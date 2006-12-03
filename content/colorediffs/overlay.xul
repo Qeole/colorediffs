@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<overlay id="colorediffs" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <script type="application/x-javascript" src="chrome://colorediffs/content/globals.js"/>
+  <script type="application/x-javascript" src="chrome://colorediffs/content/overlay.js"/>
+  <script type="application/x-javascript" src="chrome://colorediffs/content/colorediffs.js"/>
+  <script type="application/x-javascript">
+<![CDATA[
+    pref.QueryInterface(Components.interfaces.nsIPrefBranchInternal);
+    pref.addObserver("mail.pane_config.dynamic", QCMailPaneConfigObserver, false);
+
+    window.addEventListener("load", load, false);
+    window.addEventListener("unload", unload, false);
+]]>
+	</script>
+
+</overlay>
