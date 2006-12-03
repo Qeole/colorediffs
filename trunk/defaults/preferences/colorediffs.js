@@ -1,0 +1,10 @@
+pref("diffColorer.anchor_fg", "blue");
+pref("diffColorer.anchor_bg", "white"); 
+pref("diffColorer.steadyLine_fg", "grey"); 
+pref("diffColorer.steadyLine_bg", "white"); 
+pref("diffColorer.deletedLine_fg", "red");
+pref("diffColorer.deletedLine_bg", "white");  
+pref("diffColorer.addedLine_fg", "green");
+pref("diffColorer.addedLine_bg", "white"); 
+pref("diffColorer.title_fg", "magenta");
+pref("diffColorer.title_bg", "white"); 
