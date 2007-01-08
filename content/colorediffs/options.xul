@@ -7,139 +7,302 @@
         xmlns:html="http://www.w3.org/1999/xhtml"
         id="settings"
         onload="init();"
-        persist="width height screenX screenY"
+        persist="screenX screenY"
         ondialogaccept="return checkOptions();"
         title="Colored Diffs">
+    <script type="application/x-javascript" src="globals.js"/>
+    <script type="application/x-javascript" src="options.js"/>
 
-<script type="application/x-javascript" src="globals.js"/>
-<script type="application/x-javascript" src="options.js"/>
-<script type="application/x-javascript">
-  <![CDATA[
-    var pref = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
+    <commands>
+	<command id="cmd_change_mode" oncommand="document.getElementById('view_mode').setAttribute('value', document.getElementById('view').selectedItem.value);window.sizeToContent();"/>
+    </commands>
 
-    var coloredElems = ["anchor", "steadyLine", "deletedLine", "addedLine", "title"];
+    <broadcasterset>
+	<broadcaster id="view_mode" value="unified"/>
+    </broadcasterset>
 
-    function init()
-    {
-      for ( var i = 0; i < coloredElems.length; i++ ) {
-      	 var bg = coloredElems[i] + "_bg";
-      	 var fg = coloredElems[i] + "_fg";
+    <!--this is the nice way to set style to multiple controls-->
+    <!--all the controls should work this way but I don't have time to do this now-->
+    <broadcasterset>
+	<broadcaster id="sbs_steadyLine" style=""/>
+	<broadcaster id="sbs_addedLine" style=""/>
+    </broadcasterset>
 
-      	 setColor(fg, pref.getCharPref("diffColorer." + fg));
-      	 setColor(bg, pref.getCharPref("diffColorer." + bg));
-      }
-      
-      updatePreview();
-    }
-
-    function savePrefs()
-    {
-      for ( var i = 0; i < coloredElems.length; i++ ) {
-      	 var bg = coloredElems[i] + "_bg";
-      	 var fg = coloredElems[i] + "_fg";
-
-      	 pref.setCharPref("diffColorer." + fg, getColor(fg));
-      	 pref.setCharPref("diffColorer." + bg, getColor(bg));
-      }
-    }
-
-  ]]>
-  </script>
-
-<description>Change colors here</description>
-
-<hbox>
-
-<groupbox>
-<caption label="Colors"/>
-
-<hbox align="center">
-<spacer flex="1"/>
-<grid flex="1">
-  <columns>
-    <column/>
-    <column class="pickercolumn"/>
-    <column class="pickercolumn"/>
-  </columns>
-
-<rows>
-  <row class="center"><spacer/></row>
-    <row align="center">
-      <label value="Title:"/>
-      <button id="title_fg" class="color-button" oncommand="OnColorChange(this);">
-        <spacer class="color-picker" flex="1"/>
-      </button>
-      <button id="title_bg" class="color-button" oncommand="OnColorChange(this);">
-        <spacer class="color-picker" flex="1"/>
-      </button>
-    </row>
-    <row align="center">
-      <label value="Deleted Lines:"/>
-      <button id="deletedLine_fg" class="color-button" oncommand="OnColorChange(this);">
-        <spacer class="color-picker" flex="1"/>
-      </button>
-      <button id="deletedLine_bg" class="color-button" oncommand="OnColorChange(this);">
-        <spacer class="color-picker" flex="1"/>
-      </button>
-    </row>
-    <row align="center">
-      <label value="Added Lines:"/>
-      <button id="addedLine_fg" class="color-button" oncommand="OnColorChange(this);">
-        <spacer class="color-picker" flex="1"/>
-      </button>
-      <button id="addedLine_bg" class="color-button" oncommand="OnColorChange(this);">
-        <spacer class="color-picker" flex="1"/>
-      </button>
-    </row>
-    <row align="center">
-      <label value="Steady Lines:"/>
-      <button id="steadyLine_fg" class="color-button" oncommand="OnColorChange(this);">
-        <spacer class="color-picker" flex="1"/>
-      </button>
-      <button id="steadyLine_bg" class="color-button" oncommand="OnColorChange(this);">
-        <spacer class="color-picker" flex="1"/>
-      </button>
-    </row>
-    <row align="center">
-      <label value="Anchors:"/>
-      <button id="anchor_fg" class="color-button" oncommand="OnColorChange(this);">
-        <spacer class="color-picker" flex="1"/>
-      </button>
-      <button id="anchor_bg" class="color-button" oncommand="OnColorChange(this);">
-        <spacer class="color-picker" flex="1"/>
-      </button>
-    </row>
-  </rows>
-</grid>
-
-
-</hbox>
-
-<spacer style="margin-top:10px"/>
-
-</groupbox>
-
-
-<groupbox>
-<caption label="Preview"/>
-
-<vbox id="previewbox">
-<html:div>
-
-<html:pre><html:div id="title">Changes since November 24th
+    <vbox>
+    <hbox align="baseline">
+			<label value="Choose view:"/>
+			<menulist id="view" command="cmd_change_mode">  
+			    <menupopup>
+				<menuitem label="unified diff" value="unified"/>
+				<menuitem label="side by side" value="side-by-side"/>
+			    </menupopup>
+			</menulist>
+    </hbox>
+    <hbox id="unified-properties">
+	<observes element="view_mode" attribute="value" onbroadcast="document.getElementById('unified-properties').setAttribute('hidden', document.getElementById('view_mode').getAttribute('value') != 'unified');" />
+	<groupbox>
+	    <caption label="Colors"/>
+	    <hbox align="center">
+		<spacer flex="1"/>
+		<grid flex="1">
+		    <columns>
+			<column/>
+			<column class="pickercolumn"/>
+			<column class="pickercolumn"/>
+		    </columns>
+		    <rows>
+			<row class="center"><spacer/></row>
+			<row align="center">
+			    <label value="Title:"/>
+			    <button id="title_fg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			    <button id="title_bg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			</row>
+			<row align="center">
+			    <label value="Deleted Lines:"/>
+			    <button id="deletedLine_fg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			    <button id="deletedLine_bg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			</row>
+			<row align="center">
+			    <label value="Added Lines:"/>
+			    <button id="addedLine_fg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			    <button id="addedLine_bg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			</row>
+			<row align="center">
+			    <label value="Steady Lines:"/>
+			    <button id="steadyLine_fg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			    <button id="steadyLine_bg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			</row>
+			<row align="center">
+			    <label value="Anchors:"/>
+			    <button id="anchor_fg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			    <button id="anchor_bg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			</row>
+		    </rows>
+		</grid>
+	    </hbox>
+	    <spacer style="margin-top:10px"/>
+	</groupbox>
+	<groupbox>
+	    <caption label="Preview"/>
+	    <vbox id="previewbox">
+		<html:div>
+		    <html:pre><html:div id="title">Changes since November 24th
 =============================</html:div><html:span id="anchor">@@ -6,4 +6,6 @@</html:span>
 <html:span id="steadyLine">  non-changed text</html:span>
 <html:span id="deletedLine">- deleted text</html:span>
 <html:span id="addedLine">+ added line</html:span>
-</html:pre>
-
-</html:div>
-</vbox>
-
-</groupbox>
-
-</hbox>
-
-<spacer flex="1" style="height:5px;"/>
-
+		    </html:pre>
+		</html:div>
+	    </vbox>
+	</groupbox>
+    </hbox>
+    <hbox id="side-by-side-properties">
+	<observes element="view_mode" attribute="value" onbroadcast="document.getElementById('side-by-side-properties').setAttribute('hidden', document.getElementById('view_mode').getAttribute('value') != 'side-by-side');" />
+	<groupbox>
+	    <caption label="Colors"/>
+	    <hbox align="center">
+		<spacer flex="1"/>
+		<grid flex="1">
+		    <columns>
+			<column/>
+			<column class="pickercolumn"/>
+			<column class="pickercolumn"/>
+		    </columns>
+		    <rows>
+			<row class="center"><spacer/></row>
+			<row align="center">
+			    <label value="Log:"/>
+			    <button id="sbs_log_fg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			    <button id="sbs_log_bg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			</row>
+			<row align="center">
+			    <label value="Whole diff:"/>
+			    <button id="sbs_file-diff_fg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			    <button id="sbs_file-diff_bg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			</row>
+			<row align="center">
+			    <label value="Title:"/>
+			    <button id="sbs_title_fg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			    <button id="sbs_title_bg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			</row>
+			<row align="center">
+			    <label value="Additional info:"/>
+			    <button id="sbs_precode_fg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			    <button id="sbs_precode_bg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			</row>
+			<row align="center">
+			    <label value="Left diff header:"/>
+			    <button id="sbs_left-title_fg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			    <button id="sbs_left-title_bg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			</row>
+			<row align="center">
+			    <label value="Right diff header:"/>
+			    <button id="sbs_right-title_fg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			    <button id="sbs_right-title_bg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			</row>
+			<row align="center">
+			    <label value="Anchors:"/>
+			    <button id="sbs_anchor_fg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			    <button id="sbs_anchor_bg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			</row>
+			<row align="center">
+			    <label value="Left diff:"/>
+			    <button id="sbs_left_fg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			    <button id="sbs_left_bg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			</row>
+			<row align="center">
+			    <label value="Right diff:"/>
+			    <button id="sbs_right_fg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			    <button id="sbs_right_bg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			</row>
+			<row align="center">
+			    <label value="Deleted Lines:"/>
+			    <button id="sbs_deletedLine_fg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			    <button id="sbs_deletedLine_bg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			</row>
+			<row align="center">
+			    <label value="Added Lines:"/>
+			    <button id="sbs_addedLine_fg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			    <button id="sbs_addedLine_bg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			</row>
+			<row align="center">
+			    <label value="Steady Lines:"/>
+			    <button id="sbs_steadyLine_fg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+<!-- 			    <button id="sbs_steadyLine_bg" class="color-button" oncommand="OnColorChange(this);document.getElementById('sbs_steadyLine_style').setAttribute('style', document.getElementById('sbs_steadyLine').getAttribute('style'));"> -->
+			    <button id="sbs_steadyLine_bg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			</row>
+			<row align="center">
+			    <label value="Non existing line:"/>
+			    <button id="sbs_emptyLine_fg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			    <button id="sbs_emptyLine_bg" class="color-button" oncommand="OnColorChange(this);">
+				<spacer class="color-picker" flex="1"/>
+			    </button>
+			</row>
+		    </rows>
+		</grid>
+	    </hbox>
+	    <spacer style="margin-top:10px"/>
+	</groupbox>
+	<groupbox>
+	    <caption label="Preview"/>
+	    <vbox id="sbs_previewbox">
+		<html:div>
+		    <html:div id="sbs_log" style="padding: 5px; border: 1px solid black;">
+			Nice log message
+		    </html:div>
+		    <html:br/>
+		    <html:div id="sbs_file-diff">
+			<html:div id="sbs_title">
+			    Changes since November 24th<html:br/>
+			    =============================
+			</html:div>
+			<html:table>
+			    <html:tr>
+				<html:td colspan="2">
+				    <html:span id="sbs_precode">some information from version control system</html:span>
+				</html:td>
+			    </html:tr>
+			    <html:tr>
+				<html:td>
+				    <html:div id="sbs_left-title" style="padding: 5px; border: 1px solid black;">--- prev revision</html:div>
+				</html:td>
+				<html:td>
+				    <html:div id="sbs_right-title" style="padding: 5px; border: 1px solid black;">+++ new revision</html:div>
+				</html:td>
+			    </html:tr>
+			    <html:tr>
+				<html:td colspan="2" align="center">
+				    <html:span id="sbs_anchor" align="center">@@ -6,4 +6,6 @@</html:span>
+				</html:td>
+			    </html:tr>
+			    <html:tr>
+				<html:td>
+				    <html:pre id="sbs_left" style="padding: 5px; border: 1px solid black;margin:0;">
+					<html:div observes="sbs_steadyLine">  non-changed text</html:div><html:div id="sbs_emptyLine"> </html:div><html:div id="sbs_deletedLine">- deleted text</html:div>
+				    </html:pre>
+				</html:td>
+				<html:td>
+				    <html:pre id="sbs_right" style="padding: 5px; border: 1px solid black;margin:0;">
+					<html:div observes="sbs_steadyLine">  non-changed text</html:div><html:div observes="sbs_addedLine">+added text</html:div><html:div observes="sbs_addedLine">+another added text</html:div>
+				    </html:pre>
+				</html:td>
+			    </html:tr>
+			</html:table>
+		    </html:div>
+		</html:div>
+	    </vbox>
+	</groupbox>
+    </hbox>
+    </vbox>
+    <spacer flex="1" style="height:5px;"/>
 </dialog>

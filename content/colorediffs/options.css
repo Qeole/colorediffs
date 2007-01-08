@@ -15,12 +15,12 @@
 }
 
 .color-picker {
-  height: 12px; 
-  border: 1px inset #CCCCCC;
+	height: 12px;
+	border: 1px inset #CCCCCC;
 }
 
 .color-button {
-  min-width: 0px;
-  margin: 1px;
+	min-width: 0px;
+	margin: 1px;
 }
 

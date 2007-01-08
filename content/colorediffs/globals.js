@@ -1,13 +1,11 @@
 var gmessagePane;
 
-function getMessagePane()
-{
-  if (!gmessagePane)
-    gmessagePane = document.getElementById("messagepane");
+function getMessagePane() {
+	if (!gmessagePane) {
+		gmessagePane = document.getElementById("messagepane");
+	}
 
-  return gmessagePane;
+	return gmessagePane;
 }
 
-var observerService = 
-Components.classes["@mozilla.org/observer-service;1"]
-  .getService(Components.interfaces.nsIObserverService);
+var observerService = Components.classes["@mozilla.org/observer-service;1"].getService(Components.interfaces.nsIObserverService);

@@ -2,12 +2,12 @@
 
 <overlay id="msgwindowoverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-  <script type="application/x-javascript" src="chrome://colorediffs/content/globals.js"/>
-  <script type="application/x-javascript" src="chrome://colorediffs/content/overlay.js"/>
-  <script type="application/x-javascript" src="chrome://colorediffs/content/colorediffs.js"/>
-  <script type="application/x-javascript">
-    load();
-    addEventListener("unload", unloadMsgWnd, false);
-	</script>
+    <script type="application/x-javascript" src="chrome://colorediffs/content/globals.js"/>
+    <script type="application/x-javascript" src="chrome://colorediffs/content/overlay.js"/>
+    <script type="application/x-javascript" src="chrome://colorediffs/content/colorediffs.js"/>
+    <script type="application/x-javascript">
+	load();
+	addEventListener("unload", unloadMsgWnd, false);
+    </script>
 
 </overlay>
