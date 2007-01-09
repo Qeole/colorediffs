@@ -9,13 +9,13 @@
   <RDF:Description RDF:about="urn:mozilla:install-manifest"
 				   em:id="{282C3C7A-15A8-4037-A30D-BBEB17FFC76B}"
 				   em:name="Colored Diffs"
-				   em:version="0.1.5"
+				   em:version="0.2.1"
 				   em:creator="Vadim Atlygin"
 				   em:description="Color diffs sent by SVN/CVS notifications."
 				   em:homepageURL="http://code.google.com/p/colorediffs/"
 				   em:iconURL="chrome://colorediffs/content/icon.png"
 				   em:optionsURL="chrome://colorediffs/content/options.xul"
-				   em:updateURL="http://colorediffs.googlecode.com/svn/trunk/update.rdf">
+				   em:updateURL="http://colorediffs.googlecode.com/svn/trunk/update-google.rdf">
 	  <em:targetApplication RDF:resource="rdf:#$VeRq2"/>
 	  <em:file RDF:resource="urn:mozilla:extension:file:colorediffs.jar"/>
   </RDF:Description>
