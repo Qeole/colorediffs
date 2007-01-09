@@ -1,4 +1,0 @@
-
-overlay	chrome://messenger/content/messenger.xul	chrome://colorediffs/content/overlay.xul
-overlay	chrome://messenger/content/messageWindow.xul	chrome://colorediffs/content/msgwindowoverlay.xul
-content	colorediffs	content/colorediffs/
