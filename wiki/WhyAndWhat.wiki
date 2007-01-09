@@ -1,0 +1,14 @@
+#summary Why and What
+#labels Featured,Phase-Requirements
+
+This is an extension that colors boring diffs sent by SVN/CVS notificators.
+
+== Prerequisites ==
+A lot of developers use CVS and/or SVN version control systems. Most of them turned on the special notifications from the system in order to be able to review changes other people do. Someone wants to check if there are bugs in the new code, someone just wants to keep knowledge of code base up-to-date. But looking over that black-on-white letter is so boring. That's why I decided to color it up a bit.
+== What it can do already ==
+Well, not so much... It can color your diffs, it can show it in side-by-side mode if you like.
+== What it will do ==
+In the future I want this extension to be able to do following:
+  #Color the syntax of the language used</li>
+  #Check new code against few rules in order to estimate quality of it</li>
+But that's pretty big tasks, it could take a while to implement them.
