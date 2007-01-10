@@ -1,0 +1,18 @@
+#summary Screenshots
+
+= Various screenshots of extension =
+
+[http://colorediffs.googlecode.com/files/example5.jpg http://colorediffs.googlecode.com/files/small_examlple00005.jpg]
+_Boring colorless standard view of diff file_
+
+[http://colorediffs.googlecode.com/files/example1.jpg http://colorediffs.googlecode.com/files/small_examlple00001.jpg]
+_Lightweight unified view mode_
+
+[http://colorediffs.googlecode.com/files/example2.jpg http://colorediffs.googlecode.com/files/small_examlple00002.jpg]
+_Heavy and colorful side-by-side view mode for those who don't understand unified diffs_
+
+[http://colorediffs.googlecode.com/files/example4.jpg http://colorediffs.googlecode.com/files/small_examlple00004.jpg]
+_Settings dialog for unified view mode_
+
+[http://colorediffs.googlecode.com/files/example4.jpg http://colorediffs.googlecode.com/files/small_examlple00004.jpg]
+_Settings dialog for side-by-side view mode_
