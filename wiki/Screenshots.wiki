@@ -1,4 +1,5 @@
 #summary Screenshots
+#labels Featured
 
 = Various screenshots of extension =
 
