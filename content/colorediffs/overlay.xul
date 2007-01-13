@@ -4,14 +4,17 @@
 
   <script type="application/x-javascript" src="chrome://colorediffs/content/globals.js"/>
   <script type="application/x-javascript" src="chrome://colorediffs/content/overlay.js"/>
+  <script type="application/x-javascript" src="chrome://colorediffs/content/diff-parser.js"/>
+  <script type="application/x-javascript" src="chrome://colorediffs/content/side-by-side-mode.js"/>
+  <script type="application/x-javascript" src="chrome://colorediffs/content/unified-mode.js"/>
   <script type="application/x-javascript" src="chrome://colorediffs/content/colorediffs.js"/>
   <script type="application/x-javascript">
 <![CDATA[
-    pref.QueryInterface(Components.interfaces.nsIPrefBranchInternal);
-    pref.addObserver("mail.pane_config.dynamic", QCMailPaneConfigObserver, false);
+	pref.QueryInterface(Components.interfaces.nsIPrefBranchInternal);
+	pref.addObserver("mail.pane_config.dynamic", QCMailPaneConfigObserver, false);
 
-    window.addEventListener("load", load, false);
-    window.addEventListener("unload", unload, false);
+	window.addEventListener("load", load, false);
+	window.addEventListener("unload", unload, false);
 ]]>
 	</script>
 
