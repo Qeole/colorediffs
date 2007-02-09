@@ -60,7 +60,7 @@ function onLoadMessage() {
 		switch(divs[i].getAttribute("class")) {
 			case "moz-text-plain":
 			case "moz-text-flowed":
-				divs[i].innerHTML = parseDiff(divs[i].innerHTML, mode.decoration);
+				divs[i].innerHTML = parseDiff(divs[i].innerHTML, mode);
 		}
 	}
 

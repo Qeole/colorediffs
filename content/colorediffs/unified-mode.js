@@ -1,23 +1,32 @@
 function unifiedMode() {
-	this.decoration = function (string, type) {
-		switch(type) {
-			case TypeEnum.LOG: return "<div class='log'>"+string+"</div>";
-			case TypeEnum.TITLE: return "<div class='title'>"+string+"</div>";
-			case TypeEnum.PRECODE: return "<div class='pre-code'>"+string+"</div>";
-			case TypeEnum.ONE_DIFF_FILE:
-				string = string.replace(/^(\+{3}.*\d+\.\d+)$/mg, "<span class='addline'>$1</span>" );
-				string = string.replace(/^(\-{3}.*\d+\.\d+)$/mg, "<span class='delline'>$1</span>" );
-				return string;
-			case TypeEnum.ANCHOR: return "<div class='linetag'>"+string+"</div>";
-			case TypeEnum.DIFF:
-				string = string.replace(/^(\+[^+].*)$/mg, "<span class='addline'>$1</span>" );
-				string = string.replace(/^(\-[^-].*)$/mg, "<span class='delline'>$1</span>" );
-				string = string.replace(/^( .*)$/mg, "<span class='steadyline'>$1</span>" );
-				return string;
-		}
-		return string;
+	this.decorateLog = function(string) {
+		return "<div class='log'>"+string+"</div>";
 	}
 
+	this.decorateTitle = function(string) {
+		return "<div class='title'>"+string+"</div>";
+	}
+
+	this.decoratePrecode = function(string) {
+		return "<div class='pre-code'>"+string+"</div>";
+	}
+
+	this.decorateFile = function(string, filename) {
+		string = string.replace(/^(\+{3}.*\d+\.\d+)$/mg, "<span class='addline'>$1</span>" );
+		string = string.replace(/^(\-{3}.*\d+\.\d+)$/mg, "<span class='delline'>$1</span>" );
+		return "<div class='file-diff' title='" + filename + "'>" + string + "</div>";
+	}
+
+	this.decorateAnchor = function(string) {
+		return "<div class='linetag'>"+string+"</div>";
+	}
+
+	this.decorateDiff = function(string, filename, left_line, right_line) {
+		string = string.replace(/^(\+[^+].*)$/mg, "<span class='addline'>$1</span>" );
+		string = string.replace(/^(\-[^-].*)$/mg, "<span class='delline'>$1</span>" );
+		string = string.replace(/^( .*)$/mg, "<span class='steadyline'>$1</span>" );
+		return string;
+	}
 
 	this.getStyle = function(pref) {
 		var stylecontent = "";
