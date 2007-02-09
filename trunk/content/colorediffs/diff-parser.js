@@ -1,25 +1,17 @@
-var TypeEnum = {
-	LOG:0,
-	TITLE:1,
-	PRECODE:2,
-	ONE_DIFF_FILE:3,
-	ANCHOR:4,
-	DIFF:5
-}
-
-function parseDiff(text, decoration) {
-	var parseDiffPart = function(diff) {
+function parseDiff(text, mode) {
+	var parseDiffPart = function(diff, filename) {
 		var parts = diff.split(/^(@@\s\-\d+\,\d+\s\+\d+\,\d+\s@@)$/m);
 		//parts[0] is some text before code
-		var newText = decoration(parts[0], TypeEnum.PRECODE);
+		var newText = mode.decoratePrecode(parts[0]);
 		//parts[odd] are tags
 		//parts[even] are code
-		for ( var i = 1; i < parts.length; i += 1 ) {
-			if ( i % 2 == 1 ) {
-				newText += decoration(parts[i], TypeEnum.ANCHOR);
-			} else {
-				newText += decoration(parts[i], TypeEnum.DIFF);
+		for ( var i = 1; i < parts.length; i += 2 ) {
+			newText += mode.decorateAnchor(parts[i]);
+			if (parts[i].match_perl_like(/^@@\s+\-(\d+)\,\d+\s+\+(\d+)\,\d+\s+@@$/)) {
+				left_line = $1;
+				right_line = $2;
 			}
+			newText += mode.decorateDiff(parts[i+1], filename, left_line, right_line);
 		}
 		return newText;
 	}
@@ -33,14 +25,20 @@ function parseDiff(text, decoration) {
 	text = text.replace(/<\/pre>$/, "");
 
 	var diffs = text.split(/\n\n((?:.*\n){1,3}[-=]+\n)/);
-	//Ok, diffs[0] is log, put it away. But if first is false it is just a first code part so process it normally.
+	//Ok, diffs[0] is log, put it away.
 	//diffs[odd] are titles
 	//diffs[even] are diffs themselves
-	var newText = decoration(diffs[0], TypeEnum.LOG) + "\n\n";
+	var newText = mode.decorateLog(diffs[0]) + "\n\n";
 	for ( var i = 1; i < diffs.length; i += 2 ) {
-		var file = decoration(diffs[i], TypeEnum.TITLE);
-		file += parseDiffPart(diffs[i+1], decoration);
-		newText += decoration(file, TypeEnum.ONE_DIFF_FILE);
+		var file = mode.decorateTitle(diffs[i]);
+		//get filename from it
+		var filename = "";
+		if (diffs[i].match_perl_like(/\/([\w\.]+.[\w])$/m)) {
+			filename = $1;
+		}
+		//var filename =
+		file += parseDiffPart(diffs[i+1], filename);
+		newText += mode.decorateFile(file, filename);
 	}
 	return newText;
 }
