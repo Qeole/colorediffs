@@ -28,7 +28,8 @@ function parseDiff(text, mode) {
 	//Ok, diffs[0] is log, put it away.
 	//diffs[odd] are titles
 	//diffs[even] are diffs themselves
-	var newText = mode.decorateLog(diffs[0]) + "\n\n";
+	var newText = "";
+	var log = diffs[0];
 	for ( var i = 1; i < diffs.length; i += 2 ) {
 		var file = mode.decorateTitle(diffs[i]);
 		//get filename from it
@@ -36,11 +37,11 @@ function parseDiff(text, mode) {
 		if (diffs[i].match_perl_like(/\/([\w\.]+.[\w])$/m)) {
 			filename = $1;
 		}
-		//var filename =
 		file += parseDiffPart(diffs[i+1], filename);
-		newText += mode.decorateFile(file, filename);
+		newText += "<a name='" + filename + "'>" + mode.decorateFile(file, filename) + "</a>";
+		log = log.replace(new RegExp("([\/\.a-zA-Z0-9-]*" + filename + ")"), "<a href='#" + filename + "'>$1</a>");
 	}
-	return newText;
+	return mode.decorateLog(log) + "\n\n" + newText;
 }
 
 
