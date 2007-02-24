@@ -11,7 +11,17 @@ function parseDiff(text, mode) {
 				left_line = $1;
 				right_line = $2;
 			}
-			newText += mode.decorateDiff(parts[i+1], filename, left_line, right_line);
+			var diff = parts[i+1];
+
+			//show whitespaces
+			if (pref.getBoolPref("diffColorer.show-whitespace" )) {
+				diff = diff.replace(/ /g, "\u00B7");
+				diff = diff.replace(/^\t/gm, " \t");
+				diff = diff.replace(/\t/g, "\u00BB\t");
+			}
+
+
+			newText += mode.decorateDiff(diff, filename, left_line, right_line);
 		}
 		return newText;
 	}
@@ -38,7 +48,7 @@ function parseDiff(text, mode) {
 			filename = $1;
 		}
 		file += parseDiffPart(diffs[i+1], filename);
-		newText += "<a name='" + filename + "'>" + mode.decorateFile(file, filename) + "</a>";
+		newText += "<a name='" + filename + "' width='500px'>" + mode.decorateFile(file, filename) + "</a>";
 		log = log.replace(new RegExp("([\/\.a-zA-Z0-9-]*" + filename + ")"), "<a href='#" + filename + "'>$1</a>");
 	}
 	return mode.decorateLog(log) + "\n\n" + newText;

@@ -4,7 +4,7 @@ function sideBySideMode() {
 		if (string == "" ) {
 			return "";
 		} else {
-			return "<pre class='log'>"+string+"</pre>";
+			return "<pre id='log' class='log'>"+string+"</pre>";
 		}
 	}
 
@@ -19,7 +19,7 @@ function sideBySideMode() {
 	}
 
 	this.decorateFile = function(string, filename) {
-		return "<div class='file-diff' title='" + filename + "'>" + string + "</div>";
+		return "<div class='file-diff' tooltiptext='" + filename + "'>" + string + "</div>";
 	}
 
 	this.decorateAnchor = function(string) {
