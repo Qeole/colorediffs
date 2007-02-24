@@ -12,5 +12,4 @@
 		load();
 		addEventListener("unload", unloadMsgWnd, false);
 	</script>
-
 </overlay>

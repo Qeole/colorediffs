@@ -5,11 +5,11 @@
   <RDF:Description RDF:about="rdf:#$VeRq2"
 				   em:id="{3550f703-e582-4d05-9a08-453d09bdfdc6}"
 				   em:minVersion="1.0"
-				   em:maxVersion="1.5.0.*" />
+				   em:maxVersion="2.0.0.*" />
   <RDF:Description RDF:about="urn:mozilla:install-manifest"
 				   em:id="{282C3C7A-15A8-4037-A30D-BBEB17FFC76B}"
 				   em:name="Colored Diffs"
-				   em:version="0.2.1"
+				   em:version="0.3"
 				   em:creator="Vadim Atlygin"
 				   em:description="Color diffs sent by SVN/CVS notifications."
 				   em:homepageURL="http://code.google.com/p/colorediffs/"

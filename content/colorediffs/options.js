@@ -10,7 +10,7 @@ function init() {
 		setColor(bg, pref.getCharPref("diffColorer." + bg));
 	}
 
-	document.getElementById('view_mode').setAttribute('value', pref.getCharPref("diffColorer.view-mode"));
+	$('view_mode').setAttribute('value', pref.getCharPref("diffColorer.view-mode"));
 
 	//update combobox
 	var menulist = document.getElementById('view');
@@ -21,6 +21,9 @@ function init() {
 			break;
 		}
 	}
+
+	$('show-whitespaces').checked = pref.getBoolPref('diffColorer.show-whitespace');
+	$('show-toolbar').checked = pref.getBoolPref('diffColorer.show-toolbar');
 
 	updatePreview();
 }
@@ -33,7 +36,11 @@ function savePrefs() {
 		pref.setCharPref("diffColorer." + fg, getColor(fg));
 		pref.setCharPref("diffColorer." + bg, getColor(bg));
 	}
-	pref.setCharPref("diffColorer.view-mode", document.getElementById('view_mode').getAttribute('value'));
+
+	pref.setBoolPref('diffColorer.show-whitespace', $('show-whitespaces').checked);
+	pref.setBoolPref('diffColorer.show-toolbar', $('show-toolbar').checked);
+
+	pref.setCharPref("diffColorer.view-mode", $('view_mode').getAttribute('value'));
 }
 
 function checkOptions() {

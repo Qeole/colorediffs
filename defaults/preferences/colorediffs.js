@@ -38,3 +38,5 @@ pref("diffColorer.sbs_emptyLine_bg", "#997777");
 
 pref("diffColorer.view-mode", "unified");
 pref("diffColorer.debug-mode", false);
+pref("diffColorer.show-whitespace", true);
+pref("diffColorer.show-toolbar", true);

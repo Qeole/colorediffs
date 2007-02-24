@@ -1,21 +1,56 @@
 <?xml version="1.0"?>
+<?xml-stylesheet href="chrome://colorediffs/skin/colorediffs.css" type="text/css"?>
 
 <overlay id="colorediffs" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-  <script type="application/x-javascript" src="chrome://colorediffs/content/globals.js"/>
-  <script type="application/x-javascript" src="chrome://colorediffs/content/overlay.js"/>
-  <script type="application/x-javascript" src="chrome://colorediffs/content/diff-parser.js"/>
-  <script type="application/x-javascript" src="chrome://colorediffs/content/side-by-side-mode.js"/>
-  <script type="application/x-javascript" src="chrome://colorediffs/content/unified-mode.js"/>
-  <script type="application/x-javascript" src="chrome://colorediffs/content/colorediffs.js"/>
-  <script type="application/x-javascript">
+	<script type="application/x-javascript" src="chrome://colorediffs/content/globals.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/overlay.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/diff-parser.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/side-by-side-mode.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/unified-mode.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/colorediffs.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/toolbar.js"/>
+	<script type="application/x-javascript">
 <![CDATA[
+	function initToolbarCallbacks() {
+		gmessagepane = getMessagePane();
+		if (gmessagepane) {
+			gmessagepane.addEventListener("load", colorediffsToolbar.initToolbar, true);
+		}
+	}
+
 	pref.QueryInterface(Components.interfaces.nsIPrefBranchInternal);
 	pref.addObserver("mail.pane_config.dynamic", QCMailPaneConfigObserver, false);
 
 	window.addEventListener("load", load, false);
+	window.addEventListener("load", initToolbarCallbacks, true);
 	window.addEventListener("unload", unload, false);
 ]]>
 	</script>
+
+	<commands>
+		<command id="cmd_change_mode" oncommand="colorediffsToolbar.selectMode();"/>
+		<command id="cmd_change_white_spaces_mode" oncommand="colorediffsToolbar.toggleWhiteSpaces();"/>
+		<command id="cmd_change_toolbar" oncommand="colorediffsToolbar.closeToolbar();"/>
+	</commands>
+
+	<vbox id="messagepanebox">
+		<toolbar id="colorediffs-toolbar" toolbarname="Colorediffs Toolbar" accesskey="C"
+				 class="chromeclass-toolbar" customizable="true" insertafter="msgHeaderView"	hidden="true">
+			<toolbaritem>
+				<menulist id="colorediffs-view-mode" command="cmd_change_mode">
+					<menupopup>
+						<menuitem label="plain" value="none"/>
+						<menuitem label="unified diff" value="unified"/>
+						<menuitem label="side by side" value="side-by-side"/>
+					</menupopup>
+				</menulist>
+			</toolbaritem>
+			<toolbarbutton id="colorediffs-show-whitespaces" tooltiptext="Show/hide whitespace chars"
+						   command="cmd_change_white_spaces_mode" checked="false"/>
+			<toolbarbutton id="colorediffs-close-toolbar" tooltiptext="Hide toolbar"
+						   command="cmd_change_toolbar"/>
+		</toolbar>
+	</vbox>
 
 </overlay>

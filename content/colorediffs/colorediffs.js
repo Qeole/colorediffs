@@ -1,5 +1,27 @@
 var pref = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
 
+function isMessageDiff() {
+	var content = getMessagePane();
+	if (!content) {
+		return false;
+	}
+
+	var messagePrefix = /^mailbox-message:|^imap-message:/i;
+	if ( ! messagePrefix.test(GetLoadedMessage()) ) {
+		return false;
+
+	}
+
+	var message = content.contentDocument;
+	var body = message.body;
+
+	if ( !body || !isDiff(body.innerHTML) ) {
+		return false;
+	}
+
+	return true;
+}
+
 function getMode() {
 	switch(pref.getCharPref("diffColorer.view-mode")) {
 		case "side-by-side":
@@ -11,10 +33,11 @@ function getMode() {
 }
 
 function writeDebugFile(filename, html) {
-	if ( pref.getBoolPref("diffColorer.debug-mode" )) {
+	var debugDir = pref.getCharPref("diffColorer.debug-dir" );
+	if ( debugDir ) {
 		var file = Components.classes["@mozilla.org/file/local;1"]
 			.createInstance(Components.interfaces.nsILocalFile);
-		file.initWithPath("%TEMP%\\" + filename);
+		file.initWithPath( debugDir + "\\" + filename);
 
 		var foStream = Components.classes["@mozilla.org/network/file-output-stream;1"]
 			.createInstance(Components.interfaces.nsIFileOutputStream);
@@ -25,27 +48,19 @@ function writeDebugFile(filename, html) {
 	}
 }
 
+// function aaa(evt) {
+//	 dump(
+//	"clientX value: " + evt.clientX + "\n" +
+//	"clientY value: " + evt.clientY + "\n"
+//	 );}
+
 function onLoadMessage() {
-	var content = getMessagePane();
-	if (!content) {
+	if (!isMessageDiff()) {
 		return;
 	}
 
-	var loadedMessage = GetLoadedMessage();
-	if (!loadedMessage) {
-		return;
-	}
-
-	var messagePrefix = /^mailbox-message:|^imap-message:/i;
-	if ( ! messagePrefix.test(loadedMessage) ) {
-		return;
-	}
-
-	var message = content.contentDocument;
+	var message = getMessagePane().contentDocument;
 	var body = message.body;
-	if ( !body || !isDiff(body.innerHTML) ) {
-		return;
-	}
 
 	writeDebugFile("before.html", message.documentElement.innerHTML);
 
@@ -61,8 +76,13 @@ function onLoadMessage() {
 			case "moz-text-plain":
 			case "moz-text-flowed":
 				divs[i].innerHTML = parseDiff(divs[i].innerHTML, mode);
+//				diffs = document.getElementsByClassName("left", divs[i]);
+//				for ( var j = 0; j < diffs.length; j++ ) {
+//					diffs[j].addEventListener("mouseover", aaa, false);
+//				}
 		}
 	}
+
 
 	//add stylesheet
 	var styleElement = message.createElement("style");
