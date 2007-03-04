@@ -69,19 +69,59 @@ function onLoadMessage() {
 		return;
 	}
 
+	var addLinkClosures = []; //list of functions that replaces filenames with links
+	var generateHtmlClosures = []; //list of functions that actually generate html
+
+	var replaceLinks = function(log) {
+		for (var i = 0; i < addLinkClosures.length; i++ ) {
+			log = addLinkClosures[i](log);
+		}
+		return log;
+	}
+
+	var optimizedLeftRightSearch = function(div) {
+		if ( pref.getCharPref("diffColorer.view-mode") != "side-by-side" ) {
+			return [];
+		}
+
+		var elements = [];
+
+		var tables = document.getElementsByClassName("file-diff", div);
+		for (var i=0; i < tables.length; i++) {
+			var rows = tables[i].rows;
+			for (var r=0; r < rows.length; r++) {
+				if (rows[r].className == "diffs") {
+					elements = elements.concat(document.getElementsByClassName("left", rows[r]).concat(document.getElementsByClassName("right", rows[r])));
+				}
+			}
+		}
+
+		return elements;
+	}
+
+
 	//Parse body
 	for ( var i=0; i < divs.length; i++ ) {
 		switch(divs[i].getAttribute("class")) {
 			case "moz-text-plain":
-			case "moz-text-flowed":
-				divs[i].innerHTML = parseDiff(divs[i].innerHTML, mode);
-				diffs = document.getElementsByClassName("left", divs[i]).concat(document.getElementsByClassName("right", divs[i]));
-				for ( var j = 0; j < diffs.length; j++ ) {
-					diffs[j].addEventListener("scroll", colorediffsScrollCallback, false);
-				}
+			case "moz-text-flowed": var none = function() {
+				var getHtml = parseDiff(divs[i].innerHTML, mode, addLinkClosures);
+				var q = i;
+
+				generateHtmlClosures.push(function() {
+						divs[q].innerHTML = getHtml(replaceLinks);
+						var diffs = optimizedLeftRightSearch(divs[q]);
+						for ( var j = 0; j < diffs.length; j++ ) {
+							diffs[j].addEventListener("scroll", colorediffsScrollCallback, false);
+						}
+					});
+			}();
 		}
 	}
 
+	for (var i = 0; i < generateHtmlClosures.length; i++ ) {
+		generateHtmlClosures[i]();
+	}
 
 	//add stylesheet
 	var styleElement = message.createElement("style");

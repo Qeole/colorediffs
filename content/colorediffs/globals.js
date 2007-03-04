@@ -15,7 +15,7 @@ String.prototype.match_perl_like = function(regexp) {
 	var res = this.match(regexp);
 	if (res) {
 		for ( var i = 0; i < res.length; i++ ) {
-			eval("$" + i + "='" + res[i] + "'");
+			eval("$" + i + "='" + escape(res[i]) + "'");
 		}
 	}
 	return res;

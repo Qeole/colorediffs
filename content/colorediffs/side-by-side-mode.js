@@ -82,7 +82,7 @@ function sideBySideMode() {
 			decoratedRight.push(decorate(right[i][0], right[i].substring(1).pad(maxLength), (isUpperCaseLetter(right[i][0]))?right_line:right_line++));
 		}
 
-		return "<tr><td valign='top'><pre class='left'>"+decoratedLeft.join("")+"</pre></td><td valign='top'><pre class='right'>"+decoratedRight.join("")+"</pre></td></tr>";
+		return "<tr class='diffs'><td valign='top'><pre class='left'>"+decoratedLeft.join("")+"</pre></td><td valign='top'><pre class='right'>"+decoratedRight.join("")+"</pre></td></tr>";
 	}
 
 	this.getStyle = function(pref) {
