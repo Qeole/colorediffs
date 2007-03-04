@@ -10,20 +10,13 @@
 	<script type="application/x-javascript" src="chrome://colorediffs/content/unified-mode.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/colorediffs.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/toolbar.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/callbacks.js"/>
 	<script type="application/x-javascript">
 <![CDATA[
-	function initToolbarCallbacks() {
-		gmessagepane = getMessagePane();
-		if (gmessagepane) {
-			gmessagepane.addEventListener("load", colorediffsToolbar.initToolbar, true);
-		}
-	}
-
 	pref.QueryInterface(Components.interfaces.nsIPrefBranchInternal);
 	pref.addObserver("mail.pane_config.dynamic", QCMailPaneConfigObserver, false);
 
 	window.addEventListener("load", load, false);
-	window.addEventListener("load", initToolbarCallbacks, true);
 	window.addEventListener("unload", unload, false);
 ]]>
 	</script>
@@ -34,9 +27,14 @@
 		<command id="cmd_change_toolbar" oncommand="colorediffsToolbar.closeToolbar();"/>
 	</commands>
 
+	<broadcasterset>
+		<broadcaster id="colorediff-mode" value="true"/>
+	</broadcasterset>
+
+
 	<vbox id="messagepanebox">
-		<toolbar id="colorediffs-toolbar" toolbarname="Colorediffs Toolbar" accesskey="C"
-				 class="chromeclass-toolbar" customizable="true" insertafter="msgHeaderView"	hidden="true">
+		<toolbar id="colorediffs-toolbar" toolbarname="Colorediffs Toolbar"
+				 class="chromeclass-toolbar" customizable="true" insertafter="msgHeaderView" hidden="true">
 			<toolbaritem>
 				<menulist id="colorediffs-view-mode" command="cmd_change_mode">
 					<menupopup>
@@ -55,8 +53,8 @@
 
 
 	<popupset>
-		<tooltip id="mytooltip"	 orient="vertical" style="background-color: #33DD00;" hidden="true" onpopupshowing="dump(document.tooltipNode.title);">
-			<label value="Really!" style="color: red;"/>
+		<tooltip id="mytooltip"	 orient="vertical" style="background-color: #33DD00;" onpopupshowing="return colorediffsTooltipCallback(document.tooltipNode);">
+			<label id="colorediff-tooltip"/>
 		</tooltip>
 	</popupset>
 

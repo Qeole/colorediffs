@@ -19,6 +19,7 @@ cp content\colorediffs\options.xul build\chrome\content\colorediffs\
 cp content\colorediffs\overlay.js build\chrome\content\colorediffs\
 cp content\colorediffs\overlay.xul build\chrome\content\colorediffs\
 cp content\colorediffs\toolbar.js build\chrome\content\colorediffs\
+cp content\colorediffs\callbacks.js build\chrome\content\colorediffs\
 
 mkdir build\chrome\skin
 cp skin\colorediffs.css build\chrome\skin\

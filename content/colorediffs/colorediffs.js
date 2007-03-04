@@ -56,8 +56,13 @@ function writeDebugFile(filename, html) {
 
 function onLoadMessage() {
 	if (!isMessageDiff()) {
+		$("colorediff-mode").value = false;
+		colorediffsToolbar.initToolbar();
 		return;
 	}
+
+	$("colorediff-mode").value = true;
+	colorediffsToolbar.initToolbar();
 
 	var message = getMessagePane().contentDocument;
 	var body = message.body;

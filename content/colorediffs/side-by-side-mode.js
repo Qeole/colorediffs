@@ -24,7 +24,7 @@ function sideBySideMode() {
 	}
 
 	this.decorateFile = function(string, filename) {
-		return "<table class='file-diff' tooltiptext='" + filename + "'>" + string + "</table>";
+		return "<table class='file-diff' title='" + filename + "'>" + string + "</table>";
 	}
 
 	this.decorateAnchor = function(string) {
