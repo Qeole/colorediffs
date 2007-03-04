@@ -48,12 +48,6 @@ function writeDebugFile(filename, html) {
 	}
 }
 
-// function aaa(evt) {
-//	 dump(
-//	"clientX value: " + evt.clientX + "\n" +
-//	"clientY value: " + evt.clientY + "\n"
-//	 );}
-
 function onLoadMessage() {
 	if (!isMessageDiff()) {
 		$("colorediff-mode").value = false;
@@ -81,10 +75,10 @@ function onLoadMessage() {
 			case "moz-text-plain":
 			case "moz-text-flowed":
 				divs[i].innerHTML = parseDiff(divs[i].innerHTML, mode);
-//				diffs = document.getElementsByClassName("left", divs[i]);
-//				for ( var j = 0; j < diffs.length; j++ ) {
-//					diffs[j].addEventListener("mouseover", aaa, false);
-//				}
+				diffs = document.getElementsByClassName("left", divs[i]).concat(document.getElementsByClassName("right", divs[i]));
+				for ( var j = 0; j < diffs.length; j++ ) {
+					diffs[j].addEventListener("scroll", colorediffsScrollCallback, false);
+				}
 		}
 	}
 

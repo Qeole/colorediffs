@@ -19,3 +19,12 @@ function colorediffsTooltipCallback(elem) {
 		return false;
 	}
 }
+
+function colorediffsScrollCallback(evt) {
+	var ourclass = evt.target.getAttribute('class');
+	var opositeClass = (ourclass == "left")?"right":"left";
+
+	var otherSide = document.getElementsByClassName(opositeClass, evt.target.parentNode.parentNode /*TR*/)[0];
+	otherSide.scrollLeft = evt.target.scrollLeft;
+}
+
