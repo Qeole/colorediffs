@@ -1,7 +1,14 @@
-function parseDiff(text, mode) {
+function parseDiff(text, mode, addLinkClosures) {
 	var parseDiffPart = function(diff, filename) {
 		var parts = diff.split(/^(@@\s\-\d+\,\d+\s\+\d+\,\d+\s@@)/m);
 		//parts[0] is some text before code
+
+		//get filename from it
+		var filename = "";
+		if (parts[0].match_perl_like(/---\s+.*?([^\/\s]+)(?:\s|\n)+/)) {
+			filename = $1;
+		}
+
 		var newText = mode.decoratePrecode(parts[0]);
 		//parts[odd] are tags
 		//parts[even] are code
@@ -24,7 +31,7 @@ function parseDiff(text, mode) {
 
 			newText += mode.decorateDiff(diff, filename, left_line, right_line);
 		}
-		return newText;
+		return [filename, newText];
 	}
 
 
@@ -41,19 +48,24 @@ function parseDiff(text, mode) {
 	//diffs[even] are diffs themselves
 	var newText = "";
 	var log = diffs[0];
-	for ( var i = 1; i < diffs.length; i += 3 ) {
+
+	for ( var i = 1; i < diffs.length; i += 3 ) {var loopbody = function() {
 		var title = diffs[i]+diffs[i+1];
 		var file = mode.decorateTitle(title);
-		//get filename from it
-		var filename = "";
-		if (title.match_perl_like(/\/([\w\.]+.[\w])$/m)) {
-			filename = $1;
-		}
-		file += parseDiffPart(diffs[i+2], filename);
+
+		var filenameAndDiffPart = parseDiffPart(diffs[i+2]);
+		var filename = filenameAndDiffPart[0];
+		file += filenameAndDiffPart[1];
+
 		newText += "<a name='" + filename + "' width='500px'>" + mode.decorateFile(file, filename) + "</a>";
-		log = log.replace(new RegExp("([\/\.a-zA-Z0-9-]*" + filename + ")"), "<a href='#" + filename + "'>$1</a>");
+
+		addLinkClosures.push(function(log) {return log.replace(new RegExp("([\/\.a-zA-Z0-9-]*" + filename + ")"), "<a href='#" + filename + "'>$1</a>");});
+		}();
 	}
-	return mode.decorateLog(log) + "\n\n" + newText;
+
+	return function(replaceLinks) {
+		return mode.decorateLog(replaceLinks(log)) + "\n\n" + newText;
+	}
 }
 
 
