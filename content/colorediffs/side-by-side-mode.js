@@ -20,7 +20,11 @@ function sideBySideMode() {
 		string = string.replace(/^(\-{3}.*)$/mg, function(str, p1) {left = p1; return '';});
 		string = string.replace(/\n+$/, '');
 
-		return "<tr><td valign='top' width='50%' class='left-title'>" + left + "</td><td valign='top' class='right-title'>" + right + "</td></tr><tr><td colspan='2'><pre class='pre-code'>" + string + "</pre></td></tr>";
+		if (left && right) {
+			return "<tr><td valign='top' width='50%' class='left-title'>" + left + "</td><td valign='top' class='right-title'>" + right + "</td></tr><tr><td colspan='2'><pre class='pre-code'>" + string + "</pre></td></tr>";
+		} else {
+			return "";
+		}
 	}
 
 	this.decorateFile = function(string, filename) {
@@ -32,6 +36,16 @@ function sideBySideMode() {
 	}
 
 	this.decorateDiff = function(string, filename, left_line, right_line) {
+		var decorate = function(tag, str, line) {
+			switch(tag) {
+				case "d": return "<div class='delline' title='" + filename + ":" + line + "'>"+ str +" </div>";
+				case "a": return "<div class='addline' title='" + filename + ":" + line + "'>"+ str +" </div>";
+				case "s": return "<div class='steadyline' title='" + filename + ":" + line + "'>"+str+" </div>"
+				case "A": return "<div class='addline'>" + str + "</div>";
+				case "D": return "<div class='delline'>" + str + "</div>";
+			}
+		}
+
 		//split code
 		var left = [];
 		var right = [];
@@ -39,25 +53,36 @@ function sideBySideMode() {
 		lines.push("");
 		for (var i=0; i < lines.length; i++) {
 			if (/^\-(.*)$/.test(lines[i])) {
-				left.push("<div class='delline' title='" + filename + ":" + left_line++ + "'>"+ lines[i].substring(1) +" </div>");
+				left.push("d" + lines[i].substring(1));
 			} else if (/^\+(.*)$/.test(lines[i])) {
-				right.push("<div class='addline' title='" + filename + ":" + right_line++ + "'>"+lines[i].substring(1)+" </div>");
+				right.push("a" + lines[i].substring(1));
 			} else {
 				if ( left.length < right.length ) {
 					for (var k = left.length; k < right.length; k++) {
-						left.push("<div class='addline'> </div>");
+						left.push("A ");
 					}
 				} else if ( left.length > right.length ) {
 					for (var k = right.length; k < left.length; k++) {
-						right.push("<div class='delline'> </div>");
+						right.push("D ");
 					}
 				}
-				left.push("<div class='steadyline' title='" + filename + ":" + left_line++ + "'>"+lines[i].substring(1)+" </div>");
-				right.push("<div class='steadyline' title='" + filename + ":" + right_line++ + "'>"+lines[i].substring(1)+" </div>");
+				left.push("s" + lines[i].substring(1));
+				right.push("s" + lines[i].substring(1));
 			}
 		}
 		left.pop(); right.pop();
-		return "<tr><td valign='top'><pre class='left'>"+left.join("")+"</pre></td><td valign='top'><pre class='right'>"+right.join("")+"</pre></td></tr>";
+
+		var decoratedLeft = [];
+		var decoratedRight = [];
+
+		for (var i=0; i < left.length; i++) {
+			var maxLength = Math.max(left[i].length, right[i].length);
+
+			decoratedLeft.push(decorate(left[i][0], left[i].substring(1).pad(maxLength), (isUpperCaseLetter(left[i][0]))?left_line:left_line++ ));
+			decoratedRight.push(decorate(right[i][0], right[i].substring(1).pad(maxLength), (isUpperCaseLetter(right[i][0]))?right_line:right_line++));
+		}
+
+		return "<tr><td valign='top'><pre class='left'>"+decoratedLeft.join("")+"</pre></td><td valign='top'><pre class='right'>"+decoratedRight.join("")+"</pre></td></tr>";
 	}
 
 	this.getStyle = function(pref) {

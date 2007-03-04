@@ -52,4 +52,15 @@ function getColorProps(baseName) {
 	return getProperty("color", baseName + "_fg") + getProperty("background-color", baseName + "_bg");
 }
 
+String.prototype.pad = function(l, s) {
+	if (!s) s = " ";
+	var n = this;
+	while (l > n.length) {
+		n += s;
+	}
+	return n;
+}
 
+function isUpperCaseLetter(c) {
+	return /^[A-Z]$/.test(c);
+}
