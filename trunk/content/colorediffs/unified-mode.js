@@ -29,18 +29,17 @@ function unifiedMode() {
 	}
 
 	this.getStyle = function(pref) {
+		var colorStyle = function(style, prop) {
+			return "." + style + " {" + getColorProps(prop) + "}\n";
+		}
+
 		var stylecontent = "";
 
-		stylecontent += ".linetag {color: " + pref.getCharPref("diffColorer.anchor_fg")
-					 + ";background-color: " + pref.getCharPref("diffColorer.anchor_bg") + ";}\n";
-		stylecontent += ".addline {color: " + pref.getCharPref("diffColorer.addedLine_fg")
-					 + ";background-color: " + pref.getCharPref("diffColorer.addedLine_bg") + ";}\n";
-		stylecontent += ".delline {color: " + pref.getCharPref("diffColorer.deletedLine_fg")
-					 + ";background-color: " + pref.getCharPref("diffColorer.deletedLine_bg") + ";}\n";
-		stylecontent += ".steadyline {color: " + pref.getCharPref("diffColorer.steadyLine_fg")
-					 + ";background-color: " + pref.getCharPref("diffColorer.steadyLine_bg") + ";}\n";
-		stylecontent += ".title {color: " + pref.getCharPref("diffColorer.title_fg")
-					 + ";background-color: " + pref.getCharPref("diffColorer.title_bg") + ";}\n";
+		stylecontent += colorStyle("linetag", "diffColorer.anchor");
+		stylecontent += colorStyle("addline", "diffColorer.addedLine");
+		stylecontent += colorStyle("delline", "diffColorer.deletedLine");
+		stylecontent += colorStyle("steadyline", "diffColorer.steadyLine");
+		stylecontent += colorStyle("title", "diffColorer.title");
 		//stylecontent += ".addline {color: red;}\n";
 		stylecontent += "pre {font-family:monospace;}\n";
 		return stylecontent;

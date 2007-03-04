@@ -53,4 +53,12 @@
 		</toolbar>
 	</vbox>
 
+
+	<popupset>
+		<tooltip id="mytooltip"	 orient="vertical" style="background-color: #33DD00;" hidden="true" onpopupshowing="dump(document.tooltipNode.title);">
+			<label value="Really!" style="color: red;"/>
+		</tooltip>
+	</popupset>
+
+	<browser id="messagepane" tooltip="mytooltip"/>
 </overlay>

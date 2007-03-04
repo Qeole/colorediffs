@@ -39,3 +39,17 @@ document.getElementsByClassName = function(className, parentElement) {
 	return elements;
 }
 
+function getProperty(prop, color) {
+	var v = pref.getCharPref(color);
+	if (v) {
+		return prop + ": " + v + ";";
+	} else {
+		return "";
+	}
+}
+
+function getColorProps(baseName) {
+	return getProperty("color", baseName + "_fg") + getProperty("background-color", baseName + "_bg");
+}
+
+

@@ -9,21 +9,26 @@ function sideBySideMode() {
 	}
 
 	this.decorateTitle = function(string) {
-		return "<pre class='title'>"+string+"</pre>";
+		return "<tr class='title'><td colspan='2'><pre class='title'>"+string+"</pre></td></tr>";
 	}
 
 	this.decoratePrecode = function(string) {
-		string = string.replace(/^(\+{3}.*)$/mg, "</pre><div class='right-title'>$1</div><pre class='pre-code'>" );
-		string = string.replace(/^(\-{3}.*)$/mg, "</pre><div class='left-title'>$1</div><pre class='pre-code'>" );
-		return "<pre class='pre-code'>" + string + "</pre>";
+		var left;
+		var right;
+
+		string = string.replace(/^(\+{3}.*)$/mg, function(str, p1) {right = p1; return '';});
+		string = string.replace(/^(\-{3}.*)$/mg, function(str, p1) {left = p1; return '';});
+		string = string.replace(/\n+$/, '');
+
+		return "<tr><td valign='top' width='50%' class='left-title'>" + left + "</td><td valign='top' class='right-title'>" + right + "</td></tr><tr><td colspan='2'><pre class='pre-code'>" + string + "</pre></td></tr>";
 	}
 
 	this.decorateFile = function(string, filename) {
-		return "<div class='file-diff' tooltiptext='" + filename + "'>" + string + "</div>";
+		return "<table class='file-diff' tooltiptext='" + filename + "'>" + string + "</table>";
 	}
 
 	this.decorateAnchor = function(string) {
-		return "<div class='linetag'>"+string+"</div>";
+		return "<tr class='linetag'><td colspan='2'>"+string+"</td></tr>";
 	}
 
 	this.decorateDiff = function(string, filename, left_line, right_line) {
@@ -52,26 +57,26 @@ function sideBySideMode() {
 			}
 		}
 		left.pop(); right.pop();
-		return "<pre class='left'>"+left.join("")+"</pre><pre class='right'>"+right.join("")+"</pre>";
+		return "<tr><td valign='top'><pre class='left'>"+left.join("")+"</pre></td><td valign='top'><pre class='right'>"+right.join("")+"</pre></td></tr>";
 	}
 
 	this.getStyle = function(pref) {
 		var stylecontent = "";
 
-		stylecontent += "	.log {color: " + pref.getCharPref("diffColorer.sbs_log_fg") + "; background-color:" + pref.getCharPref("diffColorer.sbs_log_bg") + "; padding: 5px; border: 1px solid black;}";
-		stylecontent += "	.file-diff {color: " + pref.getCharPref("diffColorer.sbs_file-diff_fg") + "; background-color:" + pref.getCharPref("diffColorer.sbs_file-diff_bg") + "; padding: 3px;}";
-		stylecontent += "	.title {color: " + pref.getCharPref("diffColorer.sbs_title_fg") + "; background-color:" + pref.getCharPref("diffColorer.sbs_title_bg") + "; padding: 3px;clear:left;}";
-		stylecontent += "	.pre-code {color: " + pref.getCharPref("diffColorer.sbs_precode_fg") + "; background-color:" + pref.getCharPref("diffColorer.sbs_precode_bg") + ";}";
-		stylecontent += "	.addline {color: " + pref.getCharPref("diffColorer.sbs_addedLine_fg") + "; background-color:" + pref.getCharPref("diffColorer.sbs_addedLine_bg") + ";}";
-		stylecontent += "	.delline {color: " + pref.getCharPref("diffColorer.sbs_deletedLine_fg") + "; background-color:" + pref.getCharPref("diffColorer.sbs_deletedLine_bg") + ";}";
-		stylecontent += "	.linetag {color: " + pref.getCharPref("diffColorer.sbs_anchor_fg") + "; background-color:" + pref.getCharPref("diffColorer.sbs_anchor_bg") + ";text-align:center;clear:left;}";
-		stylecontent += "	.steadyline {color: " + pref.getCharPref("diffColorer.sbs_steadyLine_fg") + "; background-color:" + pref.getCharPref("diffColorer.sbs_steadyLine_bg") + ";}";
-		stylecontent += "	.left {float:left; padding: 5px; margin:0; width:48%;overflow:auto; color: " + pref.getCharPref("diffColorer.sbs_left_fg") + "; background-color:" + pref.getCharPref("diffColorer.sbs_left_bg") + "; border: 1px solid black;}";
-		stylecontent += "	.right {float:right; padding: 5px; margin:0; width:48%;overflow:auto; color: " + pref.getCharPref("diffColorer.sbs_right_fg") + "; background-color:" + pref.getCharPref("diffColorer.sbs_right_bg") + "; border: 1px solid black;}";
-		stylecontent += "	.left-title {float:left; padding: 5px; padding-top:0; padding-bottom:0; margin:0; width:48%;overflow:auto; color: " + pref.getCharPref("diffColorer.sbs_left-title_fg") + "; background-color:" + pref.getCharPref("diffColorer.sbs_left-title_bg") + "; border: 1px solid black;}";
-		stylecontent += "	.right-title {float:right; padding: 5px; padding-top:0; padding-bottom:0; margin:0; width:48%;overflow:auto; color: " + pref.getCharPref("diffColorer.sbs_right-title_fg") + "; background-color:" + pref.getCharPref("diffColorer.sbs_right-title_bg") + "; border: 1px solid black;}";
-		stylecontent += "	.left .addline {width:100%; color: green; margin-right:5px; color: " + pref.getCharPref("diffColorer.sbs_emptyLine_fg") + "; background-color:" + pref.getCharPref("diffColorer.sbs_emptyLine_bg") + ";}";
-		stylecontent += "	.right .delline {width:100%; color: green; color: " + pref.getCharPref("diffColorer.sbs_emptyLine_fg") + "; background-color:" + pref.getCharPref("diffColorer.sbs_emptyLine_bg") + ";}";
+		stylecontent += "	.log {" + getColorProps("diffColorer.sbs_log") + " padding: 5px; border: 1px solid black;}";
+		stylecontent += "	.file-diff {" + getColorProps("diffColorer.sbs_file-diff") + " padding: 3px;margin:5px;}";
+		stylecontent += "	.title {" + getColorProps("diffColorer.sbs_title") + "padding: 3px;clear:left;}";
+		stylecontent += "	.pre-code {" + getColorProps("diffColorer.sbs_precode") + "margin:0;}";
+		stylecontent += "	.addline {" + getColorProps("diffColorer.sbs_addedLine") + "}";
+		stylecontent += "	.delline {" + getColorProps("diffColorer.sbs_deletedLine") + "}";
+		stylecontent += "	.linetag {" + getColorProps("diffColorer.sbs_anchor") + "text-align:center;clear:left;}";
+		stylecontent += "	.steadyline {" + getColorProps("diffColorer.sbs_steadyLine") + "}";
+		stylecontent += "	.left {" + getColorProps("diffColorer.sbs_left") + "padding: 5px; margin:0; overflow:auto; border: 1px solid black;}";
+		stylecontent += "	.right {" + getColorProps("diffColorer.sbs_right") + "padding: 5px; margin:0; overflow:auto; border: 1px solid black;}";
+		stylecontent += "	.left-title {" + getColorProps("diffColorer.sbs_left-title") + "padding: 5px; padding-top:0; padding-bottom:0; margin:0; overflow:auto; border: 1px solid black;}";
+		stylecontent += "	.right-title {" + getColorProps("diffColorer.sbs_right-title") + "padding: 5px; padding-top:0; padding-bottom:0; margin:0; overflow:auto; border: 1px solid black;}";
+		stylecontent += "	.left .addline {" + getColorProps("diffColorer.sbs_emptyLine") + "width:100%; color: green; margin-right:5px;}";
+		stylecontent += "	.right .delline {" + getColorProps("diffColorer.sbs_emptyLine") + "width:100%; color: green;}";
 		return stylecontent;
 	}
 }
