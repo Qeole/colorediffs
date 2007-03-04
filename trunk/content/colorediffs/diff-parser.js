@@ -16,6 +16,7 @@ function parseDiff(text, mode) {
 			//show whitespaces
 			if (pref.getBoolPref("diffColorer.show-whitespace" )) {
 				diff = diff.replace(/ /g, "\u00B7");
+				diff = diff.replace(/^\u00B7/gm, " "); //first space should stay
 				diff = diff.replace(/^\t/gm, " \t");
 				diff = diff.replace(/\t/g, "\u00BB\t");
 			}
