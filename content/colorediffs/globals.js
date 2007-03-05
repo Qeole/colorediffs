@@ -64,3 +64,5 @@ String.prototype.pad = function(l, s) {
 function isUpperCaseLetter(c) {
 	return /^[A-Z]$/.test(c);
 }
+
+var colorediffIsOn = false;
