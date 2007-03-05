@@ -52,12 +52,12 @@ function writeDebugFile(filename, html) {
 
 function onLoadMessage() {
 	if (!isMessageDiff()) {
-		$("colorediff-mode").value = false;
+		colorediffIsOn = false;
 		colorediffsToolbar.initToolbar();
 		return;
 	}
 
-	$("colorediff-mode").value = true;
+	colorediffIsOn = true;
 	colorediffsToolbar.initToolbar();
 
 	var message = getMessagePane().contentDocument;
