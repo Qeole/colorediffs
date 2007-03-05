@@ -4,7 +4,7 @@ function colorediffsTooltipCallback(elem) {
 		while( elem && elem.nodeName.toLowerCase() != "body" && elem.nodeName.toLowerCase() != "browser" && (elem.title == null || elem.title == "")	) {
 			elem = elem.parentNode;
 		}
-		return elem && elem.getAttribute('title');
+		return (elem != null && elem.hasAttribute('title'))?elem.title:null;
 	}
 
 	if ( $("colorediff-mode").value ) {

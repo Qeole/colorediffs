@@ -1,6 +1,6 @@
 function parseDiff(text, mode, addLinkClosures) {
-	var parseDiffPart = function(diff, filename) {
-		var parts = diff.split(/^(@@\s\-\d+\,\d+\s\+\d+\,\d+\s@@)/m);
+	var parseDiffPart = function(d) {
+		var parts = d.split(/^(@@\s\-\d+\,\d+\s\+\d+\,\d+\s@@)/m);
 		//parts[0] is some text before code
 
 		//get filename from it
@@ -18,6 +18,7 @@ function parseDiff(text, mode, addLinkClosures) {
 				left_line = $1;
 				right_line = $2;
 			}
+
 			var diff = parts[i+1];
 
 			//show whitespaces

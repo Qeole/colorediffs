@@ -8,7 +8,7 @@ function load() {
 	}
 }
 
-const QCMailPaneConfigObserver = {
+const DiffColorerMailPaneConfigObserver = {
  observe: function(subject, topic, prefName) {
 		// verify that we're changing the mail pane config pref
 		if (topic == "nsPref:changed")
@@ -28,7 +28,7 @@ observerService.addObserver(updateObserver, "colored-diff-update", false);
 
 function unload() {
 	pref.QueryInterface(Components.interfaces.nsIPrefBranchInternal);
-	pref.removeObserver("mail.pane_config.dynamic", QCMailPaneConfigObserver);
+	pref.removeObserver("mail.pane_config.dynamic", DiffColorerMailPaneConfigObserver);
 
 	observerService.removeObserver(updateObserver, "colored-diff-update");
 }

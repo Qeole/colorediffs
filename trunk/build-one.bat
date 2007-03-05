@@ -30,12 +30,14 @@ mkdir build\defaults\preferences
 cp defaults\preferences\colorediffs.js build\defaults\preferences\
 
 cp install-%1.rdf build\install.rdf
+cp chrome.manifest.install build\chrome.manifest
 
 cd build\chrome
-zip -r colorediffs.jar content\
+zip -r colorediffs.jar content\ skin\
 cd ..\..
 
 rm -rf build\chrome\content
+rm -rf build\chrome\skin
 
 cd build
 zip -r colorediffs-%2.xpi *

@@ -2,7 +2,7 @@
 var colorediffsToolbar = {
 	reloadWithScrollPreserved: function() {
 		var mp = $('messagepane');
-		oldScroll = mp.contentWindow.scrollY;
+		var oldScroll = mp.contentWindow.scrollY;
 		mp.addEventListener(
 			"load",
 			function() {

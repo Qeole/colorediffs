@@ -14,7 +14,7 @@
 	<script type="application/x-javascript">
 <![CDATA[
 	pref.QueryInterface(Components.interfaces.nsIPrefBranchInternal);
-	pref.addObserver("mail.pane_config.dynamic", QCMailPaneConfigObserver, false);
+	pref.addObserver("mail.pane_config.dynamic", DiffColorerMailPaneConfigObserver, false);
 
 	window.addEventListener("load", load, false);
 	window.addEventListener("unload", unload, false);

@@ -33,18 +33,20 @@ function getMode() {
 }
 
 function writeDebugFile(filename, html) {
-	var debugDir = pref.getCharPref("diffColorer.debug-dir" );
-	if ( debugDir ) {
-		var file = Components.classes["@mozilla.org/file/local;1"]
-			.createInstance(Components.interfaces.nsILocalFile);
-		file.initWithPath( debugDir + "\\" + filename);
+	if (pref.prefHasUserValue("diffColorer.debug-dir" )) {
+		var debugDir = pref.getCharPref("diffColorer.debug-dir" );
+		if ( debugDir ) {
+			var file = Components.classes["@mozilla.org/file/local;1"]
+				.createInstance(Components.interfaces.nsILocalFile);
+			file.initWithPath( debugDir + "\\" + filename);
 
-		var foStream = Components.classes["@mozilla.org/network/file-output-stream;1"]
-			.createInstance(Components.interfaces.nsIFileOutputStream);
+			var foStream = Components.classes["@mozilla.org/network/file-output-stream;1"]
+				.createInstance(Components.interfaces.nsIFileOutputStream);
 
-		foStream.init(file, 0x02 | 0x08 | 0x20, 0664, 0); // write, create, truncate
-		foStream.write(html, html.length);
-		foStream.close();
+			foStream.init(file, 0x02 | 0x08 | 0x20, 0664, 0); // write, create, truncate
+			foStream.write(html, html.length);
+			foStream.close();
+		}
 	}
 }
 
@@ -99,18 +101,17 @@ function onLoadMessage() {
 		return elements;
 	}
 
-
 	//Parse body
 	for ( var i=0; i < divs.length; i++ ) {
 		switch(divs[i].getAttribute("class")) {
 			case "moz-text-plain":
 			case "moz-text-flowed": var none = function() {
 				var getHtml = parseDiff(divs[i].innerHTML, mode, addLinkClosures);
-				var q = i;
+				var div = divs[i];
 
 				generateHtmlClosures.push(function() {
-						divs[q].innerHTML = getHtml(replaceLinks);
-						var diffs = optimizedLeftRightSearch(divs[q]);
+						div.innerHTML = getHtml(replaceLinks);
+						var diffs = optimizedLeftRightSearch(div);
 						for ( var j = 0; j < diffs.length; j++ ) {
 							diffs[j].addEventListener("scroll", colorediffsScrollCallback, false);
 						}
