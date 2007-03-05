@@ -42,7 +42,7 @@ rm -rf build\chrome\skin
 cd build
 zip -r colorediffs-%2.xpi *
 
-rm -rf chrome defaults install.rdf
+rm -rf chrome defaults install.rdf chrome.manifest
 
 cd ..
 
