@@ -44,6 +44,7 @@ function sideBySideMode() {
 				case "A": return "<div class='addline'>" + str + "</div>";
 				case "D": return "<div class='delline'>" + str + "</div>";
 			}
+			return "";
 		}
 
 		//split code

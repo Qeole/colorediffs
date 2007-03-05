@@ -3,7 +3,7 @@
 }
 
 #colorediffs-close-toolbar {
-	-moz-image-region: rect(0px, 48px, 16px, 32px);
+	/*-moz-image-region: rect(0px, 48px, 16px, 32px);*/
 	height: 24px;
-	list-style-image: url("chrome://global/skin/icons/close.png");
+	list-style-image: url("chrome://global/skin/icons/Close.gif");
 }
