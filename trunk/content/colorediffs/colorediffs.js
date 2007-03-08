@@ -86,12 +86,12 @@ colorediffsGlobal.onLoadMessage = function() {
 	//Actual code starts here
 
 	if (!this.isMessageDiff()) {
-		this.$("colorediff-mode").value = false;
+		this.setActive(false);
 		this.colorediffsToolbar.initToolbar();
 		return;
 	}
 
-	this.$("colorediff-mode").value = true;
+	this.setActive(true);
 	this.colorediffsToolbar.initToolbar();
 
 	var message = this.getMessagePane().contentDocument;
