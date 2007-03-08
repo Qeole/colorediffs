@@ -7,7 +7,7 @@ function colorediffsTooltipCallback(elem) {
 		return (elem != null && elem.hasAttribute('title'))?elem.title:null;
 	}
 
-	if ( colorediffIsOn ) {
+	if ( $("colorediff-mode").value ) {
 		var title = getTooltip(elem);
 		if (title == "") {
 			title = null;

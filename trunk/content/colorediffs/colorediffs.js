@@ -38,7 +38,8 @@ function writeDebugFile(filename, html) {
 		if ( debugDir ) {
 			var file = Components.classes["@mozilla.org/file/local;1"]
 				.createInstance(Components.interfaces.nsILocalFile);
-			file.initWithPath( debugDir + "\\" + filename);
+			file.initWithPath(debugDir);
+			file.append(filename);
 
 			var foStream = Components.classes["@mozilla.org/network/file-output-stream;1"]
 				.createInstance(Components.interfaces.nsIFileOutputStream);
@@ -52,12 +53,12 @@ function writeDebugFile(filename, html) {
 
 function onLoadMessage() {
 	if (!isMessageDiff()) {
-		colorediffIsOn = false;
+		$("colorediff-mode").value = false;
 		colorediffsToolbar.initToolbar();
 		return;
 	}
 
-	colorediffIsOn = true;
+	$("colorediff-mode").value = true;
 	colorediffsToolbar.initToolbar();
 
 	var message = getMessagePane().contentDocument;
