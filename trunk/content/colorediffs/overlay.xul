@@ -13,18 +13,18 @@
 	<script type="application/x-javascript" src="chrome://colorediffs/content/callbacks.js"/>
 	<script type="application/x-javascript">
 <![CDATA[
-	pref.QueryInterface(Components.interfaces.nsIPrefBranchInternal);
-	pref.addObserver("mail.pane_config.dynamic", DiffColorerMailPaneConfigObserver, false);
+	colorediffsGlobal.pref.QueryInterface(Components.interfaces.nsIPrefBranchInternal);
+	colorediffsGlobal.pref.addObserver("mail.pane_config.dynamic", colorediffsGlobal.DiffColorerMailPaneConfigObserver, false);
 
-	window.addEventListener("load", load, false);
-	window.addEventListener("unload", unload, false);
+	window.addEventListener("load", function() {colorediffsGlobal.load();}, false);
+	window.addEventListener("unload", function() {colorediffsGlobal.unload();}, false);
 ]]>
 	</script>
 
 	<commands>
-		<command id="cmd_change_mode" oncommand="colorediffsToolbar.selectMode();"/>
-		<command id="cmd_change_white_spaces_mode" oncommand="colorediffsToolbar.toggleWhiteSpaces();"/>
-		<command id="cmd_change_toolbar" oncommand="colorediffsToolbar.closeToolbar();"/>
+		<command id="cmd_change_mode" oncommand="colorediffsGlobal.colorediffsToolbar.selectMode();"/>
+		<command id="cmd_change_white_spaces_mode" oncommand="colorediffsGlobal.colorediffsToolbar.toggleWhiteSpaces();"/>
+		<command id="cmd_change_toolbar" oncommand="colorediffsGlobal.colorediffsToolbar.closeToolbar();"/>
 	</commands>
 
 	<broadcasterset>
@@ -53,7 +53,7 @@
 
 
 	<popupset>
-		<tooltip id="mytooltip"	 orient="vertical" style="background-color: #33DD00;" onpopupshowing="return colorediffsTooltipCallback(document.tooltipNode);">
+		<tooltip id="mytooltip"	 orient="vertical" style="background-color: #33DD00;" onpopupshowing="return colorediffsGlobal.tooltipCallback(document.tooltipNode);">
 			<label id="colorediff-tooltip"/>
 		</tooltip>
 	</popupset>
