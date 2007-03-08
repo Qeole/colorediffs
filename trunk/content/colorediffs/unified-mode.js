@@ -32,7 +32,7 @@ colorediffsGlobal.unifiedMode = function() {
 		return string;
 	}
 
-	this.getStyle = function(pref) {
+	this.getStyle = function() {
 		var colorStyle = function(style, prop) {
 			return "." + style + " {" + colorediffsGlobal.getColorProps(prop) + "}\n";
 		}

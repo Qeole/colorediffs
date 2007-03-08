@@ -26,7 +26,7 @@ colorediffsGlobal.parseDiff = function(text, mode, addLinkClosures) {
 			var diff = parts[i+1];
 
 			//show whitespaces
-			if (pref.getBoolPref("diffColorer.show-whitespace" )) {
+			if (colorediffsGlobal.showWhiteSpace.get()) {
 				diff = diff.replace(/ /g, "\u00B7");
 				diff = diff.replace(/^\u00B7/gm, " "); //first space should stay
 				diff = diff.replace(/^\t/gm, " \t");

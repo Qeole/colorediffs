@@ -2,8 +2,6 @@ if (!colorediffsGlobal) {
 	var colorediffsGlobal = {}
 }
 
-colorediffsGlobal.pref = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
-
 colorediffsGlobal.isMessageDiff = function() {
 	var content = this.getMessagePane();
 	if (!content) {
@@ -27,8 +25,8 @@ colorediffsGlobal.isMessageDiff = function() {
 }
 
 colorediffsGlobal.writeDebugFile = function(filename, html) {
-	if (this.pref.prefHasUserValue("diffColorer.debug-dir" )) {
-		var debugDir = this.pref.getCharPref("diffColorer.debug-dir" );
+	if (this.debugDir.has()) {
+		var debugDir = this.debugDir.get();
 		if ( debugDir ) {
 			var file = Components.classes["@mozilla.org/file/local;1"]
 				.createInstance(Components.interfaces.nsILocalFile);
@@ -46,8 +44,10 @@ colorediffsGlobal.writeDebugFile = function(filename, html) {
 }
 
 colorediffsGlobal.onLoadMessage = function() {
+	var me = colorediffsGlobal;
+
 	function getMode() {
-		switch(pref.getCharPref("diffColorer.view-mode")) {
+		switch(colorediffsGlobal.mode.get()) {
 			case "side-by-side":
 				return new colorediffsGlobal.sideBySideMode();
 			case "unified":
@@ -64,7 +64,7 @@ colorediffsGlobal.onLoadMessage = function() {
 	}
 
 	var optimizedLeftRightSearch = function(div) {
-		if ( this.pref.getCharPref("diffColorer.view-mode") != "side-by-side" ) {
+		if ( me.mode.get() != "side-by-side" ) {
 			return [];
 		}
 
@@ -85,19 +85,19 @@ colorediffsGlobal.onLoadMessage = function() {
 
 	//Actual code starts here
 
-	if (!this.isMessageDiff()) {
-		this.setActive(false);
-		this.colorediffsToolbar.initToolbar();
+	if (!me.isMessageDiff()) {
+		me.setActive(false);
+		me.colorediffsToolbar.initToolbar();
 		return;
 	}
 
-	this.setActive(true);
-	this.colorediffsToolbar.initToolbar();
+	me.setActive(true);
+	me.colorediffsToolbar.initToolbar();
 
-	var message = this.getMessagePane().contentDocument;
+	var message = me.getMessagePane().contentDocument;
 	var body = message.body;
 
-	this.writeDebugFile("before.html", message.documentElement.innerHTML);
+	me.writeDebugFile("before.html", message.documentElement.innerHTML);
 
 	var divs = body.getElementsByTagName("div");
 	var mode = getMode();
@@ -136,12 +136,12 @@ colorediffsGlobal.onLoadMessage = function() {
 	var styleElement = message.createElement("style");
 	styleElement.type = "text/css";
 
-	var styletext = document.createTextNode(mode.getStyle(pref));
+	var styletext = document.createTextNode(mode.getStyle());
 	styleElement.appendChild(styletext);
 
 	var head = message.getElementsByTagName("head")[0];
 	head.appendChild(styleElement);
 
-	this.writeDebugFile("after.html", message.documentElement.innerHTML);
+	me.writeDebugFile("after.html", message.documentElement.innerHTML);
 }
 
