@@ -21,17 +21,6 @@
 ]]>
 	</script>
 
-	<commands>
-		<command id="cmd_change_mode" oncommand="colorediffsGlobal.colorediffsToolbar.selectMode();"/>
-		<command id="cmd_change_white_spaces_mode" oncommand="colorediffsGlobal.colorediffsToolbar.toggleWhiteSpaces();"/>
-		<command id="cmd_change_toolbar" oncommand="colorediffsGlobal.colorediffsToolbar.closeToolbar();"/>
-	</commands>
-
-	<broadcasterset>
-		<broadcaster id="colorediff-mode" value="true"/>
-	</broadcasterset>
-
-
 	<vbox id="messagepanebox">
 		<toolbar id="colorediffs-toolbar" toolbarname="Colorediffs Toolbar"
 				 class="chromeclass-toolbar" customizable="true" insertafter="msgHeaderView" hidden="true">
@@ -51,12 +40,23 @@
 		</toolbar>
 	</vbox>
 
+	<window id="messengerWindow">
+		<commands>
+			<command id="cmd_change_mode" oncommand="colorediffsGlobal.colorediffsToolbar.selectMode();"/>
+			<command id="cmd_change_white_spaces_mode" oncommand="colorediffsGlobal.colorediffsToolbar.toggleWhiteSpaces();"/>
+			<command id="cmd_change_toolbar" oncommand="colorediffsGlobal.colorediffsToolbar.closeToolbar();"/>
+		</commands>
 
-	<popupset>
-		<tooltip id="mytooltip"	 orient="vertical" style="background-color: #33DD00;" onpopupshowing="return colorediffsGlobal.tooltipCallback(document.tooltipNode);">
-			<label id="colorediff-tooltip"/>
-		</tooltip>
-	</popupset>
+		<broadcasterset>
+			<broadcaster id="colorediff-mode" value="true"/>
+		</broadcasterset>
+
+		<popupset>
+			<tooltip id="mytooltip"	 orient="vertical" style="background-color: #33DD00;" onpopupshowing="return colorediffsGlobal.tooltipCallback(document.tooltipNode);">
+				<label id="colorediff-tooltip"/>
+			</tooltip>
+		</popupset>
+	</window>
 
 	<browser id="messagepane" tooltip="mytooltip"/>
 </overlay>
