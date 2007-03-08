@@ -33,7 +33,7 @@ var colorediffsToolbar = {
 	initToolbar: function () {
 		if (pref.getBoolPref('diffColorer.show-toolbar')) {
 			//check if should be shown
-			if (!colorediffIsOn) {
+			if (!$("colorediff-mode").value) {
 				$('colorediffs-toolbar').hidden=true;
 			} else {
 				$('colorediffs-toolbar').hidden=false;

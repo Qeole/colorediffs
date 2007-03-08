@@ -27,6 +27,11 @@
 		<command id="cmd_change_toolbar" oncommand="colorediffsToolbar.closeToolbar();"/>
 	</commands>
 
+	<broadcasterset>
+		<broadcaster id="colorediff-mode" value="true"/>
+	</broadcasterset>
+
+
 	<vbox id="messagepanebox">
 		<toolbar id="colorediffs-toolbar" toolbarname="Colorediffs Toolbar"
 				 class="chromeclass-toolbar" customizable="true" insertafter="msgHeaderView" hidden="true">
