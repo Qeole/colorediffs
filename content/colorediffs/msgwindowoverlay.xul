@@ -9,7 +9,6 @@
 	<script type="application/x-javascript" src="chrome://colorediffs/content/unified-mode.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/colorediffs.js"/>
 	<script type="application/x-javascript">
-		colorediffsGlobal.load();
-		addEventListener("unload", colorediffsGlobal.unloadMsgWnd, false);
+		//colorediffsGlobal.load();
 	</script>
 </overlay>

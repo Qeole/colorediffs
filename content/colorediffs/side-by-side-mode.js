@@ -90,7 +90,7 @@ colorediffsGlobal.sideBySideMode = function() {
 		return "<tr class='diffs'><td valign='top'><pre class='left'>"+decoratedLeft.join("")+"</pre></td><td valign='top'><pre class='right'>"+decoratedRight.join("")+"</pre></td></tr>";
 	}
 
-	this.getStyle = function(pref) {
+	this.getStyle = function() {
 		var stylecontent = "";
 
 		stylecontent += "	.log {" + colorediffsGlobal.getColorProps("diffColorer.sbs_log") + " padding: 5px; border: 1px solid black;}";
