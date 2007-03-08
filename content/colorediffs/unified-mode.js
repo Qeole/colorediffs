@@ -1,4 +1,8 @@
-function unifiedMode() {
+if (!colorediffsGlobal) {
+	var colorediffsGlobal = {}
+}
+
+colorediffsGlobal.unifiedMode = function() {
 	this.decorateLog = function(string) {
 		return "<div class='log'>"+string+"</div>";
 	}
@@ -30,7 +34,7 @@ function unifiedMode() {
 
 	this.getStyle = function(pref) {
 		var colorStyle = function(style, prop) {
-			return "." + style + " {" + getColorProps(prop) + "}\n";
+			return "." + style + " {" + colorediffsGlobal.getColorProps(prop) + "}\n";
 		}
 
 		var stylecontent = "";

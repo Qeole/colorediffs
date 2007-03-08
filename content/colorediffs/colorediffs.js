@@ -1,7 +1,11 @@
-var pref = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
+if (!colorediffsGlobal) {
+	var colorediffsGlobal = {}
+}
 
-function isMessageDiff() {
-	var content = getMessagePane();
+colorediffsGlobal.pref = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
+
+colorediffsGlobal.isMessageDiff = function() {
+	var content = this.getMessagePane();
 	if (!content) {
 		return false;
 	}
@@ -15,26 +19,16 @@ function isMessageDiff() {
 	var message = content.contentDocument;
 	var body = message.body;
 
-	if ( !body || !isDiff(body.innerHTML) ) {
+	if ( !body || !this.isDiff(body.innerHTML) ) {
 		return false;
 	}
 
 	return true;
 }
 
-function getMode() {
-	switch(pref.getCharPref("diffColorer.view-mode")) {
-		case "side-by-side":
-			return new sideBySideMode();
-		case "unified":
-			return new unifiedMode();
-	}
-	return null;
-}
-
-function writeDebugFile(filename, html) {
-	if (pref.prefHasUserValue("diffColorer.debug-dir" )) {
-		var debugDir = pref.getCharPref("diffColorer.debug-dir" );
+colorediffsGlobal.writeDebugFile = function(filename, html) {
+	if (this.pref.prefHasUserValue("diffColorer.debug-dir" )) {
+		var debugDir = this.pref.getCharPref("diffColorer.debug-dir" );
 		if ( debugDir ) {
 			var file = Components.classes["@mozilla.org/file/local;1"]
 				.createInstance(Components.interfaces.nsILocalFile);
@@ -51,29 +45,16 @@ function writeDebugFile(filename, html) {
 	}
 }
 
-function onLoadMessage() {
-	if (!isMessageDiff()) {
-		$("colorediff-mode").value = false;
-		colorediffsToolbar.initToolbar();
-		return;
+colorediffsGlobal.onLoadMessage = function() {
+	function getMode() {
+		switch(pref.getCharPref("diffColorer.view-mode")) {
+			case "side-by-side":
+				return new colorediffsGlobal.sideBySideMode();
+			case "unified":
+				return new colorediffsGlobal.unifiedMode();
+		}
+		return null;
 	}
-
-	$("colorediff-mode").value = true;
-	colorediffsToolbar.initToolbar();
-
-	var message = getMessagePane().contentDocument;
-	var body = message.body;
-
-	writeDebugFile("before.html", message.documentElement.innerHTML);
-
-	var divs = body.getElementsByTagName("div");
-	var mode = getMode();
-	if ( !divs || !mode ) {
-		return;
-	}
-
-	var addLinkClosures = []; //list of functions that replaces filenames with links
-	var generateHtmlClosures = []; //list of functions that actually generate html
 
 	var replaceLinks = function(log) {
 		for (var i = 0; i < addLinkClosures.length; i++ ) {
@@ -83,7 +64,7 @@ function onLoadMessage() {
 	}
 
 	var optimizedLeftRightSearch = function(div) {
-		if ( pref.getCharPref("diffColorer.view-mode") != "side-by-side" ) {
+		if ( this.pref.getCharPref("diffColorer.view-mode") != "side-by-side" ) {
 			return [];
 		}
 
@@ -102,19 +83,45 @@ function onLoadMessage() {
 		return elements;
 	}
 
+	//Actual code starts here
+
+	if (!this.isMessageDiff()) {
+		this.$("colorediff-mode").value = false;
+		this.colorediffsToolbar.initToolbar();
+		return;
+	}
+
+	this.$("colorediff-mode").value = true;
+	this.colorediffsToolbar.initToolbar();
+
+	var message = this.getMessagePane().contentDocument;
+	var body = message.body;
+
+	this.writeDebugFile("before.html", message.documentElement.innerHTML);
+
+	var divs = body.getElementsByTagName("div");
+	var mode = getMode();
+	if ( !divs || !mode ) {
+		return;
+	}
+
+	var addLinkClosures = []; //list of functions that replaces filenames with links
+	var generateHtmlClosures = []; //list of functions that actually generate html
+
+
 	//Parse body
 	for ( var i=0; i < divs.length; i++ ) {
 		switch(divs[i].getAttribute("class")) {
 			case "moz-text-plain":
 			case "moz-text-flowed": var none = function() {
-				var getHtml = parseDiff(divs[i].innerHTML, mode, addLinkClosures);
+				var getHtml = colorediffsGlobal.parseDiff(divs[i].innerHTML, mode, addLinkClosures);
 				var div = divs[i];
 
 				generateHtmlClosures.push(function() {
 						div.innerHTML = getHtml(replaceLinks);
 						var diffs = optimizedLeftRightSearch(div);
 						for ( var j = 0; j < diffs.length; j++ ) {
-							diffs[j].addEventListener("scroll", colorediffsScrollCallback, false);
+							diffs[j].addEventListener("scroll", function() {colorediffsGlobal.scrollCallback();}, false);
 						}
 					});
 			}();
@@ -135,6 +142,6 @@ function onLoadMessage() {
 	var head = message.getElementsByTagName("head")[0];
 	head.appendChild(styleElement);
 
-	writeDebugFile("after.html", message.documentElement.innerHTML);
+	this.writeDebugFile("after.html", message.documentElement.innerHTML);
 }
 

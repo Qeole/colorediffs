@@ -1,22 +1,25 @@
-var gmessagepane;
-var pref = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
+if (!colorediffsGlobal) {
+	var colorediffsGlobal = {}
+}
 
-function load() {
-	gmessagepane = getMessagePane();
+colorediffsGlobal.pref = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
+
+colorediffsGlobal.load = function() {
+	var gmessagepane = this.getMessagePane();
 	if (gmessagepane) {
-		gmessagepane.addEventListener("load", onLoadMessage, true);
+		gmessagepane.addEventListener("load", function() {colorediffsGlobal.onLoadMessage();}, true);
 	}
 }
 
-const DiffColorerMailPaneConfigObserver = {
+colorediffsGlobal.DiffColorerMailPaneConfigObserver = {
  observe: function(subject, topic, prefName) {
 		// verify that we're changing the mail pane config pref
 		if (topic == "nsPref:changed")
-			load();
+			colorediffsGlobal.load();
 	}
 };
 
-var updateObserver = {
+colorediffsGlobal.updateObserver = {
  observe: function(subject, topic, data) {
 		if(topic=="colored-diff-update") {
 			if(gDBView) ReloadMessage();
@@ -24,15 +27,16 @@ var updateObserver = {
 	}
 };
 
-observerService.addObserver(updateObserver, "colored-diff-update", false);
+colorediffsGlobal.observerService = Components.classes["@mozilla.org/observer-service;1"].getService(Components.interfaces.nsIObserverService);
+colorediffsGlobal.observerService.addObserver(colorediffsGlobal.updateObserver, "colored-diff-update", false);
 
-function unload() {
-	pref.QueryInterface(Components.interfaces.nsIPrefBranchInternal);
-	pref.removeObserver("mail.pane_config.dynamic", DiffColorerMailPaneConfigObserver);
+colorediffsGlobal.unload = function() {
+	this.pref.QueryInterface(Components.interfaces.nsIPrefBranchInternal);
+	this.pref.removeObserver("mail.pane_config.dynamic", this.DiffColorerMailPaneConfigObserver);
 
-	observerService.removeObserver(updateObserver, "colored-diff-update");
+	this.observerService.removeObserver(updateObserver, "colored-diff-update");
 }
 
-function unloadMsgWnd() {
-	observerService.removeObserver(updateObserver, "colored-diff-update");
+colorediffsGlobal.unloadMsgWnd = function() {
+	this.observerService.removeObserver(this.updateObserver, "colored-diff-update");
 }

@@ -14,7 +14,7 @@
 	<script type="application/x-javascript" src="options.js"/>
 
 	<commands>
-		<command id="cmd_change_mode" oncommand="$('view_mode').setAttribute('value', $('view').selectedItem.value);window.sizeToContent();"/>
+		<command id="cmd_change_mode" oncommand="colorediffsGlobal.$('view_mode').setAttribute('value', colorediffsGlobal.$('view').selectedItem.value);window.sizeToContent();"/>
 	</commands>
 
 	<broadcasterset>
@@ -43,7 +43,7 @@
 			</menulist>
 		</hbox>
 		<hbox id="unified-properties">
-			<observes element="view_mode" attribute="value" onbroadcast="$('unified-properties').setAttribute('hidden', $('view_mode').getAttribute('value') != 'unified');" />
+			<observes element="view_mode" attribute="value" onbroadcast="colorediffsGlobal.$('unified-properties').setAttribute('hidden', colorediffsGlobal.$('view_mode').getAttribute('value') != 'unified');" />
 			<groupbox>
 				<caption label="Colors"/>
 				<hbox align="center">
@@ -58,46 +58,46 @@
 							<row class="center"><spacer/></row>
 							<row align="center">
 								<label value="Title:"/>
-								<button id="title_fg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="title_fg" class="color-button" oncommand="colorediffsGlobal.colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
-								<button id="title_bg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="title_bg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
 							</row>
 							<row align="center">
 								<label value="Deleted Lines:"/>
-								<button id="deletedLine_fg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="deletedLine_fg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
-								<button id="deletedLine_bg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="deletedLine_bg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
 							</row>
 							<row align="center">
 								<label value="Added Lines:"/>
-								<button id="addedLine_fg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="addedLine_fg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
-								<button id="addedLine_bg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="addedLine_bg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
 							</row>
 							<row align="center">
 								<label value="Steady Lines:"/>
-								<button id="steadyLine_fg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="steadyLine_fg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
-								<button id="steadyLine_bg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="steadyLine_bg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
 							</row>
 							<row align="center">
 								<label value="Anchors:"/>
-								<button id="anchor_fg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="anchor_fg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
-								<button id="anchor_bg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="anchor_bg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
 							</row>
@@ -136,119 +136,119 @@
 							<row class="center"><spacer/></row>
 							<row align="center">
 								<label value="Log:"/>
-								<button id="sbs_log_fg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_log_fg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
-								<button id="sbs_log_bg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_log_bg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
 							</row>
 							<row align="center">
 								<label value="Whole diff:"/>
-								<button id="sbs_file-diff_fg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_file-diff_fg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
-								<button id="sbs_file-diff_bg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_file-diff_bg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
 							</row>
 							<row align="center">
 								<label value="Title:"/>
-								<button id="sbs_title_fg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_title_fg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
-								<button id="sbs_title_bg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_title_bg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
 							</row>
 							<row align="center">
 								<label value="Additional info:"/>
-								<button id="sbs_precode_fg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_precode_fg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
-								<button id="sbs_precode_bg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_precode_bg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
 							</row>
 							<row align="center">
 								<label value="Left diff header:"/>
-								<button id="sbs_left-title_fg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_left-title_fg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
-								<button id="sbs_left-title_bg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_left-title_bg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
 							</row>
 							<row align="center">
 								<label value="Right diff header:"/>
-								<button id="sbs_right-title_fg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_right-title_fg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
-								<button id="sbs_right-title_bg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_right-title_bg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
 							</row>
 							<row align="center">
 								<label value="Anchors:"/>
-								<button id="sbs_anchor_fg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_anchor_fg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
-								<button id="sbs_anchor_bg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_anchor_bg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
 							</row>
 							<row align="center">
 								<label value="Left diff:"/>
-								<button id="sbs_left_fg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_left_fg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
-								<button id="sbs_left_bg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_left_bg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
 							</row>
 							<row align="center">
 								<label value="Right diff:"/>
-								<button id="sbs_right_fg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_right_fg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
-								<button id="sbs_right_bg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_right_bg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
 							</row>
 							<row align="center">
 								<label value="Deleted Lines:"/>
-								<button id="sbs_deletedLine_fg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_deletedLine_fg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
-								<button id="sbs_deletedLine_bg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_deletedLine_bg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
 							</row>
 							<row align="center">
 								<label value="Added Lines:"/>
-								<button id="sbs_addedLine_fg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_addedLine_fg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
-								<button id="sbs_addedLine_bg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_addedLine_bg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
 							</row>
 							<row align="center">
 								<label value="Steady Lines:"/>
-								<button id="sbs_steadyLine_fg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_steadyLine_fg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
-								<!--				<button id="sbs_steadyLine_bg" class="color-button" oncommand="OnColorChange(this);document.getElementById('sbs_steadyLine_style').setAttribute('style', document.getElementById('sbs_steadyLine').getAttribute('style'));"> -->
-								<button id="sbs_steadyLine_bg" class="color-button" oncommand="OnColorChange(this);">
+								<!--				<button id="sbs_steadyLine_bg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);document.getElementById('sbs_steadyLine_style').setAttribute('style', document.getElementById('sbs_steadyLine').getAttribute('style'));"> -->
+								<button id="sbs_steadyLine_bg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
 							</row>
 							<row align="center">
 								<label value="Non existing line:"/>
-								<button id="sbs_emptyLine_fg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_emptyLine_fg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
-								<button id="sbs_emptyLine_bg" class="color-button" oncommand="OnColorChange(this);">
+								<button id="sbs_emptyLine_bg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);">
 									<spacer class="color-picker" flex="1"/>
 								</button>
 							</row>

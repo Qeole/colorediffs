@@ -1,4 +1,8 @@
-function parseDiff(text, mode, addLinkClosures) {
+if (!colorediffsGlobal) {
+	var colorediffsGlobal = {}
+}
+
+colorediffsGlobal.parseDiff = function(text, mode, addLinkClosures) {
 	var parseDiffPart = function(d) {
 		var parts = d.split(/^(@@\s\-\d+\,\d+\s\+\d+\,\d+\s@@)/m);
 		//parts[0] is some text before code
@@ -70,7 +74,7 @@ function parseDiff(text, mode, addLinkClosures) {
 }
 
 
-function isDiff(text) {
+colorediffsGlobal.isDiff = function(text) {
 	//check if text has line tags
 	line_tag = /^@@\s\-\d+\,\d+\s\+\d+\,\d+\s@@/m;
 	return line_tag.test(text);

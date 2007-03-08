@@ -1,7 +1,11 @@
-var pref = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
-var coloredElems = ["anchor", "steadyLine", "deletedLine", "addedLine", "title", "sbs_title", "sbs_log", "sbs_file-diff", "sbs_precode", "sbs_left-title", "sbs_right-title", "sbs_anchor", "sbs_left", "sbs_right", "sbs_addedLine", "sbs_deletedLine", "sbs_steadyLine", "sbs_emptyLine"];
+if (!colorediffsGlobal) {
+	var colorediffsGlobal = {}
+}
 
-function init() {
+colorediffsGlobal.pref = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
+colorediffsGlobal.coloredElems = ["anchor", "steadyLine", "deletedLine", "addedLine", "title", "sbs_title", "sbs_log", "sbs_file-diff", "sbs_precode", "sbs_left-title", "sbs_right-title", "sbs_anchor", "sbs_left", "sbs_right", "sbs_addedLine", "sbs_deletedLine", "sbs_steadyLine", "sbs_emptyLine"];
+
+colorediffsGlobal.init = function() {
 	for ( var i = 0; i < coloredElems.length; i++ ) {
 		var bg = coloredElems[i] + "_bg";
 		var fg = coloredElems[i] + "_fg";
@@ -28,7 +32,7 @@ function init() {
 	updatePreview();
 }
 
-function savePrefs() {
+colorediffsGlobal.savePrefs = function() {
 	for ( var i = 0; i < coloredElems.length; i++ ) {
 		var bg = coloredElems[i] + "_bg";
 		var fg = coloredElems[i] + "_fg";
@@ -43,14 +47,14 @@ function savePrefs() {
 	pref.setCharPref("diffColorer.view-mode", $('view_mode').getAttribute('value'));
 }
 
-function checkOptions() {
+colorediffsGlobal.checkOptions = function() {
 	savePrefs();
 	observerService.notifyObservers(null, "colored-diff-update", null);
 	return true;
 }
 
 
-function updatePreview() {
+colorediffsGlobal.updatePreview = function() {
 	for ( var i = 0; i < coloredElems.length; i++ ) {
 		var element = coloredElems[i];
 		var elem = document.getElementById(element);
@@ -59,7 +63,7 @@ function updatePreview() {
 	}
 }
 
-function OnColorChange(element) {
+colorediffsGlobal.OnColorChange = function(element) {
 	var istext = (element.id.lastIndexOf("_fg")!=0);
 	var colorObj = { NoDefault:false, Type:istext?"Text":"Page", TextColor:0, PageColor:0, Cancel:false };
 
@@ -76,7 +80,7 @@ function OnColorChange(element) {
 }
 
 
-function setColor(elementId, color) {
+colorediffsGlobal.setColor = function(elementId, color) {
 	var element = document.getElementById(elementId);
 	var colorElement = element.getElementsByTagName("spacer")[0];
 	if (colorElement && color) {
@@ -84,7 +88,7 @@ function setColor(elementId, color) {
 	}
 }
 
-function getColor(elementId) {
+colorediffsGlobal.getColor = function(elementId) {
 	var element = document.getElementById(elementId);
 	var colorElement = element.getElementsByTagName("spacer")[0];
 	if (colorElement) {

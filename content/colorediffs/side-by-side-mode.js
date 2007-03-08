@@ -1,4 +1,8 @@
-function sideBySideMode() {
+if (!colorediffsGlobal) {
+	var colorediffsGlobal = {}
+}
+
+colorediffsGlobal.sideBySideMode = function() {
 
 	this.decorateLog = function(string) {
 		if (string == "" ) {
@@ -79,8 +83,8 @@ function sideBySideMode() {
 		for (var i=0; i < left.length; i++) {
 			var maxLength = Math.max(left[i].length, right[i].length);
 
-			decoratedLeft.push(decorate(left[i][0], left[i].substring(1).pad(maxLength), (isUpperCaseLetter(left[i][0]))?left_line:left_line++ ));
-			decoratedRight.push(decorate(right[i][0], right[i].substring(1).pad(maxLength), (isUpperCaseLetter(right[i][0]))?right_line:right_line++));
+			decoratedLeft.push(decorate(left[i][0], left[i].substring(1).pad(maxLength), (colorediffsGlobal.isUpperCaseLetter(left[i][0]))?left_line:left_line++ ));
+			decoratedRight.push(decorate(right[i][0], right[i].substring(1).pad(maxLength), (colorediffsGlobal.isUpperCaseLetter(right[i][0]))?right_line:right_line++));
 		}
 
 		return "<tr class='diffs'><td valign='top'><pre class='left'>"+decoratedLeft.join("")+"</pre></td><td valign='top'><pre class='right'>"+decoratedRight.join("")+"</pre></td></tr>";
@@ -89,20 +93,20 @@ function sideBySideMode() {
 	this.getStyle = function(pref) {
 		var stylecontent = "";
 
-		stylecontent += "	.log {" + getColorProps("diffColorer.sbs_log") + " padding: 5px; border: 1px solid black;}";
-		stylecontent += "	.file-diff {" + getColorProps("diffColorer.sbs_file-diff") + " padding: 3px;margin:5px;}";
-		stylecontent += "	.title {" + getColorProps("diffColorer.sbs_title") + "padding: 3px;clear:left;}";
-		stylecontent += "	.pre-code {" + getColorProps("diffColorer.sbs_precode") + "margin:0;}";
-		stylecontent += "	.addline {" + getColorProps("diffColorer.sbs_addedLine") + "}";
-		stylecontent += "	.delline {" + getColorProps("diffColorer.sbs_deletedLine") + "}";
-		stylecontent += "	.linetag {" + getColorProps("diffColorer.sbs_anchor") + "text-align:center;clear:left;}";
-		stylecontent += "	.steadyline {" + getColorProps("diffColorer.sbs_steadyLine") + "}";
-		stylecontent += "	.left {" + getColorProps("diffColorer.sbs_left") + "padding: 5px; margin:0; overflow:auto; border: 1px solid black;}";
-		stylecontent += "	.right {" + getColorProps("diffColorer.sbs_right") + "padding: 5px; margin:0; overflow:auto; border: 1px solid black;}";
-		stylecontent += "	.left-title {" + getColorProps("diffColorer.sbs_left-title") + "padding: 5px; padding-top:0; padding-bottom:0; margin:0; overflow:auto; border: 1px solid black;}";
-		stylecontent += "	.right-title {" + getColorProps("diffColorer.sbs_right-title") + "padding: 5px; padding-top:0; padding-bottom:0; margin:0; overflow:auto; border: 1px solid black;}";
-		stylecontent += "	.left .addline {" + getColorProps("diffColorer.sbs_emptyLine") + "width:100%; color: green; margin-right:5px;}";
-		stylecontent += "	.right .delline {" + getColorProps("diffColorer.sbs_emptyLine") + "width:100%; color: green;}";
+		stylecontent += "	.log {" + colorediffsGlobal.getColorProps("diffColorer.sbs_log") + " padding: 5px; border: 1px solid black;}";
+		stylecontent += "	.file-diff {" + colorediffsGlobal.getColorProps("diffColorer.sbs_file-diff") + " padding: 3px;margin:5px;}";
+		stylecontent += "	.title {" + colorediffsGlobal.getColorProps("diffColorer.sbs_title") + "padding: 3px;clear:left;}";
+		stylecontent += "	.pre-code {" + colorediffsGlobal.getColorProps("diffColorer.sbs_precode") + "margin:0;}";
+		stylecontent += "	.addline {" + colorediffsGlobal.getColorProps("diffColorer.sbs_addedLine") + "}";
+		stylecontent += "	.delline {" + colorediffsGlobal.getColorProps("diffColorer.sbs_deletedLine") + "}";
+		stylecontent += "	.linetag {" + colorediffsGlobal.getColorProps("diffColorer.sbs_anchor") + "text-align:center;clear:left;}";
+		stylecontent += "	.steadyline {" + colorediffsGlobal.getColorProps("diffColorer.sbs_steadyLine") + "}";
+		stylecontent += "	.left {" + colorediffsGlobal.getColorProps("diffColorer.sbs_left") + "padding: 5px; margin:0; overflow:auto; border: 1px solid black;}";
+		stylecontent += "	.right {" + colorediffsGlobal.getColorProps("diffColorer.sbs_right") + "padding: 5px; margin:0; overflow:auto; border: 1px solid black;}";
+		stylecontent += "	.left-title {" + colorediffsGlobal.getColorProps("diffColorer.sbs_left-title") + "padding: 5px; padding-top:0; padding-bottom:0; margin:0; overflow:auto; border: 1px solid black;}";
+		stylecontent += "	.right-title {" + colorediffsGlobal.getColorProps("diffColorer.sbs_right-title") + "padding: 5px; padding-top:0; padding-bottom:0; margin:0; overflow:auto; border: 1px solid black;}";
+		stylecontent += "	.left .addline {" + colorediffsGlobal.getColorProps("diffColorer.sbs_emptyLine") + "width:100%; color: green; margin-right:5px;}";
+		stylecontent += "	.right .delline {" + colorediffsGlobal.getColorProps("diffColorer.sbs_emptyLine") + "width:100%; color: green;}";
 		return stylecontent;
 	}
 }
