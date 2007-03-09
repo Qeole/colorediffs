@@ -121,7 +121,7 @@ colorediffsGlobal.onLoadMessage = function() {
 						div.innerHTML = getHtml(replaceLinks);
 						var diffs = optimizedLeftRightSearch(div);
 						for ( var j = 0; j < diffs.length; j++ ) {
-							diffs[j].addEventListener("scroll", function() {colorediffsGlobal.scrollCallback();}, false);
+							diffs[j].addEventListener("scroll", function(evt) {colorediffsGlobal.scrollCallback(evt);}, false);
 						}
 					});
 			}();

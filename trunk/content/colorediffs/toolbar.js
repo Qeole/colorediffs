@@ -2,9 +2,19 @@ if (!colorediffsGlobal) {
 	var colorediffsGlobal = {}
 }
 
-colorediffsGlobal.colorediffsToolbar = {
-	reloadWithScrollPreserved: function() {
-		var mp = colorediffsGlobal.getMessagePane();
+colorediffsGlobal.colorediffsToolbar = new function() {
+	var me = colorediffsGlobal;
+
+	var getNode = function (name) {
+		return function() {return me.$(name);}
+	}
+
+	var getViewModeNode = getNode('colorediffs-view-mode');
+	var getShowWhiteSpacesNode = getNode('colorediffs-show-whitespaces');
+	var getToolbarNode = getNode('colorediffs-toolbar');
+
+	var reloadWithScrollPreserved = function() {
+		var mp = me.getMessagePane();
 		var oldScroll = mp.contentWindow.scrollY;
 		mp.addEventListener(
 			"load",
@@ -14,39 +24,39 @@ colorediffsGlobal.colorediffsToolbar = {
 			},
 			true);
 		MsgReload();
-	},
+	}
 
-	selectMode: function () {
-		colorediffsGlobal.mode.set(colorediffsGlobal.$('colorediffs-view-mode').selectedItem.value);
+	this.selectMode = function () {
+		me.mode.set(getViewModeNode().selectedItem.value);
 		MsgReload();
-	},
+	}
 
-	toggleWhiteSpaces: function () {
-		colorediffsGlobal.showWhiteSpace.set(!colorediffsGlobal.showWhiteSpace.get());
-		colorediffsGlobal.$('colorediffs-show-whitespaces').checked=!colorediffsGlobal.$('colorediffs-show-whitespaces').checked;
+	this.toggleWhiteSpaces = function () {
+		me.showWhiteSpace.set(!me.showWhiteSpace.get());
+		getShowWhiteSpacesNode().checked = !getShowWhiteSpacesNode().checked;
 
-		this.reloadWithScrollPreserved();
-	},
+		reloadWithScrollPreserved();
+	}
 
-	closeToolbar: function() {
-		colorediffsGlobal.showToolbar.set(false);
-		colorediffsGlobal.$('colorediffs-toolbar').hidden=true
-	},
+	this.closeToolbar = function() {
+		me.showToolbar.set(false);
+		getToolbarNode().hidden=true
+	}
 
-	initToolbar: function () {
-		if (colorediffsGlobal.showToolbar.get()) {
+	this.initToolbar = function () {
+		if (me.showToolbar.get()) {
 			//check if should be shown
-			if (!colorediffsGlobal.isActive()) {
-				colorediffsGlobal.$('colorediffs-toolbar').hidden=true;
+			if (!me.isActive()) {
+				getToolbarNode().hidden=true;
 			} else {
-				colorediffsGlobal.$('colorediffs-toolbar').hidden=false;
-				colorediffsGlobal.$('colorediffs-show-whitespaces').checked = colorediffsGlobal.showWhiteSpace.get();
+				getToolbarNode().hidden=false;
+				getShowWhiteSpacesNode().checked = me.showWhiteSpace.get();
 
 				//update combobox
-				var menulist = colorediffsGlobal.$('colorediffs-view-mode');
+				var menulist = getViewModeNode();
 				var items = menulist.firstChild.childNodes;
 				for( var i=0; i < items.length; i++ ) {
-					if ( items[i].value == colorediffsGlobal.mode.get() ) {
+					if ( items[i].value == me.mode.get() ) {
 						menulist.selectedItem = items[i];
 						break;
 					}

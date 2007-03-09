@@ -15,7 +15,7 @@
 	<script type="application/x-javascript" src="options.js"/>
 
 	<commands>
-		<command id="cmd_change_mode" oncommand="colorediffsGlobal.$('view_mode').setAttribute('value', colorediffsGlobal.$('view').selectedItem.value);window.sizeToContent();"/>
+		<command id="cmd_change_mode" oncommand="colorediffsGlobal.options.onChangeMode();"/>
 		<command id="cmd_change_color" oncommand="colorediffsGlobal.options.OnColorChange(event.sourceEvent.target);"/>
 	</commands>
 
@@ -45,7 +45,7 @@
 			</menulist>
 		</hbox>
 		<hbox id="unified-properties">
-			<observes element="view_mode" attribute="value" onbroadcast="colorediffsGlobal.$('unified-properties').setAttribute('hidden', colorediffsGlobal.$('view_mode').getAttribute('value') != 'unified');" />
+			<observes element="view_mode" attribute="value" onbroadcast="colorediffsGlobal.options.onBroadcastModeUnified();" />
 			<groupbox>
 				<caption label="Colors"/>
 				<hbox align="center">
@@ -123,7 +123,7 @@
 			</groupbox>
 		</hbox>
 		<hbox id="side-by-side-properties">
-			<observes element="view_mode" attribute="value" onbroadcast="document.getElementById('side-by-side-properties').setAttribute('hidden', document.getElementById('view_mode').getAttribute('value') != 'side-by-side');" />
+			<observes element="view_mode" attribute="value" onbroadcast="colorediffsGlobal.options.onBroadcastModeSideBySide();" />
 			<groupbox>
 				<caption label="Colors"/>
 				<hbox align="center">
@@ -240,7 +240,6 @@
 								<button id="sbs_steadyLine_fg" class="color-button" command="cmd_change_color">
 									<spacer class="color-picker" flex="1"/>
 								</button>
-								<!--				<button id="sbs_steadyLine_bg" class="color-button" oncommand="colorediffsGlobal.OnColorChange(this);document.getElementById('sbs_steadyLine_style').setAttribute('style', document.getElementById('sbs_steadyLine').getAttribute('style'));"> -->
 								<button id="sbs_steadyLine_bg" class="color-button" command="cmd_change_color">
 									<spacer class="color-picker" flex="1"/>
 								</button>
