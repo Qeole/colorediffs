@@ -2,8 +2,9 @@ if (!colorediffsGlobal) {
 	var colorediffsGlobal = {}
 }
 
-colorediffsGlobal.tooltipCallback = function(elem) {
-	var getTooltip = function (elem) {
+colorediffsGlobal.tooltipCallback = function(element) {
+	var getTooltip = function () {
+		var elem = element;
 		while( elem && elem.nodeName.toLowerCase() != "body" && elem.nodeName.toLowerCase() != "browser" && (elem.title == null || elem.title == "")	) {
 			elem = elem.parentNode;
 		}
@@ -11,7 +12,7 @@ colorediffsGlobal.tooltipCallback = function(elem) {
 	}
 
 	if ( this.isActive() ) {
-		var title = getTooltip(elem);
+		var title = getTooltip();
 		if (title == "") {
 			title = null;
 		}
