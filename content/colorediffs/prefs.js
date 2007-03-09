@@ -4,7 +4,7 @@ if (!colorediffsGlobal) {
 
 colorediffsGlobal.temp = function () {
 	var me = colorediffsGlobal;
-	var pref = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
+	var pref = me.getPrefs();
 
 	var createGetSet = function(name, prop_name, getter, setter) {
 		me[name] = {
@@ -68,11 +68,11 @@ colorediffsGlobal.temp = function () {
 	}
 
 
-
 	createCharGetSet("mode", "diffColorer.view-mode");
 	createCharGetSet("debugDir", "diffColorer.debug-dir");
 	createBoolGetSet("showWhiteSpace", "diffColorer.show-whitespace");
 	createBoolGetSet("showToolbar", "diffColorer.show-toolbar");
 
-}();
+};
 
+colorediffsGlobal.temp();

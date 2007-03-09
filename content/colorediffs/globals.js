@@ -38,8 +38,6 @@ document.getElementsByClassName = function(className, parentElement) {
 	for (var i = 0; i < qwe.length; i++) {
 		if (qwe[i] && qwe[i].getAttribute("class") === className) {
 			elements.push(qwe[i]);
-		} else {
-			elements = elements.concat(document.getElementsByClassName(className, qwe[i]));
 		}
 	}
 
@@ -57,4 +55,8 @@ String.prototype.pad = function(l, s) {
 
 colorediffsGlobal.isUpperCaseLetter = function(c) {
 	return /^[A-Z]$/.test(c);
+}
+
+colorediffsGlobal.getPrefs = function() {
+	return Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
 }
