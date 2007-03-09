@@ -7,6 +7,15 @@ colorediffsGlobal.options = new function() {
 
 	var coloredElems = ["anchor", "steadyLine", "deletedLine", "addedLine", "title", "sbs_title", "sbs_log", "sbs_file-diff", "sbs_precode", "sbs_left-title", "sbs_right-title", "sbs_anchor", "sbs_left", "sbs_right", "sbs_addedLine", "sbs_deletedLine", "sbs_steadyLine", "sbs_emptyLine"];
 
+	var getNode = function (name) {
+		return function() {return me.$(name);}
+	}
+
+	var getViewModeNode = getNode('view_mode');
+	var getShowWhiteSpacesNode = getNode('show-whitespaces');
+	var getShowToolbarNode = getNode('show-toolbar');
+	var getViewNode = getNode('view');
+
 	var setColor = function(elementId, color) {
 		var element = document.getElementById(elementId);
 		var colorElement = element.getElementsByTagName("spacer")[0];
@@ -34,10 +43,10 @@ colorediffsGlobal.options = new function() {
 			me.setColorBG("diffColorer." + coloredElems[i], getColor(bg));
 		}
 
-		me.showWhiteSpace.set(me.$('show-whitespaces').checked);
-		me.showToolbar.set(me.$('show-toolbar').checked);
+		me.showWhiteSpace.set(getShowWhiteSpacesNode().checked);
+		me.showToolbar.set(getShowToolbarNode().checked);
 
-		me.mode.set(me.$('view_mode').getAttribute('value'));
+		me.mode.set(getViewModeNode().getAttribute('value'));
 	}
 
 	var updatePreview = function() {
@@ -58,10 +67,10 @@ colorediffsGlobal.options = new function() {
 			setColor(bg, me.getColorBG("diffColorer." + coloredElems[i]));
 		}
 
-		me.$('view_mode').setAttribute('value', me.mode.get());
+		getViewModeNode().setAttribute('value', me.mode.get());
 
 		//update combobox
-		var menulist = me.$('view');
+		var menulist = getViewNode();
 		var items = menulist.firstChild.childNodes;
 		for( var i=0; i < items.length; i++ ) {
 			if ( items[i].value == me.mode.get() ) {
@@ -70,8 +79,8 @@ colorediffsGlobal.options = new function() {
 			}
 		}
 
-		me.$('show-whitespaces').checked = me.showWhiteSpace.get();
-		me.$('show-toolbar').checked = me.showToolbar.get();
+		getShowWhiteSpacesNode().checked = me.showWhiteSpace.get();
+		getShowToolbarNode().checked = me.showToolbar.get();
 
 		updatePreview();
 	}
@@ -98,6 +107,19 @@ colorediffsGlobal.options = new function() {
 		setColor(element.id, color);
 
 		updatePreview();
+	}
+
+	this.onChangeMode = function() {
+		getViewModeNode().setAttribute('value', getViewNode().selectedItem.value);
+		window.sizeToContent();
+	}
+
+	this.onBroadcastModeUnified = function() {
+		colorediffsGlobal.$('unified-properties').setAttribute('hidden', getViewModeNode().getAttribute('value') != 'unified');
+	}
+
+	this.onBroadcastModeSideBySide = function() {
+		colorediffsGlobal.$('side-by-side-properties').setAttribute('hidden', getViewModeNode().getAttribute('value') != 'side-by-side');
 	}
 
 }
