@@ -29,7 +29,9 @@ mkdir build\defaults
 mkdir build\defaults\preferences
 cp defaults\preferences\colorediffs.js build\defaults\preferences\
 
-cp install-%1.rdf build\install.rdf
+rem cp install-%1.rdf build\install.rdf
+sed -e "s/${version}/%2/g" < install-%1.rdf > build\install.rdf
+
 cp chrome.manifest.install build\chrome.manifest
 
 cd build\chrome
