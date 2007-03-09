@@ -9,7 +9,7 @@
   <RDF:Description RDF:about="urn:mozilla:install-manifest"
 				   em:id="{282C3C7A-15A8-4037-A30D-BBEB17FFC76B}"
 				   em:name="Colored Diffs"
-				   em:version="0.3"
+				   em:version="0.3.2b"
 				   em:creator="Vadim Atlygin"
 				   em:description="Color diffs sent by SVN/CVS notifications."
 				   em:homepageURL="http://code.google.com/p/colorediffs/"
