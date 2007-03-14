@@ -25,11 +25,11 @@ colorediffsGlobal.getMessagePane = function() {
 }
 
 colorediffsGlobal.isActive = function(m) {
-	return this.$("colorediff-mode").value;
+	return colorediffsGlobal.$("colorediff-mode").value;
 }
 
 colorediffsGlobal.setActive = function(m) {
-	this.$("colorediff-mode").value = m;
+	colorediffsGlobal.$("colorediff-mode").value = m;
 }
 
 document.getElementsByClassName = function(className, parentElement) {

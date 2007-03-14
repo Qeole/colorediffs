@@ -14,12 +14,14 @@ cp content\colorediffs\globals.js build\chrome\content\colorediffs\
 cp content\colorediffs\icon.png build\chrome\content\colorediffs\
 cp content\colorediffs\options.css build\chrome\content\colorediffs\
 cp content\colorediffs\options.js build\chrome\content\colorediffs\
-cp content\colorediffs\options.xul build\chrome\content\colorediffs\
 cp content\colorediffs\overlay.js build\chrome\content\colorediffs\
-cp content\colorediffs\overlay.xul build\chrome\content\colorediffs\
 cp content\colorediffs\toolbar.js build\chrome\content\colorediffs\
 cp content\colorediffs\callbacks.js build\chrome\content\colorediffs\
 cp content\colorediffs\prefs.js build\chrome\content\colorediffs\
+cp content\colorediffs\options.xul build\chrome\content\colorediffs\
+cp content\colorediffs\overlay.xul build\chrome\content\colorediffs\
+cp content\colorediffs\msgwindowoverlay.xul build\chrome\content\colorediffs\
+cp content\colorediffs\main-overlay.xul build\chrome\content\colorediffs\
 
 mkdir build\chrome\skin
 cp skin\colorediffs.css build\chrome\skin\

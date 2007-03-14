@@ -3,25 +3,29 @@ if (!colorediffsGlobal) {
 }
 
 colorediffsGlobal.tooltipCallback = function(element) {
+	var me = colorediffsGlobal;
+
 	var getTooltip = function () {
 		var elem = element;
-		while( elem && elem.nodeName.toLowerCase() != "body" && elem.nodeName.toLowerCase() != "browser" && (elem.title == null || elem.title == "")	) {
+
+		while( elem && elem.nodeName.toLowerCase() != "body" && elem.nodeName.toLowerCase() != "browser" && elem.nodeName.toLowerCase() != "html" && (elem.title == null || elem.title == "")	) {
 			elem = elem.parentNode;
 		}
 		return (elem != null && elem.hasAttribute('title'))?elem.title:null;
 	}
 
-	if ( this.isActive() ) {
+	if ( me.isActive() ) {
 		var title = getTooltip();
 		if (title == "") {
 			title = null;
 		}
 
-		this.$("colorediff-tooltip").value = title;
+		me.$("colorediff-tooltip").value = title;
 		return title != null;
 	} else {
 		return false;
 	}
+
 }
 
 colorediffsGlobal.scrollCallback = function(evt) {
