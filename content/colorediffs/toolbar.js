@@ -26,21 +26,27 @@ colorediffsGlobal.colorediffsToolbar = new function() {
 		MsgReload();
 	}
 
-	this.selectMode = function () {
+	var updatePrefs = function() {
+		me.showWhiteSpace.set(getShowWhiteSpacesNode().checked);
 		me.mode.set(getViewModeNode().selectedItem.value);
+		me.showToolbar.set(!getToolbarNode().hidden)
+	}
+
+	this.selectMode = function () {
+		updatePrefs();
 		MsgReload();
 	}
 
 	this.toggleWhiteSpaces = function () {
-		me.showWhiteSpace.set(!me.showWhiteSpace.get());
 		getShowWhiteSpacesNode().checked = !getShowWhiteSpacesNode().checked;
+		updatePrefs();
 
 		reloadWithScrollPreserved();
 	}
 
 	this.closeToolbar = function() {
-		me.showToolbar.set(false);
 		getToolbarNode().hidden=true
+		updatePrefs();
 	}
 
 	this.initToolbar = function () {
