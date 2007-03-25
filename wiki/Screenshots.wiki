@@ -15,5 +15,5 @@ _Heavy and colorful side-by-side view mode for those who don't understand unifie
 [http://colorediffs.googlecode.com/files/example4.jpg http://colorediffs.googlecode.com/files/small_examlple00004.jpg]
 _Settings dialog for unified view mode_
 
-[http://colorediffs.googlecode.com/files/example4.jpg http://colorediffs.googlecode.com/files/small_examlple00004.jpg]
+[http://colorediffs.googlecode.com/files/example3.jpg http://colorediffs.googlecode.com/files/small_examlple00003.jpg]
 _Settings dialog for side-by-side view mode_
