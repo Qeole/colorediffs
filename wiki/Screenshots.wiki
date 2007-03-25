@@ -3,7 +3,8 @@
 
 = Various screenshots of extension =
 
-http://colorediffs.googlecode.com/files/example5.jpg _Boring colorless standard view of diff file_
+_Boring colorless standard view of diff file_
+http://colorediffs.googlecode.com/files/example5.jpg 
 
 _Lightweight unified view mode_
 
