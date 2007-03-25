@@ -53,6 +53,11 @@ String.prototype.pad = function(l, s) {
 	return n;
 }
 
+String.prototype.trim = function(s) {
+	if (!s) s = "\s";
+	return this.replace(new RegExp("^" + s + "*|" + s + "*$", "g"), "")
+}
+
 colorediffsGlobal.isUpperCaseLetter = function(c) {
 	return /^[A-Z]$/.test(c);
 }
