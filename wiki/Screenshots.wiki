@@ -6,18 +6,18 @@
 _Boring colorless standard view of diff file_
 http://colorediffs.googlecode.com/files/example5.jpg 
 
-_Lightweight unified view mode_
 
+_Lightweight unified view mode_
 http://colorediffs.googlecode.com/files/example1.jpg 
 
-_Heavy and colorful side-by-side view mode_
 
+_Heavy and colorful side-by-side view mode_
 http://colorediffs.googlecode.com/files/example2.jpg 
 
-_Settings dialog for unified view mode_
 
+_Settings dialog for unified view mode_
 http://colorediffs.googlecode.com/files/example4.jpg 
 
-_Settings dialog for side-by-side view mode_
 
+_Settings dialog for side-by-side view mode_
 http://colorediffs.googlecode.com/files/example3.jpg 
