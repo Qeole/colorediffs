@@ -1,13 +1,4 @@
 
-function testMatchPerlLike() {
-	"aaaa".match_perl_like(/(a)/);
-	assertEquals("$1 check", "a", $1);
-
-	"bbbb".match_perl_like(/(b)(b)/);
-	assertEquals("$1 check", "b", $1);
-	assertEquals("$2 check", "b", $2);
-}
-
 function testDollar() {
 	assertEquals("Dollar check", colorediffsGlobal.$('testData').id, 'testData');
 }
@@ -42,4 +33,13 @@ function testPad() {
 function testIsUpperCaseLetter() {
 	assertTrue("Uppercase", colorediffsGlobal.isUpperCaseLetter("R"));
 	assertFalse("Lowercase", colorediffsGlobal.isUpperCaseLetter("s"));
+}
+
+function testHtmlToPlainText() {
+	assertEquals("Smiley and link", "This is a link to google - the best :) search engine in the world", colorediffsGlobal.htmlToPlainText("This is a link to <a href='www.google.com'>google</a> - the best <img class='moz-txt-smily' alt = \":)\"> search engine in the world"));
+	assertEquals("Unescaped html", 'Me & my brother and <magnificent joey> aka "Fish"', colorediffsGlobal.htmlToPlainText("Me &amp; my&nbsp;brother<img src='foto01.jpg'> and &lt;magnificent joey&gt; aka &quot;Fish&quot;"));
+}
+
+function testEscapeHtml() {
+	assertEquals("All the reserved chars", "&lt;div&gt;&quot;Hello&quot; 'darling' &amp; good bye&lt;/div&gt;", colorediffsGlobal.escapeHTML("<div>\"Hello\" 'darling' & good bye</div>"));
 }
