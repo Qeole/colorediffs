@@ -2,16 +2,6 @@ if (!colorediffsGlobal) {
 	var colorediffsGlobal = new Object();
 }
 
-String.prototype.match_perl_like = function(regexp) {
-	var res = this.match(regexp);
-	if (res) {
-		for ( var i = 0; i < res.length; i++ ) {
-			eval("$" + i + "='" + escape(res[i]) + "'");
-		}
-	}
-	return res;
-}
-
 colorediffsGlobal.$ = function(id) {
 	return document.getElementById(id);
 }
@@ -65,3 +55,41 @@ colorediffsGlobal.isUpperCaseLetter = function(c) {
 colorediffsGlobal.getPrefs = function() {
 	return Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
 }
+
+colorediffsGlobal.htmlToPlainText = function(html) {
+	var regExpRes;
+	var texts = html.split(/(<\/?\w+.*?>)/);
+	var text = "";
+	texts.forEach(function(string) {
+			if (string[0] == '<') {
+				//replace smileys
+				if (regExpRes = string.match(/^<img.*?alt\s*=\s*['"](.*)["']/i)) {
+					text += regExpRes[1];
+				}
+			} else {
+				text += string;
+			}
+	});
+
+	text = text.replace(/&(.*?);/g, function(str, p1) {
+			switch (p1) {
+				case "nbsp": return " ";
+				case "amp": return "&";
+				case "lt": return "<";
+				case "gt": return ">";
+				case "quot": return '"';
+			}
+			return " ";
+	});
+
+	return text;
+}
+
+colorediffsGlobal.escapeHTML = function(text) {
+	text = text.replace("&", "&amp;", "g");
+	text = text.replace("<", "&lt;", "g");
+	text = text.replace(">", "&gt;", "g");
+	text = text.replace('"', "&quot;", "g");
+	return text;
+}
+
