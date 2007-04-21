@@ -43,3 +43,13 @@ function testHtmlToPlainText() {
 function testEscapeHtml() {
 	assertEquals("All the reserved chars", "&lt;div&gt;&quot;Hello&quot; 'darling' &amp; good bye&lt;/div&gt;", colorediffsGlobal.escapeHTML("<div>\"Hello\" 'darling' & good bye</div>"));
 }
+
+function testTrim() {
+	assertEquals("Trim _", "abcd", "___abcd___".trim("_"));
+	assertEquals("Trim default(spaces)", "abcd", "	 abcd	".trim());
+}
+
+function testLTrim() {
+	assertEquals("LTrim _", "abcd___", "___abcd___".ltrim("_"));
+	assertEquals("LTrim default(spaces)", "abcd ", "	 abcd ".ltrim());
+}

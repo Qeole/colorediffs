@@ -14,6 +14,8 @@ function assertParsedTree(prefix, target, source) {
 			assertArray(prefix + " file chunks ", target.chunks, source.chunks, function(prefix, target, source) {
 					assertEquals(prefix + " old line", target.old.line, source.old.line);
 					assertEquals(prefix + " new line", source.new.line, target.new.line);
+					assertEquals(prefix + " old new line", (source.old.doesnt_have_new_line)?true:false, (target.old.doesnt_have_new_line)?true:false);
+					assertEquals(prefix + " new new line", (source.new.doesnt_have_new_line)?true:false, (target.new.doesnt_have_new_line)?true:false);
 
 					assertArray(prefix + " old code", target.old.code, source.old.code, assertEquals);
 					assertArray(prefix + " new code", target.new.code, source.new.code, assertEquals);
@@ -112,6 +114,143 @@ index 52352325345
 		res);
 }
 
+function testUnifiedNoNewLine() {
+	var me = colorediffsGlobal;
+
+	var code = "" + <r><![CDATA[
+ Log message
+
+diff --git a/filename b/filename
+--- a/filename
++++ b/filename
+@@ -10,5 +10,5 @@
+ line2
+-line3
++line31
+-line41
+\ No newline at end of file
++line4
+\ No newline at end of file
+]]></r>;
+
+	code = code.trim("\n");
+
+	var res = me.unifiedParser(code);
+	assertParsedTree("test unified ", {
+		log:" Log message",
+		files:[
+			{name: "filename",
+			 title: "diff --git a/filename b/filename",
+			 chunks: [
+				 {old:
+					 {line:10,
+					  code:[
+						  "line2",
+						  "line3",
+						  "line41"],
+					  doesnt_have_new_line:true},
+				  new:
+					 {line:10,
+					  code:[
+						  "line2",
+						  "line31",
+						  "line4"],
+					  doesnt_have_new_line:true}}]}]},
+		res);
+}
+
+function testUnifiedNoNewLine2() {
+	var me = colorediffsGlobal;
+
+	var code = "" + <r><![CDATA[
+ Log message
+
+diff --git a/filename b/filename
+--- a/filename
++++ b/filename
+@@ -10,5 +10,5 @@
+ line2
+-line3
++line31
+-line4
+\ No newline at end of file
++line4
+]]></r>;
+
+	code = code.trim("\n");
+
+	var res = me.unifiedParser(code);
+	assertParsedTree("test unified ", {
+		log:" Log message",
+		files:[
+			{name: "filename",
+			 title: "diff --git a/filename b/filename",
+			 chunks: [
+				 {old:
+					 {line:10,
+					  code:[
+						  "line2",
+						  "line3",
+						  "line4",
+						  null],
+					  doesnt_have_new_line:true},
+				  new:
+					 {line:10,
+					  code:[
+						   "line2",
+						   "line31",
+						   "line4",
+						   ""],
+					  doesnt_have_new_line:false}}]}]},
+		res);
+}
+
+function testUnifiedNoNewLine3() {
+	var me = colorediffsGlobal;
+
+	var code = "" + <r><![CDATA[
+ Log message
+
+diff --git a/filename b/filename
+--- a/filename
++++ b/filename
+@@ -10,5 +10,5 @@
+ line2
+-line3
++line31
+-line4
++line4
+\ No newline at end of file
+]]></r>;
+
+	code = code.trim("\n");
+
+	var res = me.unifiedParser(code);
+	assertParsedTree("test unified ", {
+		log:" Log message",
+		files:[
+			{name: "filename",
+			 title: "diff --git a/filename b/filename",
+			 chunks: [
+				 {old:
+					 {line:10,
+					  code:[
+						  "line2",
+						  "line3",
+						  "line4",
+						  ""],
+					  doesnt_have_new_line:false},
+				  new:
+					 {line:10,
+					  code:[
+						  "line2",
+						  "line31",
+						  "line4",
+						  null],
+					  doesnt_have_new_line:true}}]}]},
+		res);
+}
+
 function testContext() {
 	var me = colorediffsGlobal;
 
@@ -136,7 +275,7 @@ diff -C2 -d -r1.1 -r1.2
   line2
 ! line3
 ! line4
-line5
+  line5
 ]]></r>;
 
 	code = code.trim("\n");
@@ -189,7 +328,7 @@ diff -C2 -d -r1.1 -r1.2
   line5
 ]]></r>;
 
-	code = code.trim("\n");
+	code = code.ltrim("\n");
 
 	var res = me.contextParser(code);
 	assertParsedTree("test context ", {
@@ -273,5 +412,218 @@ diff -C2 -d -r1.1 -r1.2
 						   null,
 						   "line5",
 						   "line6"]}}]}]},
+		res);
+}
+
+function testContextNoNewLine() {
+	var me = colorediffsGlobal;
+
+	var code = "" + <r><![CDATA[
+Log message
+
+Index: filename
+===========
+retrieving revision 1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1 -r1.2
+*** filename
+--- filename
+***************
+*** 10,5 ****
+  line1
+  line2
+! line3
+! line5
+\ No newline at end of file
+--- 10,5 ----
+  line1
+  line2
+! line3
+! line4
+! line5
+]]></r>;
+
+	code = code.ltrim("\n");
+
+	var res = me.contextParser(code);
+	assertParsedTree("test context ", {
+		log:"Log message",
+		files:[
+			{name: "filename",
+			 title: "Index: filename\n===========\n",
+			 chunks: [
+				 {old:
+					 {line:10,
+					  code:[
+						  "line1",
+						  "line2",
+						  "line3",
+						  "line5",
+						  null,
+						  null],
+					  doesnt_have_new_line:true},
+				  new:{line:10,
+					   code:[
+						   "line1",
+						   "line2",
+						   "line3",
+						   "line4",
+						   "line5",
+						   ""],
+					  doesnt_have_new_line:false},
+				 }]}]},
+		res);
+}
+
+function testContextNoNewLine2() {
+	var me = colorediffsGlobal;
+
+	var code = "" + <r><![CDATA[
+Log message
+
+Index: filename
+===========
+retrieving revision 1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1 -r1.2
+*** filename
+--- filename
+***************
+*** 10,5 ****
+  line4
+  line5
+- line6
+\ No newline at end of file
+--- 10,5 ----
+]]></r>;
+
+	code = code.trim("\n");
+
+	var res = me.contextParser(code);
+	assertParsedTree("test context ", {
+		log:"Log message",
+		files:[
+			{name: "filename",
+			 title: "Index: filename\n===========\n",
+			 chunks: [
+				 {old:
+					 {line:10,
+					  code:[
+						  "line4",
+						  "line5",
+						  "line6",
+						  null],
+					  doesnt_have_new_line:true},
+				  new:{line:10,
+					   code:[
+						   "line4",
+						   "line5",
+						   null,
+						   ""],
+					  doesnt_have_new_line:false},
+				 }]}]},
+		res);
+}
+
+function testContextNoNewLine3() {
+	var me = colorediffsGlobal;
+
+	var code = "" + <r><![CDATA[
+Log message
+
+Index: filename
+===========
+retrieving revision 1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1 -r1.2
+*** filename
+--- filename
+***************
+*** 10,5 ****
+  line3
+  line4
+! line5
+--- 10,5 ----
+  line3
+  line4
+! line5
+\ No newline at end of file
+]]></r>;
+
+	code = code.trim("\n");
+
+	var res = me.contextParser(code);
+	assertParsedTree("test context ", {
+		log:"Log message",
+		files:[
+			{name: "filename",
+			 title: "Index: filename\n===========\n",
+			 chunks: [
+				 {old:
+					 {line:10,
+					  code:[
+						  "line3",
+						  "line4",
+						  "line5",
+						  ""],
+					  doesnt_have_new_line:false},
+				  new:{line:10,
+					   code:[
+						   "line3",
+						   "line4",
+						   "line5",
+						   null],
+					  doesnt_have_new_line:true},
+				 }]}]},
+		res);
+}
+
+function testContextNoNewLine4() {
+	var me = colorediffsGlobal;
+
+	var code = "" + <r><![CDATA[
+Log message
+
+Index: filename
+===========
+retrieving revision 1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1 -r1.2
+*** filename
+--- filename
+***************
+*** 10,5 ****
+--- 10,5 ----
+  line2
+  line3
++ line4
+\ No newline at end of file
+]]></r>;
+
+	code = code.trim("\n");
+
+	var res = me.contextParser(code);
+	assertParsedTree("test context ", {
+		log:"Log message",
+		files:[
+			{name: "filename",
+			 title: "Index: filename\n===========\n",
+			 chunks: [
+				 {old:
+					 {line:10,
+					  code:[
+						  "line2",
+						  "line3",
+						  null,
+						  ""],
+					  doesnt_have_new_line:false},
+				  new:{line:10,
+					   code:[
+						   "line2",
+						   "line3",
+						   "line4",
+						   null],
+					  doesnt_have_new_line:true},
+				 }]}]},
 		res);
 }
