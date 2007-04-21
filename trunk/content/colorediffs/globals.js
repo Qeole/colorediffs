@@ -44,8 +44,13 @@ String.prototype.pad = function(l, s) {
 }
 
 String.prototype.trim = function(s) {
-	if (!s) s = "\s";
+	if (!s) s = "\\s";
 	return this.replace(new RegExp("^" + s + "*|" + s + "*$", "g"), "")
+}
+
+String.prototype.ltrim = function(s) {
+	if (!s) s = "\\s";
+	return this.replace(new RegExp("^" + s + "*", "g"), "")
 }
 
 colorediffsGlobal.isUpperCaseLetter = function(c) {

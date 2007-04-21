@@ -24,11 +24,6 @@ colorediffsGlobal.contextParser = function(text) {
 			chunk.old.code = [];
 			chunk.new.code = [];
 
-			//***
-			// !code
-			//---
-			// !code
-			// ^ this kind of format
 			var processSteadyParts = function(oldCodeString, newCodeString) {
 				var i=0, j=0;
 
@@ -51,7 +46,7 @@ colorediffsGlobal.contextParser = function(text) {
 						if ( /^ (.*)$/.test(oldLines[i] ) ) {
 							oldCode.push(oldLines[i].substring(2));
 							newCode.push(oldLines[i].substring(2));
-						} else {
+						} else if ( /^ (.*)$/.test(newLines[j] ) ) {
 							newCode.push(newLines[j].substring(2));
 							oldCode.push(newLines[j].substring(2));
 						}
@@ -85,6 +80,23 @@ colorediffsGlobal.contextParser = function(text) {
 				}
 			}
 
+			var oldLines = parts[2].trim("\n").split("\n");
+			var newLines = parts[4].trim("\n").split("\n");
+			var oldLastLine = oldLines[oldLines.length-1];
+			var newLastLine = newLines[newLines.length-1];;
+
+			chunk.old.doesnt_have_new_line = /^\\ No newline at end of file$/.test(oldLastLine);
+			chunk.new.doesnt_have_new_line = /^\\ No newline at end of file$/.test(newLastLine);
+			//check for \ No newline at end of file
+			if (chunk.old.doesnt_have_new_line && !chunk.new.doesnt_have_new_line) {
+				chunk.old.code.push(null);
+				chunk.new.code.push("");
+			} else if (chunk.new.doesnt_have_new_line && !chunk.old.doesnt_have_new_line) {
+				chunk.new.code.push(null);
+				chunk.old.code.push("");
+			}
+
+
 			return chunk;
 		}
 
@@ -97,8 +109,9 @@ colorediffsGlobal.contextParser = function(text) {
 
 		//get filename from it
 		var filename = "";
-		if (parts[0].match_perl_like(/---\s+.*?([^\/\s]+)(?:\s|\n)+/)) {
-			res_file.name = $1;
+		var regExpRes;
+		if (regExpRes = parts[0].match(/---\s+.*?([^\/\s]+)(?:\s|\n)+/)) {
+			res_file.name = regExpRes[1];
 		}
 
 		res_file.precode = parts[0];

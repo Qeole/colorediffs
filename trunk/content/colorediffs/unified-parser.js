@@ -9,9 +9,10 @@ colorediffsGlobal.unifiedParser = function(text) {
 			chunk.old = {};
 			chunk.new = {};
 
-			if (anchor.match_perl_like(/^@@\s+\-(\d+)\,\d+\s+\+(\d+)\,\d+\s+@@/)) {
-				chunk.old.line = Number($1);
-				chunk.new.line = Number($2);
+			var regExpRes;
+			if (regExpRes = anchor.match(/^@@\s+\-(\d+)\,\d+\s+\+(\d+)\,\d+\s+@@/)) {
+				chunk.old.line = Number(regExpRes[1]);
+				chunk.new.line = Number(regExpRes[2]);
 			}
 
 			//split code
@@ -22,11 +23,23 @@ colorediffsGlobal.unifiedParser = function(text) {
 			//terminal symbol to make old and new code equal length
 			lines.push("");
 
+			chunk.old.doesnt_have_new_line = false;
+			chunk.new.doesnt_have_new_line = false;
+
 			for (var i=0; i < lines.length; i++) {
 				if (/^\-(.*)$/.test(lines[i])) {
 					chunk.old.code.push(lines[i].substring(1));
 				} else if (/^\+(.*)$/.test(lines[i])) {
 					chunk.new.code.push(lines[i].substring(1));
+				} else if (/^\\ No newline at end of file$/.test(lines[i])) {
+					//check what sign previous line has if there are any
+					if ( i > 0 ) {
+						if (/^\-/.test(lines[i-1])) {
+							chunk.old.doesnt_have_new_line = true;
+						} else if (/^\+/.test(lines[i-1])) {
+							chunk.new.doesnt_have_new_line = true;
+						}
+					}
 				} else {
 					while ( chunk.old.code.length < chunk.new.code.length ) {
 						chunk.old.code.push(null);
@@ -39,6 +52,15 @@ colorediffsGlobal.unifiedParser = function(text) {
 				}
 			}
 			chunk.old.code.pop(); chunk.new.code.pop();
+
+			if (chunk.old.doesnt_have_new_line && !chunk.new.doesnt_have_new_line) {
+				chunk.old.code.push(null);
+				chunk.new.code.push("");
+			} else if (chunk.new.doesnt_have_new_line && !chunk.old.doesnt_have_new_line) {
+				chunk.new.code.push(null);
+				chunk.old.code.push("");
+			}
+
 			return chunk;
 		}
 
@@ -51,8 +73,9 @@ colorediffsGlobal.unifiedParser = function(text) {
 
 		//get filename from it
 		var filename = "";
-		if (parts[0].match_perl_like(/---\s+.*?([^\/\s]+)(?:\s|\n)+/)) {
-			res_file.name = $1;
+		var regExpRes;
+		if (regExpRes = parts[0].match(/---\s+.*?([^\/\s]+)(?:\s|\n)+/)) {
+			res_file.name = regExpRes[1];
 		}
 
 		res_file.precode = parts[0];
