@@ -17,11 +17,15 @@ colorediffsGlobal.isMessageDiff = function() {
 	var message = content.contentDocument;
 	var body = message.body;
 
-	if ( !body || !this.isDiff(body.innerHTML) ) {
+	if ( !body ) {
 		return false;
 	}
 
-	return true;
+	var text = colorediffsGlobal.htmlToPlainText(div.innerHTML);
+
+	return colorediffsGlobal.parsers.some(function(parser) {
+			return parser.couldParse(text);
+		});
 }
 
 colorediffsGlobal.writeDebugFile = function(filename, html) {
@@ -109,28 +113,40 @@ colorediffsGlobal.onLoadMessage = function() {
 	var generateHtmlClosures = []; //list of functions that actually generate html
 
 
-	//Parse body
-	for ( var i=0; i < divs.length; i++ ) {
-		switch(divs[i].getAttribute("class")) {
-			case "moz-text-plain":
-			case "moz-text-flowed": var none = function() {
-				var getHtml = colorediffsGlobal.parseDiff(divs[i].innerHTML, mode, addLinkClosures);
-				var div = divs[i];
+	var text = divs.fold(function(div, text) {
+			switch(div.getAttribute("class")) {
+				case "moz-text-plain":
+				case "moz-text-flowed":
+					return text + colorediffsGlobal.htmlToPlainText(div.innerHTML);
+			}
+		},
+		"");
 
-				generateHtmlClosures.push(function() {
-						div.innerHTML = getHtml(replaceLinks);
-						var diffs = optimizedLeftRightSearch(div);
-						for ( var j = 0; j < diffs.length; j++ ) {
-							diffs[j].addEventListener("scroll", function(evt) {colorediffsGlobal.scrollCallback(evt);}, false);
-						}
-					});
-			}();
-		}
-	}
+	//Choose parser
+	var il = colorediffsGlobal.parse(text);
 
-	for (var i = 0; i < generateHtmlClosures.length; i++ ) {
-		generateHtmlClosures[i]();
-	}
+	//Apply filters
+	var il = colorediffsGlobal.transform(il);
+
+
+	//Generate view
+
+
+//				var getHtml = colorediffsGlobal.parseDiff(divs[i].innerHTML, mode, addLinkClosures);
+//				var div = divs[i];
+
+//				generateHtmlClosures.push(function() {
+//						div.innerHTML = getHtml(replaceLinks);
+//						var diffs = optimizedLeftRightSearch(div);
+//						for ( var j = 0; j < diffs.length; j++ ) {
+//							diffs[j].addEventListener("scroll", function(evt) {colorediffsGlobal.scrollCallback(evt);}, false);
+//						}
+//					});
+
+
+//	for (var i = 0; i < generateHtmlClosures.length; i++ ) {
+//		generateHtmlClosures[i]();
+//	}
 
 	//add stylesheet
 	var styleElement = message.createElement("style");
