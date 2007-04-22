@@ -1,5 +1,9 @@
 if (!colorediffsGlobal) {
-	var colorediffsGlobal = new Object();
+	var colorediffsGlobal = {
+		parsers:new Array(),
+		transformations:[],
+		views:[]
+	};
 }
 
 colorediffsGlobal.$ = function(id) {
@@ -98,3 +102,9 @@ colorediffsGlobal.escapeHTML = function(text) {
 	return text;
 }
 
+Array.prototype.fold = function(fun, o) {
+	this.forEach(function(item) {
+			o = fun(item, o);
+		});
+	return o;
+}

@@ -53,3 +53,7 @@ function testLTrim() {
 	assertEquals("LTrim _", "abcd___", "___abcd___".ltrim("_"));
 	assertEquals("LTrim default(spaces)", "abcd ", "	 abcd ".ltrim());
 }
+
+function testFold() {
+	assertEquals("Fold", "123456", [1,2,3,4,5,6].fold(function(e, o) {return o + e;}, ""));
+}

@@ -44,7 +44,7 @@ File title
 
 	code = code.trim("\n");
 
-	var res = me.unifiedParser(code);
+	var res = me.parse(code);
 	assertParsedTree("test unified ", {
 		log:"Log message",
 		files:[
@@ -89,7 +89,7 @@ index 52352325345
 
 	code = code.trim("\n");
 
-	var res = me.unifiedParser(code);
+	var res = me.parse(code);
 	assertParsedTree("test unified ", {
 		log:" Log message",
 		files:[
@@ -135,7 +135,7 @@ diff --git a/filename b/filename
 
 	code = code.trim("\n");
 
-	var res = me.unifiedParser(code);
+	var res = me.parse(code);
 	assertParsedTree("test unified ", {
 		log:" Log message",
 		files:[
@@ -179,7 +179,7 @@ diff --git a/filename b/filename
 
 	code = code.trim("\n");
 
-	var res = me.unifiedParser(code);
+	var res = me.parse(code);
 	assertParsedTree("test unified ", {
 		log:" Log message",
 		files:[
@@ -225,7 +225,7 @@ diff --git a/filename b/filename
 
 	code = code.trim("\n");
 
-	var res = me.unifiedParser(code);
+	var res = me.parse(code);
 	assertParsedTree("test unified ", {
 		log:" Log message",
 		files:[
@@ -280,7 +280,7 @@ diff -C2 -d -r1.1 -r1.2
 
 	code = code.trim("\n");
 
-	var res = me.contextParser(code);
+	var res = me.parse(code);
 	assertParsedTree("test context ", {
 		log:"Log message",
 		files:[
@@ -330,7 +330,7 @@ diff -C2 -d -r1.1 -r1.2
 
 	code = code.ltrim("\n");
 
-	var res = me.contextParser(code);
+	var res = me.parse(code);
 	assertParsedTree("test context ", {
 		log:"Log message",
 		files:[
@@ -386,7 +386,7 @@ diff -C2 -d -r1.1 -r1.2
 
 	code = code.trim("\n");
 
-	var res = me.contextParser(code);
+	var res = me.parse(code);
 	assertParsedTree("test context ", {
 		log:"Log message",
 		files:[
@@ -445,7 +445,7 @@ diff -C2 -d -r1.1 -r1.2
 
 	code = code.ltrim("\n");
 
-	var res = me.contextParser(code);
+	var res = me.parse(code);
 	assertParsedTree("test context ", {
 		log:"Log message",
 		files:[
@@ -499,7 +499,7 @@ diff -C2 -d -r1.1 -r1.2
 
 	code = code.trim("\n");
 
-	var res = me.contextParser(code);
+	var res = me.parse(code);
 	assertParsedTree("test context ", {
 		log:"Log message",
 		files:[
@@ -552,7 +552,7 @@ diff -C2 -d -r1.1 -r1.2
 
 	code = code.trim("\n");
 
-	var res = me.contextParser(code);
+	var res = me.parse(code);
 	assertParsedTree("test context ", {
 		log:"Log message",
 		files:[
@@ -602,7 +602,7 @@ diff -C2 -d -r1.1 -r1.2
 
 	code = code.trim("\n");
 
-	var res = me.contextParser(code);
+	var res = me.parse(code);
 	assertParsedTree("test context ", {
 		log:"Log message",
 		files:[
