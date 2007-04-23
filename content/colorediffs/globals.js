@@ -108,3 +108,24 @@ Array.prototype.fold = function(fun, o) {
 		});
 	return o;
 }
+
+colorediffsGlobal.getBaseURL = function() {
+	var url = document.URL;
+
+	var content = url.lastIndexOf("content/");
+	var colorediffs = url.lastIndexOf("colorediffs/");
+
+	if ( content > colorediffs ) {
+		return url.substring(0, content) + "content/";
+	} else {
+		return url.substring(0, colorediffs) + "colorediffs/";
+	}
+}
+
+colorediffsGlobal.include = function(js_path) {
+	var req = new XMLHttpRequest();
+	req.open("GET", colorediffsGlobal.getBaseURL() + js_path, false);
+	req.send(null);
+	eval(req.responseText);
+}
+
