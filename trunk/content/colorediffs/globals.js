@@ -70,7 +70,7 @@ colorediffsGlobal.htmlToPlainText = function(html) {
 	var texts = html.split(/(<\/?\w+.*?>)/);
 	var text = "";
 	texts.forEach(function(string) {
-			if (string[0] == '<') {
+			if (string.length > 0 && string[0] == '<') {
 				//replace smileys
 				if (regExpRes = string.match(/^<img.*?alt\s*=\s*['"](.*)["']/i)) {
 					text += regExpRes[1];

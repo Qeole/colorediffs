@@ -5,9 +5,11 @@
 	<script type="application/x-javascript" src="chrome://colorediffs/content/globals.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/prefs.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/overlay.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/diff-parser.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/side-by-side-mode.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/unified-mode.js"/>
+
+	<script type="application/x-javascript" src="chrome://colorediffs/content/parsers/main-parser.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/main-transformation.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/views/main-view.js"/>
+
 	<script type="application/x-javascript" src="chrome://colorediffs/content/colorediffs.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/toolbar.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/callbacks.js"/>

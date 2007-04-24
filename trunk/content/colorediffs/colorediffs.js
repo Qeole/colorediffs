@@ -21,7 +21,7 @@ colorediffsGlobal.isMessageDiff = function() {
 		return false;
 	}
 
-	var text = colorediffsGlobal.htmlToPlainText(div.innerHTML);
+	var text = colorediffsGlobal.htmlToPlainText(body.innerHTML);
 
 	return colorediffsGlobal.parsers.some(function(parser) {
 			return parser.couldParse(text);
@@ -109,10 +109,6 @@ colorediffsGlobal.onLoadMessage = function() {
 		return;
 	}
 
-	var addLinkClosures = []; //list of functions that replaces filenames with links
-	var generateHtmlClosures = []; //list of functions that actually generate html
-
-
 	var text = divs.fold(function(div, text) {
 			switch(div.getAttribute("class")) {
 				case "moz-text-plain":
@@ -130,33 +126,19 @@ colorediffsGlobal.onLoadMessage = function() {
 
 
 	//Generate view
+	body.innerHTML = "";
+	body.appendChild(colorediffsGlobal.render(il));
 
-
-//				var getHtml = colorediffsGlobal.parseDiff(divs[i].innerHTML, mode, addLinkClosures);
-//				var div = divs[i];
-
-//				generateHtmlClosures.push(function() {
-//						div.innerHTML = getHtml(replaceLinks);
-//						var diffs = optimizedLeftRightSearch(div);
-//						for ( var j = 0; j < diffs.length; j++ ) {
-//							diffs[j].addEventListener("scroll", function(evt) {colorediffsGlobal.scrollCallback(evt);}, false);
-//						}
-//					});
-
-
-//	for (var i = 0; i < generateHtmlClosures.length; i++ ) {
-//		generateHtmlClosures[i]();
-//	}
 
 	//add stylesheet
-	var styleElement = message.createElement("style");
-	styleElement.type = "text/css";
+//	var styleElement = message.createElement("style");
+//	styleElement.type = "text/css";
 
-	var styletext = document.createTextNode(mode.getStyle());
-	styleElement.appendChild(styletext);
+//	var styletext = document.createTextNode(mode.getStyle());
+//	styleElement.appendChild(styletext);
 
-	var head = message.getElementsByTagName("head")[0];
-	head.appendChild(styleElement);
+//	var head = message.getElementsByTagName("head")[0];
+//	head.appendChild(styleElement);
 
 	me.writeDebugFile("after.html", message.documentElement.innerHTML);
 }
