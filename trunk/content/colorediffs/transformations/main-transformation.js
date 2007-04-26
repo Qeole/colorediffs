@@ -1,5 +1,5 @@
 colorediffsGlobal.transform = function(il) {
-	return colorediffsGlobal.transformations.fold(function(trasnformation, il) {
+	return colorediffsGlobal.fold(colorediffsGlobal.transformations, function(transformation, il) {
 			return transformation.run(il);
 		},
 		il);
