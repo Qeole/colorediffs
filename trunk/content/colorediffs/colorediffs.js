@@ -50,45 +50,6 @@ colorediffsGlobal.writeDebugFile = function(filename, html) {
 colorediffsGlobal.onLoadMessage = function() {
 	var me = colorediffsGlobal;
 
-	function getMode() {
-		switch(colorediffsGlobal.mode.get()) {
-			case "side-by-side":
-				return new colorediffsGlobal.sideBySideMode();
-			case "unified":
-				return new colorediffsGlobal.unifiedMode();
-		}
-		return null;
-	}
-
-	var replaceLinks = function(log) {
-		for (var i = 0; i < addLinkClosures.length; i++ ) {
-			log = addLinkClosures[i](log);
-		}
-		return log;
-	}
-
-	var optimizedLeftRightSearch = function(div) {
-		if ( me.mode.get() != "side-by-side" ) {
-			return [];
-		}
-
-		var elements = [];
-
-		var tables = document.getElementsByClassName("file-diff", div);
-		for (var i=0; i < tables.length; i++) {
-			var rows = tables[i].rows;
-			for (var r=0; r < rows.length; r++) {
-				if (rows[r].className == "diffs") {
-					elements = elements.concat(document.getElementsByClassName("left", rows[r]).concat(document.getElementsByClassName("right", rows[r])));
-				}
-			}
-		}
-
-		return elements;
-	}
-
-	//Actual code starts here
-
 	if (!me.isMessageDiff()) {
 		me.setActive(false);
 		me.colorediffsToolbar.initToolbar();
@@ -98,22 +59,28 @@ colorediffsGlobal.onLoadMessage = function() {
 	me.setActive(true);
 	me.colorediffsToolbar.initToolbar();
 
+	//don't do anything if user wants plain
+	if (colorediffsGlobal.mode.get() == 'plain') {
+		return;
+	}
+
 	var message = me.getMessagePane().contentDocument;
 	var body = message.body;
 
 	me.writeDebugFile("before.html", message.documentElement.innerHTML);
 
 	var divs = body.getElementsByTagName("div");
-	var mode = getMode();
-	if ( !divs || !mode ) {
+	if ( !divs ) {
 		return;
 	}
 
-	var text = divs.fold(function(div, text) {
+	var text = me.fold(divs, function(div, text) {
 			switch(div.getAttribute("class")) {
 				case "moz-text-plain":
 				case "moz-text-flowed":
 					return text + colorediffsGlobal.htmlToPlainText(div.innerHTML);
+				default:
+					return text;
 			}
 		},
 		"");
@@ -124,21 +91,14 @@ colorediffsGlobal.onLoadMessage = function() {
 	//Apply filters
 	var il = colorediffsGlobal.transform(il);
 
-
 	//Generate view
+	var renderedStyleBody = colorediffsGlobal.render(il);
+
+	var head = message.getElementsByTagName("head")[0];
+	head.appendChild(renderedStyleBody[0]);
+
 	body.innerHTML = "";
-	body.appendChild(colorediffsGlobal.render(il));
-
-
-	//add stylesheet
-//	var styleElement = message.createElement("style");
-//	styleElement.type = "text/css";
-
-//	var styletext = document.createTextNode(mode.getStyle());
-//	styleElement.appendChild(styletext);
-
-//	var head = message.getElementsByTagName("head")[0];
-//	head.appendChild(styleElement);
+	body.appendChild(renderedStyleBody[1]);
 
 	me.writeDebugFile("after.html", message.documentElement.innerHTML);
 }
