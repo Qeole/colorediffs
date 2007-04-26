@@ -9,7 +9,12 @@
 	<script type="application/x-javascript" src="chrome://colorediffs/content/dom.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/callbacks.js"/>
 
+	<script type="application/x-javascript" src="chrome://colorediffs/content/parsers/unified-parser.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/parsers/context-parser.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/parsers/main-parser.js"/>
+
+	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/replace-file-names-transformation.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/show-whitespaces-transformation.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/main-transformation.js"/>
 
 	<script type="application/x-javascript" src="chrome://colorediffs/content/views/side-by-side-view.js"/>

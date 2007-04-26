@@ -2,7 +2,7 @@ if (!colorediffsGlobal) {
 	var colorediffsGlobal = {
 		parsers:new Array(),
 		transformations:[],
-		views:[]
+		views:{}
 	};
 }
 
@@ -110,12 +110,12 @@ colorediffsGlobal.fold = function(a, fun, o) {
 	return o;
 }
 
-Array.prototype.fold = function(fun, o) {
-	this.forEach(function(item) {
-			o = fun(item, o);
-		});
-	return o;
-}
+// Array.prototype.fold = function(fun, o) {
+//	this.forEach(function(item) {
+//			o = fun(item, o);
+//		});
+//	return o;
+// }
 
 colorediffsGlobal.getBaseURL = function() {
 	var url = document.URL;
