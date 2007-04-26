@@ -1,12 +1,10 @@
 
-colorediffsGlobal.include("dom.js");
-
 colorediffsGlobal.views["side-by-side"] = {
 	render: function(il) {
 		var dom = colorediffsGlobal.domHelper;
 
 		function createCodeElement(side, code) {
-			var e = dom.createElement("pre", {class:side}, code.join(""));
+			var e = dom.createElement("pre", {'class':side}, code.join("\n"));
 			e.addEventListener("scroll", function(evt) {colorediffsGlobal.scrollCallback(evt);}, false);
 			return e;
 		}
@@ -17,8 +15,7 @@ colorediffsGlobal.views["side-by-side"] = {
 				});
 		}
 
-		return dom.createElement(
-			"div", null,
+		return [
 			function() {
 				var stylecontent = "";
 				stylecontent += "	.log			{$cp{diffColorer.sbs_log		}; padding: 5px; border: 1px solid black;}";
@@ -37,18 +34,18 @@ colorediffsGlobal.views["side-by-side"] = {
 				stylecontent += "	.right .delline	{$cp{diffColorer.sbs_emptyLine	};width:100%; color: green;}";
 
 				return dom.createElement("style", null, pcp(stylecontent));
-			},
-			dom.createElement("pre", {id:'log', class:'log'}, il.log),
-			dom.createElement(
-				"table", {class:'file-diff', title:file.name},
+			}(),
+			dom.createDocumentFragment(
+				dom.createElement("pre", {id:'log', 'class':'log'}, il.log),
 				il.files.map(function(file) {
-						return [
+						return dom.createElement(
+							"table", {'class':'file-diff', title:file.name},
 							dom.createElement(
-								"tr", {class:'title'},
+								"tr", {'class':'title'},
 								dom.createElement(
 									"td", {colspan:2},
 									dom.createElement(
-										"pre", {class:'title'},
+										"pre", {'class':'title'},
 										file.title
 									)
 								)
@@ -57,28 +54,28 @@ colorediffsGlobal.views["side-by-side"] = {
 							file.chunks.map(function(chunk) {
 									return [
 										dom.createElement(
-											"tr", {class:'linetag'},
-											dom.createElement("td", {colspan:2}, "@@"+chunk.old.line + "," +chunk.new.line +"@@")
+											"tr", {'class':'linetag'},
+											dom.createElement("td", {colspan:2}, "@@"+chunk['old'].line + "," +chunk['new'].line +"@@")
 										),
 										dom.createElement(
-											"tr", {class:'diffs'},
+											"tr", {'class':'diffs'},
 											dom.createElement(
 												"td", {valign:'top'},
-												createCodeElement('left', chunk.old)
+												createCodeElement('left', chunk['old'].code)
 											),
 											dom.createElement(
 												"td", {valign:'top'},
-												createCodeElement('right', chunk.new)
+												createCodeElement('right', chunk['new'].code)
 											)
 										)
 									];
 								}
 							)
-						];
+						);
 					}
 				)
 			)
-		)
+		];
 
 
 //				//put precode

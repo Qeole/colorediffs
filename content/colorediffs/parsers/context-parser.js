@@ -3,8 +3,8 @@ colorediffsGlobal.parsers.push({
 		var parseFile = function(title, code) {
 			var parseChunk = function(code) {
 				var chunk = {};
-				chunk.old = {};
-				chunk.new = {};
+				chunk['old'] = {};
+				chunk['new'] = {};
 
 				var parts = code.split(/^(?:\*|\-){3}\s+(\d+)\,\d+\s+(?:\*|\-){4}$/m);
 
@@ -14,12 +14,12 @@ colorediffsGlobal.parsers.push({
 				// parts[3] is line number of new code
 				// parts[4] is new code
 
-				chunk.new.line = Number(parts[3]);
-				chunk.old.line = Number(parts[1]);
+				chunk['new'].line = Number(parts[3]);
+				chunk['old'].line = Number(parts[1]);
 
 				//split code
-				chunk.old.code = [];
-				chunk.new.code = [];
+				chunk['old'].code = [];
+				chunk['new'].code = [];
 
 				var processSteadyParts = function(oldCodeString, newCodeString) {
 					var i=0, j=0;
@@ -61,19 +61,19 @@ colorediffsGlobal.parsers.push({
 				for (var i = 0; i < modifiedPartsOld.length; i++) {
 					if ( /^!/m.test(modifiedPartsOld[i]) ) {
 						//modified parts
-						chunk.old.code = chunk.old.code.concat(modifiedPartsOld[i].trim("\n").replace(/^! /mg, "").split("\n"));
-						chunk.new.code = chunk.new.code.concat(modifiedPartsNew[i].trim("\n").replace(/^! /mg, "").split("\n"));
-						while ( chunk.old.code.length < chunk.new.code.length ) {
-							chunk.old.code.push(null);
+						chunk['old'].code = chunk['old'].code.concat(modifiedPartsOld[i].trim("\n").replace(/^! /mg, "").split("\n"));
+						chunk['new'].code = chunk['new'].code.concat(modifiedPartsNew[i].trim("\n").replace(/^! /mg, "").split("\n"));
+						while ( chunk['old'].code.length < chunk['new'].code.length ) {
+							chunk['old'].code.push(null);
 						}
-						while ( chunk.old.code.length > chunk.new.code.length ) {
-							chunk.new.code.push(null);
+						while ( chunk['old'].code.length > chunk['new'].code.length ) {
+							chunk['new'].code.push(null);
 						}
 					} else {
 						//steady parts
 						var splittedCode = processSteadyParts(modifiedPartsOld[i], modifiedPartsNew[i]);
-						chunk.old.code = chunk.old.code.concat(splittedCode[0]);
-						chunk.new.code = chunk.new.code.concat(splittedCode[1]);
+						chunk['old'].code = chunk['old'].code.concat(splittedCode[0]);
+						chunk['new'].code = chunk['new'].code.concat(splittedCode[1]);
 					}
 				}
 
@@ -82,15 +82,15 @@ colorediffsGlobal.parsers.push({
 				var oldLastLine = oldLines[oldLines.length-1];
 				var newLastLine = newLines[newLines.length-1];;
 
-				chunk.old.doesnt_have_new_line = /^\\ No newline at end of file$/.test(oldLastLine);
-				chunk.new.doesnt_have_new_line = /^\\ No newline at end of file$/.test(newLastLine);
+				chunk['old'].doesnt_have_new_line = /^\\ No newline at end of file$/.test(oldLastLine);
+				chunk['new'].doesnt_have_new_line = /^\\ No newline at end of file$/.test(newLastLine);
 				//check for \ No newline at end of file
-				if (chunk.old.doesnt_have_new_line && !chunk.new.doesnt_have_new_line) {
-					chunk.old.code.push(null);
-					chunk.new.code.push("");
-				} else if (chunk.new.doesnt_have_new_line && !chunk.old.doesnt_have_new_line) {
-					chunk.new.code.push(null);
-					chunk.old.code.push("");
+				if (chunk['old'].doesnt_have_new_line && !chunk['new'].doesnt_have_new_line) {
+					chunk['old'].code.push(null);
+					chunk['new'].code.push("");
+				} else if (chunk['new'].doesnt_have_new_line && !chunk['old'].doesnt_have_new_line) {
+					chunk['new'].code.push(null);
+					chunk['old'].code.push("");
 				}
 
 				return chunk;
@@ -105,8 +105,8 @@ colorediffsGlobal.parsers.push({
 
 			//get filename from it
 			var filename = "";
-			var regExpRes;
-			if (regExpRes = parts[0].match(/---\s+.*?([^\/\s]+)(?:\s|\n)+/)) {
+			var regExpRes = parts[0].match(/---\s+.*?([^\/\s]+)(?:\s|\n)+/);
+			if (regExpRes) {
 				res_file.name = regExpRes[1];
 			}
 

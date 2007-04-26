@@ -66,13 +66,13 @@ colorediffsGlobal.getPrefs = function() {
 }
 
 colorediffsGlobal.htmlToPlainText = function(html) {
-	var regExpRes;
 	var texts = html.split(/(<\/?\w+.*?>)/);
 	var text = "";
 	texts.forEach(function(string) {
 			if (string.length > 0 && string[0] == '<') {
 				//replace smileys
-				if (regExpRes = string.match(/^<img.*?alt\s*=\s*['"](.*)["']/i)) {
+				var regExpRes = string.match(/^<img.*?alt\s*=\s*['"](.*)["']/i)
+				if (regExpRes) {
 					text += regExpRes[1];
 				}
 			} else {
@@ -102,6 +102,14 @@ colorediffsGlobal.escapeHTML = function(text) {
 	return text;
 }
 
+colorediffsGlobal.fold = function(a, fun, o) {
+	var l = a.length;
+	for (var i=0; i < l; ++i) {
+		o = fun(a[i], o);
+	}
+	return o;
+}
+
 Array.prototype.fold = function(fun, o) {
 	this.forEach(function(item) {
 			o = fun(item, o);
@@ -112,13 +120,19 @@ Array.prototype.fold = function(fun, o) {
 colorediffsGlobal.getBaseURL = function() {
 	var url = document.URL;
 
-	var content = url.lastIndexOf("content/");
-	var colorediffs = url.lastIndexOf("colorediffs/");
+	if (url) {
+		//under html
+		var content = url.lastIndexOf("content/");
+		var colorediffs = url.lastIndexOf("colorediffs/");
 
-	if ( content > colorediffs ) {
-		return url.substring(0, content) + "content/";
+		if ( content > colorediffs ) {
+			return url.substring(0, content) + "content/";
+		} else {
+			return url.substring(0, colorediffs) + "colorediffs/";
+		}
 	} else {
-		return url.substring(0, colorediffs) + "colorediffs/";
+		//under chrome
+		return "chrome://colorediffs/content/";
 	}
 }
 

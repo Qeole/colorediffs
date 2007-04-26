@@ -6,13 +6,17 @@
 	<script type="application/x-javascript" src="chrome://colorediffs/content/prefs.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/overlay.js"/>
 
+	<script type="application/x-javascript" src="chrome://colorediffs/content/dom.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/callbacks.js"/>
+
 	<script type="application/x-javascript" src="chrome://colorediffs/content/parsers/main-parser.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/main-transformation.js"/>
+
+	<script type="application/x-javascript" src="chrome://colorediffs/content/views/side-by-side-view.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/views/main-view.js"/>
 
 	<script type="application/x-javascript" src="chrome://colorediffs/content/colorediffs.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/toolbar.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/callbacks.js"/>
 
 	<vbox id="messagepanebox">
 		<toolbar id="colorediffs-toolbar" toolbarname="Colorediffs Toolbar"
