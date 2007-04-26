@@ -1,0 +1,9 @@
+#colorediffs-show-whitespaces {
+	list-style-image: url("chrome://colorediffs/skin/white-space.png");
+}
+
+#colorediffs-close-toolbar {
+	/*-moz-image-region: rect(0px, 48px, 16px, 32px);*/
+	height: 24px;
+	list-style-image: url("chrome://global/skin/icons/Close.gif");
+}

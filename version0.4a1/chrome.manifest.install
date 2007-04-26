@@ -1,0 +1,5 @@
+content	colorediffs	jar:chrome/colorediffs.jar!/content/colorediffs/
+skin colorediffs classic/1.0 jar:chrome/colorediffs.jar!/skin/
+
+overlay	chrome://messenger/content/messenger.xul	chrome://colorediffs/content/overlay.xul
+overlay	chrome://messenger/content/messageWindow.xul	chrome://colorediffs/content/msgwindowoverlay.xul

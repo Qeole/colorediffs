@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://colorediffs/skin/colorediffs.css" type="text/css"?>
+<?xul-overlay href="chrome://colorediffs/content/main-overlay.xul"?>
+
+<overlay id="colorediffs" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+</overlay>
