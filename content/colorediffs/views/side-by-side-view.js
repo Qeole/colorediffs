@@ -4,7 +4,7 @@ colorediffsGlobal.views["side-by-side"] = {
 		var dom = colorediffsGlobal.domHelper;
 
 		function createCodeElement(side, code) {
-			var e = dom.createElement("pre", {'class':side}, code.join("\n"));
+			var e = dom.createElement("pre", {'class':side}, code);
 			e.addEventListener("scroll", function(evt) {colorediffsGlobal.scrollCallback(evt);}, false);
 			return e;
 		}
@@ -52,6 +52,46 @@ colorediffsGlobal.views["side-by-side"] = {
 							),
 							//precode,
 							file.chunks.map(function(chunk) {
+									var oldCodeDecorated = "";
+									var newCodeDecorated = "";
+									var oldLine = chunk['old'].line;
+									var newLine = chunk['new'].line;
+
+									var oldCode = chunk['old'].code;
+									var newCode = chunk['new'].code;
+
+									var oldRawCode = chunk['old'].raw_code;
+									var newRawCode = chunk['new'].raw_code;
+
+									var l = chunk['old'].code.length;
+
+									for (var i=0; i < l; ++i) {
+										var rawOldLineLength = (oldRawCode[i])?oldRawCode[i].replace("\t", "	").length:0;
+										var rawNewLineLength = (newRawCode[i])?newRawCode[i].replace("\t", "	").length:0;
+
+										if ( oldCode[i] == null ) {
+											oldCodeDecorated += "<div class='addline'>" + "".pad(rawNewLineLength) + "</div>";
+											newCodeDecorated += "<div class='addline' title='" + file.name + ":" + newLine + "'>" + newCode[i] +" </div>";
+											newLine++;
+										} else if ( newCode[i] == null ) {
+											newCodeDecorated += "<div class='delline'>" + "".pad(rawOldLineLength) + "</div>";
+											oldCodeDecorated += "<div class='delline' title='" + file.name + ":" + oldLine + "'>" + oldCode[i] +" </div>";
+											oldLine++;
+										} else {
+											if ( oldCode[i] == newCode[i] ) {
+												oldCodeDecorated += "<div class='steadyline' title='" + file.name + ":" + oldLine + "'>" + oldCode[i] +" </div>";
+												newCodeDecorated += "<div class='steadyline' title='" + file.name + ":" + newLine + "'>" + newCode[i] +" </div>";
+											} else {
+												var maxLength = Math.max(rawOldLineLength, rawNewLineLength);
+
+												oldCodeDecorated += "<div class='delline' title='" + file.name + ":" + oldLine + "'>" + oldCode[i].pad(oldCode[i].length + maxLength - rawOldLineLength) +" </div>";
+												newCodeDecorated += "<div class='addline' title='" + file.name + ":" + newLine + "'>" + newCode[i].pad(newCode[i].length + maxLength - rawNewLineLength) +" </div>";
+											}
+											newLine++;
+											oldLine++;
+										}
+									}
+
 									return [
 										dom.createElement(
 											"tr", {'class':'linetag'},
@@ -61,11 +101,11 @@ colorediffsGlobal.views["side-by-side"] = {
 											"tr", {'class':'diffs'},
 											dom.createElement(
 												"td", {valign:'top', width:'50%'},
-												createCodeElement('left', chunk['old'].code)
+												createCodeElement('left', oldCodeDecorated)
 											),
 											dom.createElement(
 												"td", {valign:'top', width:'50%'},
-												createCodeElement('right', chunk['new'].code)
+												createCodeElement('right', newCodeDecorated)
 											)
 										)
 									];
