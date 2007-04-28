@@ -60,11 +60,11 @@ colorediffsGlobal.views["side-by-side"] = {
 										dom.createElement(
 											"tr", {'class':'diffs'},
 											dom.createElement(
-												"td", {valign:'top'},
+												"td", {valign:'top', width:'50%'},
 												createCodeElement('left', chunk['old'].code)
 											),
 											dom.createElement(
-												"td", {valign:'top'},
+												"td", {valign:'top', width:'50%'},
 												createCodeElement('right', chunk['new'].code)
 											)
 										)

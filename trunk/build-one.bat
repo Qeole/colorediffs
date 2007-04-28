@@ -32,6 +32,7 @@ cp content\colorediffs\parsers\unified-parser.js build\chrome\content\colorediff
 
 mkdir build\chrome\content\colorediffs\transformations
 cp content\colorediffs\transformations\main-transformation.js build\chrome\content\colorediffs\transformations
+cp content\colorediffs\transformations\escape-html-special-characters-transformation.js build\chrome\content\colorediffs\transformations
 cp content\colorediffs\transformations\replace-file-names-transformation.js build\chrome\content\colorediffs\transformations
 cp content\colorediffs\transformations\show-whitespaces-transformation.js build\chrome\content\colorediffs\transformations
 
