@@ -1,7 +1,3 @@
-if (!colorediffsGlobal) {
-	var colorediffsGlobal = {}
-}
-
 colorediffsGlobal.transformations.push({
 	run: function(il) {
 		if (colorediffsGlobal.showWhiteSpace.get()) {
@@ -10,7 +6,7 @@ colorediffsGlobal.transformations.push({
 							var replaceWhitespaces = function(line) {
 								if ( line ) {
 									line = line.replace(/ /g, "&middot;");
-									line = line.replace(/\t/g, "&raquo;	  ");
+									line = line.replace(/\t/g, "&raquo;" + "".pad(3));
 								}
 								return line;
 							}

@@ -51,7 +51,7 @@ colorediffsGlobal.domHelper = function() {
 			prepareDocument();
 
 			var element = htmlDocument.createDocumentFragment();
-			addElements(element, 1, arguments);
+			addElements(element, 0, arguments);
 			return element;
 		}
 	};
