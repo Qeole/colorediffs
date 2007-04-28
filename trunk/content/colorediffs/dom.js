@@ -18,7 +18,7 @@ colorediffsGlobal.domHelper = function() {
 			var arg = array[i];
 			switch(typeof arg) {
 				case "string":
-					element.appendChild(htmlDocument.createTextNode(arg));
+					element.innerHTML += arg;
 					break;
 				case "object":
 					if (arg instanceof XULElement || arg instanceof HTMLElement) {
