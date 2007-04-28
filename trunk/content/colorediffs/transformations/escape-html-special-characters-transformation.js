@@ -10,12 +10,13 @@ colorediffsGlobal.transformations.unshift({
 								return line;
 							}
 
+							chunk['old'].raw_code = chunk['old'].code;
 							chunk['old'].code = chunk['old'].code.map(escapeHTML);
+							chunk['new'].raw_code = chunk['new'].code;
 							chunk['new'].code = chunk['new'].code.map(escapeHTML);
 						});
 				});
+			return il;
 		}
-
-		return il;
 	}
-});
+);
