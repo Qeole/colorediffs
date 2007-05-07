@@ -52,6 +52,14 @@ colorediffsGlobal.views["side-by-side"] = {
 							),
 							//precode,
 							file.chunks.map(function(chunk) {
+									function countLength(s) {
+										if (s) {
+											return s.replace("\t", function(str, offset) {return "".pad(colorediffsGlobal.tabWidth - offset % colorediffsGlobal.tabWidth);}, "g").length;
+										} else {
+											return 0;
+										}
+									}
+
 									var oldCodeDecorated = "";
 									var newCodeDecorated = "";
 									var oldLine = chunk['old'].line;
@@ -66,27 +74,34 @@ colorediffsGlobal.views["side-by-side"] = {
 									var l = chunk['old'].code.length;
 
 									for (var i=0; i < l; ++i) {
-										//count tabs and normal symbols and make the same number of which in both strings
-										var rawOldLineLength = (oldRawCode[i])?oldRawCode[i].replace("\t", "".pad(4)).length:0;
-										var rawNewLineLength = (newRawCode[i])?newRawCode[i].replace("\t", "".pad(4)).length:0;
+										var rawOldLineLength = countLength(oldRawCode[i]);
+										var rawNewLineLength = countLength(newRawCode[i]);
+
+										var maxLength = Math.max(rawOldLineLength, rawNewLineLength);
+
+										var paddingOld = "".pad(maxLength - rawOldLineLength);
+										var paddingNew = "".pad(maxLength - rawNewLineLength);
 
 										if ( oldCode[i] == null ) {
-											oldCodeDecorated += "<div class='addline'>" + " ".pad(rawNewLineLength) + "</div>";
+											if (paddingOld.length == 0) paddingOld = " ";
+											oldCodeDecorated += "<div class='addline'>" + paddingOld + "</div>";
 											newCodeDecorated += "<div class='addline' title='" + file.name + ":" + newLine + "'>" + newCode[i] +" </div>";
 											newLine++;
 										} else if ( newCode[i] == null ) {
-											newCodeDecorated += "<div class='delline'>" + " ".pad(rawOldLineLength) + "</div>";
+											if (paddingNew.length == 0) paddingNew = " ";
+											newCodeDecorated += "<div class='delline'>" + paddingNew + "</div>";
 											oldCodeDecorated += "<div class='delline' title='" + file.name + ":" + oldLine + "'>" + oldCode[i] +" </div>";
 											oldLine++;
 										} else {
 											if ( oldCode[i] == newCode[i] ) {
-												oldCodeDecorated += "<div class='steadyline' title='" + file.name + ":" + oldLine + "'>" + oldCode[i] +" </div>";
-												newCodeDecorated += "<div class='steadyline' title='" + file.name + ":" + newLine + "'>" + newCode[i] +" </div>";
-											} else {
-												var maxLength = Math.max(rawOldLineLength, rawNewLineLength);
+												var code = oldCode[i];
+												if (code.length == 0) code = " ";
 
-												oldCodeDecorated += "<div class='delline' title='" + file.name + ":" + oldLine + "'>" + oldCode[i].pad(oldCode[i].length + maxLength - rawOldLineLength) +" </div>";
-												newCodeDecorated += "<div class='addline' title='" + file.name + ":" + newLine + "'>" + newCode[i].pad(newCode[i].length + maxLength - rawNewLineLength) +" </div>";
+												oldCodeDecorated += "<div class='steadyline' title='" + file.name + ":" + oldLine + "'>" + code +" </div>";
+												newCodeDecorated += "<div class='steadyline' title='" + file.name + ":" + newLine + "'>" + code +" </div>";
+											} else {
+												oldCodeDecorated += "<div class='delline' title='" + file.name + ":" + oldLine + "'>" + oldCode[i] + paddingOld +" </div>";
+												newCodeDecorated += "<div class='addline' title='" + file.name + ":" + newLine + "'>" + newCode[i] + paddingNew +" </div>";
 											}
 											newLine++;
 											oldLine++;
