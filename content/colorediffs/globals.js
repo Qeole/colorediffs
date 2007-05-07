@@ -6,6 +6,8 @@ if (!colorediffsGlobal) {
 	};
 }
 
+colorediffsGlobal.tabWidth = 8;
+
 colorediffsGlobal.$ = function(id) {
 	return document.getElementById(id);
 }
@@ -42,10 +44,9 @@ String.prototype.pad = function(l, s) {
 	if (!s) s = " ";
 
 	if ( this.length < l ) {
-		var padding = new Array(Math.floor((l - this.length)/s.length));
-		padding = padding.map(function() { return s; });
+		var padding = new Array(Math.ceil((l - this.length)/s.length) + 1);
 
-		return this.concat(padding.join(""));
+		return this.concat(padding.join(s));
 	} else {
 		return this;
 	}
