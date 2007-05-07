@@ -19,6 +19,7 @@
 	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/main-transformation.js"/>
 
 	<script type="application/x-javascript" src="chrome://colorediffs/content/views/side-by-side-view.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/views/unified-view.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/views/main-view.js"/>
 
 	<script type="application/x-javascript" src="chrome://colorediffs/content/colorediffs.js"/>

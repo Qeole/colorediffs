@@ -39,6 +39,7 @@ cp content\colorediffs\transformations\show-whitespaces-transformation.js build\
 mkdir build\chrome\content\colorediffs\views
 cp content\colorediffs\views\main-view.js build\chrome\content\colorediffs\views
 cp content\colorediffs\views\side-by-side-view.js build\chrome\content\colorediffs\views
+cp content\colorediffs\views\unified-view.js build\chrome\content\colorediffs\views
 
 mkdir build\chrome\skin
 cp skin\colorediffs.css build\chrome\skin\
