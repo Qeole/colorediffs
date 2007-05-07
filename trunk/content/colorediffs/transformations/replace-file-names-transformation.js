@@ -1,7 +1,3 @@
-if (!colorediffsGlobal) {
-	var colorediffsGlobal = {}
-}
-
 colorediffsGlobal.transformations.push({
 	run: function(il) {
 		il.files.forEach(function(file) {
