@@ -78,7 +78,7 @@ colorediffsGlobal.onLoadMessage = function() {
 			switch(div.getAttribute("class")) {
 				case "moz-text-plain":
 				case "moz-text-flowed":
-					return text + colorediffsGlobal.htmlToPlainText(div.innerHTML);
+					return text + colorediffsGlobal.htmlToPlainText(div.innerHTML) + "\n\n\n";
 				default:
 					return text;
 			}

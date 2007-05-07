@@ -105,7 +105,7 @@ colorediffsGlobal.parsers.push({
 
 			//get filename from it
 			var filename = "";
-			var regExpRes = parts[0].match(/---\s+.*?([^\/\s]+)(?:\s|\n)+/);
+			var regExpRes = parts[0].match(/---\s+(.*?)(?:\s|\n)+/);
 			if (regExpRes) {
 				res_file.name = regExpRes[1];
 			}

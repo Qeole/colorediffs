@@ -40,11 +40,15 @@ document.getElementsByClassName = function(className, parentElement) {
 
 String.prototype.pad = function(l, s) {
 	if (!s) s = " ";
-	var n = this;
-	while (l > n.length) {
-		n += s;
+
+	if ( this.length < l ) {
+		var padding = new Array(Math.floor((l - this.length)/s.length));
+		padding = padding.map(function() { return s; });
+
+		return this.concat(padding.join(""));
+	} else {
+		return this;
 	}
-	return n;
 }
 
 String.prototype.trim = function(s) {
@@ -66,30 +70,30 @@ colorediffsGlobal.getPrefs = function() {
 }
 
 colorediffsGlobal.htmlToPlainText = function(html) {
-	var texts = html.split(/(<\/?\w+.*?>)/);
-	var text = "";
-	texts.forEach(function(string) {
+	var texts = html.split(/(<\/?[^>]+>)/);
+	var text = texts.map(function(string) {
 			if (string.length > 0 && string[0] == '<') {
 				//replace smileys
 				var regExpRes = string.match(/^<img.*?alt\s*=\s*['"](.*)["']/i)
 				if (regExpRes) {
-					text += regExpRes[1];
+					return regExpRes[1];
+				} else {
+					return "";
 				}
 			} else {
-				text += string;
+				//return string;
+				return string.replace(/&([^;]+);/g, function(str, p1) {
+						switch (p1) {
+							case "nbsp": return " ";
+							case "amp": return "&";
+							case "lt": return "<";
+							case "gt": return ">";
+							case "quot": return '"';
+						}
+						return " ";
+					});
 			}
-	});
-
-	text = text.replace(/&(.*?);/g, function(str, p1) {
-			switch (p1) {
-				case "nbsp": return " ";
-				case "amp": return "&";
-				case "lt": return "<";
-				case "gt": return ">";
-				case "quot": return '"';
-			}
-			return " ";
-	});
+	}).join("");
 
 	return text;
 }

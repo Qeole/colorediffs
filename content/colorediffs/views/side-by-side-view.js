@@ -39,7 +39,7 @@ colorediffsGlobal.views["side-by-side"] = {
 				dom.createElement("pre", {id:'log', 'class':'log'}, il.log),
 				il.files.map(function(file) {
 						return dom.createElement(
-							"table", {'class':'file-diff', title:file.name},
+							"table", {'class':'file-diff', title:file.name, id:file.name, width:"100%"},
 							dom.createElement(
 								"tr", {'class':'title'},
 								dom.createElement(
@@ -66,15 +66,16 @@ colorediffsGlobal.views["side-by-side"] = {
 									var l = chunk['old'].code.length;
 
 									for (var i=0; i < l; ++i) {
-										var rawOldLineLength = (oldRawCode[i])?oldRawCode[i].replace("\t", "	").length:0;
-										var rawNewLineLength = (newRawCode[i])?newRawCode[i].replace("\t", "	").length:0;
+										//count tabs and normal symbols and make the same number of which in both strings
+										var rawOldLineLength = (oldRawCode[i])?oldRawCode[i].replace("\t", "".pad(4)).length:0;
+										var rawNewLineLength = (newRawCode[i])?newRawCode[i].replace("\t", "".pad(4)).length:0;
 
 										if ( oldCode[i] == null ) {
-											oldCodeDecorated += "<div class='addline'>" + "".pad(rawNewLineLength) + "</div>";
+											oldCodeDecorated += "<div class='addline'>" + " ".pad(rawNewLineLength) + "</div>";
 											newCodeDecorated += "<div class='addline' title='" + file.name + ":" + newLine + "'>" + newCode[i] +" </div>";
 											newLine++;
 										} else if ( newCode[i] == null ) {
-											newCodeDecorated += "<div class='delline'>" + "".pad(rawOldLineLength) + "</div>";
+											newCodeDecorated += "<div class='delline'>" + " ".pad(rawOldLineLength) + "</div>";
 											oldCodeDecorated += "<div class='delline' title='" + file.name + ":" + oldLine + "'>" + oldCode[i] +" </div>";
 											oldLine++;
 										} else {
