@@ -9,7 +9,6 @@ mkdir build\chrome\content\colorediffs
 cp content\colorediffs\callbacks.js build\chrome\content\colorediffs\
 cp content\colorediffs\colorediffs.js build\chrome\content\colorediffs\
 cp content\colorediffs\contents.rdf build\chrome\content\colorediffs\
-cp content\colorediffs\diff-parser.js build\chrome\content\colorediffs\
 cp content\colorediffs\dom.js build\chrome\content\colorediffs\
 cp content\colorediffs\globals.js build\chrome\content\colorediffs\
 cp content\colorediffs\icon.png build\chrome\content\colorediffs\
@@ -21,9 +20,7 @@ cp content\colorediffs\options.xul build\chrome\content\colorediffs\
 cp content\colorediffs\overlay.js build\chrome\content\colorediffs\
 cp content\colorediffs\overlay.xul build\chrome\content\colorediffs\
 cp content\colorediffs\prefs.js build\chrome\content\colorediffs\
-cp content\colorediffs\side-by-side-mode.js build\chrome\content\colorediffs\
 cp content\colorediffs\toolbar.js build\chrome\content\colorediffs\
-cp content\colorediffs\unified-mode.js build\chrome\content\colorediffs\
 
 mkdir build\chrome\content\colorediffs\parsers
 cp content\colorediffs\parsers\main-parser.js build\chrome\content\colorediffs\parsers
