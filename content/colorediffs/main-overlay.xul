@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<?xml-stylesheet href="chrome://colorediffs/content/bindings.css" type="text/css"?>
 
 <overlay id="main-colorediffs" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
@@ -20,6 +21,7 @@
 
 	<script type="application/x-javascript" src="chrome://colorediffs/content/views/side-by-side-view.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/views/unified-view.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/views/context-view.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/views/main-view.js"/>
 
 	<script type="application/x-javascript" src="chrome://colorediffs/content/colorediffs.js"/>
@@ -29,13 +31,7 @@
 		<toolbar id="colorediffs-toolbar" toolbarname="Colorediffs Toolbar"
 				 class="chromeclass-toolbar" customizable="true" insertafter="msgHeaderView" hidden="true">
 			<toolbaritem>
-				<menulist id="colorediffs-view-mode" command="cmd_change_mode">
-					<menupopup>
-						<menuitem label="plain" value="none"/>
-						<menuitem label="unified diff" value="unified"/>
-						<menuitem label="side by side" value="side-by-side"/>
-					</menupopup>
-				</menulist>
+				<viewsmenu id="colorediffs-view-mode" command="cmd_change_mode"/>
 			</toolbaritem>
 			<toolbarbutton id="colorediffs-show-whitespaces" tooltiptext="Show/hide whitespace chars"
 						   command="cmd_change_white_spaces_mode" checked="false"/>

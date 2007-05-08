@@ -28,7 +28,7 @@ colorediffsGlobal.colorediffsToolbar = new function() {
 
 	var updatePrefs = function() {
 		me.showWhiteSpace.set(getShowWhiteSpacesNode().checked);
-		me.mode.set(getViewModeNode().selectedItem.value);
+		me.mode.set(getViewModeNode().selectedItem);
 		me.showToolbar.set(!getToolbarNode().hidden)
 	}
 
@@ -59,14 +59,7 @@ colorediffsGlobal.colorediffsToolbar = new function() {
 				getShowWhiteSpacesNode().checked = me.showWhiteSpace.get();
 
 				//update combobox
-				var menulist = getViewModeNode();
-				var items = menulist.firstChild.childNodes;
-				for( var i=0; i < items.length; i++ ) {
-					if ( items[i].value == me.mode.get() ) {
-						menulist.selectedItem = items[i];
-						break;
-					}
-				}
+				getViewModeNode().selectedItem = me.mode.get();
 			}
 		}
 	}
