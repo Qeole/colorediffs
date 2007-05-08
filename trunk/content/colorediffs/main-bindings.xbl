@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<bindings
+   xmlns="http://www.mozilla.org/xbl"
+   xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+   xmlns:xbl="http://www.mozilla.org/xbl">
+	<binding id="views">
+		<content>
+			<xul:menulist xbl:inherits="command">
+				<xul:menupopup>
+					<xul:menuitem label="plain" value="none"/>
+				</xul:menupopup>
+			</xul:menulist>
+		</content>
+		<implementation>
+			<constructor><![CDATA[
+				var menupopup = document.getAnonymousNodes(this)[0].firstChild;
+
+				for(var view in colorediffsGlobal.views) {
+					var item = document.createElement("menuitem");
+					item.setAttribute("label", view);
+					item.setAttribute("value", view);
+					menupopup.appendChild(item);
+				}
+			]]></constructor>
+			<property name="selectedItem">
+				<getter><![CDATA[
+					return document.getAnonymousNodes(this)[0].selectedItem.value;
+				]]></getter>
+				<setter><![CDATA[
+					var menulist = document.getAnonymousNodes(this)[0];
+					var items = menulist.firstChild.childNodes;
+					for( var i=0; i < items.length; i++ ) {
+						if ( items[i].getAttribute("value") == val ) {
+							menulist.selectedItem = items[i];
+							break;
+						}
+					}
+				]]></setter>
+			</property>
+		</implementation>
+	</binding>
+
+	<binding id="color-picker">
+	</binding>
+</bindings>

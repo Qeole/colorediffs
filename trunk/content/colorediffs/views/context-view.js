@@ -1,5 +1,5 @@
 
-colorediffsGlobal.views["unified"] = {
+colorediffsGlobal.views["context"] = {
 	render: function(il) {
 		var dom = colorediffsGlobal.domHelper;
 
@@ -37,60 +37,104 @@ colorediffsGlobal.views["unified"] = {
 							),
 							//precode,
 							file.chunks.map(function(chunk) {
-
-									var codeDecorated = [];
 									var oldCodeDecorated = [];
 									var newCodeDecorated = [];
+
+									var oldCodeDecoratedDelayed = [];
+									var newCodeDecoratedDelayed = [];
 
 									var oldLine = chunk['old'].line;
 									var newLine = chunk['new'].line;
 
-									var oldCode = chunk['old'].code;
-									var newCode = chunk['new'].code;
+									var oldCode = chunk['old'].code.concat([]); //copy array
+									var newCode = chunk['new'].code.concat([]); //copy array
+
+									if (chunk['old'].doesnt_have_new_line != chunk['new'].doesnt_have_new_line) {
+										oldCode.pop();newCode.pop();
+									}
 
 									oldCode.push("");newCode.push("");
 
-									var l = chunk['old'].code.length;
+									var onlyNew = true;
+									var onlyOld = true;
+									var l = oldCode.length;
 
 									for (var i=0; i < l; ++i) {
 										if ( oldCode[i] == newCode[i] ) {
-											codeDecorated = codeDecorated.concat(oldCodeDecorated).concat(newCodeDecorated);
-											oldCodeDecorated = [];
-											newCodeDecorated = [];
+											if (oldCodeDecoratedDelayed.length == 0 && newCodeDecoratedDelayed.length != 0) {
+												newCodeDecorated = newCodeDecorated.concat(newCodeDecoratedDelayed);
+												onlyOld = false;
+											} else if (newCodeDecoratedDelayed.length == 0 && oldCodeDecoratedDelayed.length != 0) {
+												oldCodeDecorated = oldCodeDecorated.concat(oldCodeDecoratedDelayed);
+												onlyNew = false;
+											} else if (newCodeDecoratedDelayed.length != 0 && oldCodeDecoratedDelayed.length != 0) {
+												newCodeDecorated = newCodeDecorated.concat(
+													newCodeDecoratedDelayed.map(
+														function(line) {
+															return line.replace(">+ ", ">! ");
+														}
+													));
+												oldCodeDecorated = oldCodeDecorated.concat(
+													oldCodeDecoratedDelayed.map(
+														function(line) {
+															return line.replace(">- ", ">! ");
+														}
+													));
+
+												onlyNew = false;
+												onlyOld = false;
+											}
+
+											newCodeDecoratedDelayed = [];
+											oldCodeDecoratedDelayed = [];
 
 											var line = oldCode[i];
 
-											codeDecorated.push("<div class='steadyline' title='" + file.name + ":" + oldLine + "'> " + line +" </div>");
-											codeDecorated.push("<div class='steadyline' title='" + file.name + ":" + newLine + "'> " + line +" </div>");
+											oldCodeDecorated.push("<div class='steadyline' title='" + file.name + ":" + oldLine + "'>  " + line +" </div>");
+											newCodeDecorated.push("<div class='steadyline' title='" + file.name + ":" + newLine + "'>  " + line +" </div>");
 
 											newLine++;
 											oldLine++;
 										} else {
 											if ( newCode[i] != null ) {
 												var line = newCode[i];
-
-												newCodeDecorated.push("<div class='addline' title='" + file.name + ":" + newLine + "'>+" + line +" </div>");
+												newCodeDecoratedDelayed.push("<div class='addline' title='" + file.name + ":" + newLine + "'>+ " + line +" </div>");
 												newLine++;
 											}
 											if ( oldCode[i] != null ) {
 												var line = oldCode[i];
-
-												oldCodeDecorated.push("<div class='delline' title='" + file.name + ":" + oldLine + "'>-" + line +" </div>");
+												oldCodeDecoratedDelayed.push("<div class='delline' title='" + file.name + ":" + oldLine + "'>- " + line +" </div>");
 												oldLine++;
 											}
 										}
 									}
 
-									oldCode.pop(); newCode.pop(); codeDecorated.pop(); codeDecorated.pop();
+									oldCodeDecorated.pop(); newCodeDecorated.pop();
+
+									if ( onlyOld ) {
+										newCodeDecorated = [];
+									}
+
+									if ( onlyNew ) {
+										oldCodeDecorated = [];
+									}
 
 									return [
 										dom.createElement(
 											"pre", {'class':'linetag'},
-											"@@"+chunk['old'].line + "," +chunk['new'].line +"@@"
+											"***"+chunk['old'].line + "***"
 										),
 										dom.createElement(
 											"pre", {'class':'diffs'},
-											codeDecorated.join("")
+											oldCodeDecorated.join("")
+										),
+										dom.createElement(
+											"pre", {'class':'linetag'},
+											"---"+chunk['new'].line + "---"
+										),
+										dom.createElement(
+											"pre", {'class':'diffs'},
+											newCodeDecorated.join("")
 										)
 									];
 								}

@@ -39,7 +39,7 @@ colorediffsGlobal.views["side-by-side"] = {
 				dom.createElement("pre", {id:'log', 'class':'log'}, il.log),
 				il.files.map(function(file) {
 						return dom.createElement(
-							"table", {'class':'file-diff', title:file.name, id:file.name, width:"100%"},
+							"table", {'class':'file-diff', title:file.name, id:file.name, width:"99%", align:"center"},
 							dom.createElement(
 								"tr", {'class':'title'},
 								dom.createElement(
@@ -54,7 +54,15 @@ colorediffsGlobal.views["side-by-side"] = {
 							file.chunks.map(function(chunk) {
 									function countLength(s) {
 										if (s) {
-											return s.replace("\t", function(str, offset) {return "".pad(colorediffsGlobal.tabWidth - offset % colorediffsGlobal.tabWidth);}, "g").length;
+											var offsetCorrector = 0;
+											return s.replace("\t",
+															 function(str, offset) {
+																 var a = "".pad(colorediffsGlobal.tabWidth - (offset + offsetCorrector) % colorediffsGlobal.tabWidth);
+																 offsetCorrector += colorediffsGlobal.tabWidth - (offset + offsetCorrector) % colorediffsGlobal.tabWidth - 1;
+																 return a;
+															 },
+															 "g"
+											).length;
 										} else {
 											return 0;
 										}
@@ -82,27 +90,27 @@ colorediffsGlobal.views["side-by-side"] = {
 										var paddingOld = "".pad(maxLength - rawOldLineLength);
 										var paddingNew = "".pad(maxLength - rawNewLineLength);
 
-										var oldPaddedLine = (oldCode[i])?oldCode[i]:"" + paddingOld;
-										var newPaddedLine = (newCode[i])?newCode[i]:"" + paddingNew;
+										var oldPaddedLine = ((oldCode[i])?oldCode[i]:"") + paddingOld;
+										var newPaddedLine = ((newCode[i])?newCode[i]:"") + paddingNew;
 
 										if (oldPaddedLine.length == 0) oldPaddedLine = " ";
 										if (newPaddedLine.length == 0) newPaddedLine = " ";
 
 										if ( oldCode[i] == null ) {
 											oldCodeDecorated += "<div class='addline'>" + oldPaddedLine + "</div>";
-											newCodeDecorated += "<div class='addline' title='" + file.name + ":" + newLine + "'>" + newPaddedLine +" </div>";
+											newCodeDecorated += "<div class='addline' title='" + file.name + ":" + newLine + "'>" + newPaddedLine + "</div>";
 											newLine++;
 										} else if ( newCode[i] == null ) {
 											newCodeDecorated += "<div class='delline'>" + newPaddedLine + "</div>";
-											oldCodeDecorated += "<div class='delline' title='" + file.name + ":" + oldLine + "'>" + oldPaddedLine +" </div>";
+											oldCodeDecorated += "<div class='delline' title='" + file.name + ":" + oldLine + "'>" + oldPaddedLine + "</div>";
 											oldLine++;
 										} else {
 											if ( oldCode[i] == newCode[i] ) {
-												oldCodeDecorated += "<div class='steadyline' title='" + file.name + ":" + oldLine + "'>" + oldPaddedLine +" </div>";
-												newCodeDecorated += "<div class='steadyline' title='" + file.name + ":" + newLine + "'>" + newPaddedLine +" </div>";
+												oldCodeDecorated += "<div class='steadyline' title='" + file.name + ":" + oldLine + "'>" + oldPaddedLine + "</div>";
+												newCodeDecorated += "<div class='steadyline' title='" + file.name + ":" + newLine + "'>" + newPaddedLine + "</div>";
 											} else {
-												oldCodeDecorated += "<div class='delline' title='" + file.name + ":" + oldLine + "'>" + oldPaddedLine +" </div>";
-												newCodeDecorated += "<div class='addline' title='" + file.name + ":" + newLine + "'>" + newPaddedLine +" </div>";
+												oldCodeDecorated += "<div class='delline' title='" + file.name + ":" + oldLine + "'>" + oldPaddedLine + "</div>";
+												newCodeDecorated += "<div class='addline' title='" + file.name + ":" + newLine + "'>" + newPaddedLine + "</div>";
 											}
 											newLine++;
 											oldLine++;

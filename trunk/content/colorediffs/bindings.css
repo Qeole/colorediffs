@@ -1,0 +1,3 @@
+viewsmenu {
+	-moz-binding: url('chrome://colorediffs/content/main-bindings.xbl#views');
+}
