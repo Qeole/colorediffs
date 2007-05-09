@@ -1,0 +1,9 @@
+.colorpickerspacer {
+	height: 12px;
+	border: 1px inset #CCCCCC;
+}
+
+.colorpickerbutton {
+	min-width: 60px;
+	margin: 1px;
+}

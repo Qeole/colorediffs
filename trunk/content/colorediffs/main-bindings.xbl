@@ -41,5 +41,36 @@
 	</binding>
 
 	<binding id="color-picker">
+		<resources>
+			<stylesheet src="chrome://colorediffs/content/colorpicker.css"/>
+		</resources>
+		<content>
+			<xul:button class="colorpickerbutton" xbl:inherits="command">
+				<xul:spacer class="colorpickerspacer" flex="1"/>
+			</xul:button>
+		</content>
+		<implementation>
+			<property name="color">
+				<getter><![CDATA[
+					return document.getAnonymousNodes(this)[0].firstChild.style.backgroundColor;
+				]]></getter>
+				<setter><![CDATA[
+					document.getAnonymousNodes(this)[0].firstChild.style.backgroundColor = val;
+				]]></setter>
+			</property>
+		</implementation>
+		<handlers>
+			<handler event="click" button="0"><![CDATA[
+				var colorObj = { NoDefault:false, Type:"Page", TextColor:0, PageColor:0, Cancel:false };
+
+				window.openDialog("chrome://editor/content/EdColorPicker.xul", "_blank", "chrome,close,titlebar,modal", "", colorObj);
+
+				if (colorObj.Cancel) {
+					return;
+				}
+
+				this.color = colorObj.BackgroundColor;
+			]]></handler>
+		</handlers>
 	</binding>
 </bindings>

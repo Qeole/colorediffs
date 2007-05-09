@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://colorediffs/content/bindings.css" type="text/css"?>
+<?xul-overlay href="chrome://colorediffs/content/main-overlay.xul"?>
+
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<deck id="view-properties">
+		<grid id="side-by-side-view-options" flex="1">
+			<columns>
+				<column/>
+				<column class="pickercolumn"/>
+				<column class="pickercolumn"/>
+			</columns>
+			<rows>
+				<row class="center"><spacer/></row>
+				<row align="center">
+					<label value="Log:"/>
+					<colorpicker id="sbs_log_fg" command="cmd_change_color"/>
+					<colorpicker id="sbs_log_bg" command="cmd_change_color"/>
+				</row>
+				<row align="center">
+					<label value="Whole diff:"/>
+					<colorpicker id="sbs_file-diff_fg" command="cmd_change_color"/>
+					<colorpicker id="sbs_file-diff_bg" command="cmd_change_color"/>
+				</row>
+				<row align="center">
+					<label value="Title:"/>
+					<colorpicker id="sbs_title_fg" command="cmd_change_color"/>
+					<colorpicker id="sbs_title_bg" command="cmd_change_color"/>
+				</row>
+				<row align="center">
+					<label value="Additional info:"/>
+					<colorpicker id="sbs_precode_fg" command="cmd_change_color"/>
+					<colorpicker id="sbs_precode_bg" command="cmd_change_color"/>
+				</row>
+				<row align="center">
+					<label value="Left diff header:"/>
+					<colorpicker id="sbs_left-title_fg" command="cmd_change_color"/>
+					<colorpicker id="sbs_left-title_bg" command="cmd_change_color"/>
+				</row>
+				<row align="center">
+					<label value="Right diff header:"/>
+					<colorpicker id="sbs_right-title_fg" command="cmd_change_color"/>
+					<colorpicker id="sbs_right-title_bg" command="cmd_change_color"/>
+				</row>
+				<row align="center">
+					<label value="Anchors:"/>
+					<colorpicker id="sbs_anchor_fg" command="cmd_change_color"/>
+					<colorpicker id="sbs_anchor_bg" command="cmd_change_color"/>
+				</row>
+				<row align="center">
+					<label value="Left diff:"/>
+					<colorpicker id="sbs_left_fg" command="cmd_change_color"/>
+					<colorpicker id="sbs_left_bg" command="cmd_change_color"/>
+				</row>
+				<row align="center">
+					<label value="Right diff:"/>
+					<colorpicker id="sbs_right_fg" command="cmd_change_color"/>
+					<colorpicker id="sbs_right_bg" command="cmd_change_color"/>
+				</row>
+				<row align="center">
+					<label value="Deleted Lines:"/>
+					<colorpicker id="sbs_deletedLine_fg" command="cmd_change_color"/>
+					<colorpicker id="sbs_deletedLine_bg" command="cmd_change_color"/>
+				</row>
+				<row align="center">
+					<label value="Added Lines:"/>
+					<colorpicker id="sbs_addedLine_fg" command="cmd_change_color"/>
+					<colorpicker id="sbs_addedLine_bg" command="cmd_change_color"/>
+				</row>
+				<row align="center">
+					<label value="Steady Lines:"/>
+					<colorpicker id="sbs_steadyLine_fg" command="cmd_change_color"/>
+					<colorpicker id="sbs_steadyLine_bg" command="cmd_change_color"/>
+				</row>
+				<row align="center">
+					<label value="Non existing line:"/>
+					<colorpicker id="sbs_emptyLine_fg" command="cmd_change_color"/>
+					<colorpicker id="sbs_emptyLine_bg" command="cmd_change_color"/>
+				</row>
+			</rows>
+		</grid>
+	</deck>
+</overlay>
