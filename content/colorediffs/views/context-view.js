@@ -160,5 +160,6 @@ colorediffsGlobal.views["context"] = {
 //					html += "<tr><td valign='top' width='50%' class='left-title'>" + left + "</td><td valign='top' class='right-title'>" + right + "</td></tr><tr><td colspan='2'><pre class='pre-code'>" + string + "</pre></td></tr>";
 //				}
 
-	}
+	},
+	getPropertyPageId: function() {return "context-view-options";}
 };

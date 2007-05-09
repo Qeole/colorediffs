@@ -1,3 +1,17 @@
 viewsmenu {
 	-moz-binding: url('chrome://colorediffs/content/main-bindings.xbl#views');
 }
+
+colorpicker {
+	-moz-binding: url('chrome://colorediffs/content/main-bindings.xbl#color-picker');
+}
+
+.color-picker-spacer {
+	height: 12px;
+	border: 1px inset #CCCCCC;
+}
+
+.color-picker-button {
+	min-width: 0px;
+	margin: 1px;
+}

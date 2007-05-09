@@ -7,40 +7,22 @@ colorediffsGlobal.options = new function() {
 
 	var coloredElems = ["anchor", "steadyLine", "deletedLine", "addedLine", "title", "sbs_title", "sbs_log", "sbs_file-diff", "sbs_precode", "sbs_left-title", "sbs_right-title", "sbs_anchor", "sbs_left", "sbs_right", "sbs_addedLine", "sbs_deletedLine", "sbs_steadyLine", "sbs_emptyLine"];
 
-	var getNode = function (name) {
+	var getNodeGetter = function (name) {
 		return function() {return me.$(name);}
 	}
 
-	var getViewModeNode = getNode('view_mode');
-	var getShowWhiteSpacesNode = getNode('show-whitespaces');
-	var getShowToolbarNode = getNode('show-toolbar');
-	var getViewNode = getNode('view');
-
-	var setColor = function(elementId, color) {
-		var element = document.getElementById(elementId);
-		var colorElement = element.getElementsByTagName("spacer")[0];
-		if (colorElement && color) {
-			colorElement.style.backgroundColor = color;
-		}
-	}
-
-	var getColor = function(elementId) {
-		var element = document.getElementById(elementId);
-		var colorElement = element.getElementsByTagName("spacer")[0];
-		if (colorElement) {
-			return colorElement.style.backgroundColor;
-		} else {
-			return null;
-		}
-	}
+	var getViewModeNode = getNodeGetter('view_mode');
+	var getShowWhiteSpacesNode = getNodeGetter('show-whitespaces');
+	var getShowToolbarNode = getNodeGetter('show-toolbar');
+	var getViewNode = getNodeGetter('view');
 
 	var savePrefs = function() {
 		for ( var i = 0; i < coloredElems.length; i++ ) {
 			var bg = coloredElems[i] + "_bg";
 			var fg = coloredElems[i] + "_fg";
 
-			me.setColorFG("diffColorer." + coloredElems[i], getColor(fg));
-			me.setColorBG("diffColorer." + coloredElems[i], getColor(bg));
+			me.setColorFG("diffColorer." + coloredElems[i], me.$(fg).color);
+			me.setColorBG("diffColorer." + coloredElems[i], me.$(bg).color);
 		}
 
 		me.showWhiteSpace.set(getShowWhiteSpacesNode().checked);
@@ -53,8 +35,8 @@ colorediffsGlobal.options = new function() {
 		for ( var i = 0; i < coloredElems.length; i++ ) {
 			var element = coloredElems[i];
 			var elem = document.getElementById(element);
-			elem.style.color = getColor(element + "_fg");
-			elem.style.backgroundColor = getColor(element + "_bg");
+			elem.style.color = me.$(element + "_fg").color;
+			elem.style.backgroundColor = me.$(element + "_bg").color;
 		}
 	}
 
@@ -63,8 +45,8 @@ colorediffsGlobal.options = new function() {
 			var bg = coloredElems[i] + "_bg";
 			var fg = coloredElems[i] + "_fg";
 
-			setColor(fg, me.getColorFG("diffColorer." + coloredElems[i]));
-			setColor(bg, me.getColorBG("diffColorer." + coloredElems[i]));
+			me.$(fg).color = me.getColorFG("diffColorer." + coloredElems[i]);
+			me.$(bg).color = me.getColorBG("diffColorer." + coloredElems[i]);
 		}
 
 		getViewModeNode().setAttribute('value', me.mode.get());
@@ -93,24 +75,26 @@ colorediffsGlobal.options = new function() {
 		return true;
 	}
 
-	this.OnColorChange = function(element) {
-		var istext = (element.id.lastIndexOf("_fg")!=0);
-		var colorObj = { NoDefault:false, Type:istext?"Text":"Page", TextColor:0, PageColor:0, Cancel:false };
+	this.onChangeMode = function() {
+		var deck = me.$("view-properties");
 
-		window.openDialog("chrome://editor/content/EdColorPicker.xul", "_blank", "chrome,close,titlebar,modal", "", colorObj);
+		if (getViewNode().selectedItem == "none") {
+			deck.selectedIndex = 0;
+		} else {
+			var view = me.views[getViewNode().selectedItem];
 
-		if (colorObj.Cancel) {
-			return;
+			//change options page
+			var children = deck.childNodes;
+			var l = children.length;
+
+			for (var i=1; i <l; i++) {
+				if (children[i].id == view.getPropertyPageId()) {
+					deck.selectedIndex = i;
+					break;
+				}
+			}
 		}
 
-		var color = (istext)?colorObj.TextColor:colorObj.BackgroundColor;
-		setColor(element.id, color);
-
-		updatePreview();
-	}
-
-	this.onChangeMode = function() {
-		getViewModeNode().setAttribute('value', getViewNode().selectedItem.value);
 		window.sizeToContent();
 	}
 

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://colorediffs/content/bindings.css" type="text/css"?>
+<?xul-overlay href="chrome://colorediffs/content/main-overlay.xul"?>
+
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<deck id="view-properties">
+		<grid id="unified-view-options" flex="1">
+			<columns>
+				<column/>
+				<column class="pickercolumn"/>
+				<column class="pickercolumn"/>
+			</columns>
+			<rows>
+				<row class="center"><spacer/></row>
+				<row align="center">
+					<label value="Title:"/>
+					<colorpicker id="title_fg" command="cmd_change_color"/>
+					<colorpicker id="title_bg" command="cmd_change_color"/>
+				</row>
+				<row align="center">
+					<label value="Deleted Lines:"/>
+					<colorpicker id="deletedLine_fg" command="cmd_change_color"/>
+					<colorpicker id="deletedLine_bg" command="cmd_change_color"/>
+				</row>
+				<row align="center">
+					<label value="Added Lines:"/>
+					<colorpicker id="addedLine_fg" command="cmd_change_color"/>
+					<colorpicker id="addedLine_bg" command="cmd_change_color"/>
+				</row>
+				<row align="center">
+					<label value="Steady Lines:"/>
+					<colorpicker id="steadyLine_fg" command="cmd_change_color"/>
+					<colorpicker id="steadyLine_bg" command="cmd_change_color"/>
+				</row>
+				<row align="center">
+					<label value="Anchors:"/>
+					<colorpicker id="anchor_fg" command="cmd_change_color"/>
+					<colorpicker id="anchor_bg" command="cmd_change_color"/>
+				</row>
+			</rows>
+		</grid>
+	</deck>
+</overlay>
