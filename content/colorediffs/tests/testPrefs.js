@@ -1,55 +1,48 @@
-if (!colorediffsGlobal) {
-	var colorediffsGlobal = new Object();
-}
-
 var globalPref;
 
 function setUp() {
-	colorediffsGlobal.getPrefs = function() {
-		globalPref = new function() {
-			var boolPrefs = {}
-			var charPrefs = {}
+	function Pref() {
+		var boolPrefs = {}
+		var charPrefs = {}
 
-			var getPref = function(hash, prop) {
-				return hash[prop];
-			}
-
-			var setPref = function(hash, prop, value) {
-				hash[prop] = value;
-			}
-
-			var hasPref = function(prop) {
-				return boolPrefs[prop] != undefined || charPrefs[prop] != undefined;
-			}
-
-			this.getBoolPref = function(prop) {
-				return getPref(boolPrefs, prop);
-			}
-
-			this.setBoolPref = function(prop, value) {
-				setPref(boolPrefs, prop, value);
-			}
-
-			this.getCharPref = function(prop) {
-				return getPref(charPrefs, prop);
-			}
-
-			this.setCharPref = function(prop, value) {
-				setPref(charPrefs, prop, value);
-			}
-
-			this.prefHasUserValue = function(prop) {
-				return hasPref(prop);
-			}
+		var getPref = function(hash, prop) {
+			return hash[prop];
 		}
 
-		return globalPref;
+		var setPref = function(hash, prop, value) {
+			hash[prop] = value;
+		}
+
+		var hasPref = function(prop) {
+			return boolPrefs[prop] != undefined || charPrefs[prop] != undefined;
+		}
+
+		this.getBoolPref = function(prop) {
+			return getPref(boolPrefs, prop);
+		}
+
+		this.setBoolPref = function(prop, value) {
+			setPref(boolPrefs, prop, value);
+		}
+
+		this.getCharPref = function(prop) {
+			return getPref(charPrefs, prop);
+		}
+
+		this.setCharPref = function(prop, value) {
+			setPref(charPrefs, prop, value);
+		}
+
+		this.prefHasUserValue = function(prop) {
+			return hasPref(prop);
+		}
 	}
-	colorediffsGlobal.temp();
+
+	globalPref = new Pref();
 }
 
 function testProps() {
-	var me = colorediffsGlobal;
+	var me = new colorediffsGlobal.Pref(globalPref);
 
 	var checkProp = function(prop, value, desc, name, getter) {
 		assertFalse(desc + " has before", prop.has());
@@ -80,7 +73,7 @@ function testProps() {
 }
 
 function testColorProps() {
-	var me = colorediffsGlobal;
+	var me = new colorediffsGlobal.Pref(globalPref);
 
 	me.setColorBG("b", "a");
 	assertEquals("check get bg color", "a", me.getColorBG("b"));
@@ -93,7 +86,7 @@ function testColorProps() {
 
 
 function testCSSColorProps() {
-	var me = colorediffsGlobal;
+	var me = new colorediffsGlobal.Pref(globalPref);
 
 	me.setColorBG("b", "a");
 	me.setColorFG("b", "d");

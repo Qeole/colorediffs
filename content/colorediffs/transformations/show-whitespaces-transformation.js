@@ -1,6 +1,6 @@
 colorediffsGlobal.transformations.push({
-	run: function(il) {
-		if (colorediffsGlobal.showWhiteSpace.get()) {
+	run: function(il, pref) {
+		if (pref.showWhiteSpace.get()) {
 			il.files.forEach(function(file) {
 					file.chunks.forEach(function(chunk) {
 							var replaceWhitespaces = function(line, i) {

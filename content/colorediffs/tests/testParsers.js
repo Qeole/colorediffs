@@ -93,7 +93,7 @@ index 52352325345
 	assertParsedTree("test unified ", {
 		log:" Log message",
 		files:[
-			{name: "filename",
+			{name: "a/filename",
 			 title: "diff --git a/filename b/filename",
 			 chunks: [
 				 {old:
@@ -139,7 +139,7 @@ diff --git a/filename b/filename
 	assertParsedTree("test unified ", {
 		log:" Log message",
 		files:[
-			{name: "filename",
+			{name: "a/filename",
 			 title: "diff --git a/filename b/filename",
 			 chunks: [
 				 {old:
@@ -183,7 +183,7 @@ diff --git a/filename b/filename
 	assertParsedTree("test unified ", {
 		log:" Log message",
 		files:[
-			{name: "filename",
+			{name: "a/filename",
 			 title: "diff --git a/filename b/filename",
 			 chunks: [
 				 {old:
@@ -229,7 +229,7 @@ diff --git a/filename b/filename
 	assertParsedTree("test unified ", {
 		log:" Log message",
 		files:[
-			{name: "filename",
+			{name: "a/filename",
 			 title: "diff --git a/filename b/filename",
 			 chunks: [
 				 {old:
