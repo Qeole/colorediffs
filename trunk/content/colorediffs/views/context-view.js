@@ -1,6 +1,6 @@
 
 colorediffsGlobal.views["context"] = {
-	render: function(il) {
+ render: function(il, pref) {
 		var dom = colorediffsGlobal.domHelper;
 
 		function createCodeElement(side, code) {
@@ -12,7 +12,7 @@ colorediffsGlobal.views["context"] = {
 		return [
 			function() {
 				var colorStyle = function(style, prop) {
-					return "." + style + " {" + colorediffsGlobal.getColorProps(prop) + "}\n";
+					return "." + style + " {" + pref.getColorProps(prop) + "}\n";
 				}
 
 				var stylecontent = "";

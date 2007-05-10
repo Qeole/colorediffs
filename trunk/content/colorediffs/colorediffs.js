@@ -85,14 +85,16 @@ colorediffsGlobal.onLoadMessage = function() {
 		},
 		"");
 
+	var pref = new colorediffsGlobal.Pref(colorediffsGlobal.getPrefs());
+
 	//Choose parser
 	var il = colorediffsGlobal.parse(text);
 
 	//Apply filters
-	var il = colorediffsGlobal.transform(il);
+	var il = colorediffsGlobal.transform(il, pref);
 
 	//Generate view
-	var renderedStyleBody = colorediffsGlobal.render(il);
+	var renderedStyleBody = colorediffsGlobal.render(il, pref);
 
 	var head = message.getElementsByTagName("head")[0];
 	head.appendChild(renderedStyleBody[0]);

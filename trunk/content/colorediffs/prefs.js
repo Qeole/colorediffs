@@ -1,10 +1,6 @@
-if (!colorediffsGlobal) {
-	var colorediffsGlobal = new Object();
-}
-
-colorediffsGlobal.temp = function () {
-	var me = colorediffsGlobal;
-	var pref = me.getPrefs();
+colorediffsGlobal.Pref = function (prefModel) {
+	var me = this;
+	var pref = prefModel;
 
 	var createGetSet = function(name, prop_name, getter, setter) {
 		me[name] = {
@@ -73,6 +69,4 @@ colorediffsGlobal.temp = function () {
 	createBoolGetSet("showWhiteSpace", "diffColorer.show-whitespace");
 	createBoolGetSet("showToolbar", "diffColorer.show-toolbar");
 
-};
-
-colorediffsGlobal.temp();
+}

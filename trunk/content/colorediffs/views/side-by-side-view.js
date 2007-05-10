@@ -1,6 +1,6 @@
 
 colorediffsGlobal.views["side-by-side"] = {
-	render: function(il) {
+ render: function(il, pref) {
 		var dom = colorediffsGlobal.domHelper;
 
 		function createCodeElement(side, code) {
@@ -11,7 +11,7 @@ colorediffsGlobal.views["side-by-side"] = {
 
 		function pcp(str) {
 			return str.replace(/\$cp{(.*?)}/g, function(str, prop) {
-					return colorediffsGlobal.getColorProps(prop.trim());
+					return pref.getColorProps(prop.trim());
 				});
 		}
 
