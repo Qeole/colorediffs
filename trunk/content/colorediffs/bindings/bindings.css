@@ -1,0 +1,7 @@
+viewsmenu {
+	-moz-binding: url('chrome://colorediffs/content/bindings/main-bindings.xbl#views');
+}
+
+colorpicker {
+	-moz-binding: url('chrome://colorediffs/content/bindings/main-bindings.xbl#color-picker');
+}

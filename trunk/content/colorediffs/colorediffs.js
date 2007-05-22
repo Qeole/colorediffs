@@ -28,9 +28,9 @@ colorediffsGlobal.isMessageDiff = function() {
 		});
 }
 
-colorediffsGlobal.writeDebugFile = function(filename, html) {
-	if (this.debugDir.has()) {
-		var debugDir = this.debugDir.get();
+colorediffsGlobal.writeDebugFile = function(filename, html, pref) {
+	if (pref.debugDir.has()) {
+		var debugDir = pref.debugDir.get();
 		if ( debugDir ) {
 			var file = Components.classes["@mozilla.org/file/local;1"]
 				.createInstance(Components.interfaces.nsILocalFile);
@@ -59,15 +59,17 @@ colorediffsGlobal.onLoadMessage = function() {
 	me.setActive(true);
 	me.colorediffsToolbar.initToolbar();
 
+	var pref = new colorediffsGlobal.Pref(colorediffsGlobal.getPrefs());
+
 	//don't do anything if user wants plain
-	if (colorediffsGlobal.mode.get() == 'plain') {
+	if (pref.mode.get() == 'plain') {
 		return;
 	}
 
 	var message = me.getMessagePane().contentDocument;
 	var body = message.body;
 
-	me.writeDebugFile("before.html", message.documentElement.innerHTML);
+	me.writeDebugFile("before.html", message.documentElement.innerHTML, pref);
 
 	var divs = body.getElementsByTagName("div");
 	if ( !divs ) {
@@ -85,8 +87,6 @@ colorediffsGlobal.onLoadMessage = function() {
 		},
 		"");
 
-	var pref = new colorediffsGlobal.Pref(colorediffsGlobal.getPrefs());
-
 	//Choose parser
 	var il = colorediffsGlobal.parse(text);
 
@@ -102,6 +102,6 @@ colorediffsGlobal.onLoadMessage = function() {
 	body.innerHTML = "";
 	body.appendChild(renderedStyleBody[1]);
 
-	me.writeDebugFile("after.html", message.documentElement.innerHTML);
+	me.writeDebugFile("after.html", message.documentElement.innerHTML, pref);
 }
 

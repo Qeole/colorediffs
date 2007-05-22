@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<?xml-stylesheet href="chrome://colorediffs/content/bindings.css" type="text/css"?>
+<?xml-stylesheet href="chrome://colorediffs/content/bindings/bindings.css" type="text/css"?>
 
 <overlay id="main-colorediffs" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
