@@ -14,7 +14,7 @@
 				   em:description="Color diffs sent by SVN/CVS notifications."
 				   em:homepageURL="http://code.google.com/p/colorediffs/"
 				   em:iconURL="chrome://colorediffs/content/icon.png"
-				   em:optionsURL="chrome://colorediffs/content/options.xul"
+				   em:optionsURL="chrome://colorediffs/content/options/options.xul"
 				   em:updateURL="http://colorediffs.googlecode.com/svn/trunk/update-google.rdf">
 	  <em:targetApplication RDF:resource="rdf:#$VeRq2"/>
 	  <em:file RDF:resource="urn:mozilla:extension:file:colorediffs.jar"/>

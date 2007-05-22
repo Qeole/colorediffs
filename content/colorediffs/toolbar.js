@@ -4,6 +4,7 @@ if (!colorediffsGlobal) {
 
 colorediffsGlobal.colorediffsToolbar = new function() {
 	var me = colorediffsGlobal;
+	var pref = new me.Pref(me.getPrefs());
 
 	var getNode = function (name) {
 		return function() {return me.$(name);}
@@ -27,9 +28,9 @@ colorediffsGlobal.colorediffsToolbar = new function() {
 	}
 
 	var updatePrefs = function() {
-		me.showWhiteSpace.set(getShowWhiteSpacesNode().checked);
-		me.mode.set(getViewModeNode().selectedItem);
-		me.showToolbar.set(!getToolbarNode().hidden)
+		pref.showWhiteSpace.set(getShowWhiteSpacesNode().checked);
+		pref.mode.set(getViewModeNode().selectedItem);
+		pref.showToolbar.set(!getToolbarNode().hidden)
 	}
 
 	this.selectMode = function () {
@@ -50,16 +51,16 @@ colorediffsGlobal.colorediffsToolbar = new function() {
 	}
 
 	this.initToolbar = function () {
-		if (me.showToolbar.get()) {
+		if (pref.showToolbar.get()) {
 			//check if should be shown
 			if (!me.isActive()) {
 				getToolbarNode().hidden=true;
 			} else {
 				getToolbarNode().hidden=false;
-				getShowWhiteSpacesNode().checked = me.showWhiteSpace.get();
+				getShowWhiteSpacesNode().checked = pref.showWhiteSpace.get();
 
 				//update combobox
-				getViewModeNode().selectedItem = me.mode.get();
+				getViewModeNode().selectedItem = pref.mode.get();
 			}
 		}
 	}

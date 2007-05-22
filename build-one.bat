@@ -14,16 +14,24 @@ cp content\colorediffs\globals.js build\chrome\content\colorediffs\
 cp content\colorediffs\icon.png build\chrome\content\colorediffs\
 cp content\colorediffs\main-overlay.xul build\chrome\content\colorediffs\
 cp content\colorediffs\msgwindowoverlay.xul build\chrome\content\colorediffs\
-cp content\colorediffs\options.css build\chrome\content\colorediffs\
-cp content\colorediffs\options.js build\chrome\content\colorediffs\
-cp content\colorediffs\options.xul build\chrome\content\colorediffs\
 cp content\colorediffs\overlay.js build\chrome\content\colorediffs\
 cp content\colorediffs\overlay.xul build\chrome\content\colorediffs\
 cp content\colorediffs\prefs.js build\chrome\content\colorediffs\
 cp content\colorediffs\toolbar.js build\chrome\content\colorediffs\
-cp content\colorediffs\bindings.css build\chrome\content\colorediffs\
-cp content\colorediffs\main-bindings.xbl build\chrome\content\colorediffs\
-cp content\colorediffs\colorpicker.css build\chrome\content\colorediffs\
+
+mkdir build\chrome\content\colorediffs\bindings
+cp content\colorediffs\bindings\bindings.css build\chrome\content\colorediffs\bindings\
+cp content\colorediffs\bindings\colorpicker.css build\chrome\content\colorediffs\bindings\
+cp content\colorediffs\bindings\main-bindings.xbl build\chrome\content\colorediffs\bindings\
+
+mkdir build\chrome\content\colorediffs\options
+cp content\colorediffs\options\context-view-options.xul build\chrome\content\colorediffs\options\
+cp content\colorediffs\options\unified-view-options.xul build\chrome\content\colorediffs\options\
+cp content\colorediffs\options\side-by-side-view-options.xul build\chrome\content\colorediffs\options\
+cp content\colorediffs\options\options.css build\chrome\content\colorediffs\options\
+cp content\colorediffs\options\options.js build\chrome\content\colorediffs\options\
+cp content\colorediffs\options\options.xul build\chrome\content\colorediffs\options\
+cp content\colorediffs\options\options-pref.js build\chrome\content\colorediffs\options\
 
 mkdir build\chrome\content\colorediffs\parsers
 cp content\colorediffs\parsers\main-parser.js build\chrome\content\colorediffs\parsers
@@ -41,9 +49,6 @@ cp content\colorediffs\views\main-view.js build\chrome\content\colorediffs\views
 cp content\colorediffs\views\side-by-side-view.js build\chrome\content\colorediffs\views
 cp content\colorediffs\views\unified-view.js build\chrome\content\colorediffs\views
 cp content\colorediffs\views\context-view.js build\chrome\content\colorediffs\views
-cp content\colorediffs\views\context-view-options.xul build\chrome\content\colorediffs\views
-cp content\colorediffs\views\unified-view-options.xul build\chrome\content\colorediffs\views
-cp content\colorediffs\views\side-by-side-view-options.xul build\chrome\content\colorediffs\views
 
 mkdir build\chrome\skin
 cp skin\colorediffs.css build\chrome\skin\

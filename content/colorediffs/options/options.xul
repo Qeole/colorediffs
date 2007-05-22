@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
-<?xml-stylesheet href="chrome://colorediffs/content/options.css" type="text/css"?>
-<?xml-stylesheet href="chrome://colorediffs/content/bindings.css" type="text/css"?>
+<?xml-stylesheet href="chrome://colorediffs/content/options/options.css" type="text/css"?>
+<?xml-stylesheet href="chrome://colorediffs/content/bindings/bindings.css" type="text/css"?>
 
-<?xul-overlay href="chrome://colorediffs/content/views/unified-view-options.xul"?>
-<?xul-overlay href="chrome://colorediffs/content/views/context-view-options.xul"?>
-<?xul-overlay href="chrome://colorediffs/content/views/side-by-side-view-options.xul"?>
+<?xul-overlay href="chrome://colorediffs/content/options/unified-view-options.xul"?>
+<?xul-overlay href="chrome://colorediffs/content/options/context-view-options.xul"?>
+<?xul-overlay href="chrome://colorediffs/content/options/side-by-side-view-options.xul"?>
 
 <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 		xmlns:html="http://www.w3.org/1999/xhtml"
@@ -15,9 +15,9 @@
 		persist="screenX screenY"
 		ondialogaccept="return colorediffsGlobal.options.checkOptions();"
 		title="Colored Diffs">
-	<script type="application/x-javascript" src="globals.js"/>
-	<script type="application/x-javascript" src="prefs.js"/>
-	<script type="application/x-javascript" src="options.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/globals.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/prefs.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/options.js"/>
 
 	<commands>
 		<command id="cmd_change_mode" oncommand="colorediffsGlobal.options.onChangeMode();"/>
