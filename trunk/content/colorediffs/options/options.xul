@@ -11,13 +11,17 @@
 <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 		xmlns:html="http://www.w3.org/1999/xhtml"
 		id="settings"
-		onload="colorediffsGlobal.options.init();"
+		onload="colorediffsGlobal.initOptions();"
 		persist="screenX screenY"
-		ondialogaccept="return colorediffsGlobal.options.checkOptions();"
+		ondialogaccept="colorediffsGlobal.deleteOptions();"
+		ondialogcancel="colorediffsGlobal.deleteOptions();"
 		title="Colored Diffs">
+
 	<script type="application/x-javascript" src="chrome://colorediffs/content/globals.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/prefs.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/options.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/options/options-pref.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/options/options.js"/>
+
 
 	<commands>
 		<command id="cmd_change_mode" oncommand="colorediffsGlobal.options.onChangeMode();"/>
@@ -59,8 +63,8 @@
 				</tabpanel>
 				<tabpanel>
 					<hbox align="baseline">
-						<checkbox id="show-whitespaces" label="Show whitespaces" checked="false"/>
-						<checkbox id="show-toolbar" label="Show toolbar" checked="false"/>
+						<checkbox id="show-whitespaces" label="Show whitespaces" checked="false" command="/*set prefs*/"/>
+						<checkbox id="show-toolbar" label="Show toolbar" checked="false" command="/*set prefs*/"/>
 					</hbox>
 				</tabpanel>
 			</tabpanels>
