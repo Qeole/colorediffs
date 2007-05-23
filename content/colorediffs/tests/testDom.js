@@ -1,6 +1,6 @@
 
 function testDom() {
-	var dom = colorediffsGlobal.domHelper;
+	var dom = new colorediffsGlobal.domHelper(document);
 
 	var element = dom.createElement("div", null,
 									dom.createElement("span", {class:"black", id:1},

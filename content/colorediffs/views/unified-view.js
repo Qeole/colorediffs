@@ -1,8 +1,6 @@
 
 colorediffsGlobal.views["unified"] = {
- render: function(il, pref) {
-		var dom = colorediffsGlobal.domHelper;
-
+ render: function(il, pref, dom) {
 		function createCodeElement(side, code) {
 			var e = dom.createElement("pre", {'class':side}, code);
 			e.addEventListener("scroll", function(evt) {colorediffsGlobal.scrollCallback(evt);}, false);

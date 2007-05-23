@@ -93,8 +93,10 @@ colorediffsGlobal.onLoadMessage = function() {
 	//Apply filters
 	var il = colorediffsGlobal.transform(il, pref);
 
+	var dom = new colorediffsGlobal.domHelper(message);
+
 	//Generate view
-	var renderedStyleBody = colorediffsGlobal.render(il, pref);
+	var renderedStyleBody = colorediffsGlobal.render(il, pref, dom);
 
 	var head = message.getElementsByTagName("head")[0];
 	head.appendChild(renderedStyleBody[0]);

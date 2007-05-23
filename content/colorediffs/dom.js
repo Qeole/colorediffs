@@ -1,16 +1,4 @@
-colorediffsGlobal.domHelper = function() {
-
-	var htmlDocument;
-
-	function prepareDocument() {
-		if ( !htmlDocument ) {
-			if ( document instanceof XULDocument ) {
-				htmlDocument = colorediffsGlobal.getMessagePane().contentDocument;
-			} else {
-				htmlDocument = document;
-			}
-		}
-	}
+colorediffsGlobal.domHelper = function(doc) {
 
 	function addElements(element, start_index, array) {
 		var length = array.length;
@@ -34,11 +22,8 @@ colorediffsGlobal.domHelper = function() {
 		}
 	}
 
-	return {
-		createElement:function(tag, attributes) {
-			prepareDocument();
-
-			var element = htmlDocument.createElement(tag);
+	this.createElement = function(tag, attributes) {
+			var element = doc.createElement(tag);
 			for (var attribute in attributes) {
 				element.setAttribute(attribute, attributes[attribute]);
 			}
@@ -46,13 +31,11 @@ colorediffsGlobal.domHelper = function() {
 			addElements(element, 2, arguments);
 
 			return element;
-		},
-		createDocumentFragment:function() {
-			prepareDocument();
+	};
 
-			var element = htmlDocument.createDocumentFragment();
+	this.createDocumentFragment = function() {
+			var element = doc.createDocumentFragment();
 			addElements(element, 0, arguments);
 			return element;
-		}
 	};
-}();
+}

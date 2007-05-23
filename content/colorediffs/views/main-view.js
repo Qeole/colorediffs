@@ -1,3 +1,3 @@
-colorediffsGlobal.render = function(il, pref) {
-	return colorediffsGlobal.views[pref.mode.get()].render(il, pref);
+colorediffsGlobal.render = function(il, pref, dom) {
+	return colorediffsGlobal.views[pref.mode.get()].render(il, pref, dom);
 }
