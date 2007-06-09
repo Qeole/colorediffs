@@ -1,6 +1,6 @@
 colorediffsGlobal.OptionsPrefModel = function(prefModel) {
-	var boolPrefs = {}
-	var charPrefs = {}
+	var boolPrefs = {};
+	var charPrefs = {};
 
 	var getPref = function(hash, prop, defFunc) {
 		return (hash[prop] != undefined) ? hash[prop] : defFunc(prop);
@@ -35,11 +35,11 @@ colorediffsGlobal.OptionsPrefModel = function(prefModel) {
 	}
 
 	this.saveToModel = function() {
-		for (b in boolPrefs) {
+		for (var b in boolPrefs) {
 			prefModel.setBoolPref(b, boolPrefs[b]);
 		}
 
-		for (c in charPrefs) {
+		for (var c in charPrefs) {
 			prefModel.setCharPref(c, charPrefs[c]);
 		}
 	}

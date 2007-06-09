@@ -48,6 +48,21 @@ colorediffsGlobal.views["side-by-side"] = {
 									)
 								)
 							),
+							dom.createElement(
+								"tr", {},
+								dom.createElement(
+									"td", {valign:'top', width:'50%'},
+									dom.createElement(
+										'pre', {'class':'left', style: 'padding:0'},
+										dom.createElement('div', {'class':'delline', style: 'padding:5px'}, file.name))
+								),
+								dom.createElement(
+									"td", {valign:'top', width:'50%'},
+									dom.createElement(
+										'pre', {'class':'right', style: 'padding:0'},
+										dom.createElement('div', {'class':'addline', style: 'padding:5px'}, file.name))
+								)
+							),
 							//precode,
 							file.chunks.map(function(chunk) {
 									function countLength(s) {
@@ -118,7 +133,12 @@ colorediffsGlobal.views["side-by-side"] = {
 									return [
 										dom.createElement(
 											"tr", {'class':'linetag'},
-											dom.createElement("td", {colspan:2}, "@@"+chunk['old'].line + "," +chunk['new'].line +"@@")
+											dom.createElement("td", {colspan:2},
+															  "@@ -" + chunk['old'].line +
+															  "," + colorediffsGlobal.ilUtils.calcLineCounts(chunk['old'].code) +
+															  " +" +chunk['new'].line +
+															  "," + colorediffsGlobal.ilUtils.calcLineCounts(chunk['new'].code) +
+															  " @@")
 										),
 										dom.createElement(
 											"tr", {'class':'diffs'},

@@ -4,6 +4,21 @@
 
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	<deck id="view-properties">
+		<preferences>
+			<preference id="title-fg-pref" name="diffColorer.title_fg" type="string"/>
+			<preference id="title-bg-pref" name="diffColorer.title_bg" type="string"/>
+			<preference id="deletedLine-fg-pref" name="diffColorer.deletedLine_fg" type="string"/>
+			<preference id="deletedLine-bg-pref" name="diffColorer.deletedLine_bg" type="string"/>
+			<preference id="addedLine-fg-pref" name="diffColorer.addedLine_fg" type="string"/>
+			<preference id="addedLine-bg-pref" name="diffColorer.addedLine_bg" type="string"/>
+			<preference id="steadyLine-fg-pref" name="diffColorer.steadyLine_fg" type="string"/>
+			<preference id="steadyLine-bg-pref" name="diffColorer.steadyLine_bg" type="string"/>
+			<preference id="anchor-fg-pref" name="diffColorer.anchor_fg" type="string"/>
+			<preference id="anchor-bg-pref" name="diffColorer.anchor_bg" type="string"/>
+			<preference id="precode-fg-pref" name="diffColorer.precode_fg" type="string"/>
+			<preference id="precode-bg-pref" name="diffColorer.precode_bg" type="string"/>
+		</preferences>
+
 		<grid id="unified-view-options" flex="1">
 			<columns>
 				<column/>
@@ -14,28 +29,33 @@
 				<row class="center"><spacer/></row>
 				<row align="center">
 					<label value="Title:"/>
-					<colorpicker id="title_fg" command="cmd_change_color"/>
-					<colorpicker id="title_bg" command="cmd_change_color"/>
+					<colorpicker id="title_fg" preference="title-fg-pref" command="cmd_change_pref" type="button" flex="1"/>
+					<colorpicker id="title_bg" preference="title-bg-pref" command="cmd_change_pref" type="button" flex="1"/>
 				</row>
 				<row align="center">
 					<label value="Deleted Lines:"/>
-					<colorpicker id="deletedLine_fg" command="cmd_change_color"/>
-					<colorpicker id="deletedLine_bg" command="cmd_change_color"/>
+					<colorpicker id="deletedLine_fg" preference="deletedLine-fg-pref" command="cmd_change_pref" type="button" flex="1"/>
+					<colorpicker id="deletedLine_bg" preference="deletedLine-bg-pref" command="cmd_change_pref" type="button" flex="1"/>
 				</row>
 				<row align="center">
 					<label value="Added Lines:"/>
-					<colorpicker id="addedLine_fg" command="cmd_change_color"/>
-					<colorpicker id="addedLine_bg" command="cmd_change_color"/>
+					<colorpicker id="addedLine_fg" preference="addedLine-fg-pref" command="cmd_change_pref" type="button" flex="1"/>
+					<colorpicker id="addedLine_bg" preference="addedLine-bg-pref" command="cmd_change_pref" type="button" flex="1"/>
 				</row>
 				<row align="center">
 					<label value="Steady Lines:"/>
-					<colorpicker id="steadyLine_fg" command="cmd_change_color"/>
-					<colorpicker id="steadyLine_bg" command="cmd_change_color"/>
+					<colorpicker id="steadyLine_fg" preference="steadyLine-fg-pref" command="cmd_change_pref" type="button" flex="1"/>
+					<colorpicker id="steadyLine_bg" preference="steadyLine-bg-pref" command="cmd_change_pref" type="button" flex="1"/>
 				</row>
 				<row align="center">
 					<label value="Anchors:"/>
-					<colorpicker id="anchor_fg" command="cmd_change_color"/>
-					<colorpicker id="anchor_bg" command="cmd_change_color"/>
+					<colorpicker id="anchor_fg" preference="anchor-fg-pref" command="cmd_change_pref" type="button" flex="1"/>
+					<colorpicker id="anchor_bg" preference="anchor-bg-pref" command="cmd_change_pref" type="button" flex="1"/>
+				</row>
+				<row align="center">
+					<label value="Precode:"/>
+					<colorpicker id="precode_fg" preference="precode-fg-pref" command="cmd_change_pref" type="button" flex="1"/>
+					<colorpicker id="precode_bg" preference="precode-bg-pref" command="cmd_change_pref" type="button" flex="1"/>
 				</row>
 			</rows>
 		</grid>

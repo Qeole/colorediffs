@@ -1,5 +1,5 @@
 //Should be proceeded first
-colorediffsGlobal.transformations.unshift({
+colorediffsGlobal.transformations["escape-html"] = {
 	run: function(il) {
 			il.files.forEach(function(file) {
 					file.chunks.forEach(function(chunk) {
@@ -17,6 +17,5 @@ colorediffsGlobal.transformations.unshift({
 						});
 				});
 			return il;
-		}
 	}
-);
+};

@@ -1,4 +1,4 @@
-colorediffsGlobal.parsers.push({
+colorediffsGlobal.parsers["context"] = {
 	parse:function(text) {
 		var parseFile = function(title, code) {
 			var parseChunk = function(code) {
@@ -141,5 +141,5 @@ colorediffsGlobal.parsers.push({
 		var line_tag = /^(?:\*|\-){3}\s+(\d+)\,\d+\s+(?:\*|\-){4}$/m;
 		return line_tag.test(text);
 	}
-});
+};
 

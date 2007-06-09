@@ -1,6 +1,6 @@
 colorediffsGlobal.transform = function(il, pref) {
-	return colorediffsGlobal.fold(colorediffsGlobal.transformations, function(transformation, il) {
-			return transformation.run(il, pref);
-		},
-		il);
+	for each (var tr in colorediffsGlobal.transformations) {
+		il = tr.run(il, pref);
+	}
+	return il;
 }

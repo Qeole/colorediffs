@@ -8,24 +8,42 @@
 <?xul-overlay href="chrome://colorediffs/content/options/context-view-options.xul"?>
 <?xul-overlay href="chrome://colorediffs/content/options/side-by-side-view-options.xul"?>
 
-<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+<prefwindow xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 		xmlns:html="http://www.w3.org/1999/xhtml"
 		id="settings"
 		onload="colorediffsGlobal.initOptions();"
-		persist="screenX screenY"
-		ondialogaccept="colorediffsGlobal.deleteOptions();"
+		persist="width height screenX screenY sizemode"
+		ondialogaccept="colorediffsGlobal.options.checkOptions();colorediffsGlobal.deleteOptions();"
 		ondialogcancel="colorediffsGlobal.deleteOptions();"
 		title="Colored Diffs">
 
-	<script type="application/x-javascript" src="chrome://colorediffs/content/globals.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/prefs.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/options/options-pref.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/options/options.js"/>
+	<prefpane>
+		<preferences>
+			<preference id="show-whitespace" name="diffColorer.show-whitespace" type="bool" instantApply="false"/>
+			<preference id="show-toolbar" name="diffColorer.show-toolbar" type="bool"/>
+			<preference id="view-mode-pref" name="diffColorer.view-mode" type="string"/>
+		</preferences>
 
+		<script type="application/x-javascript" src="chrome://colorediffs/content/globals.js"/>
+		<script type="application/x-javascript" src="chrome://colorediffs/content/prefs.js"/>
+
+		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/escape-html-special-characters-transformation.js"/>
+		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/replace-file-names-transformation.js"/>
+		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/show-whitespaces-transformation.js"/>
+		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/main-transformation.js"/>
+
+		<script type="application/x-javascript" src="chrome://colorediffs/content/views/side-by-side-view.js"/>
+		<script type="application/x-javascript" src="chrome://colorediffs/content/views/unified-view.js"/>
+		<script type="application/x-javascript" src="chrome://colorediffs/content/views/context-view.js"/>
+		<script type="application/x-javascript" src="chrome://colorediffs/content/views/main-view.js"/>
+
+		<script type="application/x-javascript" src="chrome://colorediffs/content/options/options-pref.js"/>
+		<script type="application/x-javascript" src="chrome://colorediffs/content/options/options.js"/>
 
 	<commands>
-		<command id="cmd_change_mode" oncommand="colorediffsGlobal.options.onChangeMode();"/>
+		<command id="cmd_change_mode" oncommand="colorediffsGlobal.options.changePref(event.explicitOriginalTarget);colorediffsGlobal.options.onChangeMode();"/>
 		<command id="cmd_change_color" oncommand="updatePreview();"/>
+		<command id="cmd_change_pref" oncommand="colorediffsGlobal.options.changePref(event.explicitOriginalTarget);"/>
 	</commands>
 
 	<broadcasterset>
@@ -50,7 +68,7 @@
 					<groupbox>
 						<caption>
 							<label value="Choose view:"/>
-							<viewsmenu id="view" command="cmd_change_mode"/>
+							<viewsmenu id="view" command="cmd_change_mode" preference="view-mode-pref"/>
 						</caption>
 						<hbox align="center">
 							<spacer flex="1"/>
@@ -63,8 +81,8 @@
 				</tabpanel>
 				<tabpanel>
 					<hbox align="baseline">
-						<checkbox id="show-whitespaces" label="Show whitespaces" checked="false" command="/*set prefs*/"/>
-						<checkbox id="show-toolbar" label="Show toolbar" checked="false" command="/*set prefs*/"/>
+						<checkbox id="show-whitespaces" label="Show whitespaces" checked="false" command="cmd_change_pref" preference="show-whitespace"/>
+						<checkbox id="show-toolbar" label="Show toolbar" checked="false" command="cmd_change_pref" preference="show-toolbar"/>
 					</hbox>
 				</tabpanel>
 			</tabpanels>
@@ -79,4 +97,5 @@
 		</vbox>
 	</hbox>
 	<spacer flex="1" style="height:5px;"/>
-</dialog>
+	</prefpane>
+</prefwindow>
