@@ -7,103 +7,87 @@ colorediffsGlobal.initOptions = function() {
 	var internalPrefs = new colorediffsGlobal.OptionsPrefModel(colorediffsGlobal.getPrefs());
 	var prefs = new colorediffsGlobal.Pref(internalPrefs);
 
-	var coloredElems = ["anchor", "steadyLine", "deletedLine", "addedLine", "title", "sbs_title", "sbs_log", "sbs_file-diff", "sbs_precode", "sbs_left-title", "sbs_right-title", "sbs_anchor", "sbs_left", "sbs_right", "sbs_addedLine", "sbs_deletedLine", "sbs_steadyLine", "sbs_emptyLine"];
-
 	var getNodeGetter = function (name) {
 		return function() {return me.$(name);}
 	}
 
 	var getViewModeNode = getNodeGetter('view_mode');
-	var getShowWhiteSpacesNode = getNodeGetter('show-whitespaces');
-	var getShowToolbarNode = getNodeGetter('show-toolbar');
 	var getViewNode = getNodeGetter('view');
 	var getPreviewNode = getNodeGetter('previewbox');
 
 	var savePrefs = function() {
-		for ( var i = 0; i < coloredElems.length; i++ ) {
-			var bg = coloredElems[i] + "_bg";
-			var fg = coloredElems[i] + "_fg";
-
-			prefs.setColorFG("diffColorer." + coloredElems[i], me.$(fg).color);
-			prefs.setColorBG("diffColorer." + coloredElems[i], me.$(bg).color);
-		}
-
-		prefs.showWhiteSpace.set(getShowWhiteSpacesNode().checked);
-		prefs.showToolbar.set(getShowToolbarNode().checked);
-
-		prefs.mode.set(getViewModeNode().getAttribute('value'));
+		internalPrefs.saveToModel();
 	}
 
 	var updatePreview = function() {
-		var il = {
-			log:"Log message",
-			files:[
-				{name: "filename",
-				 title: "File title\n==============\n",
-				 chunks: [
-					{'old':
-						{line:10,
-						 code:[
-							 "line1",
-							 "line2",
-							 "line3",
-							 null,
-							 "line5"]},
-					 'new':{line:10,
+		if (prefs.mode.get() == "none") {
+			var code = "" + <r><![CDATA[
+<pre>
+Log message
+
+File title
+==============
+--- filename
++++ filename
+@@ -10,4 +10,5 @@
+ line1
+ line2
+ line3
++line4
+ line5
+</pre>
+]]></r>;
+
+
+			var doc = getPreviewNode().contentDocument;
+			var head = doc.getElementsByTagName("head")[0];
+			head.innerHTML = "";
+
+			var body = doc.getElementsByTagName("body")[0];
+			body.innerHTML = code;
+
+		} else {
+			var il = {
+				log:"Log message",
+				files:[
+					{name: "filename",
+					 title: "File title\n==============\n",
+					 chunks: [
+						{'old':{line:10,
 						  code:[
-							  "line1",
-							  "line2",
-							  "line3",
-							  "line4",
-							  "line5"]}}]}]};
+							  " line1",
+							  "	line2",
+							  " line3",
+							  null,
+							  "	line5"]},
+						 'new':{line:10,
+						  code:[
+							  " line1",
+							  "	line2",
+							  " line3",
+							  " line4",
+							  "	line5"]}}]}]};
 
-		var doc = getPreviewNode().contentDocument;
-		var dom = new colorediffsGlobal.domHelper(doc);
+			var doc = getPreviewNode().contentDocument;
+			var dom = new colorediffsGlobal.domHelper(doc);
 
-		//Apply filters
-		var il = colorediffsGlobal.transform(il, prefs);
+			//Apply filters
+			var il = colorediffsGlobal.transform(il, prefs);
 
-		//Generate view
-		var renderedStyleBody = colorediffsGlobal.render(il, prefs, dom);
+			//Generate view
+			var renderedStyleBody = colorediffsGlobal.render(il, prefs, dom);
 
-		var head = doc.getElementsByTagName("head")[0];
-		head.appendChild(renderedStyleBody[0]);
+			var head = doc.getElementsByTagName("head")[0];
+			head.innerHTML = "";
+			head.appendChild(renderedStyleBody[0]);
 
-		var body = doc.getElementsByTagName("body")[0];
-		body.innerHTML = "";
-		body.appendChild(renderedStyleBody[1]);
+			var body = doc.getElementsByTagName("body")[0];
+			body.innerHTML = "";
+			body.appendChild(renderedStyleBody[1]);
+		}
 	}
 
-	updatePreview();
-
 	colorediffsGlobal.options =	{
-		init : function() {
-			for ( var i = 0; i < coloredElems.length; i++ ) {
-				var bg = coloredElems[i] + "_bg";
-				var fg = coloredElems[i] + "_fg";
-
-				me.$(fg).color = prefs.getColorFG("diffColorer." + coloredElems[i]);
-				me.$(bg).color = prefs.getColorBG("diffColorer." + coloredElems[i]);
-			}
-
-			getViewModeNode().setAttribute('value', prefs.mode.get());
-
-			//update combobox
-			var menulist = getViewNode();
-			var items = menulist.firstChild.childNodes;
-			for( var i=0; i < items.length; i++ ) {
-				if ( items[i].value == prefs.mode.get() ) {
-					menulist.selectedItem = items[i];
-					break;
-				}
-			}
-
-			getShowWhiteSpacesNode().checked = prefs.showWhiteSpace.get();
-			getShowToolbarNode().checked = prefs.showToolbar.get();
-
-			updatePreview();
-		},
-
 		checkOptions : function() {
 			savePrefs();
 			//repaint actual mail message
@@ -135,15 +119,38 @@ colorediffsGlobal.initOptions = function() {
 			window.sizeToContent();
 		},
 
-		onBroadcastModeUnified : function() {
-			colorediffsGlobal.$('unified-properties').setAttribute('hidden', getViewModeNode().getAttribute('value') != 'unified');
-		},
+		//new code
+		changePref: function(control) {
+			var pref = document.getElementById(control.getAttribute('preference'));
 
-		onBroadcastModeSideBySide : function() {
-			colorediffsGlobal.$('side-by-side-properties').setAttribute('hidden', getViewModeNode().getAttribute('value') != 'side-by-side');
+			if (control.value != undefined) {
+				var value = control.value;
+			} else if (control.checked != undefined) {
+				var value = control.checked;
+			} else if (control.color != undefined) {
+				var value = control.color;
+			} else if (control.selectedItem != undefined) {
+				var value = control.selectedItem;
+			}
+
+			switch (pref.type) {
+				case "bool":
+					internalPrefs.setBoolPref(pref.name, value);
+					break;
+				case "string":
+					internalPrefs.setCharPref(pref.name, value);
+					break;
+			}
+
+			updatePreview();
 		}
 
 	}
+
+	//init code
+	updatePreview();
+	colorediffsGlobal.options.onChangeMode();
+
 }
 
 colorediffsGlobal.deleteOptions = function() {

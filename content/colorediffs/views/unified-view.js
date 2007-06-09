@@ -20,8 +20,10 @@ colorediffsGlobal.views["unified"] = {
 				stylecontent += colorStyle("delline", "diffColorer.deletedLine");
 				stylecontent += colorStyle("steadyline", "diffColorer.steadyLine");
 				stylecontent += colorStyle("title", "diffColorer.title");
+				stylecontent += colorStyle("precode", "diffColorer.precode");
 				//stylecontent += ".addline {color: red;}\n";
 				stylecontent += "pre {font-family:monospace;}\n";
+				stylecontent += ".addline, .delline, .precode {margin:0;}\n";
 				return dom.createElement("style", null, stylecontent);
 			}(),
 			dom.createDocumentFragment(
@@ -32,6 +34,18 @@ colorediffsGlobal.views["unified"] = {
 							dom.createElement(
 								"pre", {'class':'title'},
 								file.title
+							),
+							dom.createElement(
+								"pre", {'class':'precode'},
+								file.precode
+							),
+							dom.createElement(
+								"pre", {'class':'delline'},
+								"--- " + file.name
+							),
+							dom.createElement(
+								"pre", {'class':'addline'},
+								"+++ " + file.name
 							),
 							//precode,
 							file.chunks.map(function(chunk) {
@@ -59,7 +73,6 @@ colorediffsGlobal.views["unified"] = {
 											var line = oldCode[i];
 
 											codeDecorated.push("<div class='steadyline' title='" + file.name + ":" + oldLine + "'> " + line +" </div>");
-											codeDecorated.push("<div class='steadyline' title='" + file.name + ":" + newLine + "'> " + line +" </div>");
 
 											newLine++;
 											oldLine++;
@@ -84,7 +97,11 @@ colorediffsGlobal.views["unified"] = {
 									return [
 										dom.createElement(
 											"pre", {'class':'linetag'},
-											"@@"+chunk['old'].line + "," +chunk['new'].line +"@@"
+											"@@ -" + chunk['old'].line +
+											"," + colorediffsGlobal.ilUtils.calcLineCounts(chunk['old'].code) +
+											" +" +chunk['new'].line +
+											"," + colorediffsGlobal.ilUtils.calcLineCounts(chunk['new'].code) +
+											" @@"
 										),
 										dom.createElement(
 											"pre", {'class':'diffs'},

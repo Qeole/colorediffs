@@ -1,7 +1,7 @@
 if (!colorediffsGlobal) {
 	var colorediffsGlobal = {
-		parsers:new Array(),
-		transformations:[],
+		parsers:{},
+		transformations:{},
 		views:{}
 	};
 }

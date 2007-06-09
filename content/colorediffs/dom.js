@@ -16,7 +16,10 @@ colorediffsGlobal.domHelper = function(doc) {
 					}
 					break;
 				case "function":
-					element.appendChild(arg());
+					var res = arg();
+					if ( res != null ) {
+						element.appendChild(res);
+					}
 					break;
 			}
 		}

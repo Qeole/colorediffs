@@ -1,4 +1,4 @@
-colorediffsGlobal.parsers.push({
+colorediffsGlobal.parsers["unified"] = {
 	parse: function(text) {
 		var parseFile = function(title, code) {
 			var parseChunk = function(anchor, code) {
@@ -105,5 +105,5 @@ colorediffsGlobal.parsers.push({
 		var line_tag = /^@@\s\-\d+\,\d+\s\+\d+\,\d+\s@@/m;
 		return line_tag.test(text);
 	}
-});
+};
 

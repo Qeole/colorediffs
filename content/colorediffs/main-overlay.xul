@@ -8,6 +8,7 @@
 	<script type="application/x-javascript" src="chrome://colorediffs/content/overlay.js"/>
 
 	<script type="application/x-javascript" src="chrome://colorediffs/content/dom.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/ilUtils.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/callbacks.js"/>
 
 	<script type="application/x-javascript" src="chrome://colorediffs/content/parsers/unified-parser.js"/>

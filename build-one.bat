@@ -12,6 +12,7 @@ cp content\colorediffs\contents.rdf build\chrome\content\colorediffs\
 cp content\colorediffs\dom.js build\chrome\content\colorediffs\
 cp content\colorediffs\globals.js build\chrome\content\colorediffs\
 cp content\colorediffs\icon.png build\chrome\content\colorediffs\
+cp content\colorediffs\ilUtils.js build\chrome\content\colorediffs\
 cp content\colorediffs\main-overlay.xul build\chrome\content\colorediffs\
 cp content\colorediffs\msgwindowoverlay.xul build\chrome\content\colorediffs\
 cp content\colorediffs\overlay.js build\chrome\content\colorediffs\

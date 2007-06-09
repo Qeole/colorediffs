@@ -23,9 +23,12 @@ colorediffsGlobal.isMessageDiff = function() {
 
 	var text = colorediffsGlobal.htmlToPlainText(body.innerHTML);
 
-	return colorediffsGlobal.parsers.some(function(parser) {
-			return parser.couldParse(text);
-		});
+	for each (var parser in colorediffsGlobal.parsers) {
+			if (parser.couldParse(text)) {
+				return true;
+			}
+	}
+	return false;
 }
 
 colorediffsGlobal.writeDebugFile = function(filename, html, pref) {
@@ -62,7 +65,7 @@ colorediffsGlobal.onLoadMessage = function() {
 	var pref = new colorediffsGlobal.Pref(colorediffsGlobal.getPrefs());
 
 	//don't do anything if user wants plain
-	if (pref.mode.get() == 'plain') {
+	if (pref.mode.get() == 'none') {
 		return;
 	}
 

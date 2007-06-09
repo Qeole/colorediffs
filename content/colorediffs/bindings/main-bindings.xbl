@@ -5,7 +5,7 @@
    xmlns:xbl="http://www.mozilla.org/xbl">
 	<binding id="views">
 		<content>
-			<xul:menulist xbl:inherits="command">
+			<xul:menulist xbl:inherits="command,preference">
 				<xul:menupopup>
 					<xul:menuitem label="plain" value="none"/>
 				</xul:menupopup>
@@ -13,13 +13,19 @@
 		</content>
 		<implementation>
 			<constructor><![CDATA[
-				var menupopup = document.getAnonymousNodes(this)[0].firstChild;
+				var menulist = document.getAnonymousNodes(this)[0];
+				var menupopup = menulist.firstChild;
 
 				for(var view in colorediffsGlobal.views) {
 					var item = document.createElement("menuitem");
 					item.setAttribute("label", view);
 					item.setAttribute("value", view);
 					menupopup.appendChild(item);
+				}
+
+				if (menulist.hasAttribute('preference')) {
+					var pref = document.getElementById(menulist.getAttribute('preference'));
+					this.selectedItem = pref.valueFromPreferences;
 				}
 			]]></constructor>
 			<property name="selectedItem">
@@ -42,20 +48,33 @@
 
 	<binding id="color-picker">
 		<resources>
-			<stylesheet src="chrome://colorediffs/content/colorpicker.css"/>
+			<stylesheet src="chrome://colorediffs/content/bindings/colorpicker.css"/>
 		</resources>
 		<content>
-			<xul:button class="colorpickerbutton" xbl:inherits="command">
+			<xul:button class="colorpickerbutton" xbl:inherits="preference">
 				<xul:spacer class="colorpickerspacer" flex="1"/>
 			</xul:button>
 		</content>
 		<implementation>
+			<constructor><![CDATA[
+				/*var button = document.getAnonymousNodes(this)[0];
+				button.label = "ertetertw";
+				/*if (button.hasAttribute('preference')) {
+					var pref = document.getElementById(button.getAttribute('preference'));
+					this.color = pref.valueFromPreferences;
+				}*/
+			]]></constructor>
 			<property name="color">
 				<getter><![CDATA[
 					return document.getAnonymousNodes(this)[0].firstChild.style.backgroundColor;
 				]]></getter>
 				<setter><![CDATA[
+					/*dump(document.getAnonymousNodes(this)[0].firstChild);*/
 					document.getAnonymousNodes(this)[0].firstChild.style.backgroundColor = val;
+					/*dump(val);*/
+					//document.getAnonymousNodes(this)[0].style.color = val;
+					//document.getAnonymousNodes(this)[0].setAttribute('label', val);
+					//dump(document.getAnonymousNodes(this)[0].label);
 				]]></setter>
 			</property>
 		</implementation>

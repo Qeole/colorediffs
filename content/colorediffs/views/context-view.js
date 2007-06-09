@@ -15,13 +15,15 @@ colorediffsGlobal.views["context"] = {
 
 				var stylecontent = "";
 
-				stylecontent += colorStyle("linetag", "diffColorer.anchor");
-				stylecontent += colorStyle("addline", "diffColorer.addedLine");
-				stylecontent += colorStyle("delline", "diffColorer.deletedLine");
-				stylecontent += colorStyle("steadyline", "diffColorer.steadyLine");
-				stylecontent += colorStyle("title", "diffColorer.title");
+				stylecontent += colorStyle("linetag", "diffColorer.c_anchor");
+				stylecontent += colorStyle("addline", "diffColorer.c_addedLine");
+				stylecontent += colorStyle("delline", "diffColorer.c_deletedLine");
+				stylecontent += colorStyle("steadyline", "diffColorer.c_steadyLine");
+				stylecontent += colorStyle("title", "diffColorer.c_title");
+				stylecontent += colorStyle("precode", "diffColorer.c_precode");
 				//stylecontent += ".addline {color: red;}\n";
 				stylecontent += "pre {font-family:monospace;}\n";
+				stylecontent += ".linetag, .diffs, .addline, .delline, .precode {margin:0;}\n";
 				return dom.createElement("style", null, stylecontent);
 			}(),
 			dom.createDocumentFragment(
@@ -32,6 +34,18 @@ colorediffsGlobal.views["context"] = {
 							dom.createElement(
 								"pre", {'class':'title'},
 								file.title
+							),
+							dom.createElement(
+								"pre", {'class':'precode'},
+								file.precode
+							),
+							dom.createElement(
+								"pre", {'class':'delline'},
+								"*** " + file.name
+							),
+							dom.createElement(
+								"pre", {'class':'addline'},
+								"--- " + file.name
 							),
 							//precode,
 							file.chunks.map(function(chunk) {
@@ -120,20 +134,42 @@ colorediffsGlobal.views["context"] = {
 									return [
 										dom.createElement(
 											"pre", {'class':'linetag'},
-											"***"+chunk['old'].line + "***"
-										),
-										dom.createElement(
-											"pre", {'class':'diffs'},
-											oldCodeDecorated.join("")
+											"***************"
 										),
 										dom.createElement(
 											"pre", {'class':'linetag'},
-											"---"+chunk['new'].line + "---"
+											"*** " +
+											chunk['old'].line +
+											"," + colorediffsGlobal.ilUtils.calcLineCounts(chunk['old'].code) +
+											" ****"
 										),
+										function() {
+											if (onlyNew) {
+												return null;
+											} else {
+												return dom.createElement(
+													"pre", {'class':'diffs'},
+													oldCodeDecorated.join("")
+												);
+											}
+										},
 										dom.createElement(
-											"pre", {'class':'diffs'},
-											newCodeDecorated.join("")
-										)
+											"pre", {'class':'linetag'},
+											"--- " +
+											chunk['new'].line +
+											"," + colorediffsGlobal.ilUtils.calcLineCounts(chunk['new'].code) +
+											" ----"
+										),
+										function() {
+											if (onlyOld) {
+												return null;
+											} else {
+												return dom.createElement(
+													"pre", {'class':'diffs'},
+													newCodeDecorated.join("")
+												);
+											}
+										}
 									];
 								}
 							)
