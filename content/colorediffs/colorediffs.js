@@ -8,7 +8,7 @@ colorediffsGlobal.isMessageDiff = function() {
 		return false;
 	}
 
-	var messagePrefix = /^mailbox-message:|^imap-message:/i;
+	var messagePrefix = /^mailbox-message:|^imap-message:|^news-message:/i;
 	if ( ! messagePrefix.test(GetLoadedMessage()) ) {
 		return false;
 
@@ -52,6 +52,10 @@ colorediffsGlobal.writeDebugFile = function(filename, html, pref) {
 
 colorediffsGlobal.onLoadMessage = function() {
 	var me = colorediffsGlobal;
+
+	var message = me.getMessagePane().contentDocument;
+	var pref = new colorediffsGlobal.Pref(colorediffsGlobal.getPrefs());
+	me.writeDebugFile("before1.html", message.documentElement.innerHTML, pref);
 
 	if (!me.isMessageDiff()) {
 		me.setActive(false);
