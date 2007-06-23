@@ -12,6 +12,10 @@ colorediffsGlobal.$ = function(id) {
 	return document.getElementById(id);
 }
 
+colorediffsGlobal.$R = function(f) {
+	return f();
+}
+
 colorediffsGlobal.getMessagePane = function() {
 	if (!this.gmessagePane) {
 		this.gmessagePane = this.$("messagepane");
