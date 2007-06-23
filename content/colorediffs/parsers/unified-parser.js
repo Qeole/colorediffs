@@ -6,7 +6,7 @@ colorediffsGlobal.parsers["unified"] = {
 				chunk['old'] = {};
 				chunk['new'] = {};
 
-				var regExpRes = anchor.match(/^@@\s+\-(\d+)\,\d+\s+\+(\d+)\,\d+\s+@@/);
+				var regExpRes = anchor.match(/^@@\s+\-(\d+)(?:\,\d+)?\s+\+(\d+)(?:\,\d+)?\s+@@/);
 				if (regExpRes) {
 					chunk['old'].line = Number(regExpRes[1]);
 					chunk['new'].line = Number(regExpRes[2]);
@@ -65,7 +65,7 @@ colorediffsGlobal.parsers["unified"] = {
 
 			res_file.title = title;
 
-			var parts = code.split(/^(@@\s\-\d+\,\d+\s\+\d+\,\d+\s@@)/m);
+			var parts = code.split(/^(@@\s+\-\d+(?:\,\d+)?\s\+\d+(?:\,\d+)?\s+@@)/m);
 			//parts[0] is some text before code
 
 			//get filename from it
@@ -102,7 +102,7 @@ colorediffsGlobal.parsers["unified"] = {
 		return res;
 	},
 	couldParse: function(text) {
-		var line_tag = /^@@\s\-\d+\,\d+\s\+\d+\,\d+\s@@/m;
+		var line_tag = /^@@\s+\-\d+(?:\,\d+)?\s\+\d+(?:\,\d+)?\s+@@/m;
 		return line_tag.test(text);
 	}
 };
