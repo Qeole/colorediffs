@@ -1,6 +1,15 @@
 
 colorediffsGlobal.views["context"] = {
  render: function(il, pref, dom) {
+		function chunksMap(file, func) {
+			var result = [];
+			for (var i = 0; i < file['new'].chunks.length; i++) {
+				result.push(func(file['old'].chunks[i], file['new'].chunks[i]));
+			}
+
+			return result;
+		}
+
 		function createCodeElement(side, code) {
 			var e = dom.createElement("pre", {'class':side}, code);
 			e.addEventListener("scroll", function(evt) {colorediffsGlobal.scrollCallback(evt);}, false);
@@ -30,38 +39,37 @@ colorediffsGlobal.views["context"] = {
 				dom.createElement("pre", {id:'log', 'class':'log'}, il.log),
 				il.files.map(function(file) {
 						return dom.createElement(
-							"div", {'class':'file-diff', title:file.name, id:file.name, width:"100%"},
+							"div", {'class':'file-diff', title:file['new'].name, id:file['new'].name, width:"100%"},
 							dom.createElement(
 								"pre", {'class':'title'},
 								file.title
 							),
 							dom.createElement(
 								"pre", {'class':'precode'},
-								file.precode
+								file.additional_file_info
 							),
 							dom.createElement(
 								"pre", {'class':'delline'},
-								"*** " + file.name
+								"*** " + file['old'].name + ((file['old'].version) ? "\t" + file['old'].version : "")
 							),
 							dom.createElement(
 								"pre", {'class':'addline'},
-								"--- " + file.name
+								"--- " + file['new'].name + ((file['new'].version) ? "\t" + file['new'].version : "")
 							),
-							//precode,
-							file.chunks.map(function(chunk) {
+							chunksMap(file, function(old_chunk, new_chunk) {
 									var oldCodeDecorated = [];
 									var newCodeDecorated = [];
 
 									var oldCodeDecoratedDelayed = [];
 									var newCodeDecoratedDelayed = [];
 
-									var oldLine = chunk['old'].line;
-									var newLine = chunk['new'].line;
+									var oldLine = old_chunk.line;
+									var newLine = new_chunk.line;
 
-									var oldCode = chunk['old'].code.concat([]); //copy array
-									var newCode = chunk['new'].code.concat([]); //copy array
+									var oldCode = old_chunk.code.concat([]); //copy array
+									var newCode = new_chunk.code.concat([]); //copy array
 
-									if (chunk['old'].doesnt_have_new_line != chunk['new'].doesnt_have_new_line) {
+									if (old_chunk.doesnt_have_new_line != new_chunk.doesnt_have_new_line) {
 										oldCode.pop();newCode.pop();
 									}
 
@@ -102,20 +110,20 @@ colorediffsGlobal.views["context"] = {
 
 											var line = oldCode[i];
 
-											oldCodeDecorated.push("<div class='steadyline' title='" + file.name + ":" + oldLine + "'>  " + line +" </div>");
-											newCodeDecorated.push("<div class='steadyline' title='" + file.name + ":" + newLine + "'>  " + line +" </div>");
+											oldCodeDecorated.push("<div class='steadyline' title='" + file['old'].name + ":" + oldLine + "'>  " + line +" </div>");
+											newCodeDecorated.push("<div class='steadyline' title='" + file['new'].name + ":" + newLine + "'>  " + line +" </div>");
 
 											newLine++;
 											oldLine++;
 										} else {
 											if ( newCode[i] != null ) {
 												var line = newCode[i];
-												newCodeDecoratedDelayed.push("<div class='addline' title='" + file.name + ":" + newLine + "'>+ " + line +" </div>");
+												newCodeDecoratedDelayed.push("<div class='addline' title='" + file['new'].name + ":" + newLine + "'>+ " + line +" </div>");
 												newLine++;
 											}
 											if ( oldCode[i] != null ) {
 												var line = oldCode[i];
-												oldCodeDecoratedDelayed.push("<div class='delline' title='" + file.name + ":" + oldLine + "'>- " + line +" </div>");
+												oldCodeDecoratedDelayed.push("<div class='delline' title='" + file['old'].name + ":" + oldLine + "'>- " + line +" </div>");
 												oldLine++;
 											}
 										}
@@ -139,8 +147,8 @@ colorediffsGlobal.views["context"] = {
 										dom.createElement(
 											"pre", {'class':'linetag'},
 											"*** " +
-											chunk['old'].line +
-											"," + colorediffsGlobal.ilUtils.calcLineCounts(chunk['old'].code) +
+											old_chunk.line +
+											"," + colorediffsGlobal.ilUtils.calcLineCounts(old_chunk.code) +
 											" ****"
 										),
 										function() {
@@ -156,8 +164,8 @@ colorediffsGlobal.views["context"] = {
 										dom.createElement(
 											"pre", {'class':'linetag'},
 											"--- " +
-											chunk['new'].line +
-											"," + colorediffsGlobal.ilUtils.calcLineCounts(chunk['new'].code) +
+											new_chunk.line +
+											"," + colorediffsGlobal.ilUtils.calcLineCounts(new_chunk.code) +
 											" ----"
 										),
 										function() {
@@ -178,21 +186,6 @@ colorediffsGlobal.views["context"] = {
 				)
 			)
 		];
-
-
-//				//put precode
-//				var left;
-//				var right;
-
-//				var string = file.precode;
-
-//				string = string.replace(/^(\+{3}.*)$/mg, function(str, p1) {right = p1; return '';});
-//				string = string.replace(/^(\-{3}.*)$/mg, function(str, p1) {left = p1; return '';});
-//				string = string.replace(/\n+$/, '');
-
-//				if (left && right) {
-//					html += "<tr><td valign='top' width='50%' class='left-title'>" + left + "</td><td valign='top' class='right-title'>" + right + "</td></tr><tr><td colspan='2'><pre class='pre-code'>" + string + "</pre></td></tr>";
-//				}
 
 	},
 	getPropertyPageId: function() {return "context-view-options";}

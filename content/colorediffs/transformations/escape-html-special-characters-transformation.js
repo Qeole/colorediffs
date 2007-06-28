@@ -1,21 +1,22 @@
 //Should be proceeded first
 colorediffsGlobal.transformations["escape-html"] = {
 	run: function(il) {
-			il.files.forEach(function(file) {
-					file.chunks.forEach(function(chunk) {
-							var escapeHTML = function(line) {
-								if ( line ) {
-									line = colorediffsGlobal.escapeHTML(line);
-								}
-								return line;
-							}
+		function escapeChunk(chunk) {
+			var escapeHTML = function(line) {
+				if ( line ) {
+					line = colorediffsGlobal.escapeHTML(line);
+				}
+				return line;
+			}
 
-							chunk['old'].raw_code = chunk['old'].code;
-							chunk['old'].code = chunk['old'].code.map(escapeHTML);
-							chunk['new'].raw_code = chunk['new'].code;
-							chunk['new'].code = chunk['new'].code.map(escapeHTML);
-						});
-				});
-			return il;
+			chunk.raw_code = chunk.code;
+			chunk.code = chunk.code.map(escapeHTML);
+		}
+
+		il.files.forEach(function(file) {
+				file['old'].chunks.forEach(escapeChunk);
+				file['new'].chunks.forEach(escapeChunk);
+			});
+		return il;
 	}
 };

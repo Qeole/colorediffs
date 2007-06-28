@@ -163,7 +163,7 @@ colorediffsGlobal.parsers["unified"] = {
 		// date = [^\t]+
 		// version = [^\t]+
 		function getFileInfo(s) {
-			var r = s.match(/^[+-]{3}\s(.*)(?:\t(.*))?$/);
+			var r = s.match(/^[+-]{3}\s(.*?)(?:\t(.*))?$/);
 			return [r[1], r[2]];
 		}
 
