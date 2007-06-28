@@ -1,26 +1,31 @@
-function assertArray(prefix, target, source, func) {
-	assertEquals(prefix, target.length, source.length);
-	for (var i = 0; i < target.length; i++ ) {
-		func(prefix + " " + i, target[i], source[i]);
+function smartAssertEquals(prefix, target, source) {
+	assertEquals(prefix + " check types", typeof(target), typeof(source));
+
+	if (source instanceof Array) {
+		assert(prefix + "check types", target instanceof Array);
+		return assertEqualsArray(prefix, target, source);
+	} else {
+		switch (typeof (source)) {
+			case "object":
+				return assertEqualsObject(prefix, target, source);
+			default:
+				return assertEquals(prefix, target, source);
+		}
 	}
 }
 
-function assertParsedTree(prefix, target, source) {
-	assertEquals(prefix + "check log message", target.log, source.log);
-	assertArray(prefix + "check files", target.files, source.files, function(prefix, target, source) {
-			assertEquals(prefix + " file name", target.name, source.name);
-			assertEquals(prefix + " file title", target.title, source.title);
+function assertEqualsArray(prefix, target, source) {
+	assertEquals(prefix + " check length", target.length, source.length);
+	for (var i = 0; i < target.length; i++ ) {
+		smartAssertEquals(prefix + "[" + i + "]", target[i], source[i]);
+	}
+}
 
-			assertArray(prefix + " file chunks ", target.chunks, source.chunks, function(prefix, target, source) {
-					assertEquals(prefix + " old line", target.old.line, source.old.line);
-					assertEquals(prefix + " new line", source.new.line, target.new.line);
-					assertEquals(prefix + " old new line", (source.old.doesnt_have_new_line)?true:false, (target.old.doesnt_have_new_line)?true:false);
-					assertEquals(prefix + " new new line", (source.new.doesnt_have_new_line)?true:false, (target.new.doesnt_have_new_line)?true:false);
-
-					assertArray(prefix + " old code", target.old.code, source.old.code, assertEquals);
-					assertArray(prefix + " new code", target.new.code, source.new.code, assertEquals);
-				});
-		});
+function assertEqualsObject(prefix, target, source) {
+	for (var i in target) {
+		//check that target[i] equals source[i]
+		smartAssertEquals(prefix + " " + i, target[i], source[i]);
+	}
 }
 
 function testUnified() {
@@ -31,8 +36,8 @@ Log message
 
 File title
 ==============
---- filename
-+++ filename
+--- filename1
++++ filename2
 @@ -10,5 +10,5 @@
  line1
  line2
@@ -45,27 +50,31 @@ File title
 	code = code.trim("\n");
 
 	var res = me.parse(code);
-	assertParsedTree("test unified ", {
+	smartAssertEquals("test unified ", {
 		log:"Log message",
 		files:[
-			{name: "filename",
-			 title: "File title\n==============\n",
-			 chunks: [
-				 {old:
-					 {line:10,
-					  code:[
-						  "line1",
-						  "line2",
-						  "line3",
-						  null,
-						  "line5"]},
-				  new:{line:10,
-					   code:[
-						   "line1",
-						   "line2",
-						   "line3",
-						   "line4",
-						   "line5"]}}]}]},
+			{title: "File title",
+			 'new': {
+				name: "filename2",
+				chunks: [
+				  {line:10,
+				   code:[
+					   "line1",
+					   "line2",
+					   "line3",
+					   "line4",
+					   "line5"]}]},
+			 'old': {
+				name: "filename1",
+				chunks: [
+					{line:10,
+					 code:[
+						 "line1",
+						 "line2",
+						 "line3",
+						 null,
+						 "line5"]}]},
+		 }]},
 		res);
 }
 
@@ -76,6 +85,7 @@ function testUnifiedWineStandard() {
  Log message
 
 diff --git a/filename b/filename
+--------------------------------
 index 52352325345
 --- a/filename
 +++ b/filename
@@ -90,27 +100,30 @@ index 52352325345
 	code = code.trim("\n");
 
 	var res = me.parse(code);
-	assertParsedTree("test unified ", {
+	smartAssertEquals("test unified ", {
 		log:" Log message",
 		files:[
-			{name: "a/filename",
-			 title: "diff --git a/filename b/filename",
-			 chunks: [
-				 {old:
-					 {line:10,
-					  code:[
-						  "line1",
-						  "line2",
-						  "line3",
-						  null,
-						  "line5"]},
-				  new:{line:10,
-					   code:[
-						   "line1",
-						   "line2",
-						   "line3",
-						   "line4",
-						   "line5"]}}]}]},
+			{title: "diff --git a/filename b/filename",
+			 'new':{
+				name: "b/filename",
+				chunks:[{
+					line:10,
+					code:[
+						"line1",
+						"line2",
+						"line3",
+						"line4",
+						"line5"]}]},
+			 'old':{
+				name: "a/filename",
+				chunks: [
+					{line:10,
+					 code:[
+						 "line1",
+						 "line2",
+						 "line3",
+						 null,
+						 "line5"]}]}}]},
 		res);
 }
 
@@ -121,6 +134,7 @@ function testUnifiedNoNewLine() {
  Log message
 
 diff --git a/filename b/filename
+--------------------------------
 --- a/filename
 +++ b/filename
 @@ -10,5 +10,5 @@
@@ -136,26 +150,29 @@ diff --git a/filename b/filename
 	code = code.trim("\n");
 
 	var res = me.parse(code);
-	assertParsedTree("test unified ", {
+	smartAssertEquals("test unified ", {
 		log:" Log message",
 		files:[
-			{name: "a/filename",
-			 title: "diff --git a/filename b/filename",
-			 chunks: [
-				 {old:
+			{title: "diff --git a/filename b/filename",
+			 'old':{
+				name: "a/filename",
+				chunks: [
 					 {line:10,
 					  code:[
 						  "line2",
 						  "line3",
 						  "line41"],
-					  doesnt_have_new_line:true},
-				  new:
+					  doesnt_have_new_line:true}],
+				},
+			 'new':{
+				name: "b/filename",
+				chunks: [
 					 {line:10,
 					  code:[
 						  "line2",
 						  "line31",
 						  "line4"],
-					  doesnt_have_new_line:true}}]}]},
+					  doesnt_have_new_line:true}]}}]},
 		res);
 }
 
@@ -166,6 +183,7 @@ function testUnifiedNoNewLine2() {
  Log message
 
 diff --git a/filename b/filename
+--------------------------------
 --- a/filename
 +++ b/filename
 @@ -10,5 +10,5 @@
@@ -180,28 +198,31 @@ diff --git a/filename b/filename
 	code = code.trim("\n");
 
 	var res = me.parse(code);
-	assertParsedTree("test unified ", {
+	smartAssertEquals("test unified ", {
 		log:" Log message",
 		files:[
-			{name: "a/filename",
-			 title: "diff --git a/filename b/filename",
-			 chunks: [
-				 {old:
-					 {line:10,
-					  code:[
-						  "line2",
-						  "line3",
-						  "line4",
-						  null],
-					  doesnt_have_new_line:true},
-				  new:
-					 {line:10,
-					  code:[
-						   "line2",
-						   "line31",
-						   "line4",
-						   ""],
-					  doesnt_have_new_line:false}}]}]},
+			{title: "diff --git a/filename b/filename",
+			 'old':{
+				name: "a/filename",
+				chunks: [
+					{line:10,
+					 code:[
+						 "line2",
+						 "line3",
+						 "line4",
+						 null],
+					  doesnt_have_new_line:true}],
+			  },
+			  'new':{
+				name: "b/filename",
+				chunks: [
+					{line:10,
+					 code:[
+						 "line2",
+						 "line31",
+						 "line4",
+						 ""],
+							doesnt_have_new_line:false}]}}]},
 		res);
 }
 
@@ -212,6 +233,7 @@ function testUnifiedNoNewLine3() {
  Log message
 
 diff --git a/filename b/filename
+--------------------------------
 --- a/filename
 +++ b/filename
 @@ -10,5 +10,5 @@
@@ -226,28 +248,32 @@ diff --git a/filename b/filename
 	code = code.trim("\n");
 
 	var res = me.parse(code);
-	assertParsedTree("test unified ", {
+	smartAssertEquals("test unified ", {
 		log:" Log message",
 		files:[
-			{name: "a/filename",
-			 title: "diff --git a/filename b/filename",
-			 chunks: [
-				 {old:
-					 {line:10,
-					  code:[
-						  "line2",
-						  "line3",
-						  "line4",
-						  ""],
-					  doesnt_have_new_line:false},
-				  new:
-					 {line:10,
-					  code:[
-						  "line2",
-						  "line31",
-						  "line4",
-						  null],
-					  doesnt_have_new_line:true}}]}]},
+			{title: "diff --git a/filename b/filename",
+			 'old':{
+				name: "a/filename",
+				chunks: [
+					{line:10,
+					 code:[
+						 "line2",
+						 "line3",
+						 "line4",
+						 ""],
+					 doesnt_have_new_line:false}],
+				},
+			 'new':{
+				name: "b/filename",
+				chunks: [
+					{line:10,
+					 code:[
+						 "line2",
+						 "line31",
+						 "line4",
+						 null],
+					 doesnt_have_new_line:true}]}}],
+				},
 		res);
 }
 
@@ -281,27 +307,32 @@ diff -C2 -d -r1.1 -r1.2
 	code = code.trim("\n");
 
 	var res = me.parse(code);
-	assertParsedTree("test context ", {
+	smartAssertEquals("test context ", {
 		log:"Log message",
 		files:[
-			{name: "filename",
-			 title: "Index: filename\n===========\n",
-			 chunks: [
-				 {old:
-					 {line:10,
-					  code:[
-						  "line1",
-						  "line2",
-						  "line3",
-						  null,
-						  "line5"]},
-				  new:{line:10,
-					   code:[
-						   "line1",
-						   "line2",
-						   "line3",
-						   "line4",
-						   "line5"]}}]}]},
+			{title: "Index: filename\n===========\n",
+			 'old':{
+				name: "filename",
+				chunks: [
+					{line:10,
+					 code:[
+						 "line1",
+						 "line2",
+						 "line3",
+						 null,
+						 "line5"]}],
+			 },
+			 'new':{
+				name: "filename",
+				chunks: [
+					{line:10,
+					 code:[
+						 "line1",
+						 "line2",
+						 "line3",
+						 "line4",
+						 "line5"]}],
+			 }}]},
 		res);
 }
 
@@ -331,27 +362,32 @@ diff -C2 -d -r1.1 -r1.2
 	code = code.ltrim("\n");
 
 	var res = me.parse(code);
-	assertParsedTree("test context ", {
+	smartAssertEquals("test context ", {
 		log:"Log message",
 		files:[
-			{name: "filename",
-			 title: "Index: filename\n===========\n",
-			 chunks: [
-				 {old:
-					 {line:10,
-					  code:[
-						  "line1",
-						  "line2",
-						  null,
-						  null,
-						  "line5"]},
-				  new:{line:10,
-					   code:[
-						   "line1",
-						   "line2",
-						   "line3",
-						   "line4",
-						   "line5"]}}]}]},
+			{title: "Index: filename\n===========\n",
+			 'old':{
+				name: "filename",
+				chunks: [
+					{line:10,
+					 code:[
+						 "line1",
+						 "line2",
+						 null,
+						 null,
+						 "line5"]}],
+			 },
+			 'new':{
+				name: "filename",
+				chunks: [
+					{line:10,
+					 code:[
+						 "line1",
+						 "line2",
+						 "line3",
+						 "line4",
+						 "line5"]}],
+		}}]},
 		res);
 }
 
@@ -387,31 +423,36 @@ diff -C2 -d -r1.1 -r1.2
 	code = code.trim("\n");
 
 	var res = me.parse(code);
-	assertParsedTree("test context ", {
+	smartAssertEquals("test context ", {
 		log:"Log message",
 		files:[
-			{name: "filename",
-			 title: "Index: filename\n===========\n",
-			 chunks: [
-				 {old:
-					 {line:10,
-					  code:[
-						  "line1",
-						  "line21",
-						  null,
-						  "line3",
-						  "line4",
-						  "line5",
-						  null]},
-				  new:{line:10,
-					   code:[
-						   "line1",
-						   "line11",
-						   "line2",
-						   "line3",
-						   null,
-						   "line5",
-						   "line6"]}}]}]},
+			{title: "Index: filename\n===========\n",
+			 'old':{
+				name: "filename",
+				chunks: [
+					{line:10,
+					 code:[
+						 "line1",
+						 "line21",
+						 null,
+						 "line3",
+						 "line4",
+						 "line5",
+						 null]}],
+			 },
+			 'new':{
+				name: "filename",
+				chunks: [
+					{line:10,
+					 code:[
+						 "line1",
+						 "line11",
+						 "line2",
+						 "line3",
+						 null,
+						 "line5",
+						 "line6"]}]
+		}}]},
 		res);
 }
 
@@ -446,32 +487,36 @@ diff -C2 -d -r1.1 -r1.2
 	code = code.ltrim("\n");
 
 	var res = me.parse(code);
-	assertParsedTree("test context ", {
+	smartAssertEquals("test context ", {
 		log:"Log message",
 		files:[
-			{name: "filename",
-			 title: "Index: filename\n===========\n",
-			 chunks: [
-				 {old:
-					 {line:10,
-					  code:[
-						  "line1",
-						  "line2",
-						  "line3",
-						  "line5",
-						  null,
-						  null],
-					  doesnt_have_new_line:true},
-				  new:{line:10,
-					   code:[
-						   "line1",
-						   "line2",
-						   "line3",
-						   "line4",
-						   "line5",
-						   ""],
-					  doesnt_have_new_line:false},
-				 }]}]},
+			{title: "Index: filename\n===========\n",
+			 'old': {
+				name: "filename",
+				chunks: [
+					{line:10,
+					 code:[
+						 "line1",
+						 "line2",
+						 "line3",
+						 "line5",
+						 null,
+						 null],
+					 doesnt_have_new_line:true}],
+			 },
+			 'new': {
+				name: "filename",
+				chunks: [
+					{line:10,
+					 code:[
+						 "line1",
+						 "line2",
+						 "line3",
+						 "line4",
+						 "line5",
+						 ""],
+					 doesnt_have_new_line:false}],
+		}}]},
 		res);
 }
 
@@ -500,28 +545,32 @@ diff -C2 -d -r1.1 -r1.2
 	code = code.trim("\n");
 
 	var res = me.parse(code);
-	assertParsedTree("test context ", {
+	smartAssertEquals("test context ", {
 		log:"Log message",
 		files:[
-			{name: "filename",
-			 title: "Index: filename\n===========\n",
-			 chunks: [
-				 {old:
-					 {line:10,
-					  code:[
-						  "line4",
-						  "line5",
-						  "line6",
-						  null],
-					  doesnt_have_new_line:true},
-				  new:{line:10,
-					   code:[
-						   "line4",
-						   "line5",
-						   null,
-						   ""],
-					  doesnt_have_new_line:false},
-				 }]}]},
+			{title: "Index: filename\n===========\n",
+			 'old': {
+				name: "filename",
+				chunks: [
+					{line:10,
+					 code:[
+						 "line4",
+						 "line5",
+						 "line6",
+						 null],
+					 doesnt_have_new_line:true}],
+				},
+			 'new': {
+				name: "filename",
+				chunks: [
+					{line:10,
+					 code:[
+						 "line4",
+						 "line5",
+						 null,
+						 ""],
+					 doesnt_have_new_line:false}],
+			 }}]},
 		res);
 }
 
@@ -553,28 +602,32 @@ diff -C2 -d -r1.1 -r1.2
 	code = code.trim("\n");
 
 	var res = me.parse(code);
-	assertParsedTree("test context ", {
+	smartAssertEquals("test context ", {
 		log:"Log message",
 		files:[
-			{name: "filename",
-			 title: "Index: filename\n===========\n",
-			 chunks: [
-				 {old:
+			{title: "Index: filename\n===========\n",
+			 'old': {
+				name: "filename",
+				chunks: [
 					 {line:10,
 					  code:[
 						  "line3",
 						  "line4",
 						  "line5",
 						  ""],
-					  doesnt_have_new_line:false},
-				  new:{line:10,
-					   code:[
-						   "line3",
-						   "line4",
-						   "line5",
-						   null],
-					  doesnt_have_new_line:true},
-				 }]}]},
+					  doesnt_have_new_line:false}],
+			 },
+			 'new': {
+				name: "filename",
+				chunks: [
+					{line:10,
+					 code:[
+						 "line3",
+						 "line4",
+						 "line5",
+						 null],
+					 doesnt_have_new_line:true}],
+		}}]},
 		res);
 }
 
@@ -603,27 +656,31 @@ diff -C2 -d -r1.1 -r1.2
 	code = code.trim("\n");
 
 	var res = me.parse(code);
-	assertParsedTree("test context ", {
+	smartAssertEquals("test context ", {
 		log:"Log message",
 		files:[
-			{name: "filename",
-			 title: "Index: filename\n===========\n",
-			 chunks: [
-				 {old:
-					 {line:10,
-					  code:[
-						  "line2",
-						  "line3",
-						  null,
-						  ""],
-					  doesnt_have_new_line:false},
-				  new:{line:10,
-					   code:[
-						   "line2",
-						   "line3",
-						   "line4",
-						   null],
-					  doesnt_have_new_line:true},
-				 }]}]},
+			{title: "Index: filename\n===========\n",
+			 'old':{
+				name: "filename",
+				chunks: [
+					{line:10,
+					 code:[
+						 "line2",
+						 "line3",
+						 null,
+						 ""],
+					 doesnt_have_new_line:false}],
+			 },
+			 'new':{
+				name: "filename",
+				chunks: [
+					{line:10,
+					 code:[
+						 "line2",
+						 "line3",
+						 "line4",
+						 null],
+					 doesnt_have_new_line:true}],
+		}}]},
 		res);
 }
