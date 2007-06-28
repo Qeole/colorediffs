@@ -95,7 +95,7 @@ colorediffsGlobal.parsers["unified"] = {
 
 		// file = title file_info chunks | file_info chunks | "--- NEW FILE:" "\t" file_name " ---" new_file
 		function file(result) {
-			var file = {}
+			var file = {'old':{}, 'new':{}};
 			if ( _test(/^--- NEW FILE:/)) {
 				file.new_filename = _get().match(/^--- NEW FILE:\t(.*) ---$/)[1];
 				new_file(file);
@@ -131,7 +131,7 @@ colorediffsGlobal.parsers["unified"] = {
 			} while (!_test(/^[-=]+$/));
 
 			_next();
-			file.title = title;
+			file.title = title.trim("\n");
 			return true;
 		}
 
@@ -144,11 +144,11 @@ colorediffsGlobal.parsers["unified"] = {
 				var newFileInfo = getFileInfo(_get());
 				_next();
 
-				file.old_filename = oldFileInfo[0];
-				file.old_version = oldFileInfo[1];
+				file['old'].name = oldFileInfo[0];
+				file['old'].version = oldFileInfo[1];
 
-				file.new_filename = newFileInfo[0];
-				file.new_version = newFileInfo[1];
+				file['new'].name = newFileInfo[0];
+				file['new'].version = newFileInfo[1];
 				return true;
 			} else {
 				return false;
@@ -188,25 +188,28 @@ colorediffsGlobal.parsers["unified"] = {
 
 		// chunks = chunk | chunk chunks
 		function chunks(file) {
-			file.chunks = [];
+			file['old'].chunks = [];
+			file['new'].chunks = [];
 			while( _try(function() {return chunk(file);}) ) {
 			}
 		}
 
 		// chunk = anchor diff_code
 		function chunk(file) {
-			var chunk = {'old':{code:[]}, 'new':{code:[]}};
-			anchor(chunk);
-			diff_code(chunk);
-			file.chunks.push(chunk);
+			var old_chunk = {code:[]};
+			var new_chunk = {code:[]};
+			anchor(old_chunk, new_chunk);
+			diff_code(old_chunk, new_chunk);
+			file['old'].chunks.push(old_chunk);
+			file['new'].chunks.push(new_chunk);
 			return true;
 		}
 
 		// anchor = @@ \-\d+(,\d+)? \+\d+(,\d+)? @@
-		function anchor(chunk) {
+		function anchor(old_chunk, new_chunk) {
 			var regExpRes = _get().match(/^@@\s+\-(\d+)(?:\,\d+)?\s+\+(\d+)(?:\,\d+)?\s+@@/);
-			chunk['old'].line = Number(regExpRes[1]);
-			chunk['new'].line = Number(regExpRes[2]);
+			old_chunk.line = Number(regExpRes[1]);
+			new_chunk.line = Number(regExpRes[2]);
 			if (_test(/@@$/)) {
 				_next();
 			} else {
@@ -218,53 +221,53 @@ colorediffsGlobal.parsers["unified"] = {
 
 		// diff_code = diff_code_line | diff_code_line diff_code
 		// diff_code_line = " " .* | "+" .* | "-" .*
-		function diff_code(chunk) {
+		function diff_code(old_chunk, new_chunk) {
 			function makeEqualLength() {
-				while ( chunk['old'].code.length < chunk['new'].code.length ) {
-					chunk['old'].code.push(null);
+				while ( old_chunk.code.length < new_chunk.code.length ) {
+					old_chunk.code.push(null);
 				}
-				while ( chunk['old'].code.length > chunk['new'].code.length ) {
-					chunk['new'].code.push(null);
+				while ( old_chunk.code.length > new_chunk.code.length ) {
+					new_chunk.code.push(null);
 				}
 			}
 
-			chunk['old'].doesnt_have_new_line = false;
-			chunk['new'].doesnt_have_new_line = false;
+			old_chunk.doesnt_have_new_line = false;
+			new_chunk.doesnt_have_new_line = false;
 
-			var prev_line = "";
+			var prev_line = null;
 
 			while(true) {
 				if (_test(/^\-(.*)$/)) {
-					chunk['old'].code.push(_get().substring(1));
+					old_chunk.code.push(_get().substring(1));
 				} else if (_test(/^\+(.*)$/)) {
-					chunk['new'].code.push(_get().substring(1));
+					new_chunk.code.push(_get().substring(1));
 				} else if (_test(/^\\ No newline at end of file$/)) {
 					//check what sign previous line has if there are any
-					if ( i > 0 ) {
+					if ( prev_line != null ) {
 						if (/^\-/.test(prev_line)) {
-							chunk['old'].doesnt_have_new_line = true;
+							old_chunk.doesnt_have_new_line = true;
 						} else if (/^\+/.test(prev_line)) {
-							chunk['new'].doesnt_have_new_line = true;
+							new_chunk.doesnt_have_new_line = true;
 						}
 					}
 				} else if (_test(/^ (.*)$/)) {
 					makeEqualLength();
-					chunk['old'].code.push(_get().substring(1));
-					chunk['new'].code.push(_get().substring(1));
+					old_chunk.code.push(_get().substring(1));
+					new_chunk.code.push(_get().substring(1));
 				} else {
 					break;
 				}
 				prev_line = _get();
-				_next();
+				try { _next(); } catch (e) {break;}
 			}
 			makeEqualLength();
 
-			if (chunk['old'].doesnt_have_new_line && !chunk['new'].doesnt_have_new_line) {
-				chunk['old'].code.push(null);
-				chunk['new'].code.push("");
-			} else if (chunk['new'].doesnt_have_new_line && !chunk['old'].doesnt_have_new_line) {
-				chunk['new'].code.push(null);
-				chunk['old'].code.push("");
+			if (old_chunk.doesnt_have_new_line && !new_chunk.doesnt_have_new_line) {
+				old_chunk.code.push(null);
+				new_chunk.code.push("");
+			} else if (new_chunk.doesnt_have_new_line && !old_chunk.doesnt_have_new_line) {
+				new_chunk.code.push(null);
+				old_chunk.code.push("");
 			}
 		}
 
