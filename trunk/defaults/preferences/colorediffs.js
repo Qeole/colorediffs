@@ -39,7 +39,7 @@ pref("diffColorer.sbs_log_bg", "lightgray");
 pref("diffColorer.sbs_file-diff_fg", "white");
 pref("diffColorer.sbs_file-diff_bg", "#DDFF88");
 pref("diffColorer.sbs_precode_fg", "gray");
-pref("diffColorer.sbs_precode_bg", "white");
+pref("diffColorer.sbs_precode_bg", "#DDFF88");
 pref("diffColorer.sbs_left-title_fg", "white");
 pref("diffColorer.sbs_left-title_bg", "#AAFF88");
 pref("diffColorer.sbs_right-title_fg", "white");

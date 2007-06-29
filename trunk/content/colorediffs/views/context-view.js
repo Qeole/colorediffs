@@ -1,20 +1,7 @@
 
 colorediffsGlobal.views["context"] = {
  render: function(il, pref, dom) {
-		function chunksMap(file, func) {
-			var result = [];
-			for (var i = 0; i < file['new'].chunks.length; i++) {
-				result.push(func(file['old'].chunks[i], file['new'].chunks[i]));
-			}
-
-			return result;
-		}
-
-		function createCodeElement(side, code) {
-			var e = dom.createElement("pre", {'class':side}, code);
-			e.addEventListener("scroll", function(evt) {colorediffsGlobal.scrollCallback(evt);}, false);
-			return e;
-		}
+		var me = colorediffsGlobal;
 
 		return [
 			function() {
@@ -32,7 +19,7 @@ colorediffsGlobal.views["context"] = {
 				stylecontent += colorStyle("precode", "diffColorer.c_precode");
 				//stylecontent += ".addline {color: red;}\n";
 				stylecontent += "pre {font-family:monospace;}\n";
-				stylecontent += ".linetag, .diffs, .addline, .delline, .precode {margin:0;}\n";
+				stylecontent += ".title, .linetag, .diffs, .addline, .delline, .precode {margin:0;}\n";
 				return dom.createElement("style", null, stylecontent);
 			}(),
 			dom.createDocumentFragment(
@@ -42,11 +29,11 @@ colorediffsGlobal.views["context"] = {
 							"div", {'class':'file-diff', title:file['new'].name, id:file['new'].name, width:"100%"},
 							dom.createElement(
 								"pre", {'class':'title'},
-								file.title
+								file.title + "\n======================================="
 							),
 							dom.createElement(
 								"pre", {'class':'precode'},
-								file.additional_file_info
+								file.additional_info
 							),
 							dom.createElement(
 								"pre", {'class':'delline'},
@@ -56,7 +43,7 @@ colorediffsGlobal.views["context"] = {
 								"pre", {'class':'addline'},
 								"--- " + file['new'].name + ((file['new'].version) ? "\t" + file['new'].version : "")
 							),
-							chunksMap(file, function(old_chunk, new_chunk) {
+							me.ilUtils.chunksMap(file, function(old_chunk, new_chunk) {
 									var oldCodeDecorated = [];
 									var newCodeDecorated = [];
 

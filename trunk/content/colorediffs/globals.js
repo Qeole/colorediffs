@@ -25,7 +25,12 @@ colorediffsGlobal.getMessagePane = function() {
 }
 
 colorediffsGlobal.isActive = function(m) {
-	return colorediffsGlobal.$("colorediff-mode").value;
+	var node = colorediffsGlobal.$("colorediff-mode");
+	if ( node ) {
+		return node.value;
+	} else {
+		return false;
+	}
 }
 
 colorediffsGlobal.setActive = function(m) {
