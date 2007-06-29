@@ -41,6 +41,10 @@ cp content\colorediffs\parsers\context-parser.js build\chrome\content\colorediff
 cp content\colorediffs\parsers\unified-parser.js build\chrome\content\colorediffs\parsers
 
 mkdir build\chrome\content\colorediffs\transformations
+cp content\colorediffs\transformations\composite-transformation.js build\chrome\content\colorediffs\transformations
+cp content\colorediffs\transformations\make-lines-equal-length.js build\chrome\content\colorediffs\transformations
+cp content\colorediffs\transformations\find-common-name.js build\chrome\content\colorediffs\transformations
+cp content\colorediffs\transformations\add-title.js build\chrome\content\colorediffs\transformations
 cp content\colorediffs\transformations\main-transformation.js build\chrome\content\colorediffs\transformations
 cp content\colorediffs\transformations\escape-html-special-characters-transformation.js build\chrome\content\colorediffs\transformations
 cp content\colorediffs\transformations\replace-file-names-transformation.js build\chrome\content\colorediffs\transformations
