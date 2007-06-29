@@ -110,7 +110,7 @@ colorediffsGlobal.parsers["context"] = {
 				res_file['new'].name = res_file['old'].name = regExpRes[1];
 			}
 
-			res_file.precode = parts[0];
+			res_file.additional_file_info = parts[0];
 			res_file['old'].chunks = [];
 			res_file['new'].chunks = [];
 

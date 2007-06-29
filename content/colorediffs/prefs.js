@@ -68,5 +68,6 @@ colorediffsGlobal.Pref = function (prefModel) {
 	createCharGetSet("debugDir", "diffColorer.debug-dir");
 	createBoolGetSet("showWhiteSpace", "diffColorer.show-whitespace");
 	createBoolGetSet("showToolbar", "diffColorer.show-toolbar");
+	createBoolGetSet("instantApply", "browser.preferences.instantApply");
 
 }

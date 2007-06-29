@@ -62,6 +62,8 @@ colorediffsGlobal.colorediffsToolbar = new function() {
 				//update combobox
 				getViewModeNode().selectedItem = pref.mode.get();
 			}
+		} else {
+			getToolbarNode().hidden=true;
 		}
 	}
 }

@@ -43,6 +43,14 @@
 					}
 				]]></setter>
 			</property>
+			<property name="value">
+				<getter><![CDATA[
+					return this.selectedItem;
+				]]></getter>
+				<setter><![CDATA[
+					this.selectedItem = val;
+				]]></setter>
+			</property>
 		</implementation>
 	</binding>
 
@@ -57,25 +65,19 @@
 		</content>
 		<implementation>
 			<constructor><![CDATA[
-				/*var button = document.getAnonymousNodes(this)[0];
-				button.label = "ertetertw";
-				/*if (button.hasAttribute('preference')) {
-					var pref = document.getElementById(button.getAttribute('preference'));
-					this.color = pref.valueFromPreferences;
-				}*/
 			]]></constructor>
 			<property name="color">
 				<getter><![CDATA[
 					return document.getAnonymousNodes(this)[0].firstChild.style.backgroundColor;
 				]]></getter>
 				<setter><![CDATA[
-					/*dump(document.getAnonymousNodes(this)[0].firstChild);*/
 					document.getAnonymousNodes(this)[0].firstChild.style.backgroundColor = val;
-					/*dump(val);*/
-					//document.getAnonymousNodes(this)[0].style.color = val;
-					//document.getAnonymousNodes(this)[0].setAttribute('label', val);
-					//dump(document.getAnonymousNodes(this)[0].label);
 				]]></setter>
+			</property>
+			<property name="value">
+				<getter><![CDATA[
+					return this.color;
+				]]></getter>
 			</property>
 		</implementation>
 		<handlers>

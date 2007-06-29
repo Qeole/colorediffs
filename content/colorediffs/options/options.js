@@ -4,7 +4,31 @@ if (!colorediffsGlobal) {
 
 colorediffsGlobal.initOptions = function() {
 	var me = colorediffsGlobal;
-	var internalPrefs = new colorediffsGlobal.OptionsPrefModel(colorediffsGlobal.getPrefs());
+
+	var globalPrefs = new colorediffsGlobal.Pref(colorediffsGlobal.getPrefs());
+
+	if ( globalPrefs.instantApply.get() ) {
+		//repaint all the instances at every change.
+		var internalPrefs = new colorediffsGlobal.OptionsPrefCallbackModel(
+			colorediffsGlobal.getPrefs(),
+			function() {
+				updatePreview();
+				//repaint actual mail message
+				var observerService =
+					Components.classes["@mozilla.org/observer-service;1"]
+					.getService(Components.interfaces.nsIObserverService);
+				observerService.notifyObservers(null, "colored-diff-update", null);
+			});
+	} else {
+		//Store changes and commit them only by OK button.
+		//Repaint only preview
+		var internalPrefs = new colorediffsGlobal.OptionsPrefCallbackModel(
+			new colorediffsGlobal.OptionsPrefModel(colorediffsGlobal.getPrefs()),
+			function() {
+				updatePreview();
+			});
+	}
+
 	var prefs = new colorediffsGlobal.Pref(internalPrefs);
 
 	var getNodeGetter = function (name) {
@@ -26,7 +50,7 @@ colorediffsGlobal.initOptions = function() {
 Log message
 
 File title
-==============
+===============================
 --- filename
 +++ filename
 @@ -10,4 +10,5 @@
@@ -50,23 +74,32 @@ File title
 			var il = {
 				log:"Log message",
 				files:[
-					{name: "filename",
-					 title: "File title\n==============\n",
-					 chunks: [
-						{'old':{line:10,
-						  code:[
-							  " line1",
-							  "	line2",
-							  " line3",
-							  null,
-							  "	line5"]},
-						 'new':{line:10,
-						  code:[
-							  " line1",
-							  "	line2",
-							  " line3",
-							  " line4",
-							  "	line5"]}}]}]};
+					{title: "File title",
+					 additional_info:null,
+					 'old': {
+						name: "filename",
+						chunks: [
+							{line:10,
+							 code:[
+								 " line1",
+								 "	line2",
+								 " line3",
+								 null,
+								 "	line5"],
+							 doesnt_have_new_line:false}]
+					 },
+					 'new': {
+						name: "filename",
+						chunks: [
+							{line:10,
+							 code:[
+								 " line1",
+								 "	line2",
+								 " line3",
+								 " line4",
+								 "	line5"],
+							 doesnt_have_new_line:false}]
+					 }}]};
 
 			var doc = getPreviewNode().contentDocument;
 			var dom = new colorediffsGlobal.domHelper(doc);
@@ -90,9 +123,6 @@ File title
 	colorediffsGlobal.options =	{
 		checkOptions : function() {
 			savePrefs();
-			//repaint actual mail message
-			var observerService = Components.classes["@mozilla.org/observer-service;1"].getService(Components.interfaces.nsIObserverService);
-			observerService.notifyObservers(null, "colored-diff-update", null);
 			return true;
 		},
 
@@ -141,8 +171,6 @@ File title
 					internalPrefs.setCharPref(pref.name, value);
 					break;
 			}
-
-			updatePreview();
 		}
 
 	}

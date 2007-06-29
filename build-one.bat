@@ -33,6 +33,7 @@ cp content\colorediffs\options\options.css build\chrome\content\colorediffs\opti
 cp content\colorediffs\options\options.js build\chrome\content\colorediffs\options\
 cp content\colorediffs\options\options.xul build\chrome\content\colorediffs\options\
 cp content\colorediffs\options\options-pref.js build\chrome\content\colorediffs\options\
+cp content\colorediffs\options\options-pref-callback.js build\chrome\content\colorediffs\options\
 
 mkdir build\chrome\content\colorediffs\parsers
 cp content\colorediffs\parsers\main-parser.js build\chrome\content\colorediffs\parsers
