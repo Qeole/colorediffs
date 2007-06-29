@@ -22,8 +22,10 @@ colorediffsGlobal.initOptions = function() {
 	} else {
 		//Store changes and commit them only by OK button.
 		//Repaint only preview
+		var cachedPrefs = new colorediffsGlobal.OptionsPrefModel(colorediffsGlobal.getPrefs());
+
 		var internalPrefs = new colorediffsGlobal.OptionsPrefCallbackModel(
-			new colorediffsGlobal.OptionsPrefModel(colorediffsGlobal.getPrefs()),
+			cachedPrefs,
 			function() {
 				updatePreview();
 			});
@@ -40,7 +42,15 @@ colorediffsGlobal.initOptions = function() {
 	var getPreviewNode = getNodeGetter('previewbox');
 
 	var savePrefs = function() {
-		internalPrefs.saveToModel();
+		if (cachedPrefs) {
+			cachedPrefs.saveToModel();
+
+			//repaint actual mail message
+			var observerService =
+				Components.classes["@mozilla.org/observer-service;1"]
+				.getService(Components.interfaces.nsIObserverService);
+			observerService.notifyObservers(null, "colored-diff-update", null);
+		} //else everything is saved and updated already
 	}
 
 	var updatePreview = function() {
