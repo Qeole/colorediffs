@@ -1,6 +1,10 @@
-colorediffsGlobal.transformations["show-whitespaces"] = {
-	run: function(il, pref) {
-		function replaceWhitespaces(line, i) {
+colorediffsGlobal.transformations.composite.members["show-whitespaces"] = {
+	init: function(registrator, pref) {
+		if (pref.showWhiteSpace.get()) {
+			registrator.addLineListener(2, replaceWhitespaces);
+		}
+
+		function replaceWhitespaces(line) {
 			if ( line ) {
 				line = line.replace(" ", "&middot;", "g");
 				var offsetCorrector = 0;
@@ -16,18 +20,5 @@ colorediffsGlobal.transformations["show-whitespaces"] = {
 			}
 			return line;
 		}
-
-		function replaceWhitespacesInChunk(chunk) {
-			chunk.code = chunk.code.map(replaceWhitespaces);
-		}
-
-		if (pref.showWhiteSpace.get()) {
-			il.files.forEach(function(file) {
-					file['old'].chunks.forEach(replaceWhitespacesInChunk);
-					file['new'].chunks.forEach(replaceWhitespacesInChunk);
-			});
-		}
-
-		return il;
 	}
 };

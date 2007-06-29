@@ -15,6 +15,10 @@
 	<script type="application/x-javascript" src="chrome://colorediffs/content/parsers/context-parser.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/parsers/main-parser.js"/>
 
+	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/composite-transformation.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/add-title.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/find-common-name.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/make-lines-equal-length.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/escape-html-special-characters-transformation.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/replace-file-names-transformation.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/show-whitespaces-transformation.js"/>

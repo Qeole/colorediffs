@@ -1,22 +1,12 @@
-//Should be proceeded first
-colorediffsGlobal.transformations["escape-html"] = {
-	run: function(il) {
-		function escapeChunk(chunk) {
-			var escapeHTML = function(line) {
-				if ( line ) {
-					line = colorediffsGlobal.escapeHTML(line);
-				}
-				return line;
+colorediffsGlobal.transformations.composite.members["escape-html"] = {
+	init: function(registrator, pref) {
+		function escapeHTML(line) {
+			if ( line ) {
+				line = colorediffsGlobal.escapeHTML(line);
 			}
-
-			chunk.raw_code = chunk.code;
-			chunk.code = chunk.code.map(escapeHTML);
+			return line;
 		}
 
-		il.files.forEach(function(file) {
-				file['old'].chunks.forEach(escapeChunk);
-				file['new'].chunks.forEach(escapeChunk);
-			});
-		return il;
+		registrator.addLineListener(1, escapeHTML);
 	}
 };

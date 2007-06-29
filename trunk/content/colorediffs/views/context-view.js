@@ -26,7 +26,7 @@ colorediffsGlobal.views["context"] = {
 				dom.createElement("pre", {id:'log', 'class':'log'}, il.log),
 				il.files.map(function(file) {
 						return dom.createElement(
-							"div", {'class':'file-diff', title:file['new'].name, id:file['new'].name, width:"100%"},
+							"div", {'class':'file-diff', title:file.common_name, id:file.id, width:"100%"},
 							dom.createElement(
 								"pre", {'class':'title'},
 								file.title + "\n======================================="
