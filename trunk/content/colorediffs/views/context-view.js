@@ -35,15 +35,51 @@ colorediffsGlobal.views["context"] = {
 								"pre", {'class':'precode'},
 								file.additional_info
 							),
-							dom.createElement(
-								"pre", {'class':'delline'},
-								"*** " + file['old'].name + ((file['old'].version) ? "\t" + file['old'].version : "")
-							),
-							dom.createElement(
-								"pre", {'class':'addline'},
-								"--- " + file['new'].name + ((file['new'].version) ? "\t" + file['new'].version : "")
-							),
+							function () {
+								if (file['old'].chunks || file['new'].chunks) {
+									var old_name;
+									var new_name;
+									var old_version;
+									var new_version;
+
+									if ( file['old'] && file['old'].name ) {
+										old_name = file['old'].name;
+										old_version = (file['old'].version) ? "\t" + file['old'].version : "";
+									} else {
+										old_name = file['new'].name;
+										old_version = "";
+									}
+
+									if ( file['new'] && file['new'].name ) {
+										new_name = file['new'].name;
+										new_version = (file['new'].version) ? "\t" + file['new'].version : "";
+									} else {
+										new_name = file['old'].name;
+										new_version = "";
+									}
+
+
+									return [dom.createElement(
+											"pre", {'class':'delline'},
+											"*** " + old_name + old_version
+										),
+										dom.createElement(
+											"pre", {'class':'addline'},
+											"--- " + new_name + new_version
+										)];
+								} else {
+									return null;
+								}
+							}(),
 							me.ilUtils.chunksMap(file, function(old_chunk, new_chunk) {
+									if (old_chunk == null) {
+										old_chunk = gen_empty_chunk(new_chunk);
+									}
+
+									if (new_chunk == null) {
+										new_chunk = gen_empty_chunk(old_chunk);
+									}
+
 									var oldCodeDecorated = [];
 									var newCodeDecorated = [];
 
@@ -167,6 +203,10 @@ colorediffsGlobal.views["context"] = {
 										}
 									];
 								}
+							),
+							dom.createElement(
+								"pre", {},
+								""
 							)
 						);
 					}
@@ -174,6 +214,17 @@ colorediffsGlobal.views["context"] = {
 			)
 		];
 
+
+		function gen_empty_chunk(oposite_chunk) {
+			var chunk = {line:0, code:[]};
+			for (var i = 0; i < oposite_chunk.code.length; i++ ) {
+				chunk.code.push(null);
+			}
+			return chunk;
+		}
+
+		//Seriously, that bug is annoying.
+		return null;
 	},
 	getPropertyPageId: function() {return "context-view-options";}
 };

@@ -26,6 +26,21 @@ colorediffsGlobal.parsers["unified"] = {
 			}
 		}
 
+		function _should(f) {
+			if (!f) {
+				throw "ASSERT FAILED";
+			}
+		}
+
+		function _try_many() {
+			for (var i = 0; i < arguments.length; i++) {
+				if (_try(arguments[i])) {
+					return true;
+				}
+			}
+			return false;
+		}
+
 		function _next() {
 			curr_line++;
 			if (curr_line >= lines.length) {
@@ -96,23 +111,68 @@ colorediffsGlobal.parsers["unified"] = {
 		// file = title file_info chunks | file_info chunks | "--- NEW FILE:" "\t" file_name " ---" new_file
 		function file(result) {
 			var file = {'old':{}, 'new':{}};
-			if ( _test(/^--- NEW FILE:/)) {
-				file.new_filename = _get().match(/^--- NEW FILE:\t(.*) ---$/)[1];
-				new_file(file);
 
+			function _(func) { return function() { return func(file, result); } };
+
+			if (_try_many(
+					_(normal_file),
+					_(cvs_new_file),
+					_(cvs_deleted_file),
+					_(cvs_binary_file),
+					_(svn_binary_file)
+				)) {
 				result.files.push(file);
+				return true;
 			} else {
-				_try(function() {return title(file);});
-				if (_try(function() {return file_info(file);})) {
-					chunks(file);
-
-					result.files.push(file);
-					return true;
-				} else {
-					return false;
-				}
+				return false;
 			}
+		}
+
+		function normal_file(file) {
+			function _(func) { return function() { return func(file); } };
+
+			_try(_(title));
+			_try(_(additional_file_info));
+			_should(file_info(file));
+			_should(chunks(file));
+			return true;
+		}
+
+		function cvs_new_file(file, result) {
+			_should(_test(/^--- NEW FILE:\t.* ---$/));
+			var name = _get().match(/^--- NEW FILE:\t(.*) ---$/)[1];
+			_next();
+			_should(new_file(file, result, name));
+			return true;
+		}
+
+		function cvs_binary_file(file) {
 			return false;
+		}
+
+		function cvs_deleted_file(file) {
+			_should(_test(/^--- .* DELETED ---$/));
+			file['old'].name = _get().match(/^--- (.*) DELETED ---$/)[1];
+			_next();
+			return true;
+		}
+
+		function svn_binary_file(file) {
+			_should(title(file));
+			_should(additional_file_info(file));
+
+			extract_file_name_from_title(file);
+
+			return true;
+		}
+
+		function extract_file_name_from_title(file) {
+			var r = file.title.match(/([\w-\/]+\.[\w]+)/);
+			if ( r[1] ) {
+				file['new'].name = file['old'].name = r[1];
+			} else {
+				file['new'].name = file['old'].name = "";
+			}
 		}
 
 		// title = normal_line "==========================" | normal_line "---------------------------" | normal_line title
@@ -137,7 +197,6 @@ colorediffsGlobal.parsers["unified"] = {
 
 		// file_info = additional_file_info old_file_info new_file_info | old_file_info new_file_info
 		function file_info(file) {
-			_try(function () {return additional_file_info(file);});
 			if (_test(/^---/)) {
 				var oldFileInfo = getFileInfo(_get());
 				_next();
@@ -172,8 +231,8 @@ colorediffsGlobal.parsers["unified"] = {
 			var max_additional_info_size = 7; //TODO: get this from prefs
 			var additional_file_info = "";
 			var num = 0;
-			while ( !_test(/^---/)) {
-				if (num >= max_additional_info_size || _test(blank_line())) {
+			while ( !_test(/^---/) && !_test(blank_line())) {
+				if (num >= max_additional_info_size) {
 					return false;
 				}
 
@@ -192,6 +251,8 @@ colorediffsGlobal.parsers["unified"] = {
 			file['new'].chunks = [];
 			while( _try(function() {return chunk(file);}) ) {
 			}
+
+			return file['old'].chunks.length == file['new'].chunks.length && file['new'].chunks.length > 0;
 		}
 
 		// chunk = anchor diff_code
@@ -271,11 +332,68 @@ colorediffsGlobal.parsers["unified"] = {
 			}
 		}
 
-		return diff();
+		function new_file(f, result, name) {
+			var code = [];
+			try {
+				while(true) {
+					while(!_test(blank_line())) {
+						code.push(_get());
+						_next();
+					}
+					code.push(_get());
+					_next();
+
+					var temp_result = {files: []};
+
+					if (_try(function() { return file(temp_result); })) {
+						break;
+					}
+				}
+			} catch (e) {
+			}
+
+			code.pop();
+
+			var new_file = {
+				'new': {
+					name: name,
+					chunks: [{
+						line:1,
+						code: code
+					}]
+				},
+				'old': {}
+			};
+
+			var file_to_copy;
+			if (temp_result.files.length > 0) {
+				result.files.push(new_file);
+
+				file_to_copy = temp_result.files[0];
+			} else {
+				file_to_copy = new_file;
+			}
+
+			//copy next file to first argument
+			for (var a in file_to_copy) {
+				f[a] = file_to_copy[a];
+			}
+
+			return true;
+
+		}
+
+		var il = diff();
+		if (_get()) {
+			throw "CAN'T PARSE";
+		}
+
+		return il;
 
 	},
 	couldParse: function(text) {
 		var line_tag = /^@@\s+\-\d+(?:\,\d+)?\s\+\d+(?:\,\d+)?\s+@@/m;
-		return line_tag.test(text);
+		var new_tag = /^--- NEW FILE:\t.* ---$/m;
+		return line_tag.test(text) || new_tag.test(text);
 	}
 }

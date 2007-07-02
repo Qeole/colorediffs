@@ -63,8 +63,8 @@ colorediffsGlobal.transformations["composite"] = {
 		function proceedFile(file) {
 			proceed(file, fileEvents);
 
-			file['old'].chunks.forEach(proceedChunk);
-			file['new'].chunks.forEach(proceedChunk);
+			if (file['old'] && file['old'].chunks) { file['old'].chunks.forEach(proceedChunk); }
+			if (file['new'] && file['new'].chunks) { file['new'].chunks.forEach(proceedChunk); }
 		}
 
 		function proceedIL(il) {

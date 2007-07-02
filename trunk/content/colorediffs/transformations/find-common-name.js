@@ -17,6 +17,12 @@ colorediffsGlobal.transformations.composite.members["find-common-name"] = {
 		}
 
 		function returnCommonPart(s1, s2) {
+			if ( !s2 ) {
+				return s1;
+			}
+			if ( !s1 ) {
+				return s2;
+			}
 			var s1i = s1.length - 1;
 			var s2i = s2.length - 1;
 
