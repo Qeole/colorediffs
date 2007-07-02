@@ -22,10 +22,12 @@ colorediffsGlobal.transformations.composite.members["make-lines-equal-length"] =
 		}
 
 		function padLinesInFile(file) {
-			var l = file['old'].chunks.length;
+			if ( file['new'].chunks && file['old'].chunks ) {
+				var l = file['old'].chunks.length;
 
-			for (var i = 0; i < l; i++) {
-				padLines(file['old'].chunks[i], file['new'].chunks[i]);
+				for (var i = 0; i < l; i++) {
+					padLines(file['old'].chunks[i], file['new'].chunks[i]);
+				}
 			}
 
 			return file;
