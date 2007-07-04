@@ -210,6 +210,10 @@ colorediffsGlobal.views["context"] = {
 							)
 						);
 					}
+				),
+				dom.createElement(
+					"pre", {},
+					il.postfix || ""
 				)
 			)
 		];

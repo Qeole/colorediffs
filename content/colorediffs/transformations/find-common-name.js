@@ -4,14 +4,16 @@ colorediffsGlobal.transformations.composite.members["find-common-name"] = {
 		registrator.addFileListener(0, findCommonName);
 
 		function findCommonName(file, il) {
-			//get common part of the names
-			var commonPart = returnCommonPart(file['new'].name, file['old'].name);
+			if ( file['new'].name || file['old'].name ) {
+				//get common part of the names
+				var commonPart = returnCommonPart(file['new'].name, file['old'].name);
 
-			//try all the combinations of it on the log until found something
-			//common_name = found_part
-			file.common_name = checkCombinations(il.log, commonPart) || file['new'].name || file['old'].name;
+				//try all the combinations of it on the log until found something
+				//common_name = found_part
+				file.common_name = checkCombinations(il.log, commonPart);
 
-			file.id = file.common_name;
+				file.id = file.common_name;
+			}
 
 			return file;
 		}

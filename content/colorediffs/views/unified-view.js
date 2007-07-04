@@ -146,6 +146,10 @@ colorediffsGlobal.views["unified"] = {
 							)
 						);
 					}
+				),
+				dom.createElement(
+					"pre", {},
+					il.postfix || ""
 				)
 			)
 		];
