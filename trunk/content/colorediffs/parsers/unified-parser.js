@@ -6,6 +6,7 @@
 
 colorediffsGlobal.parsers["unified"] = {
 	parse: function(text) {
+
 		var lines = text.split("\n");
 		var curr_line = 0;
 
@@ -73,9 +74,25 @@ colorediffsGlobal.parsers["unified"] = {
 			var result = {};
 
 			log_and_code(result);
-			//postfix(result);
+			postfix(result);
 
 			return result;
+		}
+
+		function postfix(result) {
+			var postfix = "";
+
+			while(_get()) {
+				postfix += _get() + "\n";
+				try {
+					_next();
+				} catch (e) {
+					break;
+				}
+			}
+
+			result.postfix = postfix;
+			return true;
 		}
 
 		// log = normal_line | normal_line log
@@ -147,7 +164,11 @@ colorediffsGlobal.parsers["unified"] = {
 		}
 
 		function cvs_binary_file(file) {
-			return false;
+			_should(_test(/^---\s(?:new\s)?BINARY FILE:\s.*\s---$/));
+			extract_file_name_from_raw_data(file, _get());
+			_next();
+			_should(additional_file_info(file));
+			return true;
 		}
 
 		function cvs_deleted_file(file) {
@@ -161,14 +182,14 @@ colorediffsGlobal.parsers["unified"] = {
 			_should(title(file));
 			_should(additional_file_info(file));
 
-			extract_file_name_from_title(file);
+			extract_file_name_from_raw_data(file, file.title);
 
 			return true;
 		}
 
-		function extract_file_name_from_title(file) {
-			var r = file.title.match(/([\w-\/]+\.[\w]+)/);
-			if ( r[1] ) {
+		function extract_file_name_from_raw_data(file, data) {
+			var r = data.match(/\b(\w[\w-\/\.]+\.[\w]+\w)\b/);
+			if ( r && r[1] ) {
 				file['new'].name = file['old'].name = r[1];
 			} else {
 				file['new'].name = file['old'].name = "";
@@ -383,17 +404,13 @@ colorediffsGlobal.parsers["unified"] = {
 
 		}
 
-		var il = diff();
-		if (_get()) {
-			throw "CAN'T PARSE";
-		}
-
-		return il;
+		return diff();
 
 	},
 	couldParse: function(text) {
 		var line_tag = /^@@\s+\-\d+(?:\,\d+)?\s\+\d+(?:\,\d+)?\s+@@/m;
 		var new_tag = /^--- NEW FILE:\t.* ---$/m;
-		return line_tag.test(text) || new_tag.test(text);
+		var binary_tag = /^---\s(?:new\s)?BINARY FILE:\s.*\s---$/m;
+		return line_tag.test(text) || new_tag.test(text) || binary_tag.test(text);
 	}
 }

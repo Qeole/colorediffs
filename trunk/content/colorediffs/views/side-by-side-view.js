@@ -73,6 +73,10 @@ colorediffsGlobal.views["side-by-side"] = {
 							} ()
 						);
 					}
+				),
+				dom.createElement(
+					"pre", {},
+					il.postfix || ""
 				)
 			)
 		];
