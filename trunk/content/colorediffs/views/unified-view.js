@@ -90,39 +90,56 @@ colorediffsGlobal.views["unified"] = {
 									var oldCode = old_chunk.code; //.concat([]); //do not copy array;
 									var newCode = new_chunk.code; //.concat([]); //do not copy array
 
-									oldCode.push("");newCode.push("");
-
 									var l = new_chunk.code.length;
 
 									for (var i=0; i < l; ++i) {
-										if ( oldCode[i] == newCode[i] ) {
-											codeDecorated = codeDecorated.concat(oldCodeDecorated).concat(newCodeDecorated);
-											oldCodeDecorated = [];
-											newCodeDecorated = [];
-
-											var line = oldCode[i];
-
-											codeDecorated.push("<div class='steadyline' title='" + file['new'].name + ":" + oldLine + "'> " + line +" </div>");
-
-											newLine++;
-											oldLine++;
-										} else {
-											if ( newCode[i] != null ) {
+										switch( new_chunk.status[i] ) {
+											case "A": //Added
 												var line = newCode[i];
 
 												newCodeDecorated.push("<div class='addline' title='" + file['new'].name + ":" + newLine + "'>+" + line +" </div>");
 												newLine++;
-											}
-											if ( oldCode[i] != null ) {
+												break;
+											case "D": //Deleted
 												var line = oldCode[i];
 
 												oldCodeDecorated.push("<div class='delline' title='" + file['old'].name + ":" + oldLine + "'>-" + line +" </div>");
 												oldLine++;
-											}
+												break;
+											case "C": //Changed
+												newCodeDecorated.push("<div class='addline' title='" + file['new'].name + ":" + newLine + "'>+" + newCode[i] +" </div>");
+												oldCodeDecorated.push("<div class='delline' title='" + file['old'].name + ":" + oldLine + "'>-" + oldCode[i] +" </div>");
+												newLine++;
+												oldLine++;
+												break;
+											case "S": //the Same
+												codeDecorated = codeDecorated.concat(oldCodeDecorated).concat(newCodeDecorated);
+												oldCodeDecorated = [];
+												newCodeDecorated = [];
+
+												var line = oldCode[i];
+
+												codeDecorated.push("<div class='steadyline' title='" + file['new'].name + ":" + oldLine + "'> " + line +" </div>");
+
+												newLine++;
+												oldLine++;
+												break;
 										}
 									}
 
-									oldCode.pop(); newCode.pop(); codeDecorated.pop();
+									if (old_chunk.doesnt_have_new_line && !new_chunk.doesnt_have_new_line) {
+										oldCodeDecorated.push("<div class='steadyline' title='" + file['old'].name + "'>\\ No newline at end of file</div>");
+									}
+
+									if (!old_chunk.doesnt_have_new_line && new_chunk.doesnt_have_new_line) {
+										newCodeDecorated.push("<div class='steadyline' title='" + file['new'].name + "'>\\ No newline at end of file</div>");
+									}
+
+									codeDecorated = codeDecorated.concat(oldCodeDecorated).concat(newCodeDecorated);
+
+									if (old_chunk.doesnt_have_new_line && new_chunk.doesnt_have_new_line) {
+										codeDecorated.push("<div class='steadyline' title='" + file.common_name + "'>\\ No newline at end of file</div>");
+									}
 
 									return [
 										dom.createElement(
@@ -160,6 +177,9 @@ colorediffsGlobal.views["unified"] = {
 			for (var i = 0; i < oposite_chunk.code.length; i++ ) {
 				chunk.code.push(null);
 			}
+
+			chunk.status = oposite_chunk.status;
+
 			return chunk;
 		}
 
