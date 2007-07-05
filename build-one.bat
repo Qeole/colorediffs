@@ -44,6 +44,7 @@ mkdir build\chrome\content\colorediffs\transformations
 cp content\colorediffs\transformations\composite-transformation.js build\chrome\content\colorediffs\transformations
 cp content\colorediffs\transformations\make-lines-equal-length.js build\chrome\content\colorediffs\transformations
 cp content\colorediffs\transformations\find-common-name.js build\chrome\content\colorediffs\transformations
+cp content\colorediffs\transformations\detect-old-new-files.js build\chrome\content\colorediffs\transformations
 cp content\colorediffs\transformations\add-title.js build\chrome\content\colorediffs\transformations
 cp content\colorediffs\transformations\main-transformation.js build\chrome\content\colorediffs\transformations
 cp content\colorediffs\transformations\escape-html-special-characters-transformation.js build\chrome\content\colorediffs\transformations

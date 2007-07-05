@@ -132,6 +132,7 @@ colorediffsGlobal.parsers["unified"] = {
 			function _(func) { return function() { return func(file, result); } };
 
 			if (_try_many(
+					_(patch_binary_file),
 					_(normal_file),
 					_(cvs_new_file),
 					_(cvs_deleted_file),
@@ -168,6 +169,17 @@ colorediffsGlobal.parsers["unified"] = {
 			extract_file_name_from_raw_data(file, _get());
 			_next();
 			_should(additional_file_info(file));
+			return true;
+		}
+
+		function patch_binary_file(file) {
+			_should(_test(/^Binary files .* and .* differ$/));
+			var r = _get().match(/^Binary files (.*) and (.*) differ$/);
+			if (r) {
+				file['old'].name = r[1];
+				file['new'].name = r[2];
+			}
+			_next();
 			return true;
 		}
 
@@ -306,12 +318,16 @@ colorediffsGlobal.parsers["unified"] = {
 		function diff_code(old_chunk, new_chunk) {
 			function makeEqualLength() {
 				while ( old_chunk.code.length < new_chunk.code.length ) {
+					line_status[old_chunk.code.length] = "A"; //Added
 					old_chunk.code.push(null);
 				}
 				while ( old_chunk.code.length > new_chunk.code.length ) {
+					line_status[new_chunk.code.length] = "D"; //Deleted
 					new_chunk.code.push(null);
 				}
 			}
+
+			var line_status = [];
 
 			old_chunk.doesnt_have_new_line = false;
 			new_chunk.doesnt_have_new_line = false;
@@ -320,8 +336,10 @@ colorediffsGlobal.parsers["unified"] = {
 
 			while(true) {
 				if (_test(/^\-(.*)$/)) {
+					line_status[old_chunk.code.length] = "C"; //Changed
 					old_chunk.code.push(_get().substring(1));
 				} else if (_test(/^\+(.*)$/)) {
+					line_status[new_chunk.code.length] = "C"; //Changed
 					new_chunk.code.push(_get().substring(1));
 				} else if (_test(/^\\ No newline at end of file$/)) {
 					//check what sign previous line has if there are any
@@ -330,12 +348,16 @@ colorediffsGlobal.parsers["unified"] = {
 							old_chunk.doesnt_have_new_line = true;
 						} else if (/^\+/.test(prev_line)) {
 							new_chunk.doesnt_have_new_line = true;
+						} else if (/^ /.test(prev_line)) {
+							old_chunk.doesnt_have_new_line = true;
+							new_chunk.doesnt_have_new_line = true;
 						}
 					}
 				} else if (_test(/^ (.*)$/)) {
 					makeEqualLength();
 					old_chunk.code.push(_get().substring(1));
 					new_chunk.code.push(_get().substring(1));
+					line_status.push("S"); //the Same
 				} else {
 					break;
 				}
@@ -344,24 +366,21 @@ colorediffsGlobal.parsers["unified"] = {
 			}
 			makeEqualLength();
 
-			if (old_chunk.doesnt_have_new_line && !new_chunk.doesnt_have_new_line) {
-				old_chunk.code.push(null);
-				new_chunk.code.push("");
-			} else if (new_chunk.doesnt_have_new_line && !old_chunk.doesnt_have_new_line) {
-				new_chunk.code.push(null);
-				old_chunk.code.push("");
-			}
+			new_chunk.status = old_chunk.status = line_status;
 		}
 
 		function new_file(f, result, name) {
 			var code = [];
+			var status = [];
 			try {
 				while(true) {
 					while(!_test(blank_line())) {
 						code.push(_get());
+						status.push("A");
 						_next();
 					}
 					code.push(_get());
+					status.push("A");
 					_next();
 
 					var temp_result = {files: []};
@@ -374,13 +393,15 @@ colorediffsGlobal.parsers["unified"] = {
 			}
 
 			code.pop();
+			status.pop();
 
 			var new_file = {
 				'new': {
 					name: name,
 					chunks: [{
 						line:1,
-						code: code
+						code: code,
+						status: status
 					}]
 				},
 				'old': {}

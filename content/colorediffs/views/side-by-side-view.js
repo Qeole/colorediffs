@@ -119,25 +119,40 @@ colorediffsGlobal.views["side-by-side"] = {
 							var oldCodeLine = oldCode[i] + oldPadding[i];
 							var newCodeLine = newCode[i] + newPadding[i];
 
-							if ( oldCode[i] == null ) {
-								oldCodeDecorated += "<div class='addline'>" + oldPadding[i] + "</div>";
-								newCodeDecorated += "<div class='addline' title='" + file['new'].name + ":" + newLine + "'>" + newCodeLine + "</div>";
-								newLine++;
-							} else if ( newCode[i] == null ) {
-								newCodeDecorated += "<div class='delline'>" + newPadding[i] + "</div>";
-								oldCodeDecorated += "<div class='delline' title='" + file['old'].name + ":" + oldLine + "'>" + oldCodeLine + "</div>";
-								oldLine++;
-							} else {
-								if ( oldCode[i] == newCode[i] ) {
-									oldCodeDecorated += "<div class='steadyline' title='" + file['old'].name + ":" + oldLine + "'>" + oldCodeLine + "</div>";
-									newCodeDecorated += "<div class='steadyline' title='" + file['new'].name + ":" + newLine + "'>" + newCodeLine + "</div>";
-								} else {
+							switch( old_chunk.status[i] ) {
+								case "A": //Added
+									oldCodeDecorated += "<div class='addline'>" + oldPadding[i] + "</div>";
+									newCodeDecorated += "<div class='addline' title='" + file['new'].name + ":" + newLine + "'>" + newCodeLine + "</div>";
+									newLine++;
+									break;
+								case "D": //Deleted
+									newCodeDecorated += "<div class='delline'>" + newPadding[i] + "</div>";
+									oldCodeDecorated += "<div class='delline' title='" + file['old'].name + ":" + oldLine + "'>" + oldCodeLine + "</div>";
+									oldLine++;
+									break;
+								case "C": //Changed
 									oldCodeDecorated += "<div class='delline' title='" + file['old'].name + ":" + oldLine + "'>" + oldCodeLine + "</div>";
 									newCodeDecorated += "<div class='addline' title='" + file['new'].name + ":" + newLine + "'>" + newCodeLine + "</div>";
-								}
-								newLine++;
-								oldLine++;
+									newLine++;
+									oldLine++;
+									break;
+								case "S": //the Same
+									oldCodeDecorated += "<div class='steadyline' title='" + file['old'].name + ":" + oldLine + "'>" + oldCodeLine + "</div>";
+									newCodeDecorated += "<div class='steadyline' title='" + file['new'].name + ":" + newLine + "'>" + newCodeLine + "</div>";
+									newLine++;
+									oldLine++;
+									break;
 							}
+						}
+
+						if (old_chunk.doesnt_have_new_line && !new_chunk.doesnt_have_new_line) {
+							newCodeDecorated += "<div class='addline' title='" + file['new'].name + ":" + newLine + "'> </div>";
+							oldCodeDecorated += "<div class='addline' title='" + file['old'].name + "'> </div>";
+						}
+
+						if (!old_chunk.doesnt_have_new_line && new_chunk.doesnt_have_new_line) {
+							newCodeDecorated += "<div class='delline' title='" + file['new'].name + "'> </div>";
+							oldCodeDecorated += "<div class='delline' title='" + file['old'].name + ":" + oldLine + "'> </div>";
 						}
 
 						return [
@@ -170,17 +185,36 @@ colorediffsGlobal.views["side-by-side"] = {
 		function standalone_file(file, side) {
 			var version = (file[side].version) ? "\t" + file[side].version : "";
 
+			switch(side) {
+				case "new":
+					var changedClass = "addline";
+					var ignoredTag = "D";
+					var anchorSign = "+";
+					var sideClass = "right";
+					break;
+				case "old":
+					var changedClass = "delline";
+					var ignoredTag = "A";
+					var anchorSign = "-";
+					var sideClass = "left";
+					break;
+			}
+
 			return [
 				dom.createElement(
 					"tr", {},
 					dom.createElement(
 						"td", {valign:'top', width:'50%'},
 						dom.createElement(
-							'pre', {'class':'left', style: 'padding:0'},
-							dom.createElement('div', {'class':'steadyline', style: 'padding:5px'}, file[side].name + version))
+							'pre', {'class':sideClass, style: 'padding:0'},
+							dom.createElement('div', {'class':changedClass, style: 'padding:5px'}, file[side].name + version))
 					)
 				),
 				file[side].chunks.map(function(chunk) {
+						function getDecoratedLine(decoratedClass, code, line) {
+							return "<div class='" + decoratedClass + "' title='" + file[side].name + ":" + line + "'>" + code + "</div>";
+						}
+
 						var codeDecorated = "";
 						var line = chunk.line;
 
@@ -191,25 +225,44 @@ colorediffsGlobal.views["side-by-side"] = {
 						for (var i=0; i < l; ++i) {
 							var codeLine = code[i];
 
-							codeDecorated += "<div class='steadyline' title='" + file[side].name + ":" + line + "'>" + codeLine + "</div>";
-							line++;
+							if ( codeLine == "" ) {
+								codeLine = " ";
+							}
+
+							switch( chunk.status[i] ) {
+								case "A": //Added
+								case "D": //Deleted
+								case "C": //Changed
+									if (ignoredTag != chunk.status[i]) {
+										codeDecorated += getDecoratedLine(changedClass, codeLine, line);
+										line++;
+									}
+									break;
+								case "S": //the Same
+									codeDecorated += getDecoratedLine('steadyline', codeLine, line);
+									line++;
+									break;
+							}
+
+						}
+
+						if (chunk.doesnt_have_new_line) {
+							codeDecorated += "<div class='steadyline' title='" + file[side].name + "'>\\ No newline at end of file</div>";
 						}
 
 						return [
-//							dom.createElement(
-//								"tr", {'class':'linetag'},
-//								dom.createElement("td", {colspan:2},
-//												  "@@ -" + old_chunk.line +
-//												  "," + me.ilUtils.calcLineCounts(old_chunk.code) +
-//												  " +" +new_chunk.line +
-//												  "," + me.ilUtils.calcLineCounts(new_chunk.code) +
-//												  " @@")
-//							),
+							dom.createElement(
+								"tr", {'class':'linetag'},
+								dom.createElement("td", {},
+												  "@@ " + anchorSign + chunk.line +
+												  "," + me.ilUtils.calcLineCounts(chunk.code) +
+												  " @@")
+							),
 							dom.createElement(
 								"tr", {'class':'diffs'},
 								dom.createElement(
 									"td", {valign:'top', width:'50%'},
-									createCodeElement('right', codeDecorated)
+									createCodeElement(sideClass, codeDecorated)
 								)
 							)
 						];

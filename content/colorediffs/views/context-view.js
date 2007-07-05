@@ -154,6 +154,15 @@ colorediffsGlobal.views["context"] = {
 
 									oldCodeDecorated.pop(); newCodeDecorated.pop();
 
+									if (old_chunk.doesnt_have_new_line) {
+										oldCodeDecorated.push("<div class='steadyline' title='" + file['old'].name + "'>\\ No newline at end of file</div>");
+									}
+
+									if (new_chunk.doesnt_have_new_line) {
+										newCodeDecorated.push("<div class='steadyline' title='" + file['new'].name + "'>\\ No newline at end of file</div>");
+									}
+
+
 									if ( onlyOld ) {
 										newCodeDecorated = [];
 									}

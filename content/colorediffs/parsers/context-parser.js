@@ -21,6 +21,8 @@ colorediffsGlobal.parsers["context"] = {
 				chunks['old'].code = [];
 				chunks['new'].code = [];
 
+				var line_status = [];
+
 				var processSteadyParts = function(oldCodeString, newCodeString) {
 					var i=0, j=0;
 
@@ -30,27 +32,33 @@ colorediffsGlobal.parsers["context"] = {
 					var oldLines = oldCodeString.trim("\n").split("\n");
 					var newLines = newCodeString.trim("\n").split("\n");
 
+					var line_status = [];
+
 					while ( i < oldLines.length || j < newLines.length ) {
 						if (/^\-(.*)$/.test(oldLines[i])) {
 							oldCode.push(oldLines[i].substring(2));
 							newCode.push(null);
+							line_status.push("D"); //Deleted
 							i++;
 						} else if (/^\+(.*)$/.test(newLines[j])) {
 							newCode.push(newLines[j].substring(2));
 							oldCode.push(null);
+							line_status.push("A"); //Added
 							j++;
 						} else {
 							if ( /^ (.*)$/.test(oldLines[i] ) ) {
 								oldCode.push(oldLines[i].substring(2));
 								newCode.push(oldLines[i].substring(2));
+								line_status.push("S"); //the Same
 							} else if ( /^ (.*)$/.test(newLines[j] ) ) {
 								newCode.push(newLines[j].substring(2));
 								oldCode.push(newLines[j].substring(2));
+								line_status.push("S"); //the Same
 							}
 							i++; j++;
 						}
 					}
-					return [oldCode, newCode];
+					return [oldCode, newCode, line_status];
 				}
 
 				//Separate modified parts from non-modified
@@ -63,17 +71,26 @@ colorediffsGlobal.parsers["context"] = {
 						//modified parts
 						chunks['old'].code = chunks['old'].code.concat(modifiedPartsOld[i].trim("\n").replace(/^! /mg, "").split("\n"));
 						chunks['new'].code = chunks['new'].code.concat(modifiedPartsNew[i].trim("\n").replace(/^! /mg, "").split("\n"));
+						var minCodeLength = Math.min(chunks['old'].code.length, chunks['new'].code.length);
+
+						while ( line_status.length < minCodeLength ) {
+							line_status.push("C"); //Changed
+						}
+
 						while ( chunks['old'].code.length < chunks['new'].code.length ) {
 							chunks['old'].code.push(null);
+							line_status.push("A"); //Added
 						}
 						while ( chunks['old'].code.length > chunks['new'].code.length ) {
 							chunks['new'].code.push(null);
+							line_status.push("D"); //Deleted
 						}
 					} else {
 						//steady parts
 						var splittedCode = processSteadyParts(modifiedPartsOld[i], modifiedPartsNew[i]);
 						chunks['old'].code = chunks['old'].code.concat(splittedCode[0]);
 						chunks['new'].code = chunks['new'].code.concat(splittedCode[1]);
+						line_status = line_status.concat(splittedCode[2]);
 					}
 				}
 
@@ -84,14 +101,8 @@ colorediffsGlobal.parsers["context"] = {
 
 				chunks['old'].doesnt_have_new_line = /^\\ No newline at end of file$/.test(oldLastLine);
 				chunks['new'].doesnt_have_new_line = /^\\ No newline at end of file$/.test(newLastLine);
-				//check for \ No newline at end of file
-				if (chunks['old'].doesnt_have_new_line && !chunks['new'].doesnt_have_new_line) {
-					chunks['old'].code.push(null);
-					chunks['new'].code.push("");
-				} else if (chunks['new'].doesnt_have_new_line && !chunks['old'].doesnt_have_new_line) {
-					chunks['new'].code.push(null);
-					chunks['old'].code.push("");
-				}
+
+				chunks['old'].status = chunks['new'].status = line_status;
 
 				return chunks;
 			}
