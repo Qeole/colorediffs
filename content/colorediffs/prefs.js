@@ -22,6 +22,18 @@ colorediffsGlobal.Pref = function (prefModel) {
 		createGetSet(name, prop_name, getBoolPref, setBoolPref);
 	}
 
+	var createIntGetSet = function(name, prop_name) {
+		var getIntPref = function(p) {
+			return pref.getIntPref(p);
+		}
+
+		var setIntPref = function(p, v) {
+			return pref.setIntPref(p, v);
+		}
+
+		createGetSet(name, prop_name, getIntPref, setIntPref);
+	}
+
 	var getCharPref = function(p) {
 		return pref.getCharPref(p);
 	}
@@ -70,4 +82,6 @@ colorediffsGlobal.Pref = function (prefModel) {
 	createBoolGetSet("showToolbar", "diffColorer.show-toolbar");
 	createBoolGetSet("instantApply", "browser.preferences.instantApply");
 
+	createIntGetSet("parserMaxTitleSize", "diffColorer.parser.max-title-size");
+	createIntGetSet("parserMaxAdditionalInfoSize", "diffColorer.parser.max-additional-info-size");
 }

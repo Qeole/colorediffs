@@ -5,7 +5,7 @@
 // new_code = normal_line | normal_line new_code
 
 colorediffsGlobal.parsers["unified"] = {
-	parse: function(text) {
+ parse: function(text, pref) {
 
 		var lines = text.split("\n");
 		var curr_line = 0;
@@ -210,7 +210,7 @@ colorediffsGlobal.parsers["unified"] = {
 
 		// title = normal_line "==========================" | normal_line "---------------------------" | normal_line title
 		function title(file) {
-			var max_title_size = 5; //TODO: get this from prefs
+			var max_title_size = pref.parserMaxTitleSize.get();
 			var title = "";
 			var num = 0;
 			do {
@@ -261,7 +261,7 @@ colorediffsGlobal.parsers["unified"] = {
 
 		// additional_file_info = normal_line | normal_line additional_file_info
 		function additional_file_info(file) {
-			var max_additional_info_size = 7; //TODO: get this from prefs
+			var max_additional_info_size = pref.parserMaxAdditionalInfoSize.get();
 			var additional_file_info = "";
 			var num = 0;
 			while ( !_test(/^---/) && !_test(blank_line())) {

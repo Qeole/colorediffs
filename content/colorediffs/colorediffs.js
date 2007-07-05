@@ -95,7 +95,7 @@ colorediffsGlobal.onLoadMessage = function() {
 		"");
 
 	//Choose parser
-	var il = colorediffsGlobal.parse(text);
+	var il = colorediffsGlobal.parse(text, pref);
 
 	//Apply filters
 	var il = colorediffsGlobal.transform(il, pref);
