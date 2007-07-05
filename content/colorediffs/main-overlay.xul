@@ -19,6 +19,7 @@
 	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/add-title.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/find-common-name.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/detect-old-new-files.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/select-old-new-files.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/make-lines-equal-length.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/escape-html-special-characters-transformation.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/replace-file-names-transformation.js"/>
@@ -41,6 +42,17 @@
 			</toolbaritem>
 			<toolbarbutton id="colorediffs-show-whitespaces" tooltiptext="Show/hide whitespace chars"
 						   command="cmd_change_white_spaces_mode" checked="false"/>
+			<toolbaritem>
+				<menulist tooltiptext="Tune what should be shown" id="colorediffs-diff-mode" command="cmd_change_diff_mode">
+					<menupopup>
+						<menuitem label="both" value="both"/>
+						<menuitem label="new" value="new"/>
+						<menuitem label="old" value="old"/>
+					</menupopup>
+				</menulist>
+			</toolbaritem>
+			<toolbarbutton id="colorediffs-options" tooltiptext="Show options dialog"
+						   command="cmd_show_options"/>
 			<toolbarbutton id="colorediffs-close-toolbar" tooltiptext="Hide toolbar"
 						   command="cmd_change_toolbar"/>
 		</toolbar>
@@ -50,6 +62,8 @@
 		<commands>
 			<command id="cmd_change_mode" oncommand="colorediffsGlobal.colorediffsToolbar.selectMode();"/>
 			<command id="cmd_change_white_spaces_mode" oncommand="colorediffsGlobal.colorediffsToolbar.toggleWhiteSpaces();"/>
+			<command id="cmd_show_options" oncommand="colorediffsGlobal.colorediffsToolbar.showOptions();"/>
+			<command id="cmd_change_diff_mode" oncommand="colorediffsGlobal.colorediffsToolbar.selectDiffMode();"/>
 			<command id="cmd_change_toolbar" oncommand="colorediffsGlobal.colorediffsToolbar.closeToolbar();"/>
 		</commands>
 

@@ -6,12 +6,12 @@ colorediffsGlobal.transformations.composite.members["detect-old-new-files"] = {
 		function detectOldNewFiles(file, il) {
 
 			if (file['new'] && file['new'].chunks && file['old'] && file['old'].chunks) {
-				deleteSide('new', 'old');
-				deleteSide('old', 'new');
+				deleteSide('new');
+				deleteSide('old');
 			}
 
-			function deleteSide(side_to_delete, other_side) {
-				if ( file[side_to_delete].chunks[0].line == 0 ) { //Old
+			function deleteSide(side_to_delete) {
+				if ( file[side_to_delete].chunks[0].line == 0 ) {
 					file[side_to_delete].chunks = null;
 				}
 			}
@@ -20,9 +20,5 @@ colorediffsGlobal.transformations.composite.members["detect-old-new-files"] = {
 			return file;
 		}
 
-
-		function replace(name, id, il) {
-			il.log = il.log.replace(new RegExp("([\/\.a-zA-Z0-9-]*" + name + ")"), "<a href='#" + id + "'>$1</a>");
-		}
 	}
 };

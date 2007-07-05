@@ -81,6 +81,8 @@ File title
 			body.innerHTML = code;
 
 		} else {
+			var status = ["S", "S", "S", "A", "S"];
+
 			var il = {
 				log:"Log message",
 				files:[
@@ -96,6 +98,7 @@ File title
 								 " line3",
 								 null,
 								 "	line5"],
+							 status: status,
 							 doesnt_have_new_line:false}]
 					 },
 					 'new': {
@@ -108,6 +111,7 @@ File title
 								 " line3",
 								 " line4",
 								 "	line5"],
+							 status: status,
 							 doesnt_have_new_line:false}]
 					 }}]};
 

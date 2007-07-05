@@ -72,11 +72,17 @@ colorediffsGlobal.views["unified"] = {
 								}
 							}(),
 							me.ilUtils.chunksMap(file, function(old_chunk, new_chunk) {
+									var only_new = false;
+									var only_old = false;
+
+
 									if (old_chunk == null) {
+										only_new = true;
 										old_chunk = gen_empty_chunk(new_chunk);
 									}
 
 									if (new_chunk == null) {
+										only_old = true;
 										new_chunk = gen_empty_chunk(old_chunk);
 									}
 
@@ -113,13 +119,28 @@ colorediffsGlobal.views["unified"] = {
 												oldLine++;
 												break;
 											case "S": //the Same
-												codeDecorated = codeDecorated.concat(oldCodeDecorated).concat(newCodeDecorated);
+												if ( !only_new ) {
+													codeDecorated = codeDecorated.concat(oldCodeDecorated);
+												}
+
+												if ( !only_old ) {
+													codeDecorated = codeDecorated.concat(newCodeDecorated);
+												}
+
 												oldCodeDecorated = [];
 												newCodeDecorated = [];
 
-												var line = oldCode[i];
+												if ( !only_new ) {
+													var line = oldCode[i];
+													var line_number = oldLine;
+													var file_name = file['old'].name;
+												} else {
+													var line = newCode[i];
+													var line_number = newLine;
+													var file_name = file['new'].name;
+												}
 
-												codeDecorated.push("<div class='steadyline' title='" + file['new'].name + ":" + oldLine + "'> " + line +" </div>");
+												codeDecorated.push("<div class='steadyline' title='" + file_name + ":" + line_number + "'> " + line +" </div>");
 
 												newLine++;
 												oldLine++;
@@ -135,7 +156,13 @@ colorediffsGlobal.views["unified"] = {
 										newCodeDecorated.push("<div class='steadyline' title='" + file['new'].name + "'>\\ No newline at end of file</div>");
 									}
 
-									codeDecorated = codeDecorated.concat(oldCodeDecorated).concat(newCodeDecorated);
+									if ( !only_new ) {
+										codeDecorated = codeDecorated.concat(oldCodeDecorated);
+									}
+
+									if ( !only_old ) {
+										codeDecorated = codeDecorated.concat(newCodeDecorated);
+									}
 
 									if (old_chunk.doesnt_have_new_line && new_chunk.doesnt_have_new_line) {
 										codeDecorated.push("<div class='steadyline' title='" + file.common_name + "'>\\ No newline at end of file</div>");

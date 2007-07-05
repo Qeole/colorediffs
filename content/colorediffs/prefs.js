@@ -84,4 +84,6 @@ colorediffsGlobal.Pref = function (prefModel) {
 
 	createIntGetSet("parserMaxTitleSize", "diffColorer.parser.max-title-size");
 	createIntGetSet("parserMaxAdditionalInfoSize", "diffColorer.parser.max-additional-info-size");
+
+	createCharGetSet("diffMode", "diffColorer.diff-mode");
 }

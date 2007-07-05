@@ -58,3 +58,5 @@ pref("diffColorer.show-toolbar", true);
 
 pref("diffColorer.parser.max-title-size", 5);
 pref("diffColorer.parser.max-additional-info-size", 7);
+
+pref("diffColorer.diff-mode", "both");
