@@ -45,6 +45,7 @@ cp content\colorediffs\transformations\composite-transformation.js build\chrome\
 cp content\colorediffs\transformations\make-lines-equal-length.js build\chrome\content\colorediffs\transformations
 cp content\colorediffs\transformations\find-common-name.js build\chrome\content\colorediffs\transformations
 cp content\colorediffs\transformations\detect-old-new-files.js build\chrome\content\colorediffs\transformations
+cp content\colorediffs\transformations\select-old-new-files.js build\chrome\content\colorediffs\transformations
 cp content\colorediffs\transformations\add-title.js build\chrome\content\colorediffs\transformations
 cp content\colorediffs\transformations\main-transformation.js build\chrome\content\colorediffs\transformations
 cp content\colorediffs\transformations\escape-html-special-characters-transformation.js build\chrome\content\colorediffs\transformations
@@ -60,6 +61,7 @@ cp content\colorediffs\views\context-view.js build\chrome\content\colorediffs\vi
 mkdir build\chrome\skin
 cp skin\colorediffs.css build\chrome\skin\
 cp skin\white-space.png build\chrome\skin\
+cp skin\options.png build\chrome\skin\
 
 mkdir build\defaults
 mkdir build\defaults\preferences

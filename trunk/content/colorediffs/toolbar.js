@@ -11,6 +11,7 @@ colorediffsGlobal.colorediffsToolbar = new function() {
 	}
 
 	var getViewModeNode = getNode('colorediffs-view-mode');
+	var getDiffModeNode = getNode('colorediffs-diff-mode');
 	var getShowWhiteSpacesNode = getNode('colorediffs-show-whitespaces');
 	var getToolbarNode = getNode('colorediffs-toolbar');
 
@@ -30,6 +31,7 @@ colorediffsGlobal.colorediffsToolbar = new function() {
 	var updatePrefs = function() {
 		pref.showWhiteSpace.set(getShowWhiteSpacesNode().checked);
 		pref.mode.set(getViewModeNode().selectedItem);
+		pref.diffMode.set(getDiffModeNode().selectedItem.value);
 		pref.showToolbar.set(!getToolbarNode().hidden)
 	}
 
@@ -43,6 +45,16 @@ colorediffsGlobal.colorediffsToolbar = new function() {
 		updatePrefs();
 
 		reloadWithScrollPreserved();
+	}
+
+	this.showOptions = function() {
+		var features = "chrome,titlebar,toolbar,centerscreen";
+		window.openDialog("chrome://colorediffs/content/options/options.xul", "Preferences", features);
+	}
+
+	this.selectDiffMode = function() {
+		updatePrefs();
+		MsgReload();
 	}
 
 	this.closeToolbar = function() {
@@ -61,6 +73,15 @@ colorediffsGlobal.colorediffsToolbar = new function() {
 
 				//update combobox
 				getViewModeNode().selectedItem = pref.mode.get();
+
+				var menulist = getDiffModeNode();
+				var items = menulist.firstChild.childNodes;
+				for( var i=0; i < items.length; i++ ) {
+					if ( items[i].getAttribute("value") == pref.diffMode.get() ) {
+						menulist.selectedItem = items[i];
+						break;
+					}
+				}
 			}
 		} else {
 			getToolbarNode().hidden=true;
