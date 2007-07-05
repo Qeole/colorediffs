@@ -55,3 +55,6 @@ pref("diffColorer.view-mode", "unified");
 pref("diffColorer.debug-mode", false);
 pref("diffColorer.show-whitespace", true);
 pref("diffColorer.show-toolbar", true);
+
+pref("diffColorer.parser.max-title-size", 5);
+pref("diffColorer.parser.max-additional-info-size", 7);
