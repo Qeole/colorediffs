@@ -74,16 +74,41 @@ colorediffsGlobal.parsers["unified"] = {
 			var result = {};
 
 			log_and_code(result);
-			postfix(result);
+			code_and_postfix(result);
 
 			return result;
 		}
 
+		function code_and_postfix(result) {
+			function _(func) { return function() { return func(result); } };
+
+			try {
+				while(true) {
+					_try(_(code(result)));
+					if (_try(_(postfix))) {
+						break;
+					} else {
+						_next(); //TODO: We are throwing away code here.
+					}
+				}
+			} catch (e) {
+			}
+
+			return true;
+		}
+
 		function postfix(result) {
 			var postfix = "";
+			var max_postfix_size = 7;
 
-			while(_get()) {
+			var i = 0;
+
+			while(_get() || _test(blank_line())) {
 				postfix += _get() + "\n";
+				i++;
+				if ( i > max_postfix_size ) {
+					return false;
+				}
 				try {
 					_next();
 				} catch (e) {
@@ -112,7 +137,9 @@ colorediffsGlobal.parsers["unified"] = {
 
 		// code = file blank_line | file blank_line code
 		function code(result) {
-			result.files = [];
+			if ( !result.files ) {
+				result.files = [];
+			}
 
 			try {
 				do {
