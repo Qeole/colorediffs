@@ -99,7 +99,7 @@ colorediffsGlobal.parsers["unified"] = {
 
 		function postfix(result) {
 			var postfix = "";
-			var max_postfix_size = 7;
+			var max_postfix_size = pref.parserMaxPostfixSize.get();;
 
 			var i = 0;
 
@@ -404,9 +404,11 @@ colorediffsGlobal.parsers["unified"] = {
 		function new_file(f, result, name) {
 			var code = [];
 			var status = [];
+			var temp_result = {files: []};
+
 			try {
 				while(true) {
-					while(!_test(blank_line())) {
+					while(!_test(blank_line()) && !_test(/^--- .* ---$/)) {
 						code.push(_get());
 						status.push("A");
 						_next();
@@ -418,8 +420,6 @@ colorediffsGlobal.parsers["unified"] = {
 						status.push("A");
 						_next();
 					}
-
-					var temp_result = {files: []};
 
 					if (_try(function() { return file(temp_result); })) {
 						break;
