@@ -256,7 +256,12 @@ colorediffsGlobal.parsers["unified"] = {
 		// version = [^\t]+
 		function getFileInfo(s) {
 			var r = s.match(/^[+-]{3}\s(.*?)(?:\t(.*))?$/);
-			return [r[1], r[2]];
+
+			if (/(empty file)/.test(r[1])) { //Filename should match that
+				return ["", r[1] + " " + r[2]];
+			} else {
+				return [r[1], r[2]];
+			}
 		}
 
 		// additional_file_info = normal_line | normal_line additional_file_info
@@ -379,9 +384,13 @@ colorediffsGlobal.parsers["unified"] = {
 						status.push("A");
 						_next();
 					}
-					code.push(_get());
-					status.push("A");
-					_next();
+
+					//skip blank lines
+					while( _test(blank_line()) ) {
+						code.push(_get());
+						status.push("A");
+						_next();
+					}
 
 					var temp_result = {files: []};
 
@@ -407,14 +416,11 @@ colorediffsGlobal.parsers["unified"] = {
 				'old': {}
 			};
 
-			var file_to_copy;
-			if (temp_result.files.length > 0) {
-				result.files.push(new_file);
+			result.files.push(new_file);
+			result.files = result.files.concat(temp_result.files);
 
-				file_to_copy = temp_result.files[0];
-			} else {
-				file_to_copy = new_file;
-			}
+			var file_to_copy = result.files[result.files.length - 1];
+			result.files.pop();
 
 			//copy next file to first argument
 			for (var a in file_to_copy) {
