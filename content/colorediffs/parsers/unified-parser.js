@@ -152,7 +152,7 @@ colorediffsGlobal.parsers["unified"] = {
 			return result.files.length != 0;
 		}
 
-		// file = title file_info chunks | file_info chunks | "--- NEW FILE:" "\t" file_name " ---" new_file
+		// file = title file_info chunks | file_info chunks | "--- NEW FILE:" \s file_name " ---" new_file
 		function file(result) {
 			var file = {'old':{}, 'new':{}};
 
@@ -184,8 +184,8 @@ colorediffsGlobal.parsers["unified"] = {
 		}
 
 		function cvs_new_file(file, result) {
-			_should(_test(/^--- NEW FILE:\t.* ---$/));
-			var name = _get().match(/^--- NEW FILE:\t(.*) ---$/)[1];
+			_should(_test(/^--- NEW FILE:\s.* ---$/));
+			var name = _get().match(/^--- NEW FILE:\s(.*) ---$/)[1];
 			_next();
 			_should(new_file(file, result, name));
 			return true;
@@ -463,7 +463,7 @@ colorediffsGlobal.parsers["unified"] = {
 	},
 	couldParse: function(text) {
 		var line_tag = /^@@\s+\-\d+(?:\,\d+)?\s\+\d+(?:\,\d+)?\s+@@/m;
-		var new_tag = /^--- NEW FILE:\t.* ---$/m;
+		var new_tag = /^--- NEW FILE:\s.* ---$/m;
 		var binary_tag = /^---\s(?:new\s)?BINARY FILE:\s.*\s---$/m;
 		return line_tag.test(text) || new_tag.test(text) || binary_tag.test(text);
 	}
