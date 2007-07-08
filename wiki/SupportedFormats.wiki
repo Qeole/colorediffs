@@ -4,6 +4,7 @@
 
 I will describe which formats of letter is supported by the extension and what problem you might experience with them.
 
+
 = Generic SVN mailer formar =
 
 This is most common format of letters that sent by SVN mailers. It usually looks like this
@@ -40,6 +41,7 @@ Modified: trunk/file3.ext
 }}}
 
 It's easy to parse and you shouldn't have any problems with that. Note however that almost all the other formats looks generally the same but with minor differences that makes them harder to parse. So even if you can't see the difference it still might be there preventing extension from working correctly.
+PS. Sometimes when there was only binary files committed the letter isn't going to be colored. It could be fixed but I'm afraid it could cause your system performance to go down. On the other hand if there are only binary files then there aren't any interesting things to look at so that shouldn't affect you much. 
 
 = git mailer format =
 
@@ -59,7 +61,48 @@ index 3456367..456357 765423
 
 Nothing too exciting. I have no idea how new and binary files might look here, so they can  break the parser. If that is the case just mail me broken letter and it's going to be fixed in the next version.
 
+
 = Generic CVS format =
+{{{
+file1.ext
+file2.ext
+file3.ext
+
+--- NEW FILE:	file1.ext ---
+http://localhost/cgi-bin/viewcvs.cgi/file1.ext
+line1
+line2
+
+line3
+line4
+
+Index: file2.ext
+http://localhost/cgi-bin/viewcvs.cgi/file2.ext
+===================================================================
+RCS file: /data/cvs/file2.ext,v
+retrieving revision 1
+retrieving revision 2
+diff -u -d -r1 -r2
+--- file2.ext	1 Jan 2007 00:00:01 -0000	1
++++ file2.ext	1 Jan 2007 00:00:02 -0000	2
+@@ -1,3 +1,3 @@
+ line one
+-line three
++line two
+ the last line
+
+--- new BINARY FILE:	 file3.ext ---
+http://localhost/cgi-bin/viewcvs.cgi/file3.ext
+Old:		NONE
+New:	1
+
+--- BINARY FILE: file4.ext in / ---
+Old:		1
+New:	2
+http://localhost/cgi-bin/viewcvs.cgi/file4.ext
+}}}
+
+If you can change this format to another one - please do it. Representation of new files here doesn't have any boundaries for file itself, so it would be parsed really slow (after  every line parser should check if the next one is the beginning of another file) and could be extended to data that isn't really inside the file (like url at the top of it in the example). Also if that --- NEW FILE: --- is the last file in the letter and you have some kind of signature at the end of letter, the signature will be shown as the part of this new file. I can't really do anything smart about it.
 
 = Context CVS format =
 {{{
@@ -87,7 +130,9 @@ diff -C2 -d -r1 -r2
 
 It's fully supported and should work. If it doesn't please send me broken email.
 
+
 = Unified patch =
+
 
 = Context patch =
  Doesn't supported yet.
