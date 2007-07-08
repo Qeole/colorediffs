@@ -132,7 +132,39 @@ It's fully supported and should work. If it doesn't please send me broken email.
 
 
 = Unified patch =
-
+{{{
+diff -u -r -N old/file1.ext new/file1.ext
+--- old/file1.ext	1970-01-01 03:00:00.000000000 +0300
++++ new/file1.ext	2007-07-01 23:59:29.000000000 +0400
+@@ -0,0 +1 @@
++New super shiny file
+Binary files old/file2.ext and new/file2.ext differ
+diff -u -r -N old/file3.ext new/file3.ext
+--- old/file3.ext	2007-07-04 18:40:48.000000000 +0400
++++ new/file3.ext	1970-01-01 03:00:00.000000000 +0300
+@@ -1,1 +0,0 @@
+-New super shiny file
+\ No newline at end of file
+}}}
+Fully supported. Sometimes thought it could end up uncolored if there are only binary files in the patch but then again there nothing interesting to look at in that case.
 
 = Context patch =
- Doesn't supported yet.
+{{{
+diff -C2 -r -N old/file1.ext new/file1.ext
+*** old/file1.ext	1970-01-01 03:00:00.000000000 +0300
+--- new/file1.ext	2007-07-01 23:59:29.000000000 +0400
+***************
+*** 0 ****
+--- 1 ----
++ New super shiny file
+Binary files old/file2.ext and new/file2.ext differ
+diff -C2 -r -N old/file3.ext new/file3.ext
+*** old/file3.ext	2007-07-04 18:40:48.000000000 +0400
+--- new/file3.ext	1970-01-01 03:00:00.000000000 +0300
+***************
+*** 1,1 ****
+- New super shiny file
+\ No newline at end of file
+--- 0 ----
+}}}
+Doesn't supported yet. Will be in the next release.
