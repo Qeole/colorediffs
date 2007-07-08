@@ -1,0 +1,42 @@
+#summary Description of supported diff formats.
+
+= Introduction =
+
+I will describe which formats of letter is supported by the extension and what problem you might experience with them.
+
+= Generic SVN mailer formar =
+
+This is most common format of letters that sent by SVN mailers. It usually looks like this
+{{{
+Added:
+   trunk/file2.ext
+Modified:
+   trunk/file1.ext
+
+Modified: trunk/file1.ext
+==============================================================================
+--- trunk/file1.ext	(original)
++++ trunk/file1.ext	Fri Jun 29 06:34:58 2007
+@@ -33,6 +33,7 @@
+ line one
+-line three
++line two
+ the last line
+
+Added: trunk/file2.ext
+==============================================================================
+--- (empty file)
++++ trunk/file2.ext	Fri Jun 29 06:34:58 2007
+@@ -0,0 +1,23 @@
++line one
++line two
++line three
++the last line
+}}}
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
