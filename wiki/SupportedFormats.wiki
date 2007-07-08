@@ -12,12 +12,13 @@ Added:
    trunk/file2.ext
 Modified:
    trunk/file1.ext
+   trunk/file3.ext
 
 Modified: trunk/file1.ext
 ==============================================================================
 --- trunk/file1.ext	(original)
 +++ trunk/file1.ext	Fri Jun 29 06:34:58 2007
-@@ -33,6 +33,7 @@
+@@ -1,4 +1,4 @@
  line one
 -line three
 +line two
@@ -27,16 +28,42 @@ Added: trunk/file2.ext
 ==============================================================================
 --- (empty file)
 +++ trunk/file2.ext	Fri Jun 29 06:34:58 2007
-@@ -0,0 +1,23 @@
+@@ -0,0 +1,4 @@
 +line one
 +line two
 +line three
 +the last line
+
+Modified: trunk/file3.ext
+===================================================================
+(Binary files differ)
 }}}
 
-= Details =
+It's easy to parse and you shouldn't have any problems with that. Note however that almost all the other formats looks generally the same but with minor differences that makes them harder to parse. So even if you can't see the difference it still might be there preventing extension from working correctly.
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+= git mailer format =
+
+{{{
+  file1.ext |   2 +-
+  1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/file1.ext b/file2.ext
+index 3456367..456357 765423
+--- a/file1.ext
++++ b/file1.ext
+@@ -1,4 +1,4 @@ line one
+-line three
++line two
+ the last line
+}}}
+
+Nothing too exciting. I have no idea how new and binary files might look here, so they can  break the parser. If that is the case just mail me broken letter and it's going to be fixed in the next version.
+
+= Generic CVS format =
+
+= Context CVS format =
+
+= Unified patch =
+
+= Context patch =
+ Doesn't supported yet.
