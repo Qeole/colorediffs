@@ -73,7 +73,7 @@ sed -e "s/${version}/%2/g" < install-%1.rdf > build\install.rdf
 cp chrome.manifest.install build\chrome.manifest
 
 cd build\chrome
-zip -r colorediffs.jar content\ skin\
+zip -r colorediffs.jar content skin
 cd ..\..
 
 rm -rf build\chrome\content

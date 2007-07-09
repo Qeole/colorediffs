@@ -15,6 +15,11 @@ colorediffsGlobal.views["side-by-side"] = {
 				});
 		}
 
+		function createCodeLine(klass, title, code) {
+			var t = (title)?"title='" + title + "'" : "";
+			return "<div class='" + klass + "' " + t + "><span class='" + klass + "' " + t + ">" + code + "</span></div>";
+		}
+
 		return [
 			function() {
 				var stylecontent = "";
@@ -28,15 +33,15 @@ colorediffsGlobal.views["side-by-side"] = {
 				stylecontent += "	.steadyline		{$cp{diffColorer.sbs_steadyLine }}";
 				stylecontent += "	.left			{$cp{diffColorer.sbs_left		};padding: 5px; margin:0; overflow:auto; border: 1px solid black;}";
 				stylecontent += "	.right			{$cp{diffColorer.sbs_right		};padding: 5px; margin:0; overflow:auto; border: 1px solid black;}";
-				stylecontent += "	.left-title		{$cp{diffColorer.sbs_left-title };padding: 5px; padding-top:0; padding-bottom:0; margin:0; overflow:auto; border: 1px solid black;}";
-				stylecontent += "	.right-title	{$cp{diffColorer.sbs_right-title};padding: 5px; padding-top:0; padding-bottom:0; margin:0; overflow:auto; border: 1px solid black;}";
+				stylecontent += "	.left-title		{$cp{diffColorer.sbs_left-title };padding: 0; margin:0; overflow:auto; border: 1px solid black;}";
+				stylecontent += "	.right-title	{$cp{diffColorer.sbs_right-title};padding: 0; margin:0; overflow:auto; border: 1px solid black;}";
 				stylecontent += "	.left .addline	{$cp{diffColorer.sbs_emptyLine	};width:100%; color: green; margin-right:5px;}";
 				stylecontent += "	.right .delline	{$cp{diffColorer.sbs_emptyLine	};width:100%; color: green;}";
 
 				return dom.createElement("style", null, pcp(stylecontent));
 			}(),
 			dom.createDocumentFragment(
-				dom.createElement("pre", {id:'log', 'class':'log'}, il.log),
+				dom.createElement("pre", {id:'log', 'class':'log', wrap: ""}, il.log),
 				il.files.map(function(file) {
 						return dom.createElement(
 							"table", {'class':'file-diff', title:file.common_name, id:file.id, width:"99%", align:"center"},
@@ -45,7 +50,7 @@ colorediffsGlobal.views["side-by-side"] = {
 								dom.createElement(
 									"td", {colspan:2},
 									dom.createElement(
-										"pre", {'class':'title'},
+										"pre", {'class':'title', wrap: ""},
 										file.title
 									)
 								)
@@ -55,7 +60,7 @@ colorediffsGlobal.views["side-by-side"] = {
 								dom.createElement(
 									"td", {colspan:2},
 									dom.createElement(
-										"pre", {'class':'pre-code'},
+										"pre", {'class':'pre-code', wrap: ""},
 										file.additional_info
 									)
 								)
@@ -75,7 +80,7 @@ colorediffsGlobal.views["side-by-side"] = {
 					}
 				),
 				dom.createElement(
-					"pre", {},
+					"pre", {wrap: ""},
 					il.postfix || ""
 				)
 			)
@@ -85,20 +90,23 @@ colorediffsGlobal.views["side-by-side"] = {
 			var old_version = (file['old'].version) ? "\t" + file['old'].version : "";
 			var new_version = (file['new'].version) ? "\t" + file['new'].version : "";
 
+			var old_title = (file['old'].name + old_version).replace(" ", "&nbsp;", "g");
+			var new_title = (file['new'].name + new_version).replace(" ", "&nbsp;", "g");
+
 			return [
 				dom.createElement(
 					"tr", {},
 					dom.createElement(
 						"td", {valign:'top', width:'50%'},
 						dom.createElement(
-							'pre', {'class':'left', style: 'padding:0'},
-							dom.createElement('div', {'class':'delline', style: 'padding:5px'}, file['old'].name + old_version))
+							'pre', {'class':'left-title', wrap: ""},
+							dom.createElement('div', {style: 'padding:5px'}, old_title))
 					),
 					dom.createElement(
 						"td", {valign:'top', width:'50%'},
 						dom.createElement(
-							'pre', {'class':'right', style: 'padding:0'},
-							dom.createElement('div', {'class':'addline', style: 'padding:5px'}, file['new'].name + new_version))
+							'pre', {'class':'right-title', wrap: ""},
+							dom.createElement('div', {style: 'padding:5px'}, new_title))
 					)
 				),
 				me.ilUtils.chunksMap(file, function(old_chunk, new_chunk) {
@@ -121,24 +129,24 @@ colorediffsGlobal.views["side-by-side"] = {
 
 							switch( old_chunk.status[i] ) {
 								case "A": //Added
-									oldCodeDecorated += "<div class='addline'>" + oldPadding[i] + "</div>";
-									newCodeDecorated += "<div class='addline' title='" + file['new'].name + ":" + newLine + "'>" + newCodeLine + "</div>";
+									oldCodeDecorated += createCodeLine('addline', null, oldPadding[i]);
+									newCodeDecorated += createCodeLine('addline', file['new'].name + ":" + newLine, newCodeLine);
 									newLine++;
 									break;
 								case "D": //Deleted
-									newCodeDecorated += "<div class='delline'>" + newPadding[i] + "</div>";
-									oldCodeDecorated += "<div class='delline' title='" + file['old'].name + ":" + oldLine + "'>" + oldCodeLine + "</div>";
+									newCodeDecorated += createCodeLine('delline', null, newPadding[i]);
+									oldCodeDecorated += createCodeLine('delline', file['old'].name + ":" + oldLine, oldCodeLine);
 									oldLine++;
 									break;
 								case "C": //Changed
-									oldCodeDecorated += "<div class='delline' title='" + file['old'].name + ":" + oldLine + "'>" + oldCodeLine + "</div>";
-									newCodeDecorated += "<div class='addline' title='" + file['new'].name + ":" + newLine + "'>" + newCodeLine + "</div>";
+									oldCodeDecorated += createCodeLine('delline', file['old'].name + ":" + oldLine, oldCodeLine);
+									newCodeDecorated += createCodeLine('addline', file['new'].name + ":" + newLine, newCodeLine);
 									newLine++;
 									oldLine++;
 									break;
 								case "S": //the Same
-									oldCodeDecorated += "<div class='steadyline' title='" + file['old'].name + ":" + oldLine + "'>" + oldCodeLine + "</div>";
-									newCodeDecorated += "<div class='steadyline' title='" + file['new'].name + ":" + newLine + "'>" + newCodeLine + "</div>";
+									oldCodeDecorated += createCodeLine('steadyline', file['old'].name + ":" + oldLine, oldCodeLine);
+									newCodeDecorated += createCodeLine('steadyline', file['new'].name + ":" + newLine, newCodeLine);
 									newLine++;
 									oldLine++;
 									break;
@@ -146,13 +154,13 @@ colorediffsGlobal.views["side-by-side"] = {
 						}
 
 						if (old_chunk.doesnt_have_new_line && !new_chunk.doesnt_have_new_line) {
-							newCodeDecorated += "<div class='addline' title='" + file['new'].name + ":" + newLine + "'> </div>";
-							oldCodeDecorated += "<div class='addline' title='" + file['old'].name + "'> </div>";
+							newCodeDecorated += createCodeLine('addline', file['new'].name + ":" + newLine, " ");
+							oldCodeDecorated += createCodeLine('addline', file['old'].name, " ");
 						}
 
 						if (!old_chunk.doesnt_have_new_line && new_chunk.doesnt_have_new_line) {
-							newCodeDecorated += "<div class='delline' title='" + file['new'].name + "'> </div>";
-							oldCodeDecorated += "<div class='delline' title='" + file['old'].name + ":" + oldLine + "'> </div>";
+							newCodeDecorated += createCodeLine('delline', file['new'].name, " ");
+							oldCodeDecorated += createCodeLine('delline', file['old'].name + ":" + oldLine, " ");
 						}
 
 						return [
@@ -206,24 +214,26 @@ colorediffsGlobal.views["side-by-side"] = {
 					dom.createElement(
 						"td", {valign:'top', width:'50%'},
 						dom.createElement(
-							'pre', {'class':sideClass, style: 'padding:0'},
-							dom.createElement('div', {'class':changedClass, style: 'padding:5px'}, file[side].name + version))
+							'pre', {'class':sideClass+"-title", wrap: ""},
+							dom.createElement('div', {style: 'padding:5px'}, file[side].name + version)
+						)
 					)
 				),
 				file[side].chunks.map(function(chunk) {
 						function getDecoratedLine(decoratedClass, code, line) {
-							return "<div class='" + decoratedClass + "' title='" + file[side].name + ":" + line + "'>" + code + "</div>";
+							return createCodeLine(decoratedClass, file[side].name + ":" + line, code);
 						}
 
 						var codeDecorated = "";
 						var line = chunk.line;
 
 						var code = chunk.code;
+						var padding = chunk.padding;
 
 						var l = chunk.code.length;
 
 						for (var i=0; i < l; ++i) {
-							var codeLine = code[i];
+							var codeLine = code[i] + padding[i];
 
 							if ( codeLine == "" ) {
 								codeLine = " ";
@@ -247,7 +257,7 @@ colorediffsGlobal.views["side-by-side"] = {
 						}
 
 						if (chunk.doesnt_have_new_line) {
-							codeDecorated += "<div class='steadyline' title='" + file[side].name + "'>\\ No newline at end of file</div>";
+							codeDecorated += createCodeLine('steadyline', file[side].name, "\\ No newline at end of file");
 						}
 
 						return [
