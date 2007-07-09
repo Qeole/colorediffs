@@ -35,7 +35,7 @@ colorediffsGlobal.views["side-by-side"] = {
 				stylecontent += "	.right			{$cp{diffColorer.sbs_right		};padding: 5px; margin:0; overflow:auto; border: 1px solid black;}";
 				stylecontent += "	.left-title		{$cp{diffColorer.sbs_left-title };padding: 0; margin:0; overflow:auto; border: 1px solid black;}";
 				stylecontent += "	.right-title	{$cp{diffColorer.sbs_right-title};padding: 0; margin:0; overflow:auto; border: 1px solid black;}";
-				stylecontent += "	.left .addline	{$cp{diffColorer.sbs_emptyLine	};width:100%; color: green; margin-right:5px;}";
+				stylecontent += "	.left .addline	{$cp{diffColorer.sbs_emptyLine	};width:100%; color: green;}";
 				stylecontent += "	.right .delline	{$cp{diffColorer.sbs_emptyLine	};width:100%; color: green;}";
 
 				return dom.createElement("style", null, pcp(stylecontent));
