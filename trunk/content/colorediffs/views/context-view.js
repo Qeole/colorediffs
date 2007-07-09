@@ -23,16 +23,16 @@ colorediffsGlobal.views["context"] = {
 				return dom.createElement("style", null, stylecontent);
 			}(),
 			dom.createDocumentFragment(
-				dom.createElement("pre", {id:'log', 'class':'log'}, il.log),
+				dom.createElement("pre", {id:'log', 'class':'log', wrap: ""}, il.log),
 				il.files.map(function(file) {
 						return dom.createElement(
 							"div", {'class':'file-diff', title:file.common_name, id:file.id, width:"100%"},
 							dom.createElement(
-								"pre", {'class':'title'},
+								"pre", {'class':'title', wrap: ""},
 								file.title + "\n======================================="
 							),
 							dom.createElement(
-								"pre", {'class':'precode'},
+								"pre", {'class':'precode', wrap: ""},
 								file.additional_info
 							),
 							function () {
@@ -221,7 +221,7 @@ colorediffsGlobal.views["context"] = {
 					}
 				),
 				dom.createElement(
-					"pre", {},
+					"pre", {wrap: ""},
 					il.postfix || ""
 				)
 			)

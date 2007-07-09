@@ -22,40 +22,71 @@ colorediffsGlobal.transformations.composite.members["make-lines-equal-length"] =
 		}
 
 		function padLinesInFile(file) {
-			if ( file['new'].chunks && file['old'].chunks ) {
-				var l = file['old'].chunks.length;
+			var l = 0;
 
-				for (var i = 0; i < l; i++) {
-					padLines(file['old'].chunks[i], file['new'].chunks[i]);
+			if ( file['old'] && file['old'].chunks ) {
+				l = file['old'].chunks.length;
+			} else if ( file['new'] && file['new'].chunks ) {
+				l = file['new'].chunks.length;
+			}
+
+			for (var i = 0; i < l; i++) {
+				var old_chunk = null;
+				var new_chunk = null;
+
+				if ( file['old'] && file['old'].chunks ) {
+					old_chunk = file['old'].chunks[i];
 				}
+
+				if ( file['new'] && file['new'].chunks ) {
+					new_chunk = file['new'].chunks[i];
+				}
+
+				padLines(old_chunk, new_chunk);
 			}
 
 			return file;
 		}
 
 		function padLines(old_chunk, new_chunk) {
-			var old_code = old_chunk.code;
-			var new_code = new_chunk.code;
+			var maxLength = 0;
 
-			var old_padding = old_chunk.padding = [];
-			var new_padding = new_chunk.padding = [];
+			//calc max length
+			if ( old_chunk ) {
+				maxLength = colorediffsGlobal.fold(old_chunk.code, compareLength, maxLength);
+			}
 
-			var length = old_code.length;
+			if ( new_chunk ) {
+				maxLength = colorediffsGlobal.fold(new_chunk.code, compareLength, maxLength);
+			}
 
-			for (var i = 0; i < length; i++) {
-				var oldLineLength = countLength(old_code[i]);
-				var newLineLength = countLength(new_code[i]);
+			//pad lines
+			if ( old_chunk ) {
+				old_chunk.padding = pad(old_chunk.code, maxLength);
+			}
 
-				var maxLength = Math.max(oldLineLength, newLineLength);
+			if ( new_chunk ) {
+				new_chunk.padding = pad(new_chunk.code, maxLength);
+			}
 
-				var paddingOld = "".pad(maxLength - oldLineLength);
-				var paddingNew = "".pad(maxLength - newLineLength);
+			function compareLength(s, l) {
+				return Math.max(countLength(s), l);
+			}
 
-				old_padding[i] = paddingOld;
-				new_padding[i] = paddingNew;
+			function pad(code, maxLength) {
+				var padding = [];
+				var length = code.length;
 
-				if (oldLineLength + old_padding[i].length == 0) old_padding[i] = " ";
-				if (newLineLength + new_padding[i].length == 0) new_padding[i] = " ";
+				for (var i = 0; i < length; i++) {
+					var lineLength = countLength(code[i]);
+
+					var p = "".pad(maxLength - lineLength);
+
+					if (lineLength + p.length == 0) p = " ";
+					padding.push(p);
+				}
+
+				return padding;
 			}
 		}
 	}
