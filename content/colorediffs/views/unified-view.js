@@ -26,7 +26,7 @@ colorediffsGlobal.views["unified"] = {
 				dom.createElement("pre", {id:'log', 'class':'log', wrap: ""}, il.log),
 				il.files.map(function(file) {
 						return dom.createElement(
-							"div", {'class':'file-diff', title:file.common_name, id:file.id, width:"100%"},
+							"div", {'class':'file-diff', title:file.commonNameTruncated, id:file.id, width:"100%"},
 							dom.createElement(
 								"pre", {'class':'title', wrap: ""},
 								file.title + "\n======================================="
@@ -103,18 +103,18 @@ colorediffsGlobal.views["unified"] = {
 											case "A": //Added
 												var line = newCode[i];
 
-												newCodeDecorated.push("<div class='addline' title='" + file['new'].name + ":" + newLine + "'>+" + line +" </div>");
+												newCodeDecorated.push("<div class='addline' title='" + file['new'].name15Truncated + ":" + newLine + "'>+" + line +" </div>");
 												newLine++;
 												break;
 											case "D": //Deleted
 												var line = oldCode[i];
 
-												oldCodeDecorated.push("<div class='delline' title='" + file['old'].name + ":" + oldLine + "'>-" + line +" </div>");
+												oldCodeDecorated.push("<div class='delline' title='" + file['old'].name15Truncated + ":" + oldLine + "'>-" + line +" </div>");
 												oldLine++;
 												break;
 											case "C": //Changed
-												newCodeDecorated.push("<div class='addline' title='" + file['new'].name + ":" + newLine + "'>+" + newCode[i] +" </div>");
-												oldCodeDecorated.push("<div class='delline' title='" + file['old'].name + ":" + oldLine + "'>-" + oldCode[i] +" </div>");
+												newCodeDecorated.push("<div class='addline' title='" + file['new'].name15Truncated + ":" + newLine + "'>+" + newCode[i] +" </div>");
+												oldCodeDecorated.push("<div class='delline' title='" + file['old'].name15Truncated + ":" + oldLine + "'>-" + oldCode[i] +" </div>");
 												newLine++;
 												oldLine++;
 												break;
@@ -130,17 +130,19 @@ colorediffsGlobal.views["unified"] = {
 												oldCodeDecorated = [];
 												newCodeDecorated = [];
 
-												if ( !only_new ) {
+												if ( only_new ) {
 													var line = oldCode[i];
-													var line_number = oldLine;
-													var file_name = file['old'].name;
+													var tooltip = file['old'].name15Truncated + ':' + oldLine;
+												} else if (only_old) {
+													var line = newCode[i];
+													var tooltip = file['new'].name15Truncated + ':' + newLine;
 												} else {
 													var line = newCode[i];
-													var line_number = newLine;
-													var file_name = file['new'].name;
+													var tooltip = "old: " + file['old'].name7Truncated + ':' + oldLine + ", " +
+																  "new: " + file['new'].name7Truncated + ':' + newLine;
 												}
 
-												codeDecorated.push("<div class='steadyline' title='" + file_name + ":" + line_number + "'> " + line +" </div>");
+												codeDecorated.push("<div class='steadyline' title='" + tooltip + "'> " + line +" </div>");
 
 												newLine++;
 												oldLine++;
@@ -149,11 +151,11 @@ colorediffsGlobal.views["unified"] = {
 									}
 
 									if (old_chunk.doesnt_have_new_line && !new_chunk.doesnt_have_new_line) {
-										oldCodeDecorated.push("<div class='steadyline' title='" + file['old'].name + "'>\\ No newline at end of file</div>");
+										oldCodeDecorated.push("<div class='steadyline' title='" + file['old'].name15Truncated + "'>\\ No newline at end of file</div>");
 									}
 
 									if (!old_chunk.doesnt_have_new_line && new_chunk.doesnt_have_new_line) {
-										newCodeDecorated.push("<div class='steadyline' title='" + file['new'].name + "'>\\ No newline at end of file</div>");
+										newCodeDecorated.push("<div class='steadyline' title='" + file['new'].name15Truncated + "'>\\ No newline at end of file</div>");
 									}
 
 									if ( !only_new ) {
@@ -165,7 +167,7 @@ colorediffsGlobal.views["unified"] = {
 									}
 
 									if (old_chunk.doesnt_have_new_line && new_chunk.doesnt_have_new_line) {
-										codeDecorated.push("<div class='steadyline' title='" + file.common_name + "'>\\ No newline at end of file</div>");
+										codeDecorated.push("<div class='steadyline' title='" + file.commonNameTruncated + "'>\\ No newline at end of file</div>");
 									}
 
 									return [

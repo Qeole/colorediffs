@@ -42,6 +42,7 @@ cp content\colorediffs\transformations\make-lines-equal-length.js %1\content\col
 cp content\colorediffs\transformations\find-common-name.js %1\content\colorediffs\transformations
 cp content\colorediffs\transformations\detect-old-new-files.js %1\content\colorediffs\transformations
 cp content\colorediffs\transformations\select-old-new-files.js %1\content\colorediffs\transformations
+cp content\colorediffs\transformations\truncate-file-names.js %1\content\colorediffs\transformations
 cp content\colorediffs\transformations\add-title.js %1\content\colorediffs\transformations
 cp content\colorediffs\transformations\main-transformation.js %1\content\colorediffs\transformations
 cp content\colorediffs\transformations\escape-html-special-characters-transformation.js %1\content\colorediffs\transformations
