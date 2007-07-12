@@ -26,7 +26,7 @@ colorediffsGlobal.views["context"] = {
 				dom.createElement("pre", {id:'log', 'class':'log', wrap: ""}, il.log),
 				il.files.map(function(file) {
 						return dom.createElement(
-							"div", {'class':'file-diff', title:file.common_name, id:file.id, width:"100%"},
+							"div", {'class':'file-diff', title:file.commonNameTruncated, id:file.id, width:"100%"},
 							dom.createElement(
 								"pre", {'class':'title', wrap: ""},
 								file.title + "\n======================================="
@@ -133,20 +133,20 @@ colorediffsGlobal.views["context"] = {
 
 											var line = oldCode[i];
 
-											oldCodeDecorated.push("<div class='steadyline' title='" + file['old'].name + ":" + oldLine + "'>  " + line +" </div>");
-											newCodeDecorated.push("<div class='steadyline' title='" + file['new'].name + ":" + newLine + "'>  " + line +" </div>");
+											oldCodeDecorated.push("<div class='steadyline' title='" + file['old'].name15Truncated + ":" + oldLine + "'>	 " + line +" </div>");
+											newCodeDecorated.push("<div class='steadyline' title='" + file['new'].name15Truncated + ":" + newLine + "'>	 " + line +" </div>");
 
 											newLine++;
 											oldLine++;
 										} else {
 											if ( newCode[i] != null ) {
 												var line = newCode[i];
-												newCodeDecoratedDelayed.push("<div class='addline' title='" + file['new'].name + ":" + newLine + "'>+ " + line +" </div>");
+												newCodeDecoratedDelayed.push("<div class='addline' title='" + file['new'].name15Truncated + ":" + newLine + "'>+ " + line +" </div>");
 												newLine++;
 											}
 											if ( oldCode[i] != null ) {
 												var line = oldCode[i];
-												oldCodeDecoratedDelayed.push("<div class='delline' title='" + file['old'].name + ":" + oldLine + "'>- " + line +" </div>");
+												oldCodeDecoratedDelayed.push("<div class='delline' title='" + file['old'].name15Truncated + ":" + oldLine + "'>- " + line +" </div>");
 												oldLine++;
 											}
 										}
@@ -155,11 +155,11 @@ colorediffsGlobal.views["context"] = {
 									oldCodeDecorated.pop(); newCodeDecorated.pop();
 
 									if (old_chunk.doesnt_have_new_line) {
-										oldCodeDecorated.push("<div class='steadyline' title='" + file['old'].name + "'>\\ No newline at end of file</div>");
+										oldCodeDecorated.push("<div class='steadyline' title='" + file['old'].name15Truncated + "'>\\ No newline at end of file</div>");
 									}
 
 									if (new_chunk.doesnt_have_new_line) {
-										newCodeDecorated.push("<div class='steadyline' title='" + file['new'].name + "'>\\ No newline at end of file</div>");
+										newCodeDecorated.push("<div class='steadyline' title='" + file['new'].name15Truncated + "'>\\ No newline at end of file</div>");
 									}
 
 

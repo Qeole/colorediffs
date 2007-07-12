@@ -43,8 +43,9 @@ colorediffsGlobal.views["side-by-side"] = {
 			dom.createDocumentFragment(
 				dom.createElement("pre", {id:'log', 'class':'log', wrap: ""}, il.log),
 				il.files.map(function(file) {
+
 						return dom.createElement(
-							"table", {'class':'file-diff', title:file.common_name, id:file.id, width:"99%", align:"center"},
+							"table", {'class':'file-diff', title:file.commonNameTruncated, id:file.id, width:"99%", align:"center"},
 							dom.createElement(
 								"tr", {},
 								dom.createElement(
@@ -130,23 +131,23 @@ colorediffsGlobal.views["side-by-side"] = {
 							switch( old_chunk.status[i] ) {
 								case "A": //Added
 									oldCodeDecorated += createCodeLine('addline', null, oldPadding[i]);
-									newCodeDecorated += createCodeLine('addline', file['new'].name + ":" + newLine, newCodeLine);
+									newCodeDecorated += createCodeLine('addline', file['new'].name15Truncated + ":" + newLine, newCodeLine);
 									newLine++;
 									break;
 								case "D": //Deleted
 									newCodeDecorated += createCodeLine('delline', null, newPadding[i]);
-									oldCodeDecorated += createCodeLine('delline', file['old'].name + ":" + oldLine, oldCodeLine);
+									oldCodeDecorated += createCodeLine('delline', file['old'].name15Truncated + ":" + oldLine, oldCodeLine);
 									oldLine++;
 									break;
 								case "C": //Changed
-									oldCodeDecorated += createCodeLine('delline', file['old'].name + ":" + oldLine, oldCodeLine);
-									newCodeDecorated += createCodeLine('addline', file['new'].name + ":" + newLine, newCodeLine);
+									oldCodeDecorated += createCodeLine('delline', file['old'].name15Truncated + ":" + oldLine, oldCodeLine);
+									newCodeDecorated += createCodeLine('addline', file['new'].name15Truncated + ":" + newLine, newCodeLine);
 									newLine++;
 									oldLine++;
 									break;
 								case "S": //the Same
-									oldCodeDecorated += createCodeLine('steadyline', file['old'].name + ":" + oldLine, oldCodeLine);
-									newCodeDecorated += createCodeLine('steadyline', file['new'].name + ":" + newLine, newCodeLine);
+									oldCodeDecorated += createCodeLine('steadyline', file['old'].name15Truncated + ":" + oldLine, oldCodeLine);
+									newCodeDecorated += createCodeLine('steadyline', file['new'].name15Truncated + ":" + newLine, newCodeLine);
 									newLine++;
 									oldLine++;
 									break;
@@ -154,13 +155,13 @@ colorediffsGlobal.views["side-by-side"] = {
 						}
 
 						if (old_chunk.doesnt_have_new_line && !new_chunk.doesnt_have_new_line) {
-							newCodeDecorated += createCodeLine('addline', file['new'].name + ":" + newLine, " ");
-							oldCodeDecorated += createCodeLine('addline', file['old'].name, " ");
+							newCodeDecorated += createCodeLine('addline', file['new'].name15Truncated + ":" + newLine, " ");
+							oldCodeDecorated += createCodeLine('addline', file['old'].name15Truncated, " ");
 						}
 
 						if (!old_chunk.doesnt_have_new_line && new_chunk.doesnt_have_new_line) {
-							newCodeDecorated += createCodeLine('delline', file['new'].name, " ");
-							oldCodeDecorated += createCodeLine('delline', file['old'].name + ":" + oldLine, " ");
+							newCodeDecorated += createCodeLine('delline', file['new'].name15Truncated, " ");
+							oldCodeDecorated += createCodeLine('delline', file['old'].name15Truncated + ":" + oldLine, " ");
 						}
 
 						return [
@@ -221,7 +222,7 @@ colorediffsGlobal.views["side-by-side"] = {
 				),
 				file[side].chunks.map(function(chunk) {
 						function getDecoratedLine(decoratedClass, code, line) {
-							return createCodeLine(decoratedClass, file[side].name + ":" + line, code);
+							return createCodeLine(decoratedClass, file.name15Truncated + ":" + line, code);
 						}
 
 						var codeDecorated = "";
@@ -257,7 +258,7 @@ colorediffsGlobal.views["side-by-side"] = {
 						}
 
 						if (chunk.doesnt_have_new_line) {
-							codeDecorated += createCodeLine('steadyline', file[side].name, "\\ No newline at end of file");
+							codeDecorated += createCodeLine('steadyline', file.name15Truncated, "\\ No newline at end of file");
 						}
 
 						return [
