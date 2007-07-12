@@ -10,7 +10,7 @@ colorediffsGlobal.transformations.composite.members["find-common-name"] = {
 
 				//try all the combinations of it on the log until found something
 				//common_name = found_part
-				file.common_name = checkCombinations(il.log, commonPart);
+				file.common_name = checkCombinations(il.log, commonPart) || commonPart;
 
 				file.id = file.common_name;
 			}
