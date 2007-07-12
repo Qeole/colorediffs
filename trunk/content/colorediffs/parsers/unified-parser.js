@@ -183,16 +183,24 @@ colorediffsGlobal.parsers["unified"] = {
 			return true;
 		}
 
+		function cvs_new_file_title() {
+			return _test(/^--- NEW FILE:\s.* ---$/);
+		}
+
 		function cvs_new_file(file, result) {
-			_should(_test(/^--- NEW FILE:\s.* ---$/));
+			_should(cvs_new_file_title());
 			var name = _get().match(/^--- NEW FILE:\s(.*) ---$/)[1];
 			_next();
 			_should(new_file(file, result, name));
 			return true;
 		}
 
+		function cvs_binary_file_title() {
+			return _test(/^---\s(?:new\s)?BINARY FILE:\s.*\s---$/);
+		}
+
 		function cvs_binary_file(file) {
-			_should(_test(/^---\s(?:new\s)?BINARY FILE:\s.*\s---$/));
+			_should(cvs_binary_file_title());
 			extract_file_name_from_raw_data(file, _get());
 			_next();
 			_should(additional_file_info(file));
@@ -210,8 +218,12 @@ colorediffsGlobal.parsers["unified"] = {
 			return true;
 		}
 
+		function cvs_deleted_file_title() {
+			return _test(/^--- .* DELETED ---$/);
+		}
+
 		function cvs_deleted_file(file) {
-			_should(_test(/^--- .* DELETED ---$/));
+			_should(cvs_deleted_file_title());
 			file['old'].name = _get().match(/^--- (.*) DELETED ---$/)[1];
 			_next();
 			return true;
@@ -360,6 +372,7 @@ colorediffsGlobal.parsers["unified"] = {
 			}
 
 			var line_status = [];
+			var temp_result = {files: []};
 
 			old_chunk.doesnt_have_new_line = false;
 			new_chunk.doesnt_have_new_line = false;
@@ -367,7 +380,26 @@ colorediffsGlobal.parsers["unified"] = {
 			var prev_line = null;
 
 			while(true) {
-				if (_test(/^\-(.*)$/)) {
+				if (_test(/^---\s/)) { //might be the beginning of other file
+					//here is the trick. Inside _try_many stores the current_line position and checks a bunch of titles.
+					//	If any of the titles match it saves the new position and if not it restore the old one.
+					//	The outer _try checks if the nested one return true which means title was matched and new position is saved
+					//	   and convert that to false so actually position would be restored.
+					//	If however _try_many returns false that means position didn't move and we can return true and save it once again.
+					//	So _try returns false means there was a match and true means there wasn't
+					//	Position would be affected anyway.
+					if (!_try(function() {
+							return !_try_many(
+								function() { return file_info({'old':{}, 'new':{}})},
+								cvs_new_file_title,
+								cvs_deleted_file_title,
+								cvs_binary_file_title
+							);
+						}
+						)) {
+						break;
+					}
+				} else if (_test(/^\-(.*)$/)) {
 					line_status[old_chunk.code.length] = "C"; //Changed
 					old_chunk.code.push(_get().substring(1));
 				} else if (_test(/^\+(.*)$/)) {
