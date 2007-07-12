@@ -23,10 +23,10 @@ colorediffsGlobal.views["side-by-side"] = {
 		return [
 			function() {
 				var stylecontent = "";
-				stylecontent += "	.log			{$cp{diffColorer.sbs_log		}; padding: 5px; border: 1px solid black;}";
+				stylecontent += "	.log			{$cp{diffColorer.sbs_log		}; padding: 5px; border: 1px solid black;overflow:auto;}";
 				stylecontent += "	.file-diff		{$cp{diffColorer.sbs_file-diff	}; padding: 3px;margin:5px;}";
 				stylecontent += "	.title			{$cp{diffColorer.sbs_title		};padding: 5px; margin:0; overflow:auto; border: 1px solid black;}";
-				stylecontent += "	.pre-code		{$cp{diffColorer.sbs_precode	}; margin:0;}";
+				stylecontent += "	.pre-code		{$cp{diffColorer.sbs_precode	}; margin:0;overflow:auto;}";
 				stylecontent += "	.addline		{$cp{diffColorer.sbs_addedLine	}; margin-left:5px;margin-right:5px;}";
 				stylecontent += "	.delline		{$cp{diffColorer.sbs_deletedLine}; margin-left:5px;margin-right:5px;}";
 				stylecontent += "	.steadyline		{$cp{diffColorer.sbs_steadyLine }; margin-left:5px;margin-right:5px;}";
@@ -80,7 +80,7 @@ colorediffsGlobal.views["side-by-side"] = {
 					}
 				),
 				dom.createElement(
-					"pre", {wrap: ""},
+					"pre", {wrap: "", style: "overflow:auto;"},
 					il.postfix || ""
 				)
 			)
