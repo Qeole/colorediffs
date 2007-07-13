@@ -61,3 +61,4 @@ pref("diffColorer.parser.max-additional-info-size", 7);
 pref("diffColorer.parser.max-postfix-size", 15);
 
 pref("diffColorer.diff-mode", "both");
+pref("diffColorer.show-line-numbers", false);

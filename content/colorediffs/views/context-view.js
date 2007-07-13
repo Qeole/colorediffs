@@ -133,8 +133,8 @@ colorediffsGlobal.views["context"] = {
 
 											var line = oldCode[i];
 
-											oldCodeDecorated.push("<div class='steadyline' title='" + file['old'].name15Truncated + ":" + oldLine + "'>	 " + line +" </div>");
-											newCodeDecorated.push("<div class='steadyline' title='" + file['new'].name15Truncated + ":" + newLine + "'>	 " + line +" </div>");
+											oldCodeDecorated.push("<div class='steadyline' title='" + file['old'].name15Truncated + ":" + oldLine + "'>&nbsp;&nbsp;" + line +" </div>");
+											newCodeDecorated.push("<div class='steadyline' title='" + file['new'].name15Truncated + ":" + newLine + "'>&nbsp;&nbsp;" + line +" </div>");
 
 											newLine++;
 											oldLine++;

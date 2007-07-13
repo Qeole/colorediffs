@@ -87,4 +87,5 @@ colorediffsGlobal.Pref = function (prefModel) {
 	createIntGetSet("parserMaxPostfixSize", "diffColorer.parser.max-postfix-size");
 
 	createCharGetSet("diffMode", "diffColorer.diff-mode");
+	createBoolGetSet("showLineNumbers", "diffColorer.show-line-numbers");
 }

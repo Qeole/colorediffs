@@ -3,6 +3,7 @@ colorediffsGlobal.transformations["composite"] = {
 
 		//init state
 		var fileEvents = [];
+		var fileAfterEvents = [];
 		var chunkEvents = [];
 		var lineEvents = [];
 
@@ -27,6 +28,9 @@ colorediffsGlobal.transformations["composite"] = {
 				member.init({
 					addFileListener: function(priority, callback) {
 						add(fileEvents, priority, callback);
+					},
+					addFileAfterListener: function(priority, callback) {
+						add(fileAfterEvents, priority, callback);
 					},
 					addChunkListener: function(priority, callback) {
 						add(chunkEvents, priority, callback);
@@ -65,6 +69,8 @@ colorediffsGlobal.transformations["composite"] = {
 
 			if (file['old'] && file['old'].chunks) { file['old'].chunks.forEach(proceedChunk); }
 			if (file['new'] && file['new'].chunks) { file['new'].chunks.forEach(proceedChunk); }
+
+			proceed(file, fileAfterEvents);
 		}
 
 		function proceedIL(il) {
