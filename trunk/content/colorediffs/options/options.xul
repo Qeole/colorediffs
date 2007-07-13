@@ -20,6 +20,7 @@
 	<prefpane>
 		<preferences>
 			<preference id="show-whitespace" name="diffColorer.show-whitespace" type="bool" instantApply="false"/>
+			<preference id="show-line-numbers" name="diffColorer.show-line-numbers" type="bool" instantApply="false"/>
 			<preference id="show-toolbar" name="diffColorer.show-toolbar" type="bool"/>
 			<preference id="view-mode-pref" name="diffColorer.view-mode" type="string"/>
 		</preferences>
@@ -37,6 +38,7 @@
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/add-title.js"/>
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/replace-file-names-transformation.js"/>
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/show-whitespaces-transformation.js"/>
+		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/show-line-numbers.js"/>
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/main-transformation.js"/>
 
 		<script type="application/x-javascript" src="chrome://colorediffs/content/views/side-by-side-view.js"/>
@@ -89,7 +91,10 @@
 				</tabpanel>
 				<tabpanel>
 					<hbox align="baseline">
-						<checkbox id="show-whitespaces" label="Show whitespaces" checked="false" command="cmd_change_pref" preference="show-whitespace"/>
+						<vbox>
+							<checkbox id="show-whitespaces" label="Show whitespaces" checked="false" command="cmd_change_pref" preference="show-whitespace"/>
+							<checkbox id="show-line-numbers" label="Show line numbers" checked="false" command="cmd_change_pref" preference="show-line-numbers"/>
+						</vbox>
 						<checkbox id="show-toolbar" label="Show toolbar" checked="false" command="cmd_change_pref" preference="show-toolbar"/>
 					</hbox>
 				</tabpanel>

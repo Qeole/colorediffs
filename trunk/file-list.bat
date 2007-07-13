@@ -48,6 +48,7 @@ cp content\colorediffs\transformations\main-transformation.js %1\content\colored
 cp content\colorediffs\transformations\escape-html-special-characters-transformation.js %1\content\colorediffs\transformations
 cp content\colorediffs\transformations\replace-file-names-transformation.js %1\content\colorediffs\transformations
 cp content\colorediffs\transformations\show-whitespaces-transformation.js %1\content\colorediffs\transformations
+cp content\colorediffs\transformations\show-line-numbers.js %1\content\colorediffs\transformations
 
 mkdir %1\content\colorediffs\views
 cp content\colorediffs\views\main-view.js %1\content\colorediffs\views

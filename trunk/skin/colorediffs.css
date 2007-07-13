@@ -6,6 +6,10 @@
 	list-style-image: url("chrome://colorediffs/skin/options.png");
 }
 
+#colorediffs-show-line-numbers {
+	list-style-image: url("chrome://colorediffs/skin/line-numbers.png");
+}
+
 #colorediffs-close-toolbar {
 	/*-moz-image-region: rect(0px, 48px, 16px, 32px);*/
 	height: 24px;

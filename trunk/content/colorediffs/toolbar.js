@@ -13,6 +13,7 @@ colorediffsGlobal.colorediffsToolbar = new function() {
 	var getViewModeNode = getNode('colorediffs-view-mode');
 	var getDiffModeNode = getNode('colorediffs-diff-mode');
 	var getShowWhiteSpacesNode = getNode('colorediffs-show-whitespaces');
+	var getShowLineNumbersNode = getNode('colorediffs-show-line-numbers');
 	var getToolbarNode = getNode('colorediffs-toolbar');
 
 	var reloadWithScrollPreserved = function() {
@@ -30,6 +31,7 @@ colorediffsGlobal.colorediffsToolbar = new function() {
 
 	var updatePrefs = function() {
 		pref.showWhiteSpace.set(getShowWhiteSpacesNode().checked);
+		pref.showLineNumbers.set(getShowLineNumbersNode().checked);
 		pref.mode.set(getViewModeNode().selectedItem);
 		pref.diffMode.set(getDiffModeNode().selectedItem.value);
 		pref.showToolbar.set(!getToolbarNode().hidden)
@@ -42,6 +44,13 @@ colorediffsGlobal.colorediffsToolbar = new function() {
 
 	this.toggleWhiteSpaces = function () {
 		getShowWhiteSpacesNode().checked = !getShowWhiteSpacesNode().checked;
+		updatePrefs();
+
+		reloadWithScrollPreserved();
+	}
+
+	this.toggleLineNumbers = function () {
+		getShowLineNumbersNode().checked = !getShowLineNumbersNode().checked;
 		updatePrefs();
 
 		reloadWithScrollPreserved();
@@ -73,6 +82,7 @@ colorediffsGlobal.colorediffsToolbar = new function() {
 
 				//update combobox
 				getViewModeNode().selectedItem = pref.mode.get();
+				getShowLineNumbersNode().checked = pref.showLineNumbers.get();
 
 				var menulist = getDiffModeNode();
 				var items = menulist.firstChild.childNodes;
