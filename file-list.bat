@@ -59,4 +59,5 @@ cp content\colorediffs\views\context-view.js %1\content\colorediffs\views
 mkdir %1\skin
 cp skin\colorediffs.css %1\skin\
 cp skin\white-space.png %1\skin\
+cp skin\line-numbers.png %1\skin\
 cp skin\options.png %1\skin\
