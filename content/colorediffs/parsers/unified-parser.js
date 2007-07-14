@@ -440,14 +440,7 @@ colorediffsGlobal.parsers["unified"] = {
 
 			try {
 				while(true) {
-					while(!_test(blank_line()) && !_test(/^--- .* ---$/) && !_test(/^Index: /)) {
-						code.push(_get());
-						status.push("A");
-						_next();
-					}
-
-					//skip blank lines
-					while( _test(blank_line()) ) {
+					while(!_test(/^--- .* ---$/) && !_test(/^Index: /)) {
 						code.push(_get());
 						status.push("A");
 						_next();
