@@ -29,6 +29,8 @@
 		<script type="application/x-javascript" src="chrome://colorediffs/content/prefs.js"/>
 
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/composite-transformation.js"/>
+		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/composite-init.js"/>
+		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/composite-run.js"/>
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/find-common-name.js"/>
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/detect-old-new-files.js"/>
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/select-old-new-files.js"/>
@@ -39,6 +41,8 @@
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/replace-file-names-transformation.js"/>
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/show-whitespaces-transformation.js"/>
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/show-line-numbers.js"/>
+		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/collect-tab-sizes.js"/>
+		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/calc-chunk-size.js"/>
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/main-transformation.js"/>
 
 		<script type="application/x-javascript" src="chrome://colorediffs/content/views/side-by-side-view.js"/>

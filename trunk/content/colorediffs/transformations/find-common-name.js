@@ -1,7 +1,7 @@
 colorediffsGlobal.transformations.composite.members["find-common-name"] = {
 	init: function(registrator, pref) {
 
-		registrator.addFileListener(0, findCommonName);
+		registrator.addListener("find-common-name", "file", findCommonName);
 
 		function findCommonName(file, il) {
 			if ( file['new'].name || file['old'].name ) {

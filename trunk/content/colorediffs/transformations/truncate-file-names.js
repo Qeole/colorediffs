@@ -1,7 +1,7 @@
 colorediffsGlobal.transformations.composite.members["truncate-file-names"] = {
 	init: function(registrator, pref) {
 
-		registrator.addFileListener(2, truncateFileNames);
+		registrator.addListener("truncate-file-names", "file", truncateFileNames, ["find-common-name", "select-old-new-files"]);
 
 		function truncateFileNames(file, il) {
 			if (file.common_name) {

@@ -1,12 +1,17 @@
 colorediffsGlobal.transformations.composite.members["select-old-new-files"] = {
 	init: function(registrator, pref) {
 
+		function register(func) {
+			registrator.addListener("select-old-new-files", "file", func, "find-common-name");
+		}
+
+
 		switch( pref.diffMode.get() ) {
 			case "new":
-				registrator.addFileListener(1, function(file) {return selectSide('old', file);});
+				register(function(file) {return selectSide('old', file);});
 				break;
 			case "old":
-				registrator.addFileListener(1, function(file) {return selectSide('new', file);});
+				register(function(file) {return selectSide('new', file);});
 				break;
 		}
 

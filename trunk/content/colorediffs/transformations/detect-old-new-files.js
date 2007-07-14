@@ -1,10 +1,9 @@
 colorediffsGlobal.transformations.composite.members["detect-old-new-files"] = {
 	init: function(registrator, pref) {
 
-		registrator.addFileListener(1, detectOldNewFiles);
+		registrator.addListener("detect-old-new-files", "file", detectOldNewFiles);
 
-		function detectOldNewFiles(file, il) {
-
+		function detectOldNewFiles(file) {
 			if (file['new'] && file['new'].chunks && file['old'] && file['old'].chunks) {
 				deleteSide('new');
 				deleteSide('old');

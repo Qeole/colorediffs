@@ -1,7 +1,7 @@
 colorediffsGlobal.transformations.composite.members["replace-file-names"] = {
 	init: function(registrator, pref) {
 
-		registrator.addFileListener(1, replaceFilesInLog);
+		registrator.addListener("replace-file-names", "file", replaceFilesInLog, "find-common-name");
 
 		function replaceFilesInLog(file, il) {
 			replace(file.common_name, file.id, il);

@@ -130,10 +130,10 @@ colorediffsGlobal.views["unified"] = {
 												oldCodeDecorated = [];
 												newCodeDecorated = [];
 
-												if ( only_new ) {
+												if ( only_old ) {
 													var line = oldCode[i];
 													var tooltip = file['old'].name15Truncated + ':' + oldLine;
-												} else if (only_old) {
+												} else if (only_new) {
 													var line = newCode[i];
 													var tooltip = file['new'].name15Truncated + ':' + newLine;
 												} else {

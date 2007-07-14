@@ -17,7 +17,7 @@ colorediffsGlobal.views["side-by-side"] = {
 
 		function createCodeLine(klass, title, code) {
 			var t = (title)?"title='" + title + "'" : "";
-			return "<div class='" + klass + "' " + t + "><span class='" + klass + "' " + t + ">" + code + "</span></div>";
+			return "<span class='" + klass + "' " + t + ">" + code + "</span>\n";
 		}
 
 		return [
@@ -35,8 +35,8 @@ colorediffsGlobal.views["side-by-side"] = {
 				stylecontent += "	.right			{$cp{diffColorer.sbs_right		};margin:0; overflow:auto; border: 1px solid black;padding-top:5px;padding-bottom:5px;}";
 				stylecontent += "	.left-title		{$cp{diffColorer.sbs_left-title };padding: 0; margin:0; overflow:auto; border: 1px solid black;}";
 				stylecontent += "	.right-title	{$cp{diffColorer.sbs_right-title};padding: 0; margin:0; overflow:auto; border: 1px solid black;}";
-				stylecontent += "	.left .addline	{$cp{diffColorer.sbs_emptyLine	};width:100%; color: green;}";
-				stylecontent += "	.right .delline	{$cp{diffColorer.sbs_emptyLine	};width:100%; color: green;}";
+				stylecontent += "	.left .addline	{$cp{diffColorer.sbs_emptyLine	};color: green;}";
+				stylecontent += "	.right .delline	{$cp{diffColorer.sbs_emptyLine	};color: green;}";
 
 				return dom.createElement("style", null, pcp(stylecontent));
 			}(),
@@ -111,6 +111,27 @@ colorediffsGlobal.views["side-by-side"] = {
 					)
 				),
 				me.ilUtils.chunksMap(file, function(old_chunk, new_chunk) {
+						var prev_old_class = null;
+						var prev_new_class = null;
+
+
+						function startCodeBlockIfNeeded(old_class, new_class) {
+							if (old_class != prev_old_class) {
+								if (prev_old_class) {
+									oldCodeDecorated += "</div>"
+								}
+								oldCodeDecorated += "<div class='" + old_class + "'>";
+								prev_old_class = old_class;
+							}
+							if (new_class != prev_new_class) {
+								if (prev_new_class) {
+									newCodeDecorated += "</div>"
+								}
+								newCodeDecorated += "<div class='" + new_class + "'>";
+								prev_new_class = new_class;
+							}
+						}
+
 						var oldCodeDecorated = "";
 						var newCodeDecorated = "";
 						var oldLine = old_chunk.line;
@@ -130,22 +151,26 @@ colorediffsGlobal.views["side-by-side"] = {
 
 							switch( old_chunk.status[i] ) {
 								case "A": //Added
+									startCodeBlockIfNeeded('addline', 'addline');
 									oldCodeDecorated += createCodeLine('addline', null, oldPadding[i]);
 									newCodeDecorated += createCodeLine('addline', file['new'].name15Truncated + ":" + newLine, newCodeLine);
 									newLine++;
 									break;
 								case "D": //Deleted
+									startCodeBlockIfNeeded('delline', 'delline');
 									newCodeDecorated += createCodeLine('delline', null, newPadding[i]);
 									oldCodeDecorated += createCodeLine('delline', file['old'].name15Truncated + ":" + oldLine, oldCodeLine);
 									oldLine++;
 									break;
 								case "C": //Changed
+									startCodeBlockIfNeeded('delline', 'addline');
 									oldCodeDecorated += createCodeLine('delline', file['old'].name15Truncated + ":" + oldLine, oldCodeLine);
 									newCodeDecorated += createCodeLine('addline', file['new'].name15Truncated + ":" + newLine, newCodeLine);
 									newLine++;
 									oldLine++;
 									break;
 								case "S": //the Same
+									startCodeBlockIfNeeded('steadyline', 'steadyline');
 									oldCodeDecorated += createCodeLine('steadyline', file['old'].name15Truncated + ":" + oldLine, oldCodeLine);
 									newCodeDecorated += createCodeLine('steadyline', file['new'].name15Truncated + ":" + newLine, newCodeLine);
 									newLine++;
@@ -155,14 +180,19 @@ colorediffsGlobal.views["side-by-side"] = {
 						}
 
 						if (old_chunk.doesnt_have_new_line && !new_chunk.doesnt_have_new_line) {
-							newCodeDecorated += createCodeLine('addline', file['new'].name15Truncated + ":" + newLine, " ");
-							oldCodeDecorated += createCodeLine('addline', file['old'].name15Truncated, " ");
+							startCodeBlockIfNeeded('addline', 'addline');
+							newCodeDecorated += createCodeLine('addline', file['new'].name15Truncated + ":" + newLine, newPadding[i]);
+							oldCodeDecorated += createCodeLine('addline', file['old'].name15Truncated, oldPadding[i]);
 						}
 
 						if (!old_chunk.doesnt_have_new_line && new_chunk.doesnt_have_new_line) {
-							newCodeDecorated += createCodeLine('delline', file['new'].name15Truncated, " ");
-							oldCodeDecorated += createCodeLine('delline', file['old'].name15Truncated + ":" + oldLine, " ");
+							startCodeBlockIfNeeded('delline', 'delline');
+							newCodeDecorated += createCodeLine('delline', file['new'].name15Truncated, newPadding[i]);
+							oldCodeDecorated += createCodeLine('delline', file['old'].name15Truncated + ":" + oldLine, oldPadding[i]);
 						}
+
+						oldCodeDecorated += "</div>";
+						newCodeDecorated += "</div>";
 
 						return [
 							dom.createElement(
@@ -222,7 +252,19 @@ colorediffsGlobal.views["side-by-side"] = {
 				),
 				file[side].chunks.map(function(chunk) {
 						function getDecoratedLine(decoratedClass, code, line) {
-							return createCodeLine(decoratedClass, file.name15Truncated + ":" + line, code);
+							return createCodeLine(decoratedClass, file[side].name15Truncated + ":" + line, code);
+						}
+
+						var prev_class = null;
+
+						function startCodeBlockIfNeeded(klass) {
+							if (klass != prev_class) {
+								if (prev_class) {
+									codeDecorated += "</div>"
+								}
+								codeDecorated += "<div class='" + klass + "'>";
+								prev_class = klass;
+							}
 						}
 
 						var codeDecorated = "";
@@ -244,12 +286,14 @@ colorediffsGlobal.views["side-by-side"] = {
 								case "A": //Added
 								case "D": //Deleted
 								case "C": //Changed
+									startCodeBlockIfNeeded(changedClass);
 									if (ignoredTag != chunk.status[i]) {
 										codeDecorated += getDecoratedLine(changedClass, codeLine, line);
 										line++;
 									}
 									break;
 								case "S": //the Same
+									startCodeBlockIfNeeded('steadyline');
 									codeDecorated += getDecoratedLine('steadyline', codeLine, line);
 									line++;
 									break;
@@ -258,8 +302,11 @@ colorediffsGlobal.views["side-by-side"] = {
 						}
 
 						if (chunk.doesnt_have_new_line) {
+							startCodeBlockIfNeeded('steadyline');
 							codeDecorated += createCodeLine('steadyline', file.name15Truncated, "\\ No newline at end of file");
 						}
+
+						codeDecorated += "</div>";
 
 						return [
 							dom.createElement(
