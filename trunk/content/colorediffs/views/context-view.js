@@ -180,7 +180,7 @@ colorediffsGlobal.views["context"] = {
 											"pre", {'class':'linetag'},
 											"*** " +
 											old_chunk.line +
-											"," + colorediffsGlobal.ilUtils.calcLineCounts(old_chunk.code) +
+											"," + old_chunk.code_size +
 											" ****"
 										),
 										function() {
@@ -197,7 +197,7 @@ colorediffsGlobal.views["context"] = {
 											"pre", {'class':'linetag'},
 											"--- " +
 											new_chunk.line +
-											"," + colorediffsGlobal.ilUtils.calcLineCounts(new_chunk.code) +
+											"," + new_chunk.code_size +
 											" ----"
 										),
 										function() {
@@ -229,7 +229,7 @@ colorediffsGlobal.views["context"] = {
 
 
 		function gen_empty_chunk(oposite_chunk) {
-			var chunk = {line:0, code:[]};
+			var chunk = {line:0, code:[], code_size:0};
 			for (var i = 0; i < oposite_chunk.code.length; i++ ) {
 				chunk.code.push(null);
 			}
