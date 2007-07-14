@@ -199,9 +199,9 @@ colorediffsGlobal.views["side-by-side"] = {
 								"tr", {'class':'linetag'},
 								dom.createElement("td", {colspan:2},
 												  "@@ -" + old_chunk.line +
-												  "," + me.ilUtils.calcLineCounts(old_chunk.code) +
+												  "," + old_chunk.code_size +
 												  " +" +new_chunk.line +
-												  "," + me.ilUtils.calcLineCounts(new_chunk.code) +
+												  "," + new_chunk.code_size +
 												  " @@")
 							),
 							dom.createElement(
@@ -313,7 +313,7 @@ colorediffsGlobal.views["side-by-side"] = {
 								"tr", {'class':'linetag'},
 								dom.createElement("td", {},
 												  "@@ " + anchorSign + chunk.line +
-												  "," + me.ilUtils.calcLineCounts(chunk.code) +
+												  "," + chunk.code_size +
 												  " @@")
 							),
 							dom.createElement(

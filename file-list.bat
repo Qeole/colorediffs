@@ -38,6 +38,8 @@ cp content\colorediffs\parsers\unified-parser.js %1\content\colorediffs\parsers
 
 mkdir %1\content\colorediffs\transformations
 cp content\colorediffs\transformations\composite-transformation.js %1\content\colorediffs\transformations
+cp content\colorediffs\transformations\composite-init.js %1\content\colorediffs\transformations
+cp content\colorediffs\transformations\composite-run.js %1\content\colorediffs\transformations
 cp content\colorediffs\transformations\make-lines-equal-length.js %1\content\colorediffs\transformations
 cp content\colorediffs\transformations\find-common-name.js %1\content\colorediffs\transformations
 cp content\colorediffs\transformations\detect-old-new-files.js %1\content\colorediffs\transformations
@@ -49,6 +51,8 @@ cp content\colorediffs\transformations\escape-html-special-characters-transforma
 cp content\colorediffs\transformations\replace-file-names-transformation.js %1\content\colorediffs\transformations
 cp content\colorediffs\transformations\show-whitespaces-transformation.js %1\content\colorediffs\transformations
 cp content\colorediffs\transformations\show-line-numbers.js %1\content\colorediffs\transformations
+cp content\colorediffs\transformations\collect-tab-sizes.js %1\content\colorediffs\transformations
+cp content\colorediffs\transformations\calc-chunk-size.js %1\content\colorediffs\transformations
 
 mkdir %1\content\colorediffs\views
 cp content\colorediffs\views\main-view.js %1\content\colorediffs\views

@@ -10,7 +10,7 @@ colorediffsGlobal.transformations.composite.members["calc-chunk-size"] = {
 		}
 
 		function sumLine(line, i, chunk) {
-			if (line) {
+			if (line != null) {
 				chunk.code_size++;
 			}
 			return line;
