@@ -1,107 +1,105 @@
 colorediffsGlobal.transformations.composite.members["show-line-numbers"] = {
 	init: function(registrator, pref) {
 		if ( pref.showLineNumbers.get() ) {
-			registrator.addFileAfterListener(0, addLineNumbersToFile);
+
+			registrator.addListener("replace-tabs", "line", replaceTabs, ["show-line-numbers", "show-whitespaces", "calc-tab-sizes"]);
+			registrator.addListener("show-line-numbers-calc-max-line-number", "chunk-pair", calcMaxLineNumber, "calc-chunk-size");
+			registrator.addListener("show-line-numbers-calc-init-chunk", "chunk", initChunk, "show-line-numbers-calc-max-line-number");
+			registrator.addListener("show-line-numbers", "line", addLineNumber, ["show-line-numbers-calc-init-chunk", "escape-html"]);
+			registrator.addListener("show-line-numbers-close-chunk", "chunk", closeChunk, "show-line-numbers");
 		}
 
-		function addLineNumbersToFile(file) {
-			var l = 0;
+		function calcMaxLineNumber(old_chunk, new_chunk) {
+			var maxLineNumber = 0;
 
-			if ( file['old'] && file['old'].chunks ) {
-				l = file['old'].chunks.length;
-			} else if ( file['new'] && file['new'].chunks ) {
-				l = file['new'].chunks.length;
-			}
-
-			for (var i = 0; i < l; i++) {
-				var old_chunk = null;
-				var new_chunk = null;
-
-				if ( file['old'] && file['old'].chunks ) {
-					old_chunk = file['old'].chunks[i];
-				}
-
-				if ( file['new'] && file['new'].chunks ) {
-					new_chunk = file['new'].chunks[i];
-				}
-
-				addLineNumbers(old_chunk, new_chunk);
-			}
-
-			return file;
-		}
-
-		function addLineNumbers(old_chunk, new_chunk) {
-			var maxLength = 0;
-
-			//calc max length
 			if ( old_chunk ) {
-				maxLineNumber = countMaxLineNumber(old_chunk.code, old_chunk.line);
+				maxLineNumber = old_chunk.line + old_chunk.code_size - 1;
 			}
 
 			if ( new_chunk ) {
-				maxLineNumber = Math.max(countMaxLineNumber(new_chunk.code, new_chunk.line), maxLineNumber);
+				maxLineNumber = Math.max(new_chunk.line + new_chunk.code_size - 1, maxLineNumber);
 			}
 
 			var charsLength = countCharsLength(maxLineNumber);
 
-			//pad lines
 			if ( old_chunk ) {
-				addLineNumberToLines(old_chunk.code, old_chunk.line, charsLength);
+				old_chunk.charsLength = charsLength;
 			}
 
 			if ( new_chunk ) {
-				addLineNumberToLines(new_chunk.code, new_chunk.line, charsLength);
+				new_chunk.charsLength = charsLength;
+			}
+		}
+
+		function closeChunk(chunk) {
+			delete chunk.charsLength;
+			delete chunk.local_pad;
+			delete chunk.lineNumber;
+		}
+
+		function initChunk(chunk) {
+			if ( countCharsLength(chunk.line) != chunk.charsLength ) {
+				chunk.local_pad = pad;
+			} else {
+				chunk.local_pad = function(n) { return "" + n; }
 			}
 
-			function countMaxLineNumber(code, line) {
-				var lineNumber = line;
+			chunk.lineNumber = chunk.line;
+			return chunk;
+		}
 
-				for ( var i = 0; i < code.length; i++ ) {
-					if ( code[i] != null ) {
-						lineNumber++;
-					}
-				}
+		function addLineNumber(line, i, chunk) {
+			if ( line != null ) {
+				line = decorate(chunk.local_pad(chunk.lineNumber, chunk.charsLength)) + line;
 
-				return lineNumber;
+				chunk.lineNumber++;
+			} else if (chunk.padding && chunk.padding[i]) {
+				chunk.padding[i] = decoratePadding("".pad(chunk.charsLength)) + chunk.padding[i];
 			}
 
-			//works for numbers > 0 only
-			function countCharsLength(n) {
-				var c = 1;
-				while( (n = Math.floor(n / 10)) > 0 ) { c++; }
-				return c;
+			return line;
+		}
+
+		function decorate(s) {
+			return "<span style='border-right:solid 1px;border-left:solid 1px;margin-right:2px;padding-left:1px;padding-right:1px'>" + s + "</span>";
+		}
+
+		function decoratePadding(s) {
+			return "<span style='margin-right:4px;padding-left:1px;padding-right:1px'>" + s + "</span>";
+		}
+
+		//works for numbers > 0 only
+		function countCharsLength(n) {
+			var c = 1;
+			while( (n = Math.floor(n / 10)) > 0 ) { c++; }
+			return c;
+		}
+
+		function pad(n, length) {
+			var s = "" + n;
+			var nLength = countCharsLength(n);
+			while ( nLength < length ) {
+				s = "&nbsp;" + s;
+				nLength++;
 			}
 
-			function pad(n, length) {
-				var s = "" + n;
-				var nLength = countCharsLength(n);
-				while ( nLength < length ) {
-					s = "&nbsp;" + s;
-					nLength++;
-				}
+			return s;
+		}
 
-				return s;
+		function replaceTabs(line, index, chunk) {
+			var tab_sizes = chunk.tab_sizes[index];
+			if ( line ) {
+				var i = 0;
+				line = line.replace(
+					"\t",
+					function() {
+						return "".pad(tab_sizes[i++]);
+					},
+					"g"
+				);
+
 			}
-
-			function addLineNumberToLines(code, line, charsLength) {
-				var local_pad;
-
-				if ( countCharsLength(line) != charsLength ) {
-					local_pad = pad;
-				} else {
-					local_pad = function(n) { return "" + n; }
-				}
-
-				var lineNumber = line;
-				for ( var i = 0; i < code.length; i++ ) {
-					if ( code[i] != null ) {
-						code[i] = "<span style='border-right:solid 1px;border-left:solid 1px'>" + local_pad(lineNumber, charsLength) + "</span>" + code[i];
-
-						lineNumber++;
-					}
-				}
-			}
+			return line;
 		}
 	}
 };

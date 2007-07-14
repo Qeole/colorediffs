@@ -1,19 +1,18 @@
 colorediffsGlobal.transformations.composite.members["show-whitespaces"] = {
 	init: function(registrator, pref) {
 		if (pref.showWhiteSpace.get()) {
-			registrator.addLineListener(2, replaceWhitespaces);
+			registrator.addListener("show-whitespaces", "line", replaceWhitespaces, ["collect-tab-sizes", "escape-html"]);
 		}
 
-		function replaceWhitespaces(line) {
+		function replaceWhitespaces(line, index, chunk) {
+			var tab_sizes = chunk.tab_sizes[index];
 			if ( line ) {
 				line = line.replace(" ", "&middot;", "g");
-				var offsetCorrector = 0;
+				var i = 0;
 				line = line.replace(
 					"\t",
-					function(str, offset) {
-						var a = ((offset + offsetCorrector) % colorediffsGlobal.tabWidth == colorediffsGlobal.tabWidth - 1)?"":"\t";
-						offsetCorrector += colorediffsGlobal.tabWidth - (offset + offsetCorrector) % colorediffsGlobal.tabWidth - 1;
-						return "&raquo;" + a;
+					function() {
+						return "&raquo;" + "".pad(tab_sizes[i++] - 1);
 					},
 					"g"
 				);

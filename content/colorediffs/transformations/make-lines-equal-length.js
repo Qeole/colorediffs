@@ -1,92 +1,72 @@
 colorediffsGlobal.transformations.composite.members["make-lines-equal-length"] = {
 	init: function(registrator, pref) {
 		if (pref.mode.get() == "side-by-side") {
-			registrator.addFileListener(0, padLinesInFile);
+			registrator.addListener("make-lines-equal-length-init-chunk", "chunk", initChunk);
+			registrator.addListener("make-lines-equal-length-calc-pad-length", "line", calcPadLength, ["collect-tab-sizes", "make-lines-equal-length-init-chunk"]);
+			registrator.addListener("make-lines-equal-length-sync-pad-length", "chunk-pair", syncPadLength, "make-lines-equal-length-calc-pad-length");
+			registrator.addListener("make-lines-equal-length", "line", padLines, "make-lines-equal-length-sync-pad-length");
+			registrator.addListener("make-lines-equal-length-close-chunk", "chunk", closeChunk, "make-lines-equal-length");
 		}
 
-		function countLength(s) {
-			if (s) {
-				var offsetCorrector = 0;
-				return s.replace(
-					"\t",
-					function(str, offset) {
-						var a = "".pad(colorediffsGlobal.tabWidth - (offset + offsetCorrector) % colorediffsGlobal.tabWidth);
-						offsetCorrector += colorediffsGlobal.tabWidth - (offset + offsetCorrector) % colorediffsGlobal.tabWidth - 1;
-						return a;
-					},
-					"g"
-				).length;
-			} else {
-				return 0;
-			}
-		}
-
-		function padLinesInFile(file) {
-			var l = 0;
-
-			if ( file['old'] && file['old'].chunks ) {
-				l = file['old'].chunks.length;
-			} else if ( file['new'] && file['new'].chunks ) {
-				l = file['new'].chunks.length;
-			}
-
-			for (var i = 0; i < l; i++) {
-				var old_chunk = null;
-				var new_chunk = null;
-
-				if ( file['old'] && file['old'].chunks ) {
-					old_chunk = file['old'].chunks[i];
-				}
-
-				if ( file['new'] && file['new'].chunks ) {
-					new_chunk = file['new'].chunks[i];
-				}
-
-				padLines(old_chunk, new_chunk);
-			}
-
-			return file;
-		}
-
-		function padLines(old_chunk, new_chunk) {
+		function syncPadLength(old_chunk, new_chunk) {
 			var maxLength = 0;
 
-			//calc max length
-			if ( old_chunk ) {
-				maxLength = colorediffsGlobal.fold(old_chunk.code, compareLength, maxLength);
+			if (old_chunk) {
+				maxLength = Math.max(old_chunk.maxLineLength, maxLength);
 			}
 
-			if ( new_chunk ) {
-				maxLength = colorediffsGlobal.fold(new_chunk.code, compareLength, maxLength);
+			if (new_chunk) {
+				maxLength = Math.max(new_chunk.maxLineLength, maxLength);
+			}
+			if (old_chunk) {
+				old_chunk.maxLineLength = maxLength;
 			}
 
-			//pad lines
-			if ( old_chunk ) {
-				old_chunk.padding = pad(old_chunk.code, maxLength);
+			if (new_chunk) {
+				new_chunk.maxLineLength = maxLength;
 			}
+		}
 
-			if ( new_chunk ) {
-				new_chunk.padding = pad(new_chunk.code, maxLength);
-			}
+		function calcPadLength(line, i, chunk) {
+			chunk.maxLineLength = Math.max(countLength(line, chunk.tab_sizes[i]), chunk.maxLineLength);
+			return line;
+		}
 
-			function compareLength(s, l) {
-				return Math.max(countLength(s), l);
-			}
+		function initChunk(chunk) {
+			chunk.padding = new Array(chunk.code.length + 1);
+			chunk.maxLineLength = 0;
+			return chunk;
+		}
 
-			function pad(code, maxLength) {
-				var padding = [];
-				var length = code.length;
+		function padLines(line, i, chunk) {
+			var lineLength = countLength(line, chunk.tab_sizes[i]);
 
-				for (var i = 0; i < length; i++) {
-					var lineLength = countLength(code[i]);
+			var p = "".pad(chunk.maxLineLength - lineLength);
 
-					var p = "".pad(maxLength - lineLength);
+			if (lineLength + p.length == 0) p = " ";
+			chunk.padding[i] = p;
+			return line;
+		}
 
-					if (lineLength + p.length == 0) p = " ";
-					padding.push(p);
+		function closeChunk(chunk) {
+			chunk.padding[chunk.padding.length - 1] = ("".pad(chunk.maxLineLength)); //used if \No new line at end of file in old and new parts differs
+			delete chunk.maxLineLength;
+			return chunk;
+		}
+
+		function countLength(s, tab_sizes) {
+			if (s) {
+				var l = s.length;
+
+				if (tab_sizes) {
+					for (var i = 0; i < tab_sizes.length; i++) {
+						l += tab_sizes[i] - 1;
+					}
 				}
 
-				return padding;
+				return l;
+			} else {
+				return 0;
 			}
 		}
 	}
