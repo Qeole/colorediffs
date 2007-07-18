@@ -199,9 +199,18 @@ colorediffsGlobal.parsers["unified"] = {
 			return _test(/^---\s(?:new\s)?BINARY FILE:\s.*\s---$/);
 		}
 
+		function extract_binary_file_name(file, data) {
+			var r = data.match(/\b(\w[ \w-\/\.]+\.[\w]+\w)\b/);
+			if ( r && r[1] ) {
+				file['new'].name = file['old'].name = r[1];
+			} else {
+				file['new'].name = file['old'].name = "";
+			}
+		}
+
 		function cvs_binary_file(file) {
 			_should(cvs_binary_file_title());
-			extract_file_name_from_raw_data(file, _get());
+			extract_binary_file_name(file, _get());
 			_next();
 			_should(additional_file_info(file));
 			return true;
