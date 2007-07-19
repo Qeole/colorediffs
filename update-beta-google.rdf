@@ -8,7 +8,7 @@
 		  URIs, per RDF Grammar rules, I've tacked the version number onto
 		  the end to differentiate versions -->
 			<RDF:Seq>
-				<RDF:li RDF:resource="urn:mozilla:extension:{282C3C7A-15A8-4037-A30D-BBEB17FFC76B}:0.4b4"/>
+				<RDF:li RDF:resource="urn:mozilla:extension:{282C3C7A-15A8-4037-A30D-BBEB17FFC76B}:0.4b5"/>
 			</RDF:Seq>
 		</em:updates>
 
@@ -19,8 +19,8 @@
 			 logic to patch its Extensions datasource with information about existing
 			 Extensions that are ''also'' compatible with newer versions of
 			 the app. -->
-		<em:version>0.4b4</em:version>
-		<em:updateLink>http://colorediffs.googlecode.com/files/colorediffs-0.4b4.xpi</em:updateLink>
+		<em:version>0.4b5</em:version>
+		<em:updateLink>https://colorediffs.googlecode.com/files/colorediffs-0.4b5.xpi</em:updateLink>
 	</RDF:Description>
 
 	<!-- This Description describes an available update to version 2.2 of
@@ -28,14 +28,14 @@
 		 targetApplication (format of the targetApplication object is the
 		 same as for the install.rdf file, with the exception of the
 		 em:updateLink property, which contains a URL to the updated XPI) -->
-	<RDF:Description RDF:about="urn:mozilla:extension:{282C3C7A-15A8-4037-A30D-BBEB17FFC76B}:0.4b4">
-		<em:version>0.4b4</em:version>
+	<RDF:Description RDF:about="urn:mozilla:extension:{282C3C7A-15A8-4037-A30D-BBEB17FFC76B}:0.4b5">
+		<em:version>0.4b5</em:version>
 		<em:targetApplication>
 			<RDF:Description>
 				<em:id>{3550f703-e582-4d05-9a08-453d09bdfdc6}</em:id>
 				<em:minVersion>1.0</em:minVersion>
 				<em:maxVersion>2.0.0.*</em:maxVersion>
-				<em:updateLink>http://colorediffs.googlecode.com/files/colorediffs-0.4b4.xpi</em:updateLink>
+				<em:updateLink>https://colorediffs.googlecode.com/files/colorediffs-0.4b5.xpi</em:updateLink>
 			</RDF:Description>
 		</em:targetApplication>
 	</RDF:Description>
