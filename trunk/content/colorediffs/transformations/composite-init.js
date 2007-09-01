@@ -56,6 +56,14 @@ colorediffsGlobal.transformations["composite"].methods.initOthers =
 								node.ancessorCount++;
 							});
 					}
+				} else {//The callback we depends on isn't enabled, should go to the root
+					for (var i = 0; i < dependants[name].length; i++) {
+						var dependant = dependants[name][i];
+						if (dependant.ancessorCount == 0) { // push only if we aren't depends on something enabled
+							dependant.ancessorCount = 1;
+							callbacks["root"].children.push(dependant);
+						}
+					}
 				}
 			}
 
