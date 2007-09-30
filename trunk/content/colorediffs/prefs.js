@@ -83,6 +83,7 @@ colorediffsGlobal.Pref = function (prefModel) {
 	createBoolGetSet("instantApply", "browser.preferences.instantApply");
 
 	createIntGetSet("parserMaxTitleSize", "diffColorer.parser.max-title-size");
+	createIntGetSet("parserMinTitleDelimiterCharsCount", "diffColorer.parser.min-title-delimiter-chars-count");
 	createIntGetSet("parserMaxAdditionalInfoSize", "diffColorer.parser.max-additional-info-size");
 	createIntGetSet("parserMaxPostfixSize", "diffColorer.parser.max-postfix-size");
 

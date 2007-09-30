@@ -259,6 +259,7 @@ colorediffsGlobal.parsers["unified"] = {
 		// title = normal_line "==========================" | normal_line "---------------------------" | normal_line title
 		function title(file) {
 			var max_title_size = pref.parserMaxTitleSize.get();
+			var min_title_delimiter_chars_count = pref.parserMinTitleDelimiterCharsCount.get();
 			var title = "";
 			var num = 0;
 			do {
@@ -269,7 +270,7 @@ colorediffsGlobal.parsers["unified"] = {
 				if ( num >= max_title_size || _test(blank_line()) ) {
 					return false;
 				}
-			} while (!_test(/^[-=]+$/));
+			} while (!_test(/^[-=]{min_title_delimiter_chars_count,}$/));
 
 			_next();
 			file.title = title.trim("\n");
