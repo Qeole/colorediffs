@@ -66,8 +66,6 @@ colorediffsGlobal.onLoadMessage = function() {
 	me.setActive(true);
 	me.colorediffsToolbar.initToolbar();
 
-	var pref = new colorediffsGlobal.Pref(colorediffsGlobal.getPrefs());
-
 	//don't do anything if user wants plain
 	if (pref.mode.get() == 'none') {
 		return;
@@ -83,16 +81,38 @@ colorediffsGlobal.onLoadMessage = function() {
 		return;
 	}
 
+	var reloadPlanned = false;
+
 	var text = me.fold(divs, function(div, text) {
 			switch(div.getAttribute("class")) {
 				case "moz-text-plain":
 				case "moz-text-flowed":
 					return text + colorediffsGlobal.htmlToPlainText(div.innerHTML) + "\n\n\n";
+				case "moz-text-html": //that means we're looking at HTML part of multipart mail
+					//Check if we're after reload
+					if (colorediffsGlobal.restorePreferHtmlTo === undefined) {
+						//Will try to make Thunderird reload it with text part in use.
+						colorediffsGlobal.restorePreferHtmlTo = pref.preferHtml.get();
+						pref.preferHtml.set(true);
+						MsgReload();
+						reloadPlanned = true;
+					}
 				default:
 					return text;
 			}
 		},
 		"");
+
+	if (reloadPlanned) {
+		return; //got to reload
+	}
+
+	//Should do it here so we can check whether we planned reload or not in the code that actually plan it.
+	if (colorediffsGlobal.restorePreferHtmlTo !== undefined) {
+		pref.preferHtml.set(colorediffsGlobal.restorePreferHtmlTo);
+		delete colorediffsGlobal.restorePreferHtmlTo;
+	}
+
 
 	//Choose parser
 	var il = colorediffsGlobal.parse(text, pref);
