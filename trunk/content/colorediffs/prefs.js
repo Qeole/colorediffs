@@ -88,4 +88,6 @@ colorediffsGlobal.Pref = function (prefModel) {
 
 	createCharGetSet("diffMode", "diffColorer.diff-mode");
 	createBoolGetSet("showLineNumbers", "diffColorer.show-line-numbers");
+
+	createBoolGetSet("preferHtml", "mailnews.display.prefer_plaintext");
 }
