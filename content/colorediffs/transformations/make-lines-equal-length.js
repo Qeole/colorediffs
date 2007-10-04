@@ -2,7 +2,7 @@ colorediffsGlobal.transformations.composite.members["make-lines-equal-length"] =
 	init: function(registrator, pref) {
 		if (pref.mode.get() == "side-by-side") {
 			registrator.addListener("make-lines-equal-length-init-chunk", "chunk", initChunk);
-			registrator.addListener("make-lines-equal-length-calc-pad-length", "line", calcPadLength, ["collect-tab-sizes", "make-lines-equal-length-init-chunk"]);
+			registrator.addListener("make-lines-equal-length-calc-pad-length", "line", calcPadLength, ["collect-tab-sizes", "make-lines-equal-length-init-chunk", "strip-html"]);
 			registrator.addListener("make-lines-equal-length-sync-pad-length", "chunk-pair", syncPadLength, "make-lines-equal-length-calc-pad-length");
 			registrator.addListener("make-lines-equal-length", "line", padLines, "make-lines-equal-length-sync-pad-length");
 			registrator.addListener("make-lines-equal-length-close-chunk", "chunk", closeChunk, "make-lines-equal-length");

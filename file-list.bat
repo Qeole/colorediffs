@@ -53,6 +53,7 @@ cp content\colorediffs\transformations\show-whitespaces-transformation.js %1\con
 cp content\colorediffs\transformations\show-line-numbers.js %1\content\colorediffs\transformations
 cp content\colorediffs\transformations\collect-tab-sizes.js %1\content\colorediffs\transformations
 cp content\colorediffs\transformations\calc-chunk-size.js %1\content\colorediffs\transformations
+cp content\colorediffs\transformations\strip-html.js %1\content\colorediffs\transformations
 
 mkdir %1\content\colorediffs\views
 cp content\colorediffs\views\main-view.js %1\content\colorediffs\views

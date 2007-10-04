@@ -32,6 +32,7 @@
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/composite-init.js"/>
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/composite-run.js"/>
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/find-common-name.js"/>
+		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/strip-html.js"/>
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/detect-old-new-files.js"/>
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/select-old-new-files.js"/>
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/truncate-file-names.js"/>
