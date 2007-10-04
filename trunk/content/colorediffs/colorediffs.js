@@ -87,7 +87,7 @@ colorediffsGlobal.onLoadMessage = function() {
 			switch(div.getAttribute("class")) {
 				case "moz-text-plain":
 				case "moz-text-flowed":
-					return text + colorediffsGlobal.htmlToPlainText(div.innerHTML) + "\n\n\n";
+					return text + stripThunderbirdGeneratedHtml(div.innerHTML) + "\n\n\n";
 				case "moz-text-html": //that means we're looking at HTML part of multipart mail
 					//Check if we're after reload
 					if (colorediffsGlobal.restorePreferHtmlTo === undefined) {
@@ -96,6 +96,9 @@ colorediffsGlobal.onLoadMessage = function() {
 						pref.preferHtml.set(true);
 						MsgReload();
 						reloadPlanned = true;
+					} else { //ok, reloading was bad idea, but maybe html part is only log and diff is actually in attached file
+							 // so let's give it a try
+						return text + div.innerHTML + "\n\n\n";
 					}
 				default:
 					return text;
@@ -132,5 +135,12 @@ colorediffsGlobal.onLoadMessage = function() {
 	body.appendChild(renderedStyleBody[1]);
 
 	me.writeDebugFile("after.html", message.documentElement.innerHTML, pref);
+
+
+	//inner functions
+	//Strip <pre wrap=""><br><hr size="4" width="90%"><br> tags from every div
+	function stripThunderbirdGeneratedHtml(html) {
+		return html.replace(/^<pre .*?>(?:<br><hr .*?><br>)?((?:.|\n)*)<\/pre>$/i, "$1");
+	}
 }
 

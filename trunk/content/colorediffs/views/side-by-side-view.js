@@ -24,7 +24,7 @@ colorediffsGlobal.views["side-by-side"] = {
 			function() {
 				var stylecontent = "";
 				stylecontent += "	.log			{$cp{diffColorer.sbs_log		}; padding: 5px; border: 1px solid black;overflow:auto;}";
-				stylecontent += "	.file-diff		{$cp{diffColorer.sbs_file-diff	}; padding: 3px;margin:5px;}";
+				stylecontent += "	.file-diff		{$cp{diffColorer.sbs_file-diff	}; padding: 3px;margin:5px;border: 1px solid black;}";
 				stylecontent += "	.title			{$cp{diffColorer.sbs_title		};padding: 5px; margin:0; overflow:auto; border: 1px solid black;}";
 				stylecontent += "	.pre-code		{$cp{diffColorer.sbs_precode	}; margin:0;overflow:auto;}";
 				stylecontent += "	.addline		{$cp{diffColorer.sbs_addedLine	}; margin-left:5px;margin-right:5px;}";
