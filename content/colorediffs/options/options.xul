@@ -17,7 +17,7 @@
 		ondialogcancel="colorediffsGlobal.deleteOptions();"
 		title="Colored Diffs">
 
-	<prefpane>
+	<prefpane id="colorediffsSettingsPane">
 		<preferences>
 			<preference id="show-whitespace" name="diffColorer.show-whitespace" type="bool" instantApply="false"/>
 			<preference id="show-line-numbers" name="diffColorer.show-line-numbers" type="bool" instantApply="false"/>
@@ -111,7 +111,9 @@
 				<box/>
 				<tab/>
 			</deck>
-			<browser id="previewbox" flex="1"/>
+			<browser 
+				onload="colorediffsGlobal.options.onChangeMode();"
+				id="previewbox" flex="1"/>
 		</vbox>
 	</hbox>
 	<spacer flex="1" style="height:5px;"/>

@@ -189,10 +189,16 @@ File title
 
 	}
 
-	//init code
+	getPreviewNode().contentWindow.setTimeout(function() {
+		if (getPreviewNode().contentDocument.getElementsByTagName("body")[0].innerHTML == "") {
+			updatePreview();
+		}
+		getPreviewNode().contentWindow.setTimeout(arguments.callee, 1000);
+	}, 1000);
+	
+        //init code
 	updatePreview();
 	colorediffsGlobal.options.onChangeMode();
-
 }
 
 colorediffsGlobal.deleteOptions = function() {
