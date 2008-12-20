@@ -53,7 +53,7 @@ colorediffsGlobal.parsers["unified"] = {
 			return lines[curr_line];
 		}
 
-		function _accept(r) {ad.c
+		function _accept(r) {
 			var res = r.test(lines[curr_line]);
 			if (res) _next();
 			return res;
@@ -71,7 +71,7 @@ colorediffsGlobal.parsers["unified"] = {
 
 		// diff = log blank_line code postfix
 		function diff() {
-			var result = {};
+			var result = {postfix:""};
 
 			log_and_code(result);
 			code_and_postfix(result);
@@ -80,7 +80,7 @@ colorediffsGlobal.parsers["unified"] = {
 		}
 
 		function code_and_postfix(result) {
-			function _(func) { return function() { return func(result); } };
+			function _(func) { return function() { return func(result); }; };
 
 			try {
 				while(true) {
@@ -88,7 +88,8 @@ colorediffsGlobal.parsers["unified"] = {
 					if (_try(_(postfix))) {
 						break;
 					} else {
-						_next(); //TODO: We are throwing away code here.
+					        result.postfix += _get() + "\n";
+						_next();
 					}
 				}
 			} catch (e) {
@@ -99,7 +100,7 @@ colorediffsGlobal.parsers["unified"] = {
 
 		function postfix(result) {
 			var postfix = "";
-			var max_postfix_size = pref.parserMaxPostfixSize.get();;
+			var max_postfix_size = pref.parserMaxPostfixSize.get();
 
 			var i = 0;
 
@@ -116,7 +117,7 @@ colorediffsGlobal.parsers["unified"] = {
 				}
 			}
 
-			result.postfix = postfix;
+			result.postfix += postfix;
 			return true;
 		}
 
@@ -305,12 +306,17 @@ colorediffsGlobal.parsers["unified"] = {
 		// date = [^\t]+
 		// version = [^\t]+
 		function getFileInfo(s) {
-			var r = s.match(/^[+-]{3}\s(.*?)(?:\t(.*))?$/);
+		        var fiReg = /^[+-]{3}\s(.*?)(?:\t(.*))?$/;
+			var r = fiReg.exec(s);
 
-			if (/(empty file)/.test(r[1])) { //Filename should match that
+			if (r) {
+			    if (/(empty file)/.test(r[1])) { //Filename should match that
 				return ["", r[1] + " " + r[2]];
-			} else {
+			    } else {
 				return [r[1], r[2]];
+			    }
+			} else {
+			    return [s, ""];
 			}
 		}
 
