@@ -11,7 +11,9 @@ colorediffsGlobal.transformations.composite.members["replace-file-names"] = {
 
 
 		function replace(name, id, il) {
-			il.log = il.log.replace(new RegExp("([\\/\\.a-zA-Z0-9-]*\\b" + name.replace(".", "\\.") + "\\b)"), "<a href='#" + id + "'>$1</a>");
+		    if (name) {
+			il.log = il.log.replace(new RegExp("([\\/\\.a-zA-Z0-9-]*\\b" + name.replace(".", "\\.", "g") + "\\b)"), "<a href='#" + id + "'>$1</a>");
+		    }
 		}
 	}
 };
