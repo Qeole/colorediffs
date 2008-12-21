@@ -10,7 +10,7 @@ colorediffsGlobal.transformations.composite.members["detect-old-new-files"] = {
 			}
 
 			function deleteSide(side_to_delete) {
-				if ( file[side_to_delete].chunks[0].line == 0 ) {
+				if ( !file[side_to_delete].chunks[0] || file[side_to_delete].chunks[0].line == 0 ) {
 					file[side_to_delete].chunks = null;
 				}
 			}

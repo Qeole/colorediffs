@@ -378,6 +378,27 @@ colorediffsGlobal.parsers["unified"] = {
 			}
 		}
 
+		function check_next_paragraph_for_code() {
+		    return !_try(function() {
+			return !_try(function() {
+			    //skip initial blanks
+			    while( _test(blank_line()) ) { _next(); }
+			    while(true) {
+				if (_test(/^\-(.*)$/)) {
+				} else if (_test(/^\+(.*)$/)) {
+				} else if (_test(/^\\ No newline at end of file$/)) {
+				} else if (_test(/^ (.*)$/)) {
+				} else if (_test(blank_line()))	{
+				    return true;
+				} else {
+				    return false;
+				}
+				try { _next(); } catch (e) {return true;}
+			    }
+			});
+		    });
+		}
+
 		// diff_code = diff_code_line | diff_code_line diff_code
 		// diff_code_line = " " .* | "+" .* | "-" .*
 		function diff_code(old_chunk, new_chunk) {
@@ -403,15 +424,15 @@ colorediffsGlobal.parsers["unified"] = {
 			while(true) {
 				if (_test(/^---\s/)) { //might be the beginning of other file
 					//here is the trick. Inside _try_many stores the current_line position and checks a bunch of titles.
-					//	If any of the titles match it saves the new position and if not it restore the old one.
+					//	If any of the titles match it saves the new position otherwise it restore the old one.
 					//	The outer _try checks if the nested one return true which means title was matched and new position is saved
 					//	   and convert that to false so actually position would be restored.
 					//	If however _try_many returns false that means position didn't move and we can return true and save it once again.
 					//	So _try returns false means there was a match and true means there wasn't
-					//	Position would be affected anyway.
+					//	Position would not be affected anyway.
 					if (!_try(function() {
 							return !_try_many(
-								function() { return file_info({'old':{}, 'new':{}})},
+								function() { return file_info({'old':{}, 'new':{}}); },
 								cvs_new_file_title,
 								cvs_deleted_file_title,
 								cvs_binary_file_title
@@ -427,7 +448,7 @@ colorediffsGlobal.parsers["unified"] = {
 					line_status[new_chunk.code.length] = "C"; //Changed
 					new_chunk.code.push(_get().substring(1));
 				} else if (_test(/^\\ No newline at end of file$/)) {
-					//check what sign previous line has if there are any
+					//check what sign previous line has if there was any
 					if ( prev_line != null ) {
 						if (/^\-/.test(prev_line)) {
 							old_chunk.doesnt_have_new_line = true;
@@ -443,6 +464,15 @@ colorediffsGlobal.parsers["unified"] = {
 					old_chunk.code.push(_get().substring(1));
 					new_chunk.code.push(_get().substring(1));
 					line_status.push("S"); //the Same
+				} else if (_test(blank_line())) {
+				    if (check_next_paragraph_for_code()) {
+					makeEqualLength();
+					old_chunk.code.push("");
+					new_chunk.code.push("");
+					line_status.push("S"); //the Same
+				    } else {
+					break;
+				    }
 				} else {
 					break;
 				}
