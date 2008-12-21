@@ -6,7 +6,7 @@ colorediffsGlobal.transformations.composite.members["find-common-name"] = {
 		function findCommonName(file, il) {
 			if ( file['new'].name || file['old'].name ) {
 				//get common part of the names
-				var commonPart = returnCommonPart(file['new'].name, file['old'].name);
+				var commonPart = returnCommonPart(file['new'].name || "", file['old'].name || "");
 
 				//try all the combinations of it on the log until found something
 				//common_name = found_part
@@ -19,6 +19,11 @@ colorediffsGlobal.transformations.composite.members["find-common-name"] = {
 		}
 
 		function returnCommonPart(s1, s2) {
+		    if (s1 && !s2) {
+			return s1;
+		    } else if (s2 && !s1) {
+			return s2;
+		    }
 		    var d = findDiff(s1, s2);
 		    var max = "";
 		    for (var o = d; o; o = o.next[0]) {
