@@ -6,8 +6,6 @@ if (!colorediffsGlobal) {
 	};
 }
 
-colorediffsGlobal.tabWidth = 8;
-
 colorediffsGlobal.$ = function(id) {
 	return document.getElementById(id);
 }

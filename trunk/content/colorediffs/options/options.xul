@@ -40,6 +40,7 @@
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/escape-html-special-characters-transformation.js"/>
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/add-title.js"/>
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/replace-file-names-transformation.js"/>
+		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/replace-tabs.js"/>
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/show-whitespaces-transformation.js"/>
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/show-line-numbers.js"/>
 		<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/collect-tab-sizes.js"/>
@@ -111,7 +112,7 @@
 				<box/>
 				<tab/>
 			</deck>
-			<browser 
+			<browser
 				onload="colorediffsGlobal.options.onChangeMode();"
 				id="previewbox" flex="1"/>
 		</vbox>
