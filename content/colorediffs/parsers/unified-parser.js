@@ -69,6 +69,10 @@ colorediffsGlobal.parsers["unified"] = {
 			return /^$/;
 		}
 
+		function custom_log_terminator() {
+		    return /^# Begin patch$/; //for bazaar merger
+		}
+
 		// diff = log blank_line code postfix
 		function diff() {
 			var result = {postfix:""};
@@ -125,7 +129,7 @@ colorediffsGlobal.parsers["unified"] = {
 		function log_and_code(result) {
 			var log = "";
 			do {
-				while(!_test(blank_line())) {
+				while(!_test(blank_line()) && !_test(custom_log_terminator())) {
 					log += _get() + "\n";
 					_next();
 				}
