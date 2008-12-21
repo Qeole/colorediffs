@@ -19,22 +19,16 @@ colorediffsGlobal.transformations.composite.members["find-common-name"] = {
 		}
 
 		function returnCommonPart(s1, s2) {
-			if ( !s2 ) {
-				return s1;
+		    var d = findDiff(s1, s2);
+		    var max = "";
+		    for (var o = d; o; o = o.next[0]) {
+			if (o.prev.length == 0 || o.prev.length == 2) {//funny way to found out if this is a common part
+			    if (o.text.length > max.length) {
+				max = o.text;
+			    }
 			}
-			if ( !s1 ) {
-				return s2;
-			}
-			var s1i = s1.length - 1;
-			var s2i = s2.length - 1;
-
-			while (s1i >= 0 && s2i >= 0 && s1[s1i] == s2[s2i]) {
-				s1i--;
-				s2i--;
-			}
-
-			s1i++;
-			return s1.substring(s1i);
+		    }
+		    return max.trim();
 		}
 
 		function skipNextComponent(s) {
@@ -103,7 +97,7 @@ colorediffsGlobal.transformations.composite.members["find-common-name"] = {
 			var ts = s.split(/([^A-Za-z0-9])/);
 			var res = {text:"", next:[], prev: []};
 			var next = res;
-			for (var i = 0; ts[i]; i++) {
+			for (var i = 0; typeof(ts[i]) != "undefined"; i++) {
 			    var new_o = {text:ts[i], next:[], prev: []};
 			    next.next.push(new_o);
 			    new_o.prev.push(next);
