@@ -1,8 +1,6 @@
 colorediffsGlobal.transformations.composite.members["show-line-numbers"] = {
 	init: function(registrator, pref) {
 		if ( pref.showLineNumbers.get() ) {
-
-			registrator.addListener("replace-tabs", "line", replaceTabs, ["show-line-numbers", "show-whitespaces", "calc-tab-sizes"]);
 			registrator.addListener("show-line-numbers-calc-max-line-number", "chunk-pair", calcMaxLineNumber, "calc-chunk-size");
 			registrator.addListener("show-line-numbers-calc-init-chunk", "chunk", initChunk, "show-line-numbers-calc-max-line-number");
 			registrator.addListener("show-line-numbers", "line", addLineNumber, ["show-line-numbers-calc-init-chunk", "escape-html"]);
@@ -41,7 +39,7 @@ colorediffsGlobal.transformations.composite.members["show-line-numbers"] = {
 			if ( countCharsLength(chunk.line) != chunk.charsLength ) {
 				chunk.local_pad = pad;
 			} else {
-				chunk.local_pad = function(n) { return "" + n; }
+				chunk.local_pad = function(n) { return "" + n; };
 			}
 
 			chunk.lineNumber = chunk.line;
@@ -84,22 +82,6 @@ colorediffsGlobal.transformations.composite.members["show-line-numbers"] = {
 			}
 
 			return s;
-		}
-
-		function replaceTabs(line, index, chunk) {
-			var tab_sizes = chunk.tab_sizes[index];
-			if ( line ) {
-				var i = 0;
-				line = line.replace(
-					"\t",
-					function() {
-						return "".pad(tab_sizes[i++]);
-					},
-					"g"
-				);
-
-			}
-			return line;
 		}
 	}
 };

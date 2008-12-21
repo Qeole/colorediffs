@@ -23,7 +23,7 @@ colorediffsGlobal.transformations.composite.members["collect-tab-sizes"] = {
 				var tab_sizes = [];
 				var i = -1;
 				while ((i = s.indexOf("\t", i + 1)) != -1) {
-					var l = colorediffsGlobal.tabWidth - (i + offsetCorrector) % colorediffsGlobal.tabWidth;
+					var l = pref.tabSize.get() - (i + offsetCorrector) % pref.tabSize.get();
 					tab_sizes.push(l);
 					offsetCorrector += l - 1;
 				}

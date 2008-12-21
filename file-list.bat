@@ -49,6 +49,7 @@ cp content\colorediffs\transformations\add-title.js %1\content\colorediffs\trans
 cp content\colorediffs\transformations\main-transformation.js %1\content\colorediffs\transformations
 cp content\colorediffs\transformations\escape-html-special-characters-transformation.js %1\content\colorediffs\transformations
 cp content\colorediffs\transformations\replace-file-names-transformation.js %1\content\colorediffs\transformations
+cp content\colorediffs\transformations\replace-tabs.js %1\content\colorediffs\transformations
 cp content\colorediffs\transformations\show-whitespaces-transformation.js %1\content\colorediffs\transformations
 cp content\colorediffs\transformations\show-line-numbers.js %1\content\colorediffs\transformations
 cp content\colorediffs\transformations\collect-tab-sizes.js %1\content\colorediffs\transformations

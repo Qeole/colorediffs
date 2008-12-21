@@ -27,6 +27,7 @@
 	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/make-lines-equal-length.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/escape-html-special-characters-transformation.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/replace-file-names-transformation.js"/>
+	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/replace-tabs.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/show-whitespaces-transformation.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/show-line-numbers.js"/>
 	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/collect-tab-sizes.js"/>
@@ -62,6 +63,15 @@
 			</toolbaritem>
 			<toolbarbutton id="colorediffs-options" tooltiptext="Show options dialog"
 						   command="cmd_show_options"/>
+			<toolbaritem>
+				<menulist tooltiptext="Tab size" id="colorediffs-tab-size" command="cmd_change_tab_size">
+					<menupopup>
+						<menuitem label="2" value="2"/>
+						<menuitem label="4" value="4"/>
+						<menuitem label="8" value="8"/>
+					</menupopup>
+				</menulist>
+			</toolbaritem>
 			<toolbarbutton id="colorediffs-close-toolbar" tooltiptext="Hide toolbar"
 						   command="cmd_change_toolbar"/>
 		</toolbar>
@@ -74,6 +84,7 @@
 			<command id="cmd_change_line_numbers_mode" oncommand="colorediffsGlobal.colorediffsToolbar.toggleLineNumbers();"/>
 			<command id="cmd_show_options" oncommand="colorediffsGlobal.colorediffsToolbar.showOptions();"/>
 			<command id="cmd_change_diff_mode" oncommand="colorediffsGlobal.colorediffsToolbar.selectDiffMode();"/>
+			<command id="cmd_change_tab_size" oncommand="colorediffsGlobal.colorediffsToolbar.selectTabSize();"/>
 			<command id="cmd_change_toolbar" oncommand="colorediffsGlobal.colorediffsToolbar.closeToolbar();"/>
 		</commands>
 

@@ -52,6 +52,7 @@ cp content/colorediffs/transformations/add-title.js build/chrome/content/colored
 cp content/colorediffs/transformations/main-transformation.js build/chrome/content/colorediffs/transformations
 cp content/colorediffs/transformations/escape-html-special-characters-transformation.js build/chrome/content/colorediffs/transformations
 cp content/colorediffs/transformations/replace-file-names-transformation.js build/chrome/content/colorediffs/transformations
+cp content/colorediffs/transformations/replace-tabs.js build/chrome/content/colorediffs/transformations
 cp content/colorediffs/transformations/show-whitespaces-transformation.js build/chrome/content/colorediffs/transformations
 
 mkdir build/chrome/content/colorediffs/views
