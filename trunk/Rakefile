@@ -57,7 +57,7 @@ task :cruise => [:build] do |t|
 	options = convert(JSON.parse(File.read("options.json")))
 	options.sites.each {|s|
 		Dir.foreach("#{s.name}-build") do |f|
-			mv File.join("#{s.name}-build", f), File.join(ENV['CC_BUILD_ARTIFACTS'], "#{s.name}-#{f}")
+			mv File.join("#{s.name}-build", f), File.join(ENV['CC_BUILD_ARTIFACTS'], "#{s.name}-#{f}") unless f == "." || f == ".."
 		end
 	}
 end
