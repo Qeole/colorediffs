@@ -53,7 +53,12 @@ end
 #end library extensions
 
 task :default => [:build]
-task :cruise => [:build]
+task :cruise => [:build] do |t|
+	options = convert(JSON.parse(File.read("options.json")))
+	options.sites.each {|s|
+		mv "#{s.name}-build", $CC_BUILD_ARTIFACTS
+	}
+end
 
 file "mykey.pem" do |t|
 	cp File.expand_path("~/cc-private/mykey.pem"), t.name
