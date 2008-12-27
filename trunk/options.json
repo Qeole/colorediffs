@@ -1,0 +1,37 @@
+{ "version": "0.5",
+  "apps": [{"name": "Thunderbird",
+	    "aid": "{3550f703-e582-4d05-9a08-453d09bdfdc6}",
+	    "minVersion": "1.5",
+	    "maxVersion": "2.0.0.*"
+	   },
+	   {"name": "SeaMonkey",
+	    "aid": "{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}",
+	    "minVersion": "2.-1",
+	    "maxVersion": "2.*"
+	   }
+  ],
+  "info": {
+      "eid":"{282C3C7A-15A8-4037-A30D-BBEB17FFC76B}",
+      "name":"Colored Diffs",
+      "creator":"Vadim Atlygin",
+      "description":"Color diffs sent by SVN/CVS notifications.",
+      "homepageURL":"http://code.google.com/p/colorediffs/",
+      "iconURL":"chrome://colorediffs/content/icon.png",
+      "optionsURL":"chrome://colorediffs/content/options/options.xul",
+      "nickname":"colorediffs"
+  },
+  "sites": [
+  	 {"name": "amo"},
+	 {"name": "google-code",
+	     "upgrade_info": {
+	  	"install_rdf": {
+		      "updateKey":"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDsihEKoufTCXzf2T0YPk9XV+52iq039ByEjXXYSwnK2s/9yj5TE/saYX43CjMTwxjhFqvej9xTzQGshzOlchifVouI8l1vz93Yt2PputmLKCKJpi3VO+lh34jBUBkyF1Xtd+cAcmwahmKHUVEdkdCl4p0OZ+1s2OoOVW6tK66n/wIDAQAB",
+		      "updateURL":"http://colorediffs.googlecode.com/svn/trunk/update-beta-google.rdf"
+		},
+		"update_rdf": {
+		      "update_link":"http://localhost:81/einstein/"
+		}
+	     }
+	 }
+  ]
+}

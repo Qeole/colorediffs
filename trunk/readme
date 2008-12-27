@@ -1,0 +1,10 @@
+#how to make the cert
+openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout mykey.pem -out mycert.pem
+
+#updateKey
+openssl x509 -in mycert.pem -pubkey
+
+#import it into McCoy - optional step
+cat mycert.pem mykey.pem > cert.pem
+openssl pkcs12 -export -in cert.pem -out a.p12 -name aaa
+pk12util.exe -i a.p12 -d .
