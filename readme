@@ -8,3 +8,9 @@ openssl x509 -in mycert.pem -pubkey
 cat mycert.pem mykey.pem > cert.pem
 openssl pkcs12 -export -in cert.pem -out a.p12 -name aaa
 pk12util.exe -i a.p12 -d .
+
+####
+#install cruise-control.rb
+# create dir ~/cc-private and chmod it to be accessible for owner only
+# copy mykey.pem there
+# locally mykey.pem should be a level up from code tree root
