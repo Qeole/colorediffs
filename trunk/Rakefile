@@ -56,7 +56,7 @@ task :default => [:build]
 task :cruise => [:build] do |t|
 	options = convert(JSON.parse(File.read("options.json")))
 	options.sites.each {|s|
-		mv "#{s.name}-build", $CC_BUILD_ARTIFACTS
+		mv "#{s.name}-build", ENV['CC_BUILD_ARTIFACTS']
 	}
 end
 
