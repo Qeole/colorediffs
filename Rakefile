@@ -56,7 +56,9 @@ task :default => [:build]
 task :cruise => [:build] do |t|
 	options = convert(JSON.parse(File.read("options.json")))
 	options.sites.each {|s|
-		mv "#{s.name}-build", ENV['CC_BUILD_ARTIFACTS']
+		Dir.foreach("#{s.name}-build") do |f|
+			mv File.join("#{s.name}-build", f), File.join(ENV['CC_BUILD_ARTIFACTS'], "#{s.name}-#{f}")
+		end
 	}
 end
 
