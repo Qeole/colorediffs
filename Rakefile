@@ -4,7 +4,8 @@
 require 'json/pure'
 require 'zip/zip'
 require 'digest'
-require "openssl"
+require 'digest/sha2'
+require 'openssl'
 
 class Zip::ZipFile
 	def add_r(entry, src_path)
