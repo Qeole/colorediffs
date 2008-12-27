@@ -39,7 +39,7 @@ task :default => [:build]
 task :cruise => [:build]
 
 file "mykey.pem" do |t|
-	cp "~/cc-private/mykey.pm", "mykey.pm"
+	cp File.expand_path("~/cc-private/mykey.pm"), "mykey.pm"
 end
 
 task :build => "mykey.pem" do |t|
