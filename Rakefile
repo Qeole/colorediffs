@@ -99,7 +99,7 @@ def create_one(site, json)
 	#make update.rdf
 	if (site.upgrade_info != nil)
 		file = "#{json.info.nickname}-#{json.version}.xpi"
-		hash = "sha256:" + Digest::SHA256.file("build/#{json.info.nickname}-#{json.version}.xpi").hexdigest
+		hash = "sha256:" + Digest::SHA2.new(256).file("build/#{json.info.nickname}-#{json.version}.xpi").hexdigest
 		private_key = OpenSSL::PKey::RSA.new(File.read("mykey.pem"))
 		openssl_signature = private_key.sign(OpenSSL::Digest::SHA512.new, get_update_rdf_signable(json, site, file, hash, nil)).unpack("H*").first
 		signature = ["308193300d06092a864886f70d01010d050003818100" + openssl_signature].pack("H*")
