@@ -1,44 +1,34 @@
 <?xml version="1.0"?>
-<RDF:RDF xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-		  xmlns:em="http://www.mozilla.org/2004/em-rdf#">
-
-	<RDF:Description RDF:about="urn:mozilla:extension:{282C3C7A-15A8-4037-A30D-BBEB17FFC76B}">
-		<em:updates>
-			<!-- This is a list of all available updates. They must have unique
-		  URIs, per RDF Grammar rules, I've tacked the version number onto
-		  the end to differentiate versions -->
-			<RDF:Seq>
-				<RDF:li RDF:resource="urn:mozilla:extension:{282C3C7A-15A8-4037-A30D-BBEB17FFC76B}:0.4.2"/>
-			</RDF:Seq>
-		</em:updates>
-
-		<!-- Firefox 0.9 did not support the above RDF grammar, only the following
-			 two simple properties, so we also provide them here for people
-			 upgrading from Firefox 0.9. Note that we've used the larger of the two
-			 updates here, since Firefox 0.9 was not smart enough to have any of the
-			 logic to patch its Extensions datasource with information about existing
-			 Extensions that are ''also'' compatible with newer versions of
-			 the app. -->
-		<em:version>0.4.2</em:version>
-		<em:updateLink>https://colorediffs.googlecode.com/files/colorediffs-0.4.2.xpi</em:updateLink>
-	</RDF:Description>
-
-	<!-- This Description describes an available update to version 2.2 of
-		 FooExtension - it defines a new maxVersion for the Firefox
-		 targetApplication (format of the targetApplication object is the
-		 same as for the install.rdf file, with the exception of the
-		 em:updateLink property, which contains a URL to the updated XPI) -->
-	<RDF:Description RDF:about="urn:mozilla:extension:{282C3C7A-15A8-4037-A30D-BBEB17FFC76B}:0.4.2">
-		<em:version>0.4.2</em:version>
-		<em:targetApplication>
-			<RDF:Description>
-				<em:id>{3550f703-e582-4d05-9a08-453d09bdfdc6}</em:id>
-				<em:minVersion>1.5</em:minVersion>
-				<em:maxVersion>2.0.0.*</em:maxVersion>
-				<em:updateLink>https://colorediffs.googlecode.com/files/colorediffs-0.4.2.xpi</em:updateLink>
-			</RDF:Description>
-		</em:targetApplication>
-	</RDF:Description>
+<RDF:RDF xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+<RDF:Description about="urn:mozilla:extension:{282C3C7A-15A8-4037-A30D-BBEB17FFC76B}">
+  <em:signature>MIGTMA0GCSqGSIb3DQEBDQUAA4GBABE42KZG4pw2HA3i6wa6OT6B7bz2NBI12J6CsXJIHG0m8rvbpMUgCANBqjPG0XGreI/k2xpCXoynMaPO6wTht37bS2txOVBJz5EMcpPymN0FcbN2yc8cNlYzLkYpst+N4YRFAD48I1L66LuB7vnMPRyb71YEfVvPQRFWQiepWbOh</em:signature>
+  <em:updates>
+    <RDF:Seq>
+      <RDF:li>
+        <RDF:Description>
+          <em:targetApplication>
+            <RDF:Description>
+              <em:id>{3550f703-e582-4d05-9a08-453d09bdfdc6}</em:id>
+              <em:maxVersion>3.0b1</em:maxVersion>
+              <em:minVersion>2.0</em:minVersion>
+              <em:updateHash>sha256:1ff2890900a2a2139031b0f7efcacf5db6b2bce8c4594d5bedfb1d194965faf8</em:updateHash>
+              <em:updateLink>https://colorediffs.googlecode.com/files/colorediffs-0.5.159.xpi</em:updateLink>
+            </RDF:Description>
+          </em:targetApplication>
+          <em:targetApplication>
+            <RDF:Description>
+              <em:id>{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}</em:id>
+              <em:maxVersion>2.0a3</em:maxVersion>
+              <em:minVersion>2.0a2</em:minVersion>
+              <em:updateHash>sha256:1ff2890900a2a2139031b0f7efcacf5db6b2bce8c4594d5bedfb1d194965faf8</em:updateHash>
+              <em:updateLink>https://colorediffs.googlecode.com/files/colorediffs-0.5.159.xpi</em:updateLink>
+            </RDF:Description>
+          </em:targetApplication>
+          <em:version>0.5.159</em:version>
+        </RDF:Description>
+      </RDF:li>
+    </RDF:Seq>
+  </em:updates>
+</RDF:Description>
 
 </RDF:RDF>
-
