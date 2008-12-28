@@ -227,10 +227,7 @@ def get_install_rdf(json, site)
 				   em:optionsURL="#{json.info.optionsURL}"
 				   #{upgrade_info}>
 #{get_target_apps(json.apps, {}, '    ')}
-	  <em:file RDF:resource="urn:mozilla:extension:file:#{json.info.nickname}.jar"/>
   </RDF:Description>
-  <RDF:Description RDF:about="urn:mozilla:extension:file:#{json.info.nickname}.jar"
-				   em:package="content/#{json.info.nickname}/" />
 </RDF:RDF>
 END
 end
