@@ -1,13 +1,13 @@
 { "version": "0.5",
   "apps": [{"name": "Thunderbird",
 	    "aid": "{3550f703-e582-4d05-9a08-453d09bdfdc6}",
-	    "minVersion": "1.5",
-	    "maxVersion": "2.0.0.*"
+	    "minVersion": "2.0",
+	    "maxVersion": "3.0b1"
 	   },
 	   {"name": "SeaMonkey",
 	    "aid": "{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}",
-	    "minVersion": "2.-1",
-	    "maxVersion": "2.*"
+	    "minVersion": "2.0a2",
+	    "maxVersion": "2.0a3"
 	   }
   ],
   "info": {
@@ -25,11 +25,11 @@
 	 {"name": "google-code",
 	     "upgrade_info": {
 	  	"install_rdf": {
-		      "updateKey":"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDsihEKoufTCXzf2T0YPk9XV+52iq039ByEjXXYSwnK2s/9yj5TE/saYX43CjMTwxjhFqvej9xTzQGshzOlchifVouI8l1vz93Yt2PputmLKCKJpi3VO+lh34jBUBkyF1Xtd+cAcmwahmKHUVEdkdCl4p0OZ+1s2OoOVW6tK66n/wIDAQAB",
-		      "updateURL":"http://colorediffs.googlecode.com/svn/trunk/update-beta-google.rdf"
+		      "updateKey":"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC3qsDK94RUSs6nF3YWMdLAN0m1ohu21z61KkqfBBmGC60cm1YiCVF6qykfrKrJsJ3JTt/fX/cMFPBs8UZG24lmwWiNr3FsjE6KFL0upYt827z1fij/vcyQuHNWxhjgsZ2a2J/leJojOoOZPq4ua+araMnaTtNLlw88qCk67I+3JQIDAQAB",
+		      "updateURL":"http://colorediffs.googlecode.com/svn/trunk/update-google.rdf"
 		},
 		"update_rdf": {
-		      "update_link":"http://localhost:81/einstein/"
+		      "update_link":"https://colorediffs.googlecode.com/files/"
 		}
 	     }
 	 }
