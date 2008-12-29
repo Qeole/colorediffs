@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <RDF:RDF xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 <RDF:Description about="urn:mozilla:extension:{282C3C7A-15A8-4037-A30D-BBEB17FFC76B}">
-  <em:signature>MIGTMA0GCSqGSIb3DQEBDQUAA4GBADMtULMO5OlbxjQKxSBjfiWv7Qc43TJP4rOuKTEJc1qXqaudd8YxsbYJLMXFkzoe0dBp33H6ZUTmqVTIUbKgJi5ccYWMxN06aGmzhZnLJNFgHlc4Cnnbze1jrZGYk55ZRALoTYERxbCsz12Z6OK01m70iNNhjb6hK2rwilsHqPEg</em:signature>
+  <em:signature>MIGTMA0GCSqGSIb3DQEBDQUAA4GBAGbvOjIUF41L30kVeCdUB4bZv9xYb08/Pze//RZMCY9ra6iZwove6g0x35+VO11+iQP/+1ON/yJ5PwrPEyTj9FjUnVfveQifqTc+UCuos+Pq/daUFGJlqnbN5CroycUchE5E17Exqv0bgHZ1DUdhA+p9vbAC9236EeJmWjWZeZv2</em:signature>
   <em:updates>
     <RDF:Seq>
       <RDF:li>
@@ -11,8 +11,8 @@
               <em:id>{3550f703-e582-4d05-9a08-453d09bdfdc6}</em:id>
               <em:maxVersion>3.0b1</em:maxVersion>
               <em:minVersion>2.0</em:minVersion>
-              <em:updateHash>sha256:abdcf041c90e21548130d5fc28b675c9c5c7dbe9f7b2b6d3a7c14a8b6caf67b0</em:updateHash>
-              <em:updateLink>https://colorediffs.googlecode.com/files/colorediffs-0.5.163.xpi</em:updateLink>
+              <em:updateHash>sha256:0c26e02a48c1763174f37483e14bc978f091d03aa170b825c6de7045f46ab64e</em:updateHash>
+              <em:updateLink>https://colorediffs.googlecode.com/files/colorediffs-0.5.164.xpi</em:updateLink>
             </RDF:Description>
           </em:targetApplication>
           <em:targetApplication>
@@ -20,11 +20,11 @@
               <em:id>{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}</em:id>
               <em:maxVersion>2.0a3</em:maxVersion>
               <em:minVersion>2.0a2</em:minVersion>
-              <em:updateHash>sha256:abdcf041c90e21548130d5fc28b675c9c5c7dbe9f7b2b6d3a7c14a8b6caf67b0</em:updateHash>
-              <em:updateLink>https://colorediffs.googlecode.com/files/colorediffs-0.5.163.xpi</em:updateLink>
+              <em:updateHash>sha256:0c26e02a48c1763174f37483e14bc978f091d03aa170b825c6de7045f46ab64e</em:updateHash>
+              <em:updateLink>https://colorediffs.googlecode.com/files/colorediffs-0.5.164.xpi</em:updateLink>
             </RDF:Description>
           </em:targetApplication>
-          <em:version>0.5.163</em:version>
+          <em:version>0.5.164</em:version>
         </RDF:Description>
       </RDF:li>
     </RDF:Seq>
