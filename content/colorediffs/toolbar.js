@@ -27,7 +27,7 @@ colorediffsGlobal.colorediffsToolbar = new function() {
 				mp.removeEventListener("load", arguments.callee, true);
 			},
 			true);
-		MsgReload();
+		ReloadMessage();
 	};
 
 	var updatePrefs = function() {
@@ -41,7 +41,7 @@ colorediffsGlobal.colorediffsToolbar = new function() {
 
 	this.selectMode = function () {
 		updatePrefs();
-		MsgReload();
+		ReloadMessage();
 	};
 
 	this.toggleWhiteSpaces = function () {
@@ -65,7 +65,7 @@ colorediffsGlobal.colorediffsToolbar = new function() {
 
 	this.selectDiffMode = function() {
 		updatePrefs();
-		MsgReload();
+		ReloadMessage();
 	};
 
 	this.selectTabSize = function() {

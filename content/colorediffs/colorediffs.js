@@ -94,7 +94,7 @@ colorediffsGlobal.onLoadMessage = function() {
 						//Will try to make Thunderird reload it with text part in use.
 						colorediffsGlobal.restorePreferHtmlTo = pref.preferHtml.get();
 						pref.preferHtml.set(true);
-						MsgReload();
+						ReloadMessage();
 						reloadPlanned = true;
 					} else { //ok, reloading was bad idea, but maybe html part is only log and diff is actually in attached file
 							 // so let's give it a try
