@@ -65,7 +65,7 @@ colorediffsGlobal.colorediffsToolbar = new function() {
 
 	this.selectDiffMode = function() {
 		updatePrefs();
-		ReloadMessage();
+		reloadWithScrollPreserved();
 	};
 
 	this.selectTabSize = function() {
