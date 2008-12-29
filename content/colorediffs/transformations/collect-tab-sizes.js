@@ -1,7 +1,6 @@
 colorediffsGlobal.transformations.composite.members["collect-tab-sizes"] = {
 	init: function(registrator, pref) {
-		if (pref.mode.get() == "side-by-side" || pref.showWhiteSpace.get() || pref.showLineNumbers.get()) {
-
+		if (pref.mode.get() == "side-by-side" || pref.tabSize.get() != 8 || pref.showWhiteSpace.get() || pref.showLineNumbers.get()) {
 			registrator.addListener("collect-tab-sizes-init-chunk", "chunk", initChunk);
 			registrator.addListener("collect-tab-sizes", "line", collectTabSizes, "collect-tab-sizes-init-chunk");
 		}
