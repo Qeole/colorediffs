@@ -118,14 +118,14 @@ colorediffsGlobal.views["side-by-side"] = {
 						function startCodeBlockIfNeeded(old_class, new_class) {
 							if (old_class != prev_old_class) {
 								if (prev_old_class) {
-									oldCodeDecorated += "</div>"
+									oldCodeDecorated += "</div>";
 								}
 								oldCodeDecorated += "<div class='" + old_class + "'>";
 								prev_old_class = old_class;
 							}
 							if (new_class != prev_new_class) {
 								if (prev_new_class) {
-									newCodeDecorated += "</div>"
+									newCodeDecorated += "</div>";
 								}
 								newCodeDecorated += "<div class='" + new_class + "'>";
 								prev_new_class = new_class;
@@ -243,7 +243,7 @@ colorediffsGlobal.views["side-by-side"] = {
 				dom.createElement(
 					"tr", {},
 					dom.createElement(
-						"td", {valign:'top', width:'50%'},
+						"td", {valign:'top', colspan:'2'},
 						dom.createElement(
 							'pre', {'class':sideClass+"-title", wrap: ""},
 							dom.createElement('div', {style: 'padding:5px'}, file[side].name + version)
@@ -260,7 +260,7 @@ colorediffsGlobal.views["side-by-side"] = {
 						function startCodeBlockIfNeeded(klass) {
 							if (klass != prev_class) {
 								if (prev_class) {
-									codeDecorated += "</div>"
+									codeDecorated += "</div>";
 								}
 								codeDecorated += "<div class='" + klass + "'>";
 								prev_class = klass;
@@ -311,7 +311,7 @@ colorediffsGlobal.views["side-by-side"] = {
 						return [
 							dom.createElement(
 								"tr", {'class':'linetag'},
-								dom.createElement("td", {},
+								dom.createElement("td", {colspan:'2'},
 												  "@@ " + anchorSign + chunk.line +
 												  "," + chunk.code_size +
 												  " @@")
@@ -319,7 +319,7 @@ colorediffsGlobal.views["side-by-side"] = {
 							dom.createElement(
 								"tr", {'class':'diffs'},
 								dom.createElement(
-									"td", {valign:'top', width:'50%'},
+									"td", {valign:'top', colspan:'2'},
 									dom.createElement("pre", {'class':sideClass}, codeDecorated)
 								)
 							)
