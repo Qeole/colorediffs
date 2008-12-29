@@ -49,7 +49,7 @@ colorediffsGlobal.transformations.composite.members["find-common-name"] = {
 			}
 		}
 
-		function checkCombinations(log, name) {
+		function checkPathCombinations(log, name) {
 			do {
 				if ( log.indexOf(name) >= 0 ) {
 					return name;
@@ -58,6 +58,26 @@ colorediffsGlobal.transformations.composite.members["find-common-name"] = {
 				name = skipNextComponent(name);
 			} while( name != "" );
 			return null;
+		}
+
+		function chopToLastSpace(s) {
+		    if (s.indexOf(" ") == -1) {
+			return "";
+		    } else {
+			return s.replace(/ +.*?$/, "");
+		    }
+		}
+
+		function checkCombinations(log, name) {
+		    do {
+			var tempN = checkPathCombinations(log, name);
+			if ( tempN != null ) {
+			    return tempN;
+			}
+
+			name = chopToLastSpace(name);
+		    } while( name != "" );
+		    return null;
 		}
 
 		function findDiff(a, b) {
