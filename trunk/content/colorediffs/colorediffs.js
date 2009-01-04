@@ -1,5 +1,5 @@
 if (!colorediffsGlobal) {
-	var colorediffsGlobal = {}
+	var colorediffsGlobal = {};
 }
 
 colorediffsGlobal.isMessageDiff = function() {
