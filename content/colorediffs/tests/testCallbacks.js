@@ -1,31 +1,34 @@
-function testTooltipCallback() {
-	var me = colorediffsGlobal;
+eval(loadFile("content/colorediffs/globals.js"));
+eval(loadFile("content/colorediffs/callbacks.js"));
 
-	me.isActive = function() {return true;}
+test__TooltipCallback = function() {
+    var me = colorediffsGlobal;
 
-	assertTrue("First tooltip", me.tooltipCallback(document.getElementById('first-test')));
-	assertEquals("Check first tooltip", "nice tooltip", document.getElementById('colorediff-tooltip').value);
+    me.isActive = function() {return true;};
 
-	assertTrue("Second tooltip", me.tooltipCallback(document.getElementById('second-test')));
-	assertEquals("Check second tooltip", "another nice tooltip", document.getElementById('colorediff-tooltip').value);
+    assert.that(me.tooltipCallback(document.getElementById('first-test')), is.true());
+    assert.that(document.getElementById('colorediff-tooltip').value, is.eq("nice tooltip"));
 
-	assertFalse("Third tooltip", me.tooltipCallback(document.getElementById('third-test')));
+    assert.that(me.tooltipCallback(document.getElementById('second-test')), is.true());
+    assert.that(document.getElementById('colorediff-tooltip').value, is.eq("another nice tooltip"));
 
-	me.isActive = function() {return false;}
-	assertFalse("First tooltip non-active", me.tooltipCallback(document.getElementById('first-test')));
-}
+    assert.that(me.tooltipCallback(document.getElementById('third-test')), is.false());
 
-function testScrollCallback() {
-	var me = colorediffsGlobal;
+    me.isActive = function() {return false;};
+    assert.that(me.tooltipCallback(document.getElementById('first-test')), is.false());
+};
 
-	var left = document.getElementById("left");
-	var right = document.getElementById("left");
+// function test__ScrollCallback() {
+// 	var me = colorediffsGlobal;
 
-	left.scrollLeft = 5;
-	me.scrollCallback({target:left});
-	assertEquals("check left scroll", 5, right.scrollLeft);
+// 	var left = document.getElementById("left");
+// 	var right = document.getElementById("left");
 
-	right.scrollLeft = 3;
-	me.scrollCallback({target:right});
-	assertEquals("check right scroll", 3, left.scrollLeft);
-}
+// 	left.scrollLeft = 5;
+// 	me.scrollCallback({target:left});
+// 	assertEquals("check left scroll", 5, right.scrollLeft);
+
+// 	right.scrollLeft = 3;
+// 	me.scrollCallback({target:right});
+// 	assertEquals("check right scroll", 3, left.scrollLeft);
+// }
