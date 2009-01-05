@@ -1,95 +1,92 @@
-var globalPref;
+eval(loadFile("content/colorediffs/prefs.js"));
 
-function setUp() {
-	function Pref() {
-		var boolPrefs = {}
-		var charPrefs = {}
+function Pref() {
+    var boolPrefs = {};
+    var charPrefs = {};
 
-		var getPref = function(hash, prop) {
-			return hash[prop];
-		}
+    var getPref = function(hash, prop) {
+	return hash[prop];
+    };
 
-		var setPref = function(hash, prop, value) {
-			hash[prop] = value;
-		}
+    var setPref = function(hash, prop, value) {
+	hash[prop] = value;
+    };
 
-		var hasPref = function(prop) {
-			return boolPrefs[prop] != undefined || charPrefs[prop] != undefined;
-		}
+    var hasPref = function(prop) {
+	return boolPrefs[prop] != undefined || charPrefs[prop] != undefined;
+    };
 
-		this.getBoolPref = function(prop) {
-			return getPref(boolPrefs, prop);
-		}
+    this.getBoolPref = function(prop) {
+	return getPref(boolPrefs, prop);
+    };
 
-		this.setBoolPref = function(prop, value) {
-			setPref(boolPrefs, prop, value);
-		}
+    this.setBoolPref = function(prop, value) {
+	setPref(boolPrefs, prop, value);
+    };
 
-		this.getCharPref = function(prop) {
-			return getPref(charPrefs, prop);
-		}
+    this.getCharPref = function(prop) {
+	return getPref(charPrefs, prop);
+    };
 
-		this.setCharPref = function(prop, value) {
-			setPref(charPrefs, prop, value);
-		}
+    this.setCharPref = function(prop, value) {
+	setPref(charPrefs, prop, value);
+    };
 
-		this.prefHasUserValue = function(prop) {
-			return hasPref(prop);
-		}
-	}
-
-	globalPref = new Pref();
+    this.prefHasUserValue = function(prop) {
+	return hasPref(prop);
+    };
 }
 
-function testProps() {
-	var me = new colorediffsGlobal.Pref(globalPref);
+let globalPref = new Pref();
 
-	var checkProp = function(prop, value, desc, name, getter) {
-		assertFalse(desc + " has before", prop.has());
-		prop.set(value);
-		assertTrue(desc + " has after", prop.has());
-		assertEquals(desc + " check", value, prop.get());
-		assertEquals(desc + " pref check", value, getter(name));
-	}
+test.props = function() {
+    var me = new colorediffsGlobal.Pref(globalPref);
 
-	var checkCharProp = function(prop, desc, name) {
-		var randString = "abcdefghsadgjdflkgjxlkcvjlkxcvsadfawef";
+    var checkProp = function(prop, value, name, getter) {
+	assert.that(prop.has(), is.False());
+	prop.set(value);
+	assert.that(prop.has(), is.True());
+	assert.that(prop.get(), is.eq(value));
+	assert.that(getter(name), is.eq(value));
+    };
 
-		var value = randString[Math.floor(Math.random() * randString.length)];
+    var checkCharProp = function(prop, name) {
+	var randString = "abcdefghsadgjdflkgjxlkcvjlkxcvsadfawef";
+	var value = randString[Math.floor(Math.random() * randString.length)];
 
-		checkProp(prop, value, desc, name, function(n) {return globalPref.getCharPref(n)});
-	}
+	checkProp(prop, value, name, function(n) {return globalPref.getCharPref(n);});
+    };
 
-	var checkBoolProp = function(prop, desc, name) {
-		var value = Math.random() > 0.5;
-		checkProp(prop, value, desc, name, function(n) {return globalPref.getBoolPref(n)});
-	}
+    var checkBoolProp = function(prop, name) {
+	var value = Math.random() > 0.5;
+	checkProp(prop, value, name, function(n) {return globalPref.getBoolPref(n);});
+    };
 
-	checkCharProp(me.mode, "mode", "diffColorer.view-mode");
-	checkCharProp(me.debugDir, "debug dir", "diffColorer.debug-dir");
+    checkCharProp(me.mode, "diffColorer.view-mode");
+    checkCharProp(me.debugDir, "diffColorer.debug-dir");
 
-	checkBoolProp(me.showWhiteSpace, "show whitespaces", "diffColorer.show-whitespace");
-	checkBoolProp(me.showToolbar, "show toolbar", "diffColorer.show-toolbar");
-}
+    checkBoolProp(me.showWhiteSpace, "diffColorer.show-whitespace");
+    checkBoolProp(me.showToolbar, "diffColorer.show-toolbar");
+};
 
-function testColorProps() {
-	var me = new colorediffsGlobal.Pref(globalPref);
+test.colorProps = function() {
+    var me = new colorediffsGlobal.Pref(globalPref);
 
-	me.setColorBG("b", "a");
-	assertEquals("check get bg color", "a", me.getColorBG("b"));
-	assertEquals("check set bg color", "a", globalPref.getCharPref("b_bg"));
+    me.setColorBG("b", "a");
+    assert.that(me.getColorBG("b"), is.eq("a"));
+    assert.that(globalPref.getCharPref("b_bg"), is.eq("a"));
 
-	me.setColorFG("c", "d");
-	assertEquals("check get fg color", "d", me.getColorFG("c"));
-	assertEquals("check set fg color", "d", globalPref.getCharPref("c_fg"));
-}
+    me.setColorFG("c", "d");
+    assert.that(me.getColorFG("c"), is.eq("d"));
+    assert.that(globalPref.getCharPref("c_fg"), is.eq("d"));
+};
 
 
-function testCSSColorProps() {
-	var me = new colorediffsGlobal.Pref(globalPref);
+test.CSSColorProps = function() {
+    var me = new colorediffsGlobal.Pref(globalPref);
 
-	me.setColorBG("b", "a");
-	me.setColorFG("b", "d");
+    me.setColorBG("b", "a");
+    me.setColorFG("b", "d");
 
-	assertEquals("check CSS color props", "color: d;background-color: a;", me.getColorProps("b"));
-}
+    assert.that(me.getColorProps("b"), is.eq("color: d;background-color: a;"));
+};

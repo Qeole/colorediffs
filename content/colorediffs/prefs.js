@@ -1,3 +1,7 @@
+if (!colorediffsGlobal) {
+    var colorediffsGlobal = {};
+}
+
 colorediffsGlobal.Pref = function (prefModel) {
 	var me = this;
 	var pref = prefModel;

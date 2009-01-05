@@ -1,3 +1,7 @@
+if (!colorediffsGlobal) {
+    var colorediffsGlobal = {};
+}
+
 colorediffsGlobal.OptionsPrefModel = function(prefModel) {
 	var boolPrefs = {};
 	var charPrefs = {};

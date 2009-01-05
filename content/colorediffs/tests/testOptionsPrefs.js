@@ -1,76 +1,73 @@
-var globalPref;
+eval(loadFile("content/colorediffs/options/options-pref.js"));
 
-function setUp() {
-	function Pref() {
-		var boolPrefs = {}
-		var charPrefs = {}
+function Pref() {
+    var boolPrefs = {};
+    var charPrefs = {};
 
-		var getPref = function(hash, prop) {
-			return hash[prop];
-		}
+    var getPref = function(hash, prop) {
+	return hash[prop];
+    };
 
-		var setPref = function(hash, prop, value) {
-			hash[prop] = value;
-		}
+    var setPref = function(hash, prop, value) {
+	hash[prop] = value;
+    };
 
-		var hasPref = function(prop) {
-			return boolPrefs[prop] != undefined || charPrefs[prop] != undefined;
-		}
+    var hasPref = function(prop) {
+	return boolPrefs[prop] != undefined || charPrefs[prop] != undefined;
+    };
 
-		this.getBoolPref = function(prop) {
-			return getPref(boolPrefs, prop);
-		}
+    this.getBoolPref = function(prop) {
+	return getPref(boolPrefs, prop);
+    };
 
-		this.setBoolPref = function(prop, value) {
-			setPref(boolPrefs, prop, value);
-		}
+    this.setBoolPref = function(prop, value) {
+	setPref(boolPrefs, prop, value);
+    };
 
-		this.getCharPref = function(prop) {
-			return getPref(charPrefs, prop);
-		}
+    this.getCharPref = function(prop) {
+	return getPref(charPrefs, prop);
+    };
 
-		this.setCharPref = function(prop, value) {
-			setPref(charPrefs, prop, value);
-		}
+    this.setCharPref = function(prop, value) {
+	setPref(charPrefs, prop, value);
+    };
 
-		this.prefHasUserValue = function(prop) {
-			return hasPref(prop);
-		}
-	}
-
-	globalPref = new Pref();
+    this.prefHasUserValue = function(prop) {
+	return hasPref(prop);
+    };
 }
 
-function testProps() {
-	var prefs = new colorediffsGlobal.OptionsPrefModel(globalPref);
+let globalPref = new Pref();
 
-	globalPref.setBoolPref("predefined.bool-prop", true);
-	globalPref.setCharPref("predefined.char-prop", "yes");
+test.props = function() {
+    var prefs = new colorediffsGlobal.OptionsPrefModel(globalPref);
 
-	assertTrue("test predefined bool has", prefs.prefHasUserValue("predefined.bool-prop"));
-	assertTrue("test predefined char has", prefs.prefHasUserValue("predefined.char-prop"));
+    globalPref.setBoolPref("predefined.bool-prop", true);
+    globalPref.setCharPref("predefined.char-prop", "yes");
 
-	assertFalse("test non-predefined bool has", prefs.prefHasUserValue("non-predefined.bool-prop"));
-	assertFalse("test non-predefined char has", prefs.prefHasUserValue("non-predefined.char-prop"));
+    assert.that(prefs.prefHasUserValue("predefined.bool-prop"), is.True());
+    assert.that(prefs.prefHasUserValue("predefined.char-prop"), is.True());
 
-	prefs.setBoolPref("non-predefined.bool-prop", true);
-	prefs.setCharPref("non-predefined.char-prop", "yes");
+    assert.that(prefs.prefHasUserValue("non-predefined.bool-prop"), is.False());
+    assert.that(prefs.prefHasUserValue("non-predefined.char-prop"), is.False());
 
-	assertTrue("test predefined bool get", prefs.getBoolPref("predefined.bool-prop"));
-	assertTrue("test non-predefined bool get", prefs.getBoolPref("non-predefined.bool-prop"));
+    prefs.setBoolPref("non-predefined.bool-prop", true);
+    prefs.setCharPref("non-predefined.char-prop", "yes");
 
-	assertEquals("test predefined char get", "yes", prefs.getCharPref("predefined.char-prop"));
-	assertEquals("test non-predefined char get", "yes", prefs.getCharPref("non-predefined.char-prop"));
+    assert.that(prefs.getBoolPref("predefined.bool-prop"), is.True());
+    assert.that(prefs.getBoolPref("non-predefined.bool-prop"), is.True());
 
-	assertFalse("test non-predefined bool has before sync", globalPref.prefHasUserValue("non-predefined.bool-prop"));
-	assertFalse("test non-predefined char has before sync", globalPref.prefHasUserValue("non-predefined.char-prop"));
+    assert.that(prefs.getCharPref("predefined.char-prop"), is.eq("yes"));
+    assert.that(prefs.getCharPref("non-predefined.char-prop"), is.eq("yes"));
 
-	prefs.saveToModel();
+    assert.that(globalPref.prefHasUserValue("non-predefined.bool-prop"), is.False());
+    assert.that(globalPref.prefHasUserValue("non-predefined.char-prop"), is.False());
 
-	assertTrue("test predefined bool get after sync", globalPref.getBoolPref("predefined.bool-prop"));
-	assertTrue("test non-predefined bool get after sync", globalPref.getBoolPref("non-predefined.bool-prop"));
+    prefs.saveToModel();
 
-	assertEquals("test predefined char get after sync", "yes", globalPref.getCharPref("predefined.char-prop"));
-	assertEquals("test non-predefined char get after sync", "yes", globalPref.getCharPref("non-predefined.char-prop"));
-}
+    assert.that(globalPref.getBoolPref("predefined.bool-prop"), is.True());
+    assert.that(globalPref.getBoolPref("non-predefined.bool-prop"), is.True());
 
+    assert.that(globalPref.getCharPref("predefined.char-prop"), is.eq("yes"));
+    assert.that(globalPref.getCharPref("non-predefined.char-prop"), is.eq("yes"));
+};
