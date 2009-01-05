@@ -136,10 +136,3 @@ colorediffsGlobal.getBaseURL = function() {
 	}
 };
 
-colorediffsGlobal.include = function(js_path) {
-	var req = new XMLHttpRequest();
-	req.open("GET", colorediffsGlobal.getBaseURL() + js_path, false);
-	req.send(null);
-	eval(req.responseText);
-};
-

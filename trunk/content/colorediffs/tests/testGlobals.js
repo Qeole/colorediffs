@@ -58,8 +58,3 @@ test.ltrim = function() {
 test.fold = function() {
 	assert.that(colorediffsGlobal.fold([1,2,3,4,5,6], function(e, o) {return o + e;}, ""), is.eq("123456"));
 };
-
-function testInclude() {
-	colorediffsGlobal.include("tests/testGlobalInclude.js");
-	assertEquals("Include", "Included", isGlobalIncluded);
-}
