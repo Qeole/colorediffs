@@ -118,6 +118,7 @@ function checkGlobals(f) {
 	    if (typeof(globalVars[varName]) == "undefined") {
 		if (varName != "ignoreGlobals" && (typeof(ignoreGlobals) == "undefined" || ignoreGlobals.indexOf(varName) == -1)) {
 		    errors[varName] = "Warning: Reason: Polluted global namespace with '" + varName + "'";
+		    assert.fail();
 		}
 	    }
 	}
@@ -188,26 +189,33 @@ let is = {
 
 let assert = function() {
     var number = 1;
+    var something_failed = false;
     return {
 	that: function(actual, pred) {
 	    var res = pred.check(actual);
 	    if (!res) {
 		log("Assert #" + number + ": < got: " + actual + " :>, < expected: " + pred.expected + " :>");
+		something_failed = true;
 	    }
 	    number++;
 	},
+	mustNotThrow: function(f) {
+	    try {
+		f();
+	    } catch(e) {
+		log("Got exception:  " + e.fileName + ":" + e.lineNumber + " : " + e);
+		something_failed = true;
+	    }
+	},
+	fail: function() {
+	    something_failed = true;
+	},
 	clear: function() {
 	    number = 1;
-	}
+	},
+	everything_ok: function() {return !something_failed;}
     };
 }();
-
-// function testWrapping(a, b) {
-// //    e = 5;
-// //    return a + b;
-//     ignoreGlobals = ["location"];
-//     e = 10;
-// }
 
 log("Wow, it's working");
 
@@ -220,25 +228,25 @@ for (let [, file] in Iterator(files)) {
 	checkGlobals(function() {
 	    ignoreGlobals = ["location"];
 	    test = {};
-	    try {
+	    assert.mustNotThrow(function() {
 		eval(loadFile(dir + file));
 		for (let varName in test) {
 		    ignoreGlobals.push(varName);
 		    prepLogs(varName + ": ", function() {
 			checkGlobals(function() {
-			    try {
+			    assert.mustNotThrow(function() {
 				test[varName]();
-			    } catch(e) {
-				log("Got exception:  " + e.fileName + ":" + e.lineNumber + " : " + e);
-			    }
+			    });
 			    assert.clear();
 			});
 		    });
 		}
-	    } catch(e) {
-		log("Got exception:  " + e.fileName + ":" + e.lineNumber + " : " + e);
-	    }
+	    });
 	    delete test;
 	});
     });
+}
+
+if (!assert.everything_ok()) {
+    throw 1; //make exit code
 }
