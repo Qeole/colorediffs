@@ -1,14 +1,26 @@
+if (typeof(importClass) != "undefined") {
+    importClass(java.io.File);
+    importClass(java.io.FileInputStream);
+    importClass(java.io.BufferedReader);
+    importClass(java.io.InputStreamReader);
+}
+
+
 let loadFile = function() {
     var res;
     if (typeof(importClass) != "undefined") {
 	res = function(fileName) {
-	    importClass(java.io.File);
-	    importClass(Packages.org.apache.tools.ant.util.FileUtils);
-	    importClass(java.io.FileReader);
+	    var data = "";
 
 	    var file = new File(fileName);
-	    var reader = new FileReader(file);
-	    return (new String(FileUtils.readFully(reader))).toString();
+
+	    var fis = new FileInputStream(file);
+	    var d = new BufferedReader(new InputStreamReader(fis));
+
+	    while (d.ready()) {
+		data += d.readLine() + "\n";
+	    }
+	    return data;
 	};
     } else if (typeof(Components) != "undefined") {
 	res = function(fileName) {
@@ -51,7 +63,7 @@ let listFiles = function() {
 	res = function(fileName) {
 	    importClass(java.io.File);
 
-	    return (new File(fileName)).listFiles();
+	    return (new File(fileName)).list();
 	};
     } else if (typeof(Components) != "undefined") {
 	res = function(fileName) {
@@ -78,7 +90,7 @@ let log = function() {
     var res;
     if (typeof(importClass) != "undefined") {
 	res = function(text) {
-	    self.log(text);
+	    print(text);
 	};
     } else if (typeof(Components) != "undefined") {
 	res = function(text) {
@@ -167,13 +179,13 @@ function eq(actual) {
 }
 
 let is = {
-    true: function() {
+    True: function() {
 	return {
 	    check: function(actual) {return actual === true;},
 	    expected: "true"
 	};
     },
-    false: function() {
+    False: function() {
 	return {
 	    check: function(actual) {return actual === false;},
 	    expected: "false"
@@ -220,29 +232,26 @@ for (let [, file] in Iterator(files)) {
     prepLogs(getFileName(file) + ": ", function() {
 	checkGlobals(function() {
 	    ignoreGlobals = [];
+	    test = {};
 	    try {
 		eval(loadFile(dir + file));
-		for (let varName in this) {
-		    if (/^test__/.test(varName)) {
-			ignoreGlobals.push(varName);
-			prepLogs(varName + ": ", function() {
-			    checkGlobals(function() {
-				try {
-				    this[varName]();
-				} catch(e) {
-				    log("Got exception: " + e);
-				}
-				assert.clear();
-			    });
+		for (let varName in test) {
+		    ignoreGlobals.push(varName);
+		    prepLogs(varName + ": ", function() {
+			checkGlobals(function() {
+			    try {
+				test[varName]();
+			    } catch(e) {
+				log("Got exception:  " + e.fileName + ":" + e.lineNumber + " : " + e);
+			    }
+			    assert.clear();
 			});
-		    }
+		    });
 		}
 	    } catch(e) {
-		log("Got exception: " + e);
+		log("Got exception:  " + e.fileName + ":" + e.lineNumber + " : " + e);
 	    }
+	    delete test;
 	});
     });
 }
-
-// var f = wrap(testWrapping, checkGlobals);
-// prepLogs("!!!!!! ", function() {f(1, 2);});

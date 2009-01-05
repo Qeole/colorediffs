@@ -1,21 +1,21 @@
 eval(loadFile("content/colorediffs/globals.js"));
 eval(loadFile("content/colorediffs/callbacks.js"));
 
-test__TooltipCallback = function() {
+test.tooltipCallback = function() {
     var me = colorediffsGlobal;
 
     me.isActive = function() {return true;};
 
-    assert.that(me.tooltipCallback(document.getElementById('first-test')), is.true());
+    assert.that(me.tooltipCallback(document.getElementById('first-test')), is.True());
     assert.that(document.getElementById('colorediff-tooltip').value, is.eq("nice tooltip"));
 
-    assert.that(me.tooltipCallback(document.getElementById('second-test')), is.true());
+    assert.that(me.tooltipCallback(document.getElementById('second-test')), is.True());
     assert.that(document.getElementById('colorediff-tooltip').value, is.eq("another nice tooltip"));
 
-    assert.that(me.tooltipCallback(document.getElementById('third-test')), is.false());
+    assert.that(me.tooltipCallback(document.getElementById('third-test')), is.False());
 
     me.isActive = function() {return false;};
-    assert.that(me.tooltipCallback(document.getElementById('first-test')), is.false());
+    assert.that(me.tooltipCallback(document.getElementById('first-test')), is.False());
 };
 
 // function test__ScrollCallback() {
