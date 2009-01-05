@@ -8,11 +8,11 @@ if (!colorediffsGlobal) {
 
 colorediffsGlobal.$ = function(id) {
 	return document.getElementById(id);
-}
+};
 
 colorediffsGlobal.$R = function(f) {
 	return f();
-}
+};
 
 colorediffsGlobal.getMessagePane = function() {
 	if (!this.gmessagePane) {
@@ -20,7 +20,7 @@ colorediffsGlobal.getMessagePane = function() {
 	}
 
 	return this.gmessagePane;
-}
+};
 
 colorediffsGlobal.isActive = function(m) {
 	var node = colorediffsGlobal.$("colorediff-mode");
@@ -29,23 +29,11 @@ colorediffsGlobal.isActive = function(m) {
 	} else {
 		return false;
 	}
-}
+};
 
 colorediffsGlobal.setActive = function(m) {
 	colorediffsGlobal.$("colorediff-mode").value = m;
-}
-
-document.getElementsByClassName = function(className, parentElement) {
-	var elements = [];
-	var qwe = parentElement.getElementsByTagName("*");
-	for (var i = 0; i < qwe.length; i++) {
-		if (qwe[i] && qwe[i].getAttribute("class") === className) {
-			elements.push(qwe[i]);
-		}
-	}
-
-	return elements;
-}
+};
 
 String.prototype.pad = function(l, s) {
 	if (!s) s = " ";
@@ -57,32 +45,32 @@ String.prototype.pad = function(l, s) {
 	} else {
 		return this;
 	}
-}
+};
 
 String.prototype.trim = function(s) {
 	if (!s) s = "\\s";
-	return this.replace(new RegExp("^" + s + "*|" + s + "*$", "g"), "")
-}
+	return this.replace(new RegExp("^" + s + "*|" + s + "*$", "g"), "");
+};
 
 String.prototype.ltrim = function(s) {
 	if (!s) s = "\\s";
-	return this.replace(new RegExp("^" + s + "*", "g"), "")
-}
+	return this.replace(new RegExp("^" + s + "*", "g"), "");
+};
 
 colorediffsGlobal.isUpperCaseLetter = function(c) {
 	return /^[A-Z]$/.test(c);
-}
+};
 
 colorediffsGlobal.getPrefs = function() {
 	return Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
-}
+};
 
 colorediffsGlobal.htmlToPlainText = function(html) {
 	var texts = html.split(/(<\/?[^>]+>)/);
 	var text = texts.map(function(string) {
 			if (string.length > 0 && string[0] == '<') {
 				//replace smileys
-				var regExpRes = string.match(/^<img.*?alt\s*=\s*['"](.*)["']/i)
+				var regExpRes = string.match(/^<img.*?alt\s*=\s*['"](.*)["']/i);
 				if (regExpRes) {
 					return regExpRes[1];
 				} else {
@@ -104,7 +92,7 @@ colorediffsGlobal.htmlToPlainText = function(html) {
 	}).join("");
 
 	return text;
-}
+};
 
 colorediffsGlobal.escapeHTML = function(text) {
 	text = text.replace("&", "&amp;", "g");
@@ -112,7 +100,7 @@ colorediffsGlobal.escapeHTML = function(text) {
 	text = text.replace(">", "&gt;", "g");
 	text = text.replace('"', "&quot;", "g");
 	return text;
-}
+};
 
 colorediffsGlobal.fold = function(a, fun, o) {
 	var l = a.length;
@@ -120,7 +108,7 @@ colorediffsGlobal.fold = function(a, fun, o) {
 		o = fun(a[i], o);
 	}
 	return o;
-}
+};
 
 // Array.prototype.fold = function(fun, o) {
 //	this.forEach(function(item) {
@@ -146,12 +134,12 @@ colorediffsGlobal.getBaseURL = function() {
 		//under chrome
 		return "chrome://colorediffs/content/";
 	}
-}
+};
 
 colorediffsGlobal.include = function(js_path) {
 	var req = new XMLHttpRequest();
 	req.open("GET", colorediffsGlobal.getBaseURL() + js_path, false);
 	req.send(null);
 	eval(req.responseText);
-}
+};
 

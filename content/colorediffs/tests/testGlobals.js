@@ -1,62 +1,63 @@
+eval(loadFile("content/colorediffs/globals.js"));
 
-function testDollar() {
-	assertEquals("Dollar check", colorediffsGlobal.$('testData').id, 'testData');
-}
+// function testDollar() {
+// 	assertEquals("Dollar check", colorediffsGlobal.$('testData').id, 'testData');
+// }
 
-function testGetElementsByClassName() {
-	var elems = document.getElementsByClassName("test", document.getElementById('classTesting'));
+// function testGetElementsByClassName() {
+// 	var elems = document.getElementById('classTesting').getElementsByClassName("test");
 
-	assertNotNull("First Null check", elems);
+// 	assertNotNull("First Null check", elems);
 
-	assertEquals("Length check", 4, elems.length);
+// 	assertEquals("Length check", 4, elems.length);
 
-	var elemsIds = [];
-	for (var i=0; i < elems.length; i++) {
-		elemsIds.push(elems[i].id);
-	}
+// 	var elemsIds = [];
+// 	for (var i=0; i < elems.length; i++) {
+// 		elemsIds.push(elems[i].id);
+// 	}
 
-	elemsIds.sort();
+// 	elemsIds.sort();
 
-	assertEquals("Elems ids", [1, 2, 3, 4].join(","), elemsIds.join(",") );
+// 	assertEquals("Elems ids", [1, 2, 3, 4].join(","), elemsIds.join(",") );
 
-	var elems2 = document.getElementsByClassName("test2", document.getElementById('classTesting'));
-	assertNotNull("Second Null check", elems2);
-	assertEquals("Length check", 0, elems2.length);
-}
+// 	var elems2 = document.getElementById('classTesting').getElementsByClassName("test2");
+// 	assertNotNull("Second Null check", elems2);
+// 	assertEquals("Length check", 0, elems2.length);
+// }
 
-function testPad() {
-	assertEquals("Pad spaces", "abcd   ", "abcd".pad(7, " "));
-	assertEquals("Pad _", "abcd____", "abcd".pad(8, "_"));
-	assertEquals("Pad default(spaces)", "abcd ", "abcd".pad(5));
-}
+test.pad = function() {
+	assert.that("abcd".pad(7, " "), is.eq("abcd   "));
+	assert.that("abcd".pad(8, "_"), is.eq("abcd____"));
+	assert.that("abcd".pad(5), is.eq("abcd "));
+};
 
-function testIsUpperCaseLetter() {
-	assertTrue("Uppercase", colorediffsGlobal.isUpperCaseLetter("R"));
-	assertFalse("Lowercase", colorediffsGlobal.isUpperCaseLetter("s"));
-}
+test.isUpperCaseLetter = function() {
+	assert.that(colorediffsGlobal.isUpperCaseLetter("R"), is.True());
+	assert.that(colorediffsGlobal.isUpperCaseLetter("s"), is.False());
+};
 
-function testHtmlToPlainText() {
-	assertEquals("Smiley and link", "This is a link to google - the best :) search engine in the world", colorediffsGlobal.htmlToPlainText("This is a link to <a href='www.google.com'>google</a> - the best <img class='moz-txt-smily' alt = \":)\"> search engine in the world"));
-	assertEquals("Unescaped html", 'Me & my brother and <magnificent joey> aka "Fish"', colorediffsGlobal.htmlToPlainText("Me &amp; my&nbsp;brother<img src='foto01.jpg'> and &lt;magnificent joey&gt; aka &quot;Fish&quot;"));
-}
+test.htmlToPlainText = function() {
+	assert.that(colorediffsGlobal.htmlToPlainText("This is a link to <a href='www.google.com'>google</a> - the best <img class='moz-txt-smily' alt = \":)\"> search engine in the world"), is.eq("This is a link to google - the best :) search engine in the world"));
+	assert.that(colorediffsGlobal.htmlToPlainText("Me &amp; my&nbsp;brother<img src='foto01.jpg'> and &lt;magnificent joey&gt; aka &quot;Fish&quot;"), is.eq('Me & my brother and <magnificent joey> aka "Fish"'));
+};
 
-function testEscapeHtml() {
-	assertEquals("All the reserved chars", "&lt;div&gt;&quot;Hello&quot; 'darling' &amp; good bye&lt;/div&gt;", colorediffsGlobal.escapeHTML("<div>\"Hello\" 'darling' & good bye</div>"));
-}
+test.escapeHtml = function() {
+	assert.that(colorediffsGlobal.escapeHTML("<div>\"Hello\" 'darling' & good bye</div>"), is.eq("&lt;div&gt;&quot;Hello&quot; 'darling' &amp; good bye&lt;/div&gt;"));
+};
 
-function testTrim() {
-	assertEquals("Trim _", "abcd", "___abcd___".trim("_"));
-	assertEquals("Trim default(spaces)", "abcd", "	 abcd	".trim());
-}
+test.trim = function () {
+	assert.that("___abcd___".trim("_"), is.eq("abcd"));
+	assert.that("	 abcd	".trim(), is.eq("abcd"));
+};
 
-function testLTrim() {
-	assertEquals("LTrim _", "abcd___", "___abcd___".ltrim("_"));
-	assertEquals("LTrim default(spaces)", "abcd ", "	 abcd ".ltrim());
-}
+test.ltrim = function() {
+	assert.that("___abcd___".ltrim("_"), is.eq("abcd___"));
+	assert.that("	 abcd ".ltrim(), is.eq("abcd "));
+};
 
-function testFold() {
-	assertEquals("Fold", "123456", colorediffsGlobal.fold([1,2,3,4,5,6], function(e, o) {return o + e;}, ""));
-}
+test.fold = function() {
+	assert.that(colorediffsGlobal.fold([1,2,3,4,5,6], function(e, o) {return o + e;}, ""), is.eq("123456"));
+};
 
 function testInclude() {
 	colorediffsGlobal.include("tests/testGlobalInclude.js");
