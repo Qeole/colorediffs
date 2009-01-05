@@ -1,26 +1,13 @@
-if (typeof(importClass) != "undefined") {
-    importClass(java.io.File);
-    importClass(java.io.FileInputStream);
-    importClass(java.io.BufferedReader);
-    importClass(java.io.InputStreamReader);
+if (typeof(load) != "undefined") { //this is Rhino
+    load("env.js");
+    document = window.document;
 }
-
 
 let loadFile = function() {
     var res;
-    if (typeof(importClass) != "undefined") {
+    if (typeof(readFile) != "undefined") {
 	res = function(fileName) {
-	    var data = "";
-
-	    var file = new File(fileName);
-
-	    var fis = new FileInputStream(file);
-	    var d = new BufferedReader(new InputStreamReader(fis));
-
-	    while (d.ready()) {
-		data += d.readLine() + "\n";
-	    }
-	    return data;
+	    return readFile(fileName);
 	};
     } else if (typeof(Components) != "undefined") {
 	res = function(fileName) {
@@ -231,7 +218,7 @@ var files = listFiles(dir).filter(isTestFile);
 for (let [, file] in Iterator(files)) {
     prepLogs(getFileName(file) + ": ", function() {
 	checkGlobals(function() {
-	    ignoreGlobals = [];
+	    ignoreGlobals = ["location"];
 	    test = {};
 	    try {
 		eval(loadFile(dir + file));

@@ -1,18 +1,18 @@
 if (!colorediffsGlobal) {
-	var colorediffsGlobal = {}
+	var colorediffsGlobal = {};
 }
 
 colorediffsGlobal.tooltipCallback = function(element) {
 	var me = colorediffsGlobal;
 
-	var getTooltip = function () {
+	function getTooltip() {
 		var elem = element;
 
 		while( elem && elem.nodeName.toLowerCase() != "body" && elem.nodeName.toLowerCase() != "browser" && elem.nodeName.toLowerCase() != "html" && (elem.title == null || elem.title == "")	) {
 			elem = elem.parentNode;
 		}
 		return (elem != null && elem.hasAttribute('title'))?elem.title:null;
-	}
+	};
 
 	if ( me.isActive() ) {
 		var title = getTooltip();
@@ -26,13 +26,13 @@ colorediffsGlobal.tooltipCallback = function(element) {
 		return false;
 	}
 
-}
+};
 
 colorediffsGlobal.scrollCallback = function(evt) {
 	var ourclass = evt.target.getAttribute('class');
 	var opositeClass = (ourclass == "left")?"right":"left";
 
-	var otherSide = document.getElementsByClassName(opositeClass, evt.target.parentNode.parentNode /*TR*/)[0];
+	var otherSide = evt.target.parentNode.parentNode.getElementsByClassName(opositeClass)[0];
 	otherSide.scrollLeft = evt.target.scrollLeft;
-}
+};
 
