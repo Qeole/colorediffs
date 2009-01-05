@@ -52,13 +52,13 @@ class OpenSSL::Digest::SHA256
 end
 #end library extensions
 
-task :default => [:update, :build]
+task :default => [:test, :update, :build]
 
-task :update do 
+task :update do
 	`svn up`
 end
 
-task :cruise => [:build] do |t|
+task :cruise => [:test, :build] do |t|
 	options = convert(JSON.parse(File.read("options.json")))
 	options.sites.each {|s|
 		Dir.foreach("#{s.name}-build") do |f|
@@ -69,6 +69,10 @@ end
 
 file "../mykey.pem" do |t|
 	cp File.expand_path("~/cc-private/mykey.pem"), t.name
+end
+
+task :test do |t|
+	sh "java -cp js.jar org.mozilla.javascript.tools.shell.Main -version 170 content/colorediffs/tests/main.js"
 end
 
 task :build => "../mykey.pem" do |t|
