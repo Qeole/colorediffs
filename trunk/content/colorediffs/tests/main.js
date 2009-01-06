@@ -254,12 +254,11 @@ let is = {
 		let res;
 		if (typeof(el.outerHTML) != "undefined") {
 		    res = el.outerHTML;
-		    return res;
 		} else {
 		    let serializer = new XMLSerializer();
 		    res = serializer.serializeToString(el);
-		    return "\n" + XML(res).toXMLString() + "\n";
 		}
+		return "\n" + XML(res).toXMLString() + "\n";
 	    }
 	};
     }
