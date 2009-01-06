@@ -27,7 +27,7 @@ colorediffsGlobal.transformations.composite.members["find-common-name"] = {
 		    var d = findDiff(s1, s2);
 		    var max = "";
 		    for (var o = d; o; o = o.next[0]) {
-			if (o.prev.length == 0 || o.prev.length == 2) {//funny way to found out if this is a common part
+			if (o.prev.length == 0 || o.prev.length == 2) {//funny way to find out if this is a common part
 			    if (o.text.length > max.length) {
 				max = o.text;
 			    }

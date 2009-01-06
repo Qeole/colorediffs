@@ -67,6 +67,7 @@ colorediffsGlobal.load = function() {
 	sstream.close();
 	fstream.close();
 
+	let xul_doc = document;
 	eval(data);
     }
 };
