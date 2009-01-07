@@ -1,29 +1,13 @@
 eval(loadFile("content/colorediffs/globals.js"));
+eval(loadFile("content/colorediffs/dom.js"));
 
-// function testDollar() {
-// 	assertEquals("Dollar check", colorediffsGlobal.$('testData').id, 'testData');
-// }
+test.dollar = function() {
+    var dom = new colorediffsGlobal.domHelper(document);
+    var element = dom.createElement("div", {"id":'testData'}, "aaa");
+    document.documentElement.appendChild(element);
 
-// function testGetElementsByClassName() {
-// 	var elems = document.getElementById('classTesting').getElementsByClassName("test");
-
-// 	assertNotNull("First Null check", elems);
-
-// 	assertEquals("Length check", 4, elems.length);
-
-// 	var elemsIds = [];
-// 	for (var i=0; i < elems.length; i++) {
-// 		elemsIds.push(elems[i].id);
-// 	}
-
-// 	elemsIds.sort();
-
-// 	assertEquals("Elems ids", [1, 2, 3, 4].join(","), elemsIds.join(",") );
-
-// 	var elems2 = document.getElementById('classTesting').getElementsByClassName("test2");
-// 	assertNotNull("Second Null check", elems2);
-// 	assertEquals("Length check", 0, elems2.length);
-// }
+    assert.that(colorediffsGlobal.$('testData').id, is.eqLoosely('testData'));
+};
 
 test.pad = function() {
 	assert.that("abcd".pad(7, " "), is.eq("abcd   "));
