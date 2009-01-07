@@ -1,41 +1,70 @@
-function smartAssertEquals(prefix, target, source) {
-	assertEquals(prefix + " check types", typeof(target), typeof(source));
+eval(loadFile("content/colorediffs/globals.js"));
+eval(loadFile("content/colorediffs/parsers/main-parser.js"));
+eval(loadFile("content/colorediffs/parsers/unified-parser.js"));
 
-	if (source instanceof Array) {
-		assert(prefix + "check types", target instanceof Array);
-		return assertEqualsArray(prefix, target, source);
-	} else {
-		switch (typeof (source)) {
-			case "object":
-				return assertEqualsObject(prefix, target, source);
-			default:
-				return assertEquals(prefix, target, source);
-		}
-	}
+
+eval(loadFile("content/colorediffs/prefs.js"));
+
+function Pref() {
+    var boolPrefs = {};
+    var charPrefs = {};
+    var intPrefs = {};
+
+    var getPref = function(hash, prop) {
+	return hash[prop];
+    };
+
+    var setPref = function(hash, prop, value) {
+	hash[prop] = value;
+    };
+
+    var hasPref = function(prop) {
+	return boolPrefs[prop] != undefined || charPrefs[prop] != undefined;
+    };
+
+    this.getBoolPref = function(prop) {
+	return getPref(boolPrefs, prop);
+    };
+
+    this.setBoolPref = function(prop, value) {
+	setPref(boolPrefs, prop, value);
+    };
+
+    this.getIntPref = function(prop) {
+	return getPref(intPrefs, prop);
+    };
+
+    this.setIntPref = function(prop, value) {
+	setPref(intPrefs, prop, value);
+    };
+
+    this.getCharPref = function(prop) {
+	return getPref(charPrefs, prop);
+    };
+
+    this.setCharPref = function(prop, value) {
+	setPref(charPrefs, prop, value);
+    };
+
+    this.prefHasUserValue = function(prop) {
+	return hasPref(prop);
+    };
 }
 
-function assertEqualsArray(prefix, target, source) {
-	assertEquals(prefix + " check length", target.length, source.length);
-	for (var i = 0; i < target.length; i++ ) {
-		smartAssertEquals(prefix + "[" + i + "]", target[i], source[i]);
-	}
-}
+let globalPref = new Pref();
+let pref = new colorediffsGlobal.Pref(globalPref);
 
-function assertEqualsObject(prefix, target, source) {
-	for (var i in target) {
-		//check that target[i] equals source[i]
-		smartAssertEquals(prefix + " " + i, target[i], source[i]);
-	}
-}
+pref.parserMaxPostfixSize.set(15);
+pref.parserMaxAdditionalInfoSize.set(7);
+pref.parserMaxTitleSize.set(5);
+pref.parserMinTitleDelimiterCharsCount.set(10);
 
-function testUnified() {
-	var me = colorediffsGlobal;
+test.unified = function() {
+    var me = colorediffsGlobal;
 
-	var code = "" + <r><![CDATA[
+    var code = "" + <r><![CDATA[
 Log message
 
-File title
-==============
 --- filename1
 +++ filename2
 @@ -10,5 +10,5 @@
@@ -47,45 +76,64 @@ File title
  line5
 ]]></r>;
 
-	code = code.trim("\n");
 
-	var res = me.parse(code);
-	smartAssertEquals("test unified ", {
-		log:"Log message",
-		files:[
-			{title: "File title",
-			 'new': {
-				name: "filename2",
-				chunks: [
-				  {line:10,
-				   code:[
-					   "line1",
-					   "line2",
-					   "line3",
-					   "line4",
-					   "line5"]}]},
-			 'old': {
-				name: "filename1",
-				chunks: [
-					{line:10,
-					 code:[
-						 "line1",
-						 "line2",
-						 "line3",
-						 null,
-						 "line5"]}]},
-		 }]},
-		res);
-}
+    code = code.trim("\n");
 
-function testUnifiedWineStandard() {
+    var res = me.parse(code, pref);
+    assert.that(res, is.eqJson({
+	log:"Log message",
+	postfix:"",
+	files:[
+	    {'additional_info' : '',
+	     'new': {
+		 name: "filename2",
+		 version: null,
+		 chunks: [
+		     {line:10,
+                      'status' : [
+                          'S',
+                          'S',
+                          'C',
+                          'A',
+                          'S'
+                      ],
+		      'doesnt_have_new_line' : false,
+		      code:[
+			  "line1",
+			  "line2",
+			  "line3",
+			  "line4",
+			  "line5"]}]},
+	     'old': {
+		 name: "filename1",
+		 version: null,
+		 chunks: [
+		     {line:10,
+                      'status' : [
+                          'S',
+                          'S',
+                          'C',
+                          'A',
+                          'S'
+                      ],
+                      'doesnt_have_new_line' : false,
+		      code:[
+			  "line1",
+			  "line2",
+			  "line3",
+			  null,
+			  "line5"]}]}
+	    }]}));
+};
+
+let testunifiedWineStandard = function() {
 	var me = colorediffsGlobal;
 
 	var code = "" + <r><![CDATA[
  Log message
 
 diff --git a/filename b/filename
---------------------------------
+------------------------------
 index 52352325345
 --- a/filename
 +++ b/filename
@@ -100,7 +148,7 @@ index 52352325345
 	code = code.trim("\n");
 
 	var res = me.parse(code);
-	smartAssertEquals("test unified ", {
+	assert.that(res, is.eqJson({
 		log:" Log message",
 		files:[
 			{title: "diff --git a/filename b/filename",
@@ -123,9 +171,8 @@ index 52352325345
 						 "line2",
 						 "line3",
 						 null,
-						 "line5"]}]}}]},
-		res);
-}
+						 "line5"]}]}}]}));
+};
 
 function testUnifiedNoNewLine() {
 	var me = colorediffsGlobal;
