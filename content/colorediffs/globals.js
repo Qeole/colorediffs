@@ -110,29 +110,3 @@ colorediffsGlobal.fold = function(a, fun, o) {
 	return o;
 };
 
-// Array.prototype.fold = function(fun, o) {
-//	this.forEach(function(item) {
-//			o = fun(item, o);
-//		});
-//	return o;
-// }
-
-colorediffsGlobal.getBaseURL = function() {
-	var url = document.URL;
-
-	if (url) {
-		//under html
-		var content = url.lastIndexOf("content/");
-		var colorediffs = url.lastIndexOf("colorediffs/");
-
-		if ( content > colorediffs ) {
-			return url.substring(0, content) + "content/";
-		} else {
-			return url.substring(0, colorediffs) + "colorediffs/";
-		}
-	} else {
-		//under chrome
-		return "chrome://colorediffs/content/";
-	}
-};
-

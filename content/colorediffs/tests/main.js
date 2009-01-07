@@ -133,33 +133,16 @@ function prepLogs(p, f) {
     })();
 }
 
-function isTrue() {
-    return function (actual, not) {
-	return assert.testOrNot(
-	    actual,
-	    not,
-	    message || "Should have been truey:<" + actual + ">",
-	    message || "Should have been falsey:<" + actual + ">");
-    };
-}
-
-function isFalse(actual) {
-    if (!actual) {
-	return true;
+let ppDom = function(el) {
+    let res;
+    if (typeof(el.outerHTML) != "undefined") {
+	res = el.outerHTML;
     } else {
-	log("got " + actual + ", expected false");
-	return false;
+	let serializer = new XMLSerializer();
+	res = serializer.serializeToString(el);
     }
-}
-
-function eq(actual) {
-    if (!actual) {
-	return true;
-    } else {
-	log("got " + actual + ", expected false");
-	return false;
-    }
-}
+    return "\n" + XML(res).toXMLString() + "\n";
+};
 
 let is = {
     True: function() {
@@ -177,6 +160,12 @@ let is = {
     eq: function(expr) {
 	return {
 	    check: function(actual) {return actual === expr;},
+	    expected: expr
+	};
+    },
+    eqLoosely: function(expr) {
+	return {
+	    check: function(actual) {return actual == expr;},
 	    expected: expr
 	};
     },
@@ -250,16 +239,7 @@ let is = {
 		return check(actual, expr);
 	    },
 	    expected: expr,
-	    format: function(el) {
-		let res;
-		if (typeof(el.outerHTML) != "undefined") {
-		    res = el.outerHTML;
-		} else {
-		    let serializer = new XMLSerializer();
-		    res = serializer.serializeToString(el);
-		}
-		return "\n" + XML(res).toXMLString() + "\n";
-	    }
+	    format: ppDom
 	};
     }
 };
@@ -479,6 +459,7 @@ let document = function() {
 		(new java.lang.String("<html><body></body></html>").getBytes("UTF8"))));
     } else {
 	let el = xul_doc.createElementNS("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul", "xul:browser");
+	el.style = "display:none";
 	let elb = xul_doc.createElementNS("http://www.w3.org/1999/xhtml", "html:body");
 	el.appendChild(elb);
 	return elb.ownerDocument;
@@ -487,6 +468,17 @@ let document = function() {
 
 if (typeof(Element) == "undefined") {
     window.Element = DOMElement;
+    DOMElement.prototype.getElementsByClassName = function(className) {
+	var elements = [];
+	var qwe = this.getElementsByTagName("*");
+	for (var i = 0; i < qwe.length; i++) {
+		if (qwe[i] && qwe[i].getAttribute("class") == className) {
+			elements.push(qwe[i]);
+		}
+	}
+
+	return elements;
+    };
 }
 
 let getInnerHTML = function() {
