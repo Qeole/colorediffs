@@ -127,17 +127,22 @@ colorediffsGlobal.parsers["unified"] = {
 
 		// log = normal_line | normal_line log
 		function log_and_code(result) {
-			var log = "";
+			var log1 = "";
+		    all:
 			do {
 				while(!_test(blank_line()) && !_test(custom_log_terminator())) {
-					log += _get() + "\n";
+					log1 += _get() + "\n";
+				    try {
 					_next();
+				    } catch (e) {
+					break all;
+				    }
 				}
-				log += _get() + "\n";
+				log1 += _get() + "\n";
 				_next();
 			} while( !_try(function() {return code(result);}) );
 
-			result.log = log.trim("\n");
+			result.log = log1.trim("\n");
 		}
 
 		// code = file blank_line | file blank_line code
@@ -179,7 +184,7 @@ colorediffsGlobal.parsers["unified"] = {
 		}
 
 		function normal_file(file) {
-			function _(func) { return function() { return func(file); } };
+			function _(func) { return function() { return func(file); }; };
 
 			_try(_(title));
 			_try(_(additional_file_info));
