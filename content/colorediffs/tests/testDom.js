@@ -1,5 +1,5 @@
-eval(loadFile("content/colorediffs/globals.js"));
-eval(loadFile("content/colorediffs/dom.js"));
+importFile("../globals.js");
+importFile("../dom.js");
 
 test.dom = function() {
     var dom = new colorediffsGlobal.domHelper(document);

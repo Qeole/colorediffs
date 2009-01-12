@@ -1,5 +1,5 @@
 if (!colorediffsGlobal) {
-    var colorediffsGlobal = {};
+    colorediffsGlobal = {};
 }
 
 colorediffsGlobal.OptionsPrefModel = function(prefModel) {

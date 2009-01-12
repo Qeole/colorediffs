@@ -41,34 +41,30 @@ colorediffsGlobal.load = function() {
 
     window.addEventListener("unload", unload, false);
 
+//     Components.utils.import("resource://test-framework/main.js");
+//     run_tests("{282C3C7A-15A8-4037-A30D-BBEB17FFC76B}", "content/colorediffs/tests", document);
+
     var pref = new colorediffsGlobal.Pref(colorediffsGlobal.getPrefs());
     if (pref.debugDir.has()) {
 	//run tests
 
 	var MY_ID = "{282C3C7A-15A8-4037-A30D-BBEB17FFC76B}";
-	var em = Components.classes["@mozilla.org/extensions/manager;1"].
-	    getService(Components.interfaces.nsIExtensionManager);
-	var file = em.getInstallLocation(MY_ID).getItemFile(MY_ID, "content/colorediffs/tests/main.js");
-
-	var fstream = Components.classes["@mozilla.org/network/file-input-stream;1"].
-	    createInstance(Components.interfaces.nsIFileInputStream);
-	var sstream = Components.classes["@mozilla.org/scriptableinputstream;1"].
-	    createInstance(Components.interfaces.nsIScriptableInputStream);
+	var em = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
+	var file = em.getInstallLocation(MY_ID).getItemFile(MY_ID, "test-framework/main.js");
+	var fstream = Components.classes["@mozilla.org/network/file-input-stream;1"].createInstance(Components.interfaces.nsIFileInputStream);
+	var sstream = Components.classes["@mozilla.org/scriptableinputstream;1"].createInstance(Components.interfaces.nsIScriptableInputStream);
 	fstream.init(file, -1, 0, 0);
 	sstream.init(fstream);
 
 	var data = "";
 	var str = sstream.read(4096);
-	while (str.length > 0) {
-	    data += str;
-	    str = sstream.read(4096);
-	}
+	while (str.length > 0) {data += str; str = sstream.read(4096);}
 
 	sstream.close();
 	fstream.close();
 
-	let xul_doc = document;
 	eval(data);
+	run_tests(MY_ID, "content/colorediffs/tests/", document);
     }
 };
 
