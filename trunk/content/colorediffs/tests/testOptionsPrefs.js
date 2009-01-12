@@ -1,4 +1,4 @@
-eval(loadFile("content/colorediffs/options/options-pref.js"));
+importFile("../options/options-pref.js");
 
 function Pref() {
     var boolPrefs = {};
@@ -38,6 +38,9 @@ function Pref() {
 }
 
 let globalPref = new Pref();
+
+ignore("Pref");
+ignore("globalPref");
 
 test.props = function() {
     var prefs = new colorediffsGlobal.OptionsPrefModel(globalPref);

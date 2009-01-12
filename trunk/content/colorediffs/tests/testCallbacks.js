@@ -1,6 +1,8 @@
-eval(loadFile("content/colorediffs/globals.js"));
-eval(loadFile("content/colorediffs/callbacks.js"));
-eval(loadFile("content/colorediffs/dom.js"));
+importFile("../globals.js");
+importFile("../callbacks.js");
+importFile("../dom.js");
+
+ignore("colorediffsGlobal");
 
 test.tooltipCallback = function() {
     var me = colorediffsGlobal;
