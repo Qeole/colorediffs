@@ -73,7 +73,7 @@ file "../mykey.pem" do |t|
 end
 
 task :test do |t|
-	sh "java -cp js.jar org.mozilla.javascript.tools.shell.Main -version 170 -debug content/colorediffs/tests/main.js"
+	sh "java -cp test-framework/js.jar org.mozilla.javascript.tools.shell.Main -version 170 -debug test-framework/main.js --test-directory content/colorediffs/tests/"
 end
 
 task :build => "../mykey.pem" do |t|
