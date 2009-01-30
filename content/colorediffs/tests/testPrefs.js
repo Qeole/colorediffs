@@ -1,46 +1,5 @@
 importFile("../prefs.js");
-
-function Pref() {
-    var boolPrefs = {};
-    var charPrefs = {};
-
-    var getPref = function(hash, prop) {
-	return hash[prop];
-    };
-
-    var setPref = function(hash, prop, value) {
-	hash[prop] = value;
-    };
-
-    var hasPref = function(prop) {
-	return boolPrefs[prop] != undefined || charPrefs[prop] != undefined;
-    };
-
-    this.getBoolPref = function(prop) {
-	return getPref(boolPrefs, prop);
-    };
-
-    this.setBoolPref = function(prop, value) {
-	setPref(boolPrefs, prop, value);
-    };
-
-    this.getCharPref = function(prop) {
-	return getPref(charPrefs, prop);
-    };
-
-    this.setCharPref = function(prop, value) {
-	setPref(charPrefs, prop, value);
-    };
-
-    this.prefHasUserValue = function(prop) {
-	return hasPref(prop);
-    };
-}
-
-let globalPref = new Pref();
-
-ignore("Pref");
-ignore("globalPref");
+importFile("prefHelper.js");
 
 test.props = function() {
     var me = new colorediffsGlobal.Pref(globalPref);
