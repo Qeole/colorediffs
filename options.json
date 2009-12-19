@@ -2,12 +2,12 @@
   "apps": [{"name": "Thunderbird",
 	    "aid": "{3550f703-e582-4d05-9a08-453d09bdfdc6}",
 	    "minVersion": "2.0",
-	    "maxVersion": "3.0b1"
+	    "maxVersion": "3.0.*"
 	   },
 	   {"name": "SeaMonkey",
 	    "aid": "{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}",
 	    "minVersion": "2.0a2",
-	    "maxVersion": "2.0a3"
+	    "maxVersion": "2.0.*"
 	   }
   ],
   "info": {

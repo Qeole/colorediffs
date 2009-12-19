@@ -46,8 +46,8 @@ function Pref() {
     };
 }
 
-let globalPref = new Pref();
-let pref = new colorediffsGlobal.Pref(globalPref);
+this.globalPref = new Pref();
+this.pref = new colorediffsGlobal.Pref(globalPref);
 
 ignore("globalPref");
 ignore("Pref");
