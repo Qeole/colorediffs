@@ -53,7 +53,7 @@ class OpenSSL::Digest::SHA256
 end
 #end library extensions
 
-task :default => [:test, :build]
+task :default => [:build]
 
 task :cruise => [:test, :build] do |t|
 	options = convert(JSON.parse(File.read("options.json")))
