@@ -53,11 +53,7 @@ class OpenSSL::Digest::SHA256
 end
 #end library extensions
 
-task :default => [:test, :update, :build]
-
-task :update do
-	`svn up`
-end
+task :default => [:test, :build]
 
 task :cruise => [:test, :build] do |t|
 	options = convert(JSON.parse(File.read("options.json")))
@@ -78,18 +74,14 @@ end
 
 task :build => "../mykey.pem" do |t|
 	options = convert(JSON.parse(File.read("options.json")))
-	options.version = options.version + "." + get_svn_rev
+	options.version = options.version + "." + build_version
 	options.sites.each {|s|
 		create_one(s, options)
 	}
 end
 
-def get_svn_rev
-	revision = ""
-	IO.popen("svn info") { |f|
-		revision = f.gets(nil).scan(/^Revision: (.*)$/)[0][0]
-	}
-	return revision
+def build_version
+	Time.now.utc.strftime("%Y.%m.%d.%H.%M.%S");
 end
 
 def create_one(site, json)
@@ -192,7 +184,7 @@ end
 def get_update_rdf_signable(json, site, file, hash, signature)
 	signature = if (signature) then "\n  <em:signature>#{signature}</em:signature>" else "" end
 	text =<<-END
-<RDF:Description about="urn:mozilla:extension:{282C3C7A-15A8-4037-A30D-BBEB17FFC76B}">#{signature}
+<RDF:Description about="urn:mozilla:extension:#{json.info.eid}">#{signature}
   <em:updates>
     <RDF:Seq>
       <RDF:li>

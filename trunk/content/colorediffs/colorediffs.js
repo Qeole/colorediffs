@@ -9,9 +9,8 @@ colorediffsGlobal.isMessageDiff = function() {
 	}
 
 	var messagePrefix = /^mailbox-message:|^imap-message:|^news-message:/i;
-	if ( ! messagePrefix.test(GetLoadedMessage()) ) {
+	if ( ! messagePrefix.test(gMessageDisplay.folderDisplay.selectedMessageUris[0]) ) {
 		return false;
-
 	}
 
 	var message = content.contentDocument;
@@ -24,31 +23,31 @@ colorediffsGlobal.isMessageDiff = function() {
 	var text = colorediffsGlobal.htmlToPlainText(body.innerHTML);
 
 	for each (var parser in colorediffsGlobal.parsers) {
-			if (parser.couldParse(text)) {
-				return true;
-			}
+		if (parser.couldParse(text)) {
+			return true;
+		}
 	}
 	return false;
-}
+};
 
 colorediffsGlobal.writeDebugFile = function(filename, html, pref) {
 	if (pref.debugDir.has()) {
-		var debugDir = pref.debugDir.get();
-		if ( debugDir ) {
-			var file = Components.classes["@mozilla.org/file/local;1"]
-				.createInstance(Components.interfaces.nsILocalFile);
-			file.initWithPath(debugDir);
-			file.append(filename);
+	var debugDir = pref.debugDir.get();
+	if ( debugDir ) {
+		var file = Components.classes["@mozilla.org/file/local;1"]
+		.createInstance(Components.interfaces.nsILocalFile);
+		file.initWithPath(debugDir);
+		file.append(filename);
 
-			var foStream = Components.classes["@mozilla.org/network/file-output-stream;1"]
-				.createInstance(Components.interfaces.nsIFileOutputStream);
+		var foStream = Components.classes["@mozilla.org/network/file-output-stream;1"]
+		.createInstance(Components.interfaces.nsIFileOutputStream);
 
-			foStream.init(file, 0x02 | 0x08 | 0x20, 0664, 0); // write, create, truncate
-			foStream.write(html, html.length);
-			foStream.close();
-		}
+		foStream.init(file, 0x02 | 0x08 | 0x20, 0664, 0); // write, create, truncate
+		foStream.write(html, html.length);
+		foStream.close();
 	}
-}
+	}
+};
 
 colorediffsGlobal.onLoadMessage = function() {
 	var me = colorediffsGlobal;
@@ -58,9 +57,9 @@ colorediffsGlobal.onLoadMessage = function() {
 	me.writeDebugFile("before1.html", message.documentElement.innerHTML, pref);
 
 	if (!me.isMessageDiff()) {
-		me.setActive(false);
-		me.colorediffsToolbar.initToolbar();
-		return;
+	me.setActive(false);
+	me.colorediffsToolbar.initToolbar();
+	return;
 	}
 
 	me.setActive(true);
@@ -68,52 +67,51 @@ colorediffsGlobal.onLoadMessage = function() {
 
 	//don't do anything if user wants plain
 	if (pref.mode.get() == 'none') {
-		return;
+	return;
 	}
 
-	var message = me.getMessagePane().contentDocument;
 	var body = message.body;
 
 	me.writeDebugFile("before.html", message.documentElement.innerHTML, pref);
 
 	var divs = body.getElementsByTagName("div");
 	if ( !divs ) {
-		return;
+	return;
 	}
 
 	var reloadPlanned = false;
 
 	var text = me.fold(divs, function(div, text) {
-			switch(div.getAttribute("class")) {
-				case "moz-text-plain":
-				case "moz-text-flowed":
-					return text + stripThunderbirdGeneratedHtml(div.innerHTML) + "\n\n\n";
-				case "moz-text-html": //that means we're looking at HTML part of multipart mail
-					//Check if we're after reload
-					if (colorediffsGlobal.restorePreferHtmlTo === undefined) {
-						//Will try to make Thunderird reload it with text part in use.
-						colorediffsGlobal.restorePreferHtmlTo = pref.preferHtml.get();
-						pref.preferHtml.set(true);
-						ReloadMessage();
-						reloadPlanned = true;
-					} else { //ok, reloading was bad idea, but maybe html part is only log and diff is actually in attached file
-							 // so let's give it a try
-						return text + div.innerHTML + "\n\n\n";
-					}
-				default:
-					return text;
-			}
-		},
-		"");
+	switch(div.getAttribute("class")) {
+		case "moz-text-plain":
+		case "moz-text-flowed":
+		return text + stripThunderbirdGeneratedHtml(div.innerHTML) + "\n\n\n";
+		case "moz-text-html":
+		//that means we're looking at HTML part of multipart mail
+		//Check if we're after reload
+		if (colorediffsGlobal.restorePreferHtmlTo === undefined) {
+			//Will try to make Thunderird reload it with text part in use.
+			colorediffsGlobal.restorePreferHtmlTo = pref.preferHtml.get();
+			pref.preferHtml.set(true);
+			ReloadMessage();
+			reloadPlanned = true;
+		} else { //ok, reloading was bad idea, but maybe html part is only log and diff is actually in attached file
+			// so let's give it a try
+			return text + div.innerHTML + "\n\n\n";
+		}
+		default:
+		return text;
+	}
+	}, "");
 
 	if (reloadPlanned) {
-		return; //got to reload
+	return; //got to reload
 	}
 
 	//Should do it here so we can check whether we planned reload or not in the code that actually plan it.
 	if (colorediffsGlobal.restorePreferHtmlTo !== undefined) {
-		pref.preferHtml.set(colorediffsGlobal.restorePreferHtmlTo);
-		delete colorediffsGlobal.restorePreferHtmlTo;
+	pref.preferHtml.set(colorediffsGlobal.restorePreferHtmlTo);
+	delete colorediffsGlobal.restorePreferHtmlTo;
 	}
 
 
@@ -121,7 +119,7 @@ colorediffsGlobal.onLoadMessage = function() {
 	var il = colorediffsGlobal.parse(text, pref);
 
 	//Apply filters
-	var il = colorediffsGlobal.transform(il, pref);
+	il = colorediffsGlobal.transform(il, pref);
 
 	var dom = new colorediffsGlobal.domHelper(message);
 
@@ -140,7 +138,7 @@ colorediffsGlobal.onLoadMessage = function() {
 	//inner functions
 	//Strip <pre wrap=""><br><hr size="4" width="90%"><br> tags from every div
 	function stripThunderbirdGeneratedHtml(html) {
-		return html.replace(/^<pre .*?>(?:<br><hr .*?><br>)?((?:.|\n)*)<\/pre>$/i, "$1");
+	return html.replace(/^<pre .*?>(?:<br><hr .*?><br>)?((?:.|\n)*)<\/pre>$/i, "$1");
 	}
-}
+};
 

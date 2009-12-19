@@ -80,7 +80,7 @@ test.unifiedWineStandard = function() {
     var me = colorediffsGlobal;
 
     var code = "" + <r><![CDATA[
- Log message
+Log message
 
 diff --git a/filename b/filename
 -----------------------------------------------
@@ -146,7 +146,7 @@ test.unifiedNoNewLine = function() {
     var me = colorediffsGlobal;
 
     var code = "" + <r><![CDATA[
- Log message
+Log message
 
 diff --git a/filename b/filename
 --------------------------------
@@ -208,7 +208,7 @@ test.unifiedNoNewLine2 = function() {
     var me = colorediffsGlobal;
 
     var code = "" + <r><![CDATA[
- Log message
+Log message
 
 diff --git a/filename b/filename
 --------------------------------
@@ -269,7 +269,7 @@ test.unifiedNoNewLine3 = function() {
     var me = colorediffsGlobal;
 
     var code = "" + <r><![CDATA[
- Log message
+Log message
 
 diff --git a/filename b/filename
 --------------------------------
@@ -557,7 +557,7 @@ diff -C2 -d -r1.1 -r1.2
 			"line6"]}]
 	    }}]}));
 };
-
+/*
 test.contextNoNewLine = function() {
     var me = colorediffsGlobal;
 
@@ -602,12 +602,14 @@ diff -C2 -d -r1.1 -r1.2
 			'S',
 			'S',
 			'C',
-			'C'
+			'C',
+			'A'
 		    ],
 		    code:[
 			"line1",
 			"line2",
 			"line3",
+			"line4",
 			"line5"],
 		    doesnt_have_new_line:true}]
 	    },
@@ -619,17 +621,19 @@ diff -C2 -d -r1.1 -r1.2
 			'S',
 			'S',
 			'C',
-			'C'
+			'C',
+			'A'
 		    ],
 		    code:[
 			"line1",
 			"line2",
 			"line3",
-			"line4"],
+			"line4",
+			null],
 		    doesnt_have_new_line:false}]
 		}}]}));
 };
-
+*/
 test.contextNoNewLine2 = function() {
     var me = colorediffsGlobal;
 
