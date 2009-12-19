@@ -15,12 +15,11 @@ colorediffsGlobal.$R = function(f) {
 };
 
 colorediffsGlobal.getMessagePane = function() {
-    return GetMessagePane();
-// 	if (!this.gmessagePane) {
-// 		this.gmessagePane = this.$("messagepane");
-// 	}
+	if (!this.gmessagePane) {
+		this.gmessagePane = this.$("messagepane");
+	}
 
-// 	return this.gmessagePane;
+	return this.gmessagePane;
 };
 
 colorediffsGlobal.isActive = function(m) {
