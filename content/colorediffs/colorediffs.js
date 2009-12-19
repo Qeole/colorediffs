@@ -32,20 +32,20 @@ colorediffsGlobal.isMessageDiff = function() {
 
 colorediffsGlobal.writeDebugFile = function(filename, html, pref) {
 	if (pref.debugDir.has()) {
-	var debugDir = pref.debugDir.get();
-	if ( debugDir ) {
-		var file = Components.classes["@mozilla.org/file/local;1"]
-		.createInstance(Components.interfaces.nsILocalFile);
-		file.initWithPath(debugDir);
-		file.append(filename);
+		var debugDir = pref.debugDir.get();
+		if ( debugDir != "" ) {
+			var file = Components.classes["@mozilla.org/file/local;1"]
+				.createInstance(Components.interfaces.nsILocalFile);
+			file.initWithPath(debugDir);
+			file.append(filename);
 
-		var foStream = Components.classes["@mozilla.org/network/file-output-stream;1"]
-		.createInstance(Components.interfaces.nsIFileOutputStream);
+			var foStream = Components.classes["@mozilla.org/network/file-output-stream;1"]
+				.createInstance(Components.interfaces.nsIFileOutputStream);
 
-		foStream.init(file, 0x02 | 0x08 | 0x20, 0664, 0); // write, create, truncate
-		foStream.write(html, html.length);
-		foStream.close();
-	}
+			foStream.init(file, 0x02 | 0x08 | 0x20, 0664, 0); // write, create, truncate
+			foStream.write(html, html.length);
+			foStream.close();
+		}
 	}
 };
 
@@ -138,7 +138,7 @@ colorediffsGlobal.onLoadMessage = function() {
 	//inner functions
 	//Strip <pre wrap=""><br><hr size="4" width="90%"><br> tags from every div
 	function stripThunderbirdGeneratedHtml(html) {
-	return html.replace(/^<pre .*?>(?:<br><hr .*?><br>)?((?:.|\n)*)<\/pre>$/i, "$1");
+		return html.replace(/^<pre .*?>(?:<br>(?:<hr .*?>|<fieldset .*?>.*?<\/fieldset>)<br>)?((?:.|\n)*)<\/pre>$/i, "$1");
 	}
 };
 
