@@ -181,6 +181,13 @@ def get_update_rdf(json, site, file, hash, signature)
 END
 end
 
+
+# be careful changing the code below. It has to produce the exact same string.
+# if there's new params to be added, please check what output
+#   $ ruby normalize_update_rdf.rb update.rdf "urn:mozilla:extension:{282C3C7A-15A8-4037-A30D-BBEB17FFC76B}"
+# produce. To get normalize_update_rdf.rb run $ git clone git://github.com/bard/spock.git
+# If the format breaks, even if just white spaces are changed, validation of signature will fail and update
+#   process will be broken beyond repair.
 def get_update_rdf_signable(json, site, file, hash, signature)
 	signature = if (signature) then "\n  <em:signature>#{signature}</em:signature>" else "" end
 	text =<<-END
@@ -189,7 +196,7 @@ def get_update_rdf_signable(json, site, file, hash, signature)
     <RDF:Seq>
       <RDF:li>
         <RDF:Description>
-#{get_target_apps(json.apps, {:updateLink => "#{site.upgrade_info.update_rdf.update_link}#{file}", :updateHash=>hash}, '          ')}
+#{get_target_apps(json.apps, {:updateHash=>hash, :updateLink => "#{site.upgrade_info.update_rdf.update_link}#{file}"}, '          ')}
           <em:version>#{json.version}</em:version>
         </RDF:Description>
       </RDF:li>
@@ -198,7 +205,6 @@ def get_update_rdf_signable(json, site, file, hash, signature)
 </RDF:Description>
 END
 end
-
 
 def get_target_apps(apps, additional, pad)
 	add = additional.map{|n, v| "#{pad}    <em:#{n}>#{v}</em:#{n}>" }.join("\n")
@@ -215,3 +221,4 @@ def get_target_apps(apps, additional, pad)
 END
 	}.join("").chop
 end
+
