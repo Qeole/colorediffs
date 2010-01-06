@@ -12,7 +12,7 @@ colorediffsGlobal.transformations.composite.members["show-whitespaces"] = {
 				line = line.replace(
 					"\t",
 					function() {
-						return "&raquo;" + "".pad(tab_sizes[i++] - 1);
+						return "&raquo;" + colorediffsGlobal.pad("", tab_sizes[i++] - 1);
 					},
 					"g"
 				);

@@ -41,7 +41,7 @@ colorediffsGlobal.transformations.composite.members["make-lines-equal-length"] =
 		function padLines(line, i, chunk) {
 			var lineLength = countLength(line, chunk.tab_sizes[i]);
 
-			var p = "".pad(chunk.maxLineLength - lineLength);
+			var p = colorediffsGlobal.pad("", chunk.maxLineLength - lineLength);
 
 			if (lineLength + p.length == 0) p = " ";
 			chunk.padding[i] = p;
@@ -49,7 +49,7 @@ colorediffsGlobal.transformations.composite.members["make-lines-equal-length"] =
 		}
 
 		function closeChunk(chunk) {
-			chunk.padding[chunk.padding.length - 1] = ("".pad(chunk.maxLineLength)); //used if \No new line at end of file in old and new parts differs
+			chunk.padding[chunk.padding.length - 1] = (colorediffsGlobal.pad("", chunk.maxLineLength)); //used if \No new line at end of file in old and new parts differs
 			delete chunk.maxLineLength;
 			return chunk;
 		}

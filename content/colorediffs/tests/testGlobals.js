@@ -10,9 +10,9 @@ test.dollar = function() {
 };
 
 test.pad = function() {
-	assert.that("abcd".pad(7, " "), is.eq("abcd   "));
-	assert.that("abcd".pad(8, "_"), is.eq("abcd____"));
-	assert.that("abcd".pad(5), is.eq("abcd "));
+	assert.that(colorediffsGlobal.pad("abcd", 7, " "), is.eq("abcd   "));
+	assert.that(colorediffsGlobal.pad("abcd", 8, "_"), is.eq("abcd____"));
+	assert.that(colorediffsGlobal.pad("abcd", 5), is.eq("abcd "));
 };
 
 test.isUpperCaseLetter = function() {
@@ -34,9 +34,9 @@ test.trim = function () {
 	assert.that("	 abcd	".trim(), is.eq("abcd"));
 };
 
-test.ltrim = function() {
-	assert.that("___abcd___".ltrim("_"), is.eq("abcd___"));
-	assert.that("	 abcd ".ltrim(), is.eq("abcd "));
+test.trimLeft = function() {
+	assert.that("___abcd___".trimLeft("_"), is.eq("abcd___"));
+	assert.that("	 abcd ".trimLeft(), is.eq("abcd "));
 };
 
 test.fold = function() {

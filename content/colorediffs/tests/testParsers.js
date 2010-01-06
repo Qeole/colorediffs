@@ -425,7 +425,7 @@ diff -C2 -d -r1.1 -r1.2
   line5
 ]]></r>;
 
-    code = code.ltrim("\n");
+    code = code.trimLeft("\n");
 
     var res = me.parse(code, pref);
     assert.that(res, is.eqJson({
@@ -586,7 +586,7 @@ diff -C2 -d -r1.1 -r1.2
 ! line5
 ]]></r>;
 
-    code = code.ltrim("\n");
+    code = code.trimLeft("\n");
 
     var res = me.parse(code, pref);
     assert.that(res, is.eqJson({
