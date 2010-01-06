@@ -11,7 +11,7 @@ colorediffsGlobal.transformations.composite.members["replace-tabs"] = {
 				line = line.replace(
 					"\t",
 					function() {
-						return "".pad(tab_sizes[i++]);
+						return colorediffsGlobal.pad("", tab_sizes[i++]);
 					},
 					"g"
 				);

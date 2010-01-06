@@ -52,7 +52,7 @@ colorediffsGlobal.transformations.composite.members["show-line-numbers"] = {
 
 				chunk.lineNumber++;
 			} else if (chunk.padding && chunk.padding[i]) {
-				chunk.padding[i] = decoratePadding("".pad(chunk.charsLength)) + chunk.padding[i];
+				chunk.padding[i] = decoratePadding(colorediffsGlobal.pad("", chunk.charsLength)) + chunk.padding[i];
 			}
 
 			return line;

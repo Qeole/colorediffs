@@ -35,26 +35,16 @@ colorediffsGlobal.setActive = function(m) {
 	colorediffsGlobal.$("colorediff-mode").value = m;
 };
 
-String.prototype.pad = function(l, s) {
+colorediffsGlobal.pad = function(string, l, s) {
 	if (!s) s = " ";
 
-	if ( this.length < l ) {
-		var padding = new Array(Math.ceil((l - this.length)/s.length) + 1);
+	if ( string.length < l ) {
+		var padding = new Array(Math.ceil((l - string.length)/s.length) + 1);
 
-		return this.concat(padding.join(s));
+		return string.concat(padding.join(s));
 	} else {
-		return this;
+		return string;
 	}
-};
-
-String.prototype.trim = function(s) {
-	if (!s) s = "\\s";
-	return this.replace(new RegExp("^" + s + "*|" + s + "*$", "g"), "");
-};
-
-String.prototype.ltrim = function(s) {
-	if (!s) s = "\\s";
-	return this.replace(new RegExp("^" + s + "*", "g"), "");
 };
 
 colorediffsGlobal.isUpperCaseLetter = function(c) {
