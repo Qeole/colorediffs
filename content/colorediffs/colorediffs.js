@@ -76,44 +76,49 @@ colorediffsGlobal.onLoadMessage = function() {
 
 	var divs = body.getElementsByTagName("div");
 	if ( !divs ) {
-	return;
+		return;
 	}
 
 	var reloadPlanned = false;
 
 	var text = me.fold(divs, function(div, text) {
-	switch(div.getAttribute("class")) {
-		case "moz-text-plain":
-		case "moz-text-flowed":
-		return text + stripThunderbirdGeneratedHtml(div.innerHTML) + "\n\n\n";
-		case "moz-text-html":
-		//that means we're looking at HTML part of multipart mail
-		//Check if we're after reload
-		if (colorediffsGlobal.restorePreferHtmlTo === undefined) {
-			//Will try to make Thunderird reload it with text part in use.
-			colorediffsGlobal.restorePreferHtmlTo = pref.preferHtml.get();
-			pref.preferHtml.set(true);
-			ReloadMessage();
-			reloadPlanned = true;
-		} else { //ok, reloading was bad idea, but maybe html part is only log and diff is actually in attached file
-			// so let's give it a try
-			return text + div.innerHTML + "\n\n\n";
+		switch(div.getAttribute("class")) {
+			case "moz-text-plain":
+			case "moz-text-flowed":
+				return text + colorediffsGlobal.stripHtml(div) + "\n\n\n";
+			case "moz-text-html":
+				//that means we're looking at HTML part of multipart mail
+				//Check if we're after reload
+				if (colorediffsGlobal.restorePreferHtmlTo === undefined) {
+					//Will try to make Thunderird reload it with text part in use.
+					colorediffsGlobal.restorePreferHtmlTo = pref.preferHtml.get();
+					pref.preferHtml.set(true);
+					ReloadMessage();
+					reloadPlanned = true;
+				} else { //ok, reloading was bad idea, but maybe html part is only log and diff is actually in attached file
+					// so let's give it a try
+					return text + colorediffsGlobal.stripHtml(div) + "\n\n\n";
+				}
+			default:
+				return text;
 		}
-		default:
-		return text;
-	}
 	}, "");
 
 	if (reloadPlanned) {
-	return; //got to reload
+		return; //got to reload
 	}
 
 	//Should do it here so we can check whether we planned reload or not in the code that actually plan it.
 	if (colorediffsGlobal.restorePreferHtmlTo !== undefined) {
-	pref.preferHtml.set(colorediffsGlobal.restorePreferHtmlTo);
-	delete colorediffsGlobal.restorePreferHtmlTo;
+		pref.preferHtml.set(colorediffsGlobal.restorePreferHtmlTo);
+		delete colorediffsGlobal.restorePreferHtmlTo;
 	}
 
+	//no luck finding a moz styled divs,
+	//	let's try just stripping all html out
+	if (text == "") {
+		text = colorediffsGlobal.stripHtml(body);
+	}
 
 	//Choose parser
 	var il = colorediffsGlobal.parse(text, pref);
