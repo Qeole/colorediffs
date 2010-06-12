@@ -84,11 +84,60 @@ colorediffsGlobal.htmlToPlainText = function(html) {
 	return text;
 };
 
+colorediffsGlobal.outerHtml = function(dom_node, innerHtml) {
+	var html = "<" + dom_node.tagName;
+	if (dom_node.hasAttributes()) {
+		var attributes = dom_node.attributes;
+		var attributes_length = attributes.length;
+		for (let i = 0; i < attributes_length; i++) {
+			var attribute = attributes[i];
+			html += ' ' + attribute.name + '="' + attribute.value + '"';
+		}
+	}
+	html += '>' + innerHtml + '</' + dom_node.tagName + '>';
+	return html;
+};
+
+colorediffsGlobal.stripHtml = function(dom_node) {
+	if (dom_node.nodeName == "#text") {
+		return colorediffsGlobal.unescapeHTML(dom_node.textContent);
+	} else if (dom_node.nodeType == 1) {
+		var klass = dom_node.getAttribute("class");
+		var text = colorediffsGlobal.stripHtmlList(dom_node.childNodes);
+		if (klass != null && (klass.indexOf('moz-txt-link') == 0 || klass.indexOf('moz-smiley') == 0)) {
+			text = colorediffsGlobal.outerHtml(dom_node, text);
+		}
+		return text;
+	} else {
+		//it's not a real dom node, comment of something similar.
+		// better to ignore it
+		return "";
+	}
+};
+
+colorediffsGlobal.stripHtmlList = function(dom_node_list) {
+	var text = "";
+	var nodes_length = dom_node_list.length;
+	for (let i = 0; i < nodes_length; i++) {
+		text += colorediffsGlobal.stripHtml(dom_node_list[i]);
+	}
+	return text;
+};
+
 colorediffsGlobal.escapeHTML = function(text) {
 	text = text.replace("&", "&amp;", "g");
 	text = text.replace("<", "&lt;", "g");
 	text = text.replace(">", "&gt;", "g");
 	text = text.replace('"', "&quot;", "g");
+	return text;
+};
+
+colorediffsGlobal.unescapeHTML = function(text) {
+	text = text.replace("&amp;", "&", "g");
+	text = text.replace("&lt;", "<", "g");
+	text = text.replace("&gt;", ">", "g");
+	text = text.replace("&quot;", '"', "g");
+	text = text.replace("&nbsp;", ' ', "g");
 	return text;
 };
 
