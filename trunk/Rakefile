@@ -99,6 +99,7 @@ def create_one(site, json)
 	}
 
 	cp "chrome.manifest.install", "build/chrome.manifest"
+	cp "LICENSE", "build/LICENSE"
 
 	puts "make build/chrome/#{json.info.nickname}.jar"
 	Zip::ZipFile.open("build/chrome/#{json.info.nickname}.jar", Zip::ZipFile::CREATE) {|zf|
@@ -114,12 +115,14 @@ def create_one(site, json)
 		zf.add_r("defaults", "build/defaults");
 		zf.add_r("chrome.manifest", "build/chrome.manifest");
 		zf.add_r("install.rdf", "build/install.rdf");
+		zf.add_r("LICENSE", "build/LICENSE");
 	}
 
 	rm_rf "build/chrome"
 	rm_rf "build/defaults"
 	rm_rf "build/chrome.manifest"
 	rm_rf "build/install.rdf"
+	rm_rf "build/LICENSE"
 
 	#make update.rdf
 	if (site.upgrade_info != nil)
