@@ -8,7 +8,7 @@ The best possible way to get message user reading is
 var messageText = document.getElementById("messagepane").contentDocument.body
 }}}
 
-This will give you html with some of the thunderbird special elements inside, all the text that looks like links will be replaced to actual ones, smiles might be converted to images etc. You can save a little time by searching for <div class="moz-text-plain"> elements, inside them lying actual body and inlined attachments, each one in different <div>.
+This will give you html with some of the thunderbird special elements inside, all the text that looks like links will be replaced to actual ones, smiles might be converted to images etc. You can save a little time by searching for {{{<div class="moz-text-plain">}}} elements, inside them lying actual body and inlined attachments, each one in different {{{<div>}}}.
 
 This is sad picture but there are no better alternatives. You can get mime version but then you'll have to parse it yourself, also you could get xml version, but there are only headers, no text itself. 
 
