@@ -120,6 +120,7 @@ colorediffsGlobal.onLoadMessage = function() {
 		text = colorediffsGlobal.stripHtml(body);
 	}
 
+	me.writeDebugFile("text.html", text, pref);
 	//Choose parser
 	var il = colorediffsGlobal.parse(text, pref);
 
