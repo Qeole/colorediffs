@@ -47,7 +47,6 @@ $files = FileList.new([
 	"content/colorediffs/transformations/show-line-numbers.js",
 	"content/colorediffs/transformations/collect-tab-sizes.js",
 	"content/colorediffs/transformations/calc-chunk-size.js",
-	"content/colorediffs/transformations/strip-html.js",
 
 	"content/colorediffs/views/main-view.js",
 	"content/colorediffs/views/side-by-side-view.js",
