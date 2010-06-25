@@ -15,9 +15,10 @@
 		persist="width height screenX screenY sizemode"
 		ondialogaccept="colorediffsGlobal.options.checkOptions();colorediffsGlobal.deleteOptions();"
 		ondialogcancel="colorediffsGlobal.deleteOptions();"
-		title="Colored Diffs">
+		title="Colored Diffs"
+		width = "1000">
 
-	<prefpane id="colorediffsSettingsPane">
+	<prefpane id="colorediffsSettingsPane" style = "width:200em">
 		<preferences>
 			<preference id="show-whitespace" name="diffColorer.show-whitespace" type="bool" instantApply="false"/>
 			<preference id="show-line-numbers" name="diffColorer.show-line-numbers" type="bool" instantApply="false"/>
@@ -73,7 +74,7 @@
 		<broadcaster id="sbs_addedLine" style=""/>
 	</broadcasterset>
 
-	<hbox>
+	<hbox style = "width:200em">
 		<tabbox>
 			<tabs>
 				<tab label="Views"/>
@@ -107,7 +108,7 @@
 			</tabpanels>
 		</tabbox>
 		<spacer/>
-		<vbox>
+		<vbox style="width:50em">
 			<deck>
 				<box/>
 				<tab/>
