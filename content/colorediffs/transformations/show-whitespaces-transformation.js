@@ -1,7 +1,7 @@
 colorediffsGlobal.transformations.composite.members["show-whitespaces"] = {
 	init: function(registrator, pref) {
 		if (pref.showWhiteSpace.get()) {
-			registrator.addListener("show-whitespaces", "line", replaceWhitespaces, ["collect-tab-sizes", "escape-html"]);
+			registrator.addListener("show-whitespaces", "line", replaceWhitespaces, ["collect-tab-sizes"]);
 		}
 
 		function replaceWhitespaces(line, index, chunk) {
