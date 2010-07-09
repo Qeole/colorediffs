@@ -40,7 +40,6 @@ $files = FileList.new([
 	"content/colorediffs/transformations/truncate-file-names.js",
 	"content/colorediffs/transformations/add-title.js",
 	"content/colorediffs/transformations/main-transformation.js",
-	"content/colorediffs/transformations/escape-html-special-characters-transformation.js",
 	"content/colorediffs/transformations/replace-file-names-transformation.js",
 	"content/colorediffs/transformations/replace-tabs.js",
 	"content/colorediffs/transformations/show-whitespaces-transformation.js",

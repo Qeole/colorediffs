@@ -100,7 +100,7 @@ colorediffsGlobal.outerHtml = function(dom_node, innerHtml) {
 
 colorediffsGlobal.stripHtml = function(dom_node) {
 	if (dom_node.nodeName == "#text") {
-		return colorediffsGlobal.unescapeHTML(dom_node.textContent);
+		return colorediffsGlobal.escapeHTML(dom_node.textContent);
 	} else if (dom_node.nodeType == 1) {
 		var klass = dom_node.getAttribute("class");
 		var text = colorediffsGlobal.stripHtmlList(dom_node.childNodes);

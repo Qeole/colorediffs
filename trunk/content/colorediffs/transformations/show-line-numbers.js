@@ -3,7 +3,7 @@ colorediffsGlobal.transformations.composite.members["show-line-numbers"] = {
 		if ( pref.showLineNumbers.get() ) {
 			registrator.addListener("show-line-numbers-calc-max-line-number", "chunk-pair", calcMaxLineNumber, "calc-chunk-size");
 			registrator.addListener("show-line-numbers-calc-init-chunk", "chunk", initChunk, "show-line-numbers-calc-max-line-number");
-			registrator.addListener("show-line-numbers", "line", addLineNumber, ["show-line-numbers-calc-init-chunk", "escape-html"]);
+			registrator.addListener("show-line-numbers", "line", addLineNumber, ["show-line-numbers-calc-init-chunk"]);
 			registrator.addListener("show-line-numbers-close-chunk", "chunk", closeChunk, "show-line-numbers");
 		}
 
