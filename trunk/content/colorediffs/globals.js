@@ -91,7 +91,7 @@ colorediffsGlobal.outerHtml = function(dom_node, innerHtml) {
 		var attributes_length = attributes.length;
 		for (let i = 0; i < attributes_length; i++) {
 			var attribute = attributes[i];
-			html += ' ' + attribute.name + '="' + attribute.value + '"';
+			html += ' ' + attribute.name + '="' + attribute.value.replace('"', '\\"') + '"';
 		}
 	}
 	html += '>' + innerHtml + '</' + dom_node.tagName + '>';
