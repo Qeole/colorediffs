@@ -15,7 +15,7 @@ In the future I want this extension to be able to do following:
 But that's pretty big tasks, it could take a while to implement them.
 
 ## Contribution ##
-If you know how to do something better, whether it's code, icons, default color scheme, just contact me. Also please visit the [issues list](issues) and comment on issues you'd really like to be done first.
+If you know how to do something better, whether it's code, icons, default color scheme, just contact me. Also please visit the [issues list](https://github.com/jglick/colorediffs/issues) and comment on issues you'd really like to be done first.
 
 ## Firefox extension ##
 There isn't one and probably never will be, sorry. I could make it work for diff in `<pre>` sections (most mail lists archives format them like this) but it would never work in GMail and other Web mail systems where it would be actually useful. It's just plain hard to find the code between the lines of normal text.
