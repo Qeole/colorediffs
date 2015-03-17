@@ -1,5 +1,10 @@
 This is an extension that colors boring diffs sent by notifiers for Subversion, CVS, Mercurial, etc.
 
+# Looking for maintainer!
+
+Neither the original author (Vadim Atlygin) nor the later contributor (Jesse Glick) are still using this extension or interested in maintaining it.
+If you are ready to take over active maintenance, please send me a note and we can arrange transfer of ownership.
+
 ## Prerequisites ##
 A lot of developers use CVS and/or SVN version control systems. Most of also receive special notifications from the system about changes other people do. They might be useful in various ways: someone wants to check if there are bugs in the new code, someone just wants to keep knowledge of code base up-to-date. But looking over that black-on-white letter is so boring. That's why I decided to color it up a bit.
 ## What it can do already ##
