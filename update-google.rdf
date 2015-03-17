@@ -12,7 +12,7 @@
               <em:maxVersion>3.1.*</em:maxVersion>
               <em:minVersion>3.0a1pre</em:minVersion>
               <em:updateHash>sha256:6d785458a97de995a7a0a8abd7a7d1a4740bd4fa6df836d322b311b8456d327e</em:updateHash>
-              <em:updateLink>https://colorediffs.googlecode.com/files/colorediffs-0.6.2010.07.17.13.19.31.xpi</em:updateLink>
+              <em:updateLink>https://github.com/jglick/colorediffs/releases/download/colorediffs-0.6.2010.07.17.13.19.31/colorediffs-0.6.2010.07.17.13.19.31.xpi</em:updateLink>
             </RDF:Description>
           </em:targetApplication>
           <em:targetApplication>
@@ -21,7 +21,7 @@
               <em:maxVersion>2.0.*</em:maxVersion>
               <em:minVersion>2.0a2</em:minVersion>
               <em:updateHash>sha256:6d785458a97de995a7a0a8abd7a7d1a4740bd4fa6df836d322b311b8456d327e</em:updateHash>
-              <em:updateLink>https://colorediffs.googlecode.com/files/colorediffs-0.6.2010.07.17.13.19.31.xpi</em:updateLink>
+              <em:updateLink>https://github.com/jglick/colorediffs/releases/download/colorediffs-0.6.2010.07.17.13.19.31/colorediffs-0.6.2010.07.17.13.19.31.xpi</em:updateLink>
             </RDF:Description>
           </em:targetApplication>
           <em:version>0.6.2010.07.17.13.19.31</em:version>

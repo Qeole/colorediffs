@@ -26,10 +26,10 @@
 	     "upgrade_info": {
 	  	"install_rdf": {
 		      "updateKey":"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC3qsDK94RUSs6nF3YWMdLAN0m1ohu21z61KkqfBBmGC60cm1YiCVF6qykfrKrJsJ3JTt/fX/cMFPBs8UZG24lmwWiNr3FsjE6KFL0upYt827z1fij/vcyQuHNWxhjgsZ2a2J/leJojOoOZPq4ua+araMnaTtNLlw88qCk67I+3JQIDAQAB",
-		      "updateURL":"http://colorediffs.googlecode.com/svn/trunk/update-google.rdf"
+		      "updateURL":"https://raw.githubusercontent.com/jglick/colorediffs/master/update-google.rdf"
 		},
 		"update_rdf": {
-		      "update_link":"https://colorediffs.googlecode.com/files/"
+		      "update_link":"TODO"
 		}
 	     }
 	 }
