@@ -1,27 +1,27 @@
-pref("diffColorer.anchor_fg",      "blue");
+pref("diffColorer.anchor_fg",      "#4271ae"); // blue
 pref("diffColorer.anchor_bg",      "white");
-pref("diffColorer.steadyLine_fg",  "grey");
+pref("diffColorer.steadyLine_fg",  "#8e908c"); // grey
 pref("diffColorer.steadyLine_bg",  "white");
-pref("diffColorer.deletedLine_fg", "red");
+pref("diffColorer.deletedLine_fg", "#c82829"); // red
 pref("diffColorer.deletedLine_bg", "white");
-pref("diffColorer.addedLine_fg",   "green");
+pref("diffColorer.addedLine_fg",   "#718c00"); // green
 pref("diffColorer.addedLine_bg",   "white");
-pref("diffColorer.title_fg",       "#840084");
+pref("diffColorer.title_fg",       "#8959a8"); // purple
 pref("diffColorer.title_bg",       "white");
-pref("diffColorer.precode_fg",     "lightgrey");
+pref("diffColorer.precode_fg",     "#f5871f"); // orange
 pref("diffColorer.precode_bg",     "white");
 
-pref("diffColorer.c_anchor_fg",      "blue");
+pref("diffColorer.c_anchor_fg",      "#4271ae"); // blue
 pref("diffColorer.c_anchor_bg",      "white");
-pref("diffColorer.c_steadyLine_fg",  "grey");
+pref("diffColorer.c_steadyLine_fg",  "#8e908c"); // grey
 pref("diffColorer.c_steadyLine_bg",  "white");
-pref("diffColorer.c_deletedLine_fg", "red");
+pref("diffColorer.c_deletedLine_fg", "#c82829"); // red
 pref("diffColorer.c_deletedLine_bg", "white");
-pref("diffColorer.c_addedLine_fg",   "green");
+pref("diffColorer.c_addedLine_fg",   "#718c00"); // green
 pref("diffColorer.c_addedLine_bg",   "white");
-pref("diffColorer.c_title_fg",       "#840084");
+pref("diffColorer.c_title_fg",       "#8959a8"); // purple
 pref("diffColorer.c_title_bg",       "white");
-pref("diffColorer.c_precode_fg",     "lightgrey");
+pref("diffColorer.c_precode_fg",     "#f5871f"); // orange
 pref("diffColorer.c_precode_bg",     "white");
 
 pref("diffColorer.sbs_anchor_fg",      "blue");
