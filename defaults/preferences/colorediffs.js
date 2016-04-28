@@ -64,3 +64,5 @@ pref("diffColorer.parser.max-postfix-size",                15);
 pref("diffColorer.diff-mode",         "both");
 pref("diffColorer.show-line-numbers", false);
 pref("diffColorer.tab-size",          8);
+pref("diffColorer.symbol-whitespace", "&middot;");
+pref("diffColorer.symbol-tab",        "&raquo;");
