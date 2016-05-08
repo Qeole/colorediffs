@@ -446,7 +446,8 @@ colorediffsGlobal.parsers["unified"] = {
 						)) {
 						break;
 					}
-				} else if (_test(/^\-(.*)$/)) {
+				} else if (_test(/^\-(.*)$/) &&
+					!(_test(/^\-\- $/) && (lines.length - curr_line < 12))) {
 					line_status[old_chunk.code.length] = "C"; //Changed
 					old_chunk.code.push(_get().substring(1));
 				} else if (_test(/^\+(.*)$/)) {
