@@ -97,4 +97,7 @@ colorediffsGlobal.Pref = function (prefModel) {
 	createBoolGetSet("preferHtml", "mailnews.display.prefer_plaintext");
 
 	createIntGetSet("tabSize", "diffColorer.tab-size");
+
+	createCharGetSet("symbolWhitespace", "diffColorer.symbol-whitespace");
+	createCharGetSet("symbolTab", "diffColorer.symbol-tab");
 };

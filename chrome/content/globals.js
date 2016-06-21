@@ -125,19 +125,19 @@ colorediffsGlobal.stripHtmlList = function(dom_node_list) {
 };
 
 colorediffsGlobal.escapeHTML = function(text) {
-	text = text.replace("&", "&amp;", "g");
-	text = text.replace("<", "&lt;", "g");
-	text = text.replace(">", "&gt;", "g");
-	text = text.replace('"', "&quot;", "g");
+	text = text.replace(/&/g, "&amp;");
+	text = text.replace(/</g, "&lt;");
+	text = text.replace(/>/g, "&gt;");
+	text = text.replace(/"/g, "&quot;");
 	return text;
 };
 
 colorediffsGlobal.unescapeHTML = function(text) {
-	text = text.replace("&amp;", "&", "g");
-	text = text.replace("&lt;", "<", "g");
-	text = text.replace("&gt;", ">", "g");
-	text = text.replace("&quot;", '"', "g");
-	text = text.replace("&nbsp;", ' ', "g");
+	text = text.replace(/&amp;/g, "&");
+	text = text.replace(/&lt;/g, "<");
+	text = text.replace(/&gt;/g, ">");
+	text = text.replace(/&quot;/g, '"');
+	text = text.replace(/&nbsp;/g, ' ');
 	return text;
 };
 

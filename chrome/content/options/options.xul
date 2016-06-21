@@ -24,6 +24,8 @@
 			<preference id="show-line-numbers" name="diffColorer.show-line-numbers" type="bool" instantApply="false"/>
 			<preference id="show-toolbar" name="diffColorer.show-toolbar" type="bool"/>
 			<preference id="view-mode-pref" name="diffColorer.view-mode" type="string"/>
+			<preference id="symbol-whitespace" name="diffColorer.symbol-whitespace" type="string"/>
+			<preference id="symbol-tab" name="diffColorer.symbol-tab" type="string"/>
 		</preferences>
 
 		<script type="application/x-javascript" src="chrome://colorediffs/content/globals.js"/>
@@ -58,7 +60,6 @@
 
 	<commands>
 		<command id="cmd_change_mode" oncommand="colorediffsGlobal.options.changePref(event.explicitOriginalTarget);colorediffsGlobal.options.onChangeMode();"/>
-		<command id="cmd_change_color" oncommand="updatePreview();"/>
 		<command id="cmd_change_pref" oncommand="colorediffsGlobal.options.changePref(event.explicitOriginalTarget);"/>
 	</commands>
 
@@ -96,13 +97,33 @@
 					</groupbox>
 				</tabpanel>
 				<tabpanel>
-					<hbox align="baseline">
-						<vbox>
-							<checkbox id="show-whitespaces" label="Show whitespaces" checked="false" command="cmd_change_pref" preference="show-whitespace"/>
-							<checkbox id="show-line-numbers" label="Show line numbers" checked="false" command="cmd_change_pref" preference="show-line-numbers"/>
-						</vbox>
-						<checkbox id="show-toolbar" label="Show toolbar" checked="false" command="cmd_change_pref" preference="show-toolbar"/>
-					</hbox>
+					<vbox>
+						<hbox align="baseline">
+							<vbox>
+								<checkbox id="show-whitespaces" label="Show whitespaces" checked="false" command="cmd_change_pref" preference="show-whitespace"/>
+								<checkbox id="show-line-numbers" label="Show line numbers" checked="false" command="cmd_change_pref" preference="show-line-numbers"/>
+							</vbox>
+							<checkbox id="show-toolbar" label="Show toolbar" checked="false" command="cmd_change_pref" preference="show-toolbar"/>
+						</hbox>
+						<grid>
+							<columns>
+								<column flex="1"/>
+								<column flex="2"/>
+							</columns>
+							<rows>
+								<row align="baseline">
+									<label value="Symbol for whitespaces"/>
+									<textbox id="symbol-whitespace" preference="symbol-whitespace"
+										size="10" onchange="colorediffsGlobal.options.changePref(event.explicitOriginalTarget);"/>
+								</row>
+								<row align="baseline">
+									<label value="Symbol for tabs"/>
+									<textbox id="symbol-tab" preference="symbol-tab"
+										size="10" onchange="colorediffsGlobal.options.changePref(event.explicitOriginalTarget);"/>
+								</row>
+							</rows>
+						</grid>
+					</vbox>
 				</tabpanel>
 			</tabpanels>
 		</tabbox>

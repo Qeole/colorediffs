@@ -55,23 +55,20 @@ colorediffsGlobal.initOptions = function() {
 
 	var updatePreview = function() {
 		if (prefs.mode.get() == "none") {
-			var code = "" + <r><![CDATA[
-<pre>
-Log message
-
-File title
-===============================
---- filename
-+++ filename
-@@ -10,4 +10,5 @@
- line1
- line2
- line3
-+line4
- line5
-</pre>
-]]></r>;
-
+			var code = "<pre>\n" +
+				"Log message\n" +
+				"\n" +
+				"File title\n" +
+				"===============================\n" +
+				"--- filename\n" +
+				"+++ filename\n" +
+				"@@ -10,4 +10,5 @@\n" +
+				" line1\n" +
+				" line2\n" +
+				" line3\n" +
+				"+line4\n" +
+				" line5\n" +
+				"</pre>";
 
 			var doc = getPreviewNode().contentDocument;
 			var head = doc.getElementsByTagName("head")[0];
