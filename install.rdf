@@ -9,10 +9,12 @@
     em:version="0.7"
     em:creator="Vadim Atlygin"
     em:description="Color diffs sent by Git / SVN / CVS notifications."
-    em:homepageURL=""
+    em:homepageURL="https://github.com/Qeole/colorediffs"
     em:iconURL="chrome://colorediffs/content/icon.png"
     em:optionsURL="chrome://colorediffs/content/options/options.xul"
     >
+
+    <em:type>2</em:type>
 
     <em:targetApplication>
       <RDF:Description>
