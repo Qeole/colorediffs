@@ -1,4 +1,4 @@
-# Colored diffs
+# ![Add-on icon](chrome/content/icon.png) Colored diffs
 
 This is an extension that colors boring diffs sent by notifiers for Git,
 Subversion, CVS, Mercurial, etc.
