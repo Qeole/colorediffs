@@ -5,32 +5,32 @@
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	<deck id="view-properties">
 		<preferences>
-			<preference id="sbs_log-fg-pref" name="diffColorer.sbs_log_fg" type="string"/>
-			<preference id="sbs_log-bg-pref" name="diffColorer.sbs_log_bg" type="string"/>
-			<preference id="sbs_precode-fg-pref" name="diffColorer.sbs_precode_fg" type="string"/>
-			<preference id="sbs_precode-bg-pref" name="diffColorer.sbs_precode_bg" type="string"/>
-			<preference id="sbs_left-title-fg-pref" name="diffColorer.sbs_left-title_fg" type="string"/>
-			<preference id="sbs_left-title-bg-pref" name="diffColorer.sbs_left-title_bg" type="string"/>
-			<preference id="sbs_right-title-fg-pref" name="diffColorer.sbs_right-title_fg" type="string"/>
-			<preference id="sbs_right-title-bg-pref" name="diffColorer.sbs_right-title_bg" type="string"/>
-			<preference id="sbs_file-diff-fg-pref" name="diffColorer.sbs_file-diff_fg" type="string"/>
-			<preference id="sbs_file-diff-bg-pref" name="diffColorer.sbs_file-diff_bg" type="string"/>
-			<preference id="sbs_left-fg-pref" name="diffColorer.sbs_left_fg" type="string"/>
-			<preference id="sbs_left-bg-pref" name="diffColorer.sbs_left_bg" type="string"/>
-			<preference id="sbs_right-fg-pref" name="diffColorer.sbs_right_fg" type="string"/>
-			<preference id="sbs_right-bg-pref" name="diffColorer.sbs_right_bg" type="string"/>
-			<preference id="sbs_emptyLine-fg-pref" name="diffColorer.sbs_emptyLine_fg" type="string"/>
-			<preference id="sbs_emptyLine-bg-pref" name="diffColorer.sbs_emptyLine_bg" type="string"/>
-			<preference id="sbs_title-fg-pref" name="diffColorer.sbs_title_fg" type="string"/>
-			<preference id="sbs_title-bg-pref" name="diffColorer.sbs_title_bg" type="string"/>
-			<preference id="sbs_deletedLine-fg-pref" name="diffColorer.sbs_deletedLine_fg" type="string"/>
-			<preference id="sbs_deletedLine-bg-pref" name="diffColorer.sbs_deletedLine_bg" type="string"/>
-			<preference id="sbs_addedLine-fg-pref" name="diffColorer.sbs_addedLine_fg" type="string"/>
-			<preference id="sbs_addedLine-bg-pref" name="diffColorer.sbs_addedLine_bg" type="string"/>
-			<preference id="sbs_steadyLine-fg-pref" name="diffColorer.sbs_steadyLine_fg" type="string"/>
-			<preference id="sbs_steadyLine-bg-pref" name="diffColorer.sbs_steadyLine_bg" type="string"/>
-			<preference id="sbs_anchor-fg-pref" name="diffColorer.sbs_anchor_fg" type="string"/>
-			<preference id="sbs_anchor-bg-pref" name="diffColorer.sbs_anchor_bg" type="string"/>
+			<preference id="sbs_log-fg-pref" name="extensions.diffColorer.sbs_log_fg" type="string"/>
+			<preference id="sbs_log-bg-pref" name="extensions.diffColorer.sbs_log_bg" type="string"/>
+			<preference id="sbs_precode-fg-pref" name="extensions.diffColorer.sbs_precode_fg" type="string"/>
+			<preference id="sbs_precode-bg-pref" name="extensions.diffColorer.sbs_precode_bg" type="string"/>
+			<preference id="sbs_left-title-fg-pref" name="extensions.diffColorer.sbs_left-title_fg" type="string"/>
+			<preference id="sbs_left-title-bg-pref" name="extensions.diffColorer.sbs_left-title_bg" type="string"/>
+			<preference id="sbs_right-title-fg-pref" name="extensions.diffColorer.sbs_right-title_fg" type="string"/>
+			<preference id="sbs_right-title-bg-pref" name="extensions.diffColorer.sbs_right-title_bg" type="string"/>
+			<preference id="sbs_file-diff-fg-pref" name="extensions.diffColorer.sbs_file-diff_fg" type="string"/>
+			<preference id="sbs_file-diff-bg-pref" name="extensions.diffColorer.sbs_file-diff_bg" type="string"/>
+			<preference id="sbs_left-fg-pref" name="extensions.diffColorer.sbs_left_fg" type="string"/>
+			<preference id="sbs_left-bg-pref" name="extensions.diffColorer.sbs_left_bg" type="string"/>
+			<preference id="sbs_right-fg-pref" name="extensions.diffColorer.sbs_right_fg" type="string"/>
+			<preference id="sbs_right-bg-pref" name="extensions.diffColorer.sbs_right_bg" type="string"/>
+			<preference id="sbs_emptyLine-fg-pref" name="extensions.diffColorer.sbs_emptyLine_fg" type="string"/>
+			<preference id="sbs_emptyLine-bg-pref" name="extensions.diffColorer.sbs_emptyLine_bg" type="string"/>
+			<preference id="sbs_title-fg-pref" name="extensions.diffColorer.sbs_title_fg" type="string"/>
+			<preference id="sbs_title-bg-pref" name="extensions.diffColorer.sbs_title_bg" type="string"/>
+			<preference id="sbs_deletedLine-fg-pref" name="extensions.diffColorer.sbs_deletedLine_fg" type="string"/>
+			<preference id="sbs_deletedLine-bg-pref" name="extensions.diffColorer.sbs_deletedLine_bg" type="string"/>
+			<preference id="sbs_addedLine-fg-pref" name="extensions.diffColorer.sbs_addedLine_fg" type="string"/>
+			<preference id="sbs_addedLine-bg-pref" name="extensions.diffColorer.sbs_addedLine_bg" type="string"/>
+			<preference id="sbs_steadyLine-fg-pref" name="extensions.diffColorer.sbs_steadyLine_fg" type="string"/>
+			<preference id="sbs_steadyLine-bg-pref" name="extensions.diffColorer.sbs_steadyLine_bg" type="string"/>
+			<preference id="sbs_anchor-fg-pref" name="extensions.diffColorer.sbs_anchor_fg" type="string"/>
+			<preference id="sbs_anchor-bg-pref" name="extensions.diffColorer.sbs_anchor_bg" type="string"/>
 		</preferences>
 
 		<grid id="side-by-side-view-options" flex="1">

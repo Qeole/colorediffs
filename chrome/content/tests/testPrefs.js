@@ -24,11 +24,11 @@ test.props = function() {
 	checkProp(prop, value, name, function(n) {return globalPref.getBoolPref(n);});
     };
 
-    checkCharProp(me.mode, "diffColorer.view-mode");
-    checkCharProp(me.debugDir, "diffColorer.debug-dir");
+    checkCharProp(me.mode, "extensions.diffColorer.view-mode");
+    checkCharProp(me.debugDir, "extensions.diffColorer.debug-dir");
 
-    checkBoolProp(me.showWhiteSpace, "diffColorer.show-whitespace");
-    checkBoolProp(me.showToolbar, "diffColorer.show-toolbar");
+    checkBoolProp(me.showWhiteSpace, "extensions.diffColorer.show-whitespace");
+    checkBoolProp(me.showToolbar, "extensions.diffColorer.show-toolbar");
 };
 
 test.colorProps = function() {

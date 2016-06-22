@@ -23,20 +23,20 @@ colorediffsGlobal.views["side-by-side"] = {
 		return [
 			function() {
 				var stylecontent = "";
-				stylecontent += "	.log			{$cp{diffColorer.sbs_log		}; padding: 5px; border: 1px solid black;overflow:auto;}\n";
-				stylecontent += "	.file-diff		{$cp{diffColorer.sbs_file-diff	}; padding: 3px;margin:5px;border: 1px solid black; table-layout: fixed;}\n";
-				stylecontent += "	.title			{$cp{diffColorer.sbs_title		};padding: 5px; margin:0; overflow:auto; border: 1px solid black;}\n";
-				stylecontent += "	.pre-code		{$cp{diffColorer.sbs_precode	}; margin:0;overflow:auto;}\n";
-				stylecontent += "	.addline		{$cp{diffColorer.sbs_addedLine	}; margin-left:5px;margin-right:5px;}\n";
-				stylecontent += "	.delline		{$cp{diffColorer.sbs_deletedLine}; margin-left:5px;margin-right:5px;}\n";
-				stylecontent += "	.steadyline		{$cp{diffColorer.sbs_steadyLine }; margin-left:5px;margin-right:5px;}\n";
-				stylecontent += "	.linetag		{$cp{diffColorer.sbs_anchor		}; text-align:center;clear:left;margin:0;}\n";
-				stylecontent += "	.left			{$cp{diffColorer.sbs_left		};margin:0; overflow:auto; border: 1px solid black;padding-top:5px;padding-bottom:5px;}\n";
-				stylecontent += "	.right			{$cp{diffColorer.sbs_right		};margin:0; overflow:auto; border: 1px solid black;padding-top:5px;padding-bottom:5px;}\n";
-				stylecontent += "	.left-title		{$cp{diffColorer.sbs_left-title };padding: 0; margin:0; overflow:auto; border: 1px solid black;}\n";
-				stylecontent += "	.right-title	{$cp{diffColorer.sbs_right-title};padding: 0; margin:0; overflow:auto; border: 1px solid black;}\n";
-				stylecontent += "	.left .addline	{$cp{diffColorer.sbs_emptyLine	};color: green;}\n";
-				stylecontent += "	.right .delline	{$cp{diffColorer.sbs_emptyLine	};color: green;}\n";
+				stylecontent += "	.log			{$cp{extensions.diffColorer.sbs_log		}; padding: 5px; border: 1px solid black;overflow:auto;}\n";
+				stylecontent += "	.file-diff		{$cp{extensions.diffColorer.sbs_file-diff	}; padding: 3px;margin:5px;border: 1px solid black; table-layout: fixed;}\n";
+				stylecontent += "	.title			{$cp{extensions.diffColorer.sbs_title		};padding: 5px; margin:0; overflow:auto; border: 1px solid black;}\n";
+				stylecontent += "	.pre-code		{$cp{extensions.diffColorer.sbs_precode	}; margin:0;overflow:auto;}\n";
+				stylecontent += "	.addline		{$cp{extensions.diffColorer.sbs_addedLine	}; margin-left:5px;margin-right:5px;}\n";
+				stylecontent += "	.delline		{$cp{extensions.diffColorer.sbs_deletedLine}; margin-left:5px;margin-right:5px;}\n";
+				stylecontent += "	.steadyline		{$cp{extensions.diffColorer.sbs_steadyLine }; margin-left:5px;margin-right:5px;}\n";
+				stylecontent += "	.linetag		{$cp{extensions.diffColorer.sbs_anchor		}; text-align:center;clear:left;margin:0;}\n";
+				stylecontent += "	.left			{$cp{extensions.diffColorer.sbs_left		};margin:0; overflow:auto; border: 1px solid black;padding-top:5px;padding-bottom:5px;}\n";
+				stylecontent += "	.right			{$cp{extensions.diffColorer.sbs_right		};margin:0; overflow:auto; border: 1px solid black;padding-top:5px;padding-bottom:5px;}\n";
+				stylecontent += "	.left-title		{$cp{extensions.diffColorer.sbs_left-title };padding: 0; margin:0; overflow:auto; border: 1px solid black;}\n";
+				stylecontent += "	.right-title	{$cp{extensions.diffColorer.sbs_right-title};padding: 0; margin:0; overflow:auto; border: 1px solid black;}\n";
+				stylecontent += "	.left .addline	{$cp{extensions.diffColorer.sbs_emptyLine	};color: green;}\n";
+				stylecontent += "	.right .delline	{$cp{extensions.diffColorer.sbs_emptyLine	};color: green;}\n";
 
 				return dom.createElement("style", null, pcp(stylecontent));
 			}(),

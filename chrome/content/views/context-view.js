@@ -11,12 +11,12 @@ colorediffsGlobal.views["context"] = {
 
 				var stylecontent = "";
 
-				stylecontent += colorStyle("linetag", "diffColorer.c_anchor");
-				stylecontent += colorStyle("addline", "diffColorer.c_addedLine");
-				stylecontent += colorStyle("delline", "diffColorer.c_deletedLine");
-				stylecontent += colorStyle("steadyline", "diffColorer.c_steadyLine");
-				stylecontent += colorStyle("title", "diffColorer.c_title");
-				stylecontent += colorStyle("precode", "diffColorer.c_precode");
+				stylecontent += colorStyle("linetag", "extensions.diffColorer.c_anchor");
+				stylecontent += colorStyle("addline", "extensions.diffColorer.c_addedLine");
+				stylecontent += colorStyle("delline", "extensions.diffColorer.c_deletedLine");
+				stylecontent += colorStyle("steadyline", "extensions.diffColorer.c_steadyLine");
+				stylecontent += colorStyle("title", "extensions.diffColorer.c_title");
+				stylecontent += colorStyle("precode", "extensions.diffColorer.c_precode");
 				//stylecontent += ".addline {color: red;}\n";
 				stylecontent += "pre {font-family:monospace;}\n";
 				stylecontent += ".title, .linetag, .diffs, .addline, .delline, .precode {margin:0;}\n";

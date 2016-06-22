@@ -5,18 +5,18 @@
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	<deck id="view-properties">
 		<preferences>
-			<preference id="c_title-fg-pref" name="diffColorer.c_title_fg" type="string"/>
-			<preference id="c_title-bg-pref" name="diffColorer.c_title_bg" type="string"/>
-			<preference id="c_deletedLine-fg-pref" name="diffColorer.c_deletedLine_fg" type="string"/>
-			<preference id="c_deletedLine-bg-pref" name="diffColorer.c_deletedLine_bg" type="string"/>
-			<preference id="c_addedLine-fg-pref" name="diffColorer.c_addedLine_fg" type="string"/>
-			<preference id="c_addedLine-bg-pref" name="diffColorer.c_addedLine_bg" type="string"/>
-			<preference id="c_steadyLine-fg-pref" name="diffColorer.c_steadyLine_fg" type="string"/>
-			<preference id="c_steadyLine-bg-pref" name="diffColorer.c_steadyLine_bg" type="string"/>
-			<preference id="c_anchor-fg-pref" name="diffColorer.c_anchor_fg" type="string"/>
-			<preference id="c_anchor-bg-pref" name="diffColorer.c_anchor_bg" type="string"/>
-			<preference id="c_precode-fg-pref" name="diffColorer.c_precode_fg" type="string"/>
-			<preference id="c_precode-bg-pref" name="diffColorer.c_precode_bg" type="string"/>
+			<preference id="c_title-fg-pref" name="extensions.diffColorer.c_title_fg" type="string"/>
+			<preference id="c_title-bg-pref" name="extensions.diffColorer.c_title_bg" type="string"/>
+			<preference id="c_deletedLine-fg-pref" name="extensions.diffColorer.c_deletedLine_fg" type="string"/>
+			<preference id="c_deletedLine-bg-pref" name="extensions.diffColorer.c_deletedLine_bg" type="string"/>
+			<preference id="c_addedLine-fg-pref" name="extensions.diffColorer.c_addedLine_fg" type="string"/>
+			<preference id="c_addedLine-bg-pref" name="extensions.diffColorer.c_addedLine_bg" type="string"/>
+			<preference id="c_steadyLine-fg-pref" name="extensions.diffColorer.c_steadyLine_fg" type="string"/>
+			<preference id="c_steadyLine-bg-pref" name="extensions.diffColorer.c_steadyLine_bg" type="string"/>
+			<preference id="c_anchor-fg-pref" name="extensions.diffColorer.c_anchor_fg" type="string"/>
+			<preference id="c_anchor-bg-pref" name="extensions.diffColorer.c_anchor_bg" type="string"/>
+			<preference id="c_precode-fg-pref" name="extensions.diffColorer.c_precode_fg" type="string"/>
+			<preference id="c_precode-bg-pref" name="extensions.diffColorer.c_precode_bg" type="string"/>
 		</preferences>
 
 		<grid id="context-view-options" flex="1">

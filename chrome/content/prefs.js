@@ -80,24 +80,24 @@ colorediffsGlobal.Pref = function (prefModel) {
 	};
 
 
-	createCharGetSet("mode", "diffColorer.view-mode");
-	createCharGetSet("debugDir", "diffColorer.debug-dir");
-	createBoolGetSet("showWhiteSpace", "diffColorer.show-whitespace");
-	createBoolGetSet("showToolbar", "diffColorer.show-toolbar");
+	createCharGetSet("mode", "extensions.diffColorer.view-mode");
+	createCharGetSet("debugDir", "extensions.diffColorer.debug-dir");
+	createBoolGetSet("showWhiteSpace", "extensions.diffColorer.show-whitespace");
+	createBoolGetSet("showToolbar", "extensions.diffColorer.show-toolbar");
 	createBoolGetSet("instantApply", "browser.preferences.instantApply");
 
-	createIntGetSet("parserMaxTitleSize", "diffColorer.parser.max-title-size");
-	createIntGetSet("parserMinTitleDelimiterCharsCount", "diffColorer.parser.min-title-delimiter-chars-count");
-	createIntGetSet("parserMaxAdditionalInfoSize", "diffColorer.parser.max-additional-info-size");
-	createIntGetSet("parserMaxPostfixSize", "diffColorer.parser.max-postfix-size");
+	createIntGetSet("parserMaxTitleSize", "extensions.diffColorer.parser.max-title-size");
+	createIntGetSet("parserMinTitleDelimiterCharsCount", "extensions.diffColorer.parser.min-title-delimiter-chars-count");
+	createIntGetSet("parserMaxAdditionalInfoSize", "extensions.diffColorer.parser.max-additional-info-size");
+	createIntGetSet("parserMaxPostfixSize", "extensions.diffColorer.parser.max-postfix-size");
 
-	createCharGetSet("diffMode", "diffColorer.diff-mode");
-	createBoolGetSet("showLineNumbers", "diffColorer.show-line-numbers");
+	createCharGetSet("diffMode", "extensions.diffColorer.diff-mode");
+	createBoolGetSet("showLineNumbers", "extensions.diffColorer.show-line-numbers");
 
 	createBoolGetSet("preferHtml", "mailnews.display.prefer_plaintext");
 
-	createIntGetSet("tabSize", "diffColorer.tab-size");
+	createIntGetSet("tabSize", "extensions.diffColorer.tab-size");
 
-	createCharGetSet("symbolWhitespace", "diffColorer.symbol-whitespace");
-	createCharGetSet("symbolTab", "diffColorer.symbol-tab");
+	createCharGetSet("symbolWhitespace", "extensions.diffColorer.symbol-whitespace");
+	createCharGetSet("symbolTab", "extensions.diffColorer.symbol-tab");
 };

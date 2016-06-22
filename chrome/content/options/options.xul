@@ -20,12 +20,12 @@
 
 	<prefpane id="colorediffsSettingsPane" style = "width:200em">
 		<preferences>
-			<preference id="show-whitespace" name="diffColorer.show-whitespace" type="bool" instantApply="false"/>
-			<preference id="show-line-numbers" name="diffColorer.show-line-numbers" type="bool" instantApply="false"/>
-			<preference id="show-toolbar" name="diffColorer.show-toolbar" type="bool"/>
-			<preference id="view-mode-pref" name="diffColorer.view-mode" type="string"/>
-			<preference id="symbol-whitespace" name="diffColorer.symbol-whitespace" type="string"/>
-			<preference id="symbol-tab" name="diffColorer.symbol-tab" type="string"/>
+			<preference id="show-whitespace" name="extensions.diffColorer.show-whitespace" type="bool" instantApply="false"/>
+			<preference id="show-line-numbers" name="extensions.diffColorer.show-line-numbers" type="bool" instantApply="false"/>
+			<preference id="show-toolbar" name="extensions.diffColorer.show-toolbar" type="bool"/>
+			<preference id="view-mode-pref" name="extensions.diffColorer.view-mode" type="string"/>
+			<preference id="symbol-whitespace" name="extensions.diffColorer.symbol-whitespace" type="string"/>
+			<preference id="symbol-tab" name="extensions.diffColorer.symbol-tab" type="string"/>
 		</preferences>
 
 		<script type="application/x-javascript" src="chrome://colorediffs/content/globals.js"/>
