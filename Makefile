@@ -18,4 +18,4 @@ test:
 		#--test-directory chrome/content/tests/
 
 clean:
-	rm -f $(ADDON)-*T*.xpi
+	rm -f $(ADDON)-*.xpi
