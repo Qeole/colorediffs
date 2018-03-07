@@ -371,16 +371,11 @@ colorediffsGlobal.parsers["unified"] = {
 
 		// anchor = @@ \-\d+(,\d+)? \+\d+(,\d+)? @@
 		function anchor(old_chunk, new_chunk) {
-			var regExpRes = _get().match(/^@@\s+\-(\d+)(?:\,\d+)?\s+\+(\d+)(?:\,\d+)?\s+@@/);
+			var regExpRes = _get().match(/^@@\s+\-(\d+)(?:\,\d+)?\s+\+(\d+)(?:\,\d+)?\s+@@\s*(.*)/);
 			old_chunk.line = Number(regExpRes[1]);
 			new_chunk.line = Number(regExpRes[2]);
-			if (_test(/@@$/)) {
-				_next();
-			} else {
-				//git adds the first line of code to the anchor line for some reason
-				//TODO: do you think it is better to split the string instead of rewriting it?
-				lines[curr_line] = _get().slice(regExpRes[0].length);
-			}
+			old_chunk.infoline = regExpRes[3];
+			_next();
 		}
 
 		function check_next_paragraph_for_code() {

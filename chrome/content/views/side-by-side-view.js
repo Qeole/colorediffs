@@ -26,7 +26,8 @@ colorediffsGlobal.views["side-by-side"] = {
 				stylecontent += "	.log			{$cp{extensions.diffColorer.sbs_log		}; padding: 5px; border: 1px solid black;overflow:auto;}\n";
 				stylecontent += "	.file-diff		{$cp{extensions.diffColorer.sbs_file-diff	}; padding: 3px;margin:5px;border: 1px solid black; table-layout: fixed;}\n";
 				stylecontent += "	.title			{$cp{extensions.diffColorer.sbs_title		};padding: 5px; margin:0; overflow:auto; border: 1px solid black;}\n";
-				stylecontent += "	.pre-code		{$cp{extensions.diffColorer.sbs_precode	}; margin:0;overflow:auto;}\n";
+				stylecontent += "	.pre-code		{$cp{extensions.diffColorer.sbs_precode	}; margin:0;overflow:auto; display:inline;}\n";
+				stylecontent += "	.infoline		{$cp{extensions.diffColorer.sbs_precode	}; margin:0;overflow:auto; display:inline;}\n";
 				stylecontent += "	.addline		{$cp{extensions.diffColorer.sbs_addedLine	}; margin-left:5px;margin-right:5px;}\n";
 				stylecontent += "	.delline		{$cp{extensions.diffColorer.sbs_deletedLine}; margin-left:5px;margin-right:5px;}\n";
 				stylecontent += "	.steadyline		{$cp{extensions.diffColorer.sbs_steadyLine }; margin-left:5px;margin-right:5px;}\n";
@@ -204,6 +205,21 @@ colorediffsGlobal.views["side-by-side"] = {
 												  "," + new_chunk.code_size +
 												  " @@")
 							),
+							function() {
+								if (!old_chunk.infoline) {
+									return null;
+								} else {
+									return dom.createElement(
+										"tr", {'class':'linetag'},
+										dom.createElement("td", {colspan:2},
+											dom.createElement(
+												"pre", {'class':'infoline'},
+												old_chunk.infoline
+											)
+										)
+									);
+								}
+							},
 							dom.createElement(
 								"tr", {'class':'diffs'},
 								dom.createElement(

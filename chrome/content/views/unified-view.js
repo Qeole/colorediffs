@@ -17,9 +17,11 @@ colorediffsGlobal.views["unified"] = {
 				stylecontent += colorStyle("steadyline", "extensions.diffColorer.steadyLine");
 				stylecontent += colorStyle("title", "extensions.diffColorer.title");
 				stylecontent += colorStyle("precode", "extensions.diffColorer.precode");
+				stylecontent += colorStyle("infoline", "extensions.diffColorer.precode");
 				//stylecontent += ".addline {color: red;}\n";
 				stylecontent += "pre {font-family:monospace;}\n";
-				stylecontent += ".title, .linetag, .diffs, .addline, .delline, .precode {margin:0;}\n";
+				stylecontent += ".linetag, .infoline {display:inline;}\n";
+				stylecontent += ".title, .linetag, .diffs, .addline, .delline, .precode, .infoline {margin:0;}\n";
 				return dom.createElement("style", null, stylecontent);
 			}(),
 			dom.createDocumentFragment(
@@ -170,20 +172,28 @@ colorediffsGlobal.views["unified"] = {
 										codeDecorated.push("<div class='steadyline' title='" + file.commonNameTruncated + "'>\\ No newline at end of file</div>");
 									}
 
-									return [
-										dom.createElement(
+									var ret = [dom.createElement(
 											"pre", {'class':'linetag'},
 											"@@ -" + old_chunk.line +
 											"," + old_chunk.code_size +
 											" +" +new_chunk.line +
 											"," + new_chunk.code_size +
 											" @@"
-										),
-										dom.createElement(
+									)];
+
+									if (old_chunk.infoline) {
+										ret.push(dom.createElement(
+												"pre", {'class':'infoline'},
+												" " + old_chunk.infoline
+										));
+									}
+
+									ret.push(dom.createElement(
 											"pre", {'class':'diffs'},
 											codeDecorated.join("")
-										)
-									];
+									));
+
+									return ret;
 								}
 							),
 							dom.createElement(

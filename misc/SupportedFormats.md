@@ -51,9 +51,9 @@ diff --git a/file1.ext b/file2.ext
 index 3456367..456357 765423
 --- a/file1.ext
 +++ b/file1.ext
-@@ -1,3 +1,3 @@ line one
--line three
-+line two
+@@ -1,3 +1,3 @@ info line
+-line one
++line one
  the last line
 ```
 

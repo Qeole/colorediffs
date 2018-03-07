@@ -17,9 +17,10 @@ colorediffsGlobal.views["context"] = {
 				stylecontent += colorStyle("steadyline", "extensions.diffColorer.c_steadyLine");
 				stylecontent += colorStyle("title", "extensions.diffColorer.c_title");
 				stylecontent += colorStyle("precode", "extensions.diffColorer.c_precode");
+				stylecontent += colorStyle("infoline", "extensions.diffColorer.precode");
 				//stylecontent += ".addline {color: red;}\n";
 				stylecontent += "pre {font-family:monospace;}\n";
-				stylecontent += ".title, .linetag, .diffs, .addline, .delline, .precode {margin:0;}\n";
+				stylecontent += ".title, .linetag, .diffs, .addline, .delline, .precode, .infoline {margin:0;}\n";
 				return dom.createElement("style", null, stylecontent);
 			}(),
 			dom.createDocumentFragment(
@@ -176,6 +177,16 @@ colorediffsGlobal.views["context"] = {
 											"pre", {'class':'linetag'},
 											"***************"
 										),
+										function() {
+											if (!old_chunk.infoline) {
+												return null;
+											} else {
+												return dom.createElement(
+													"pre", {'class':'infoline'},
+													old_chunk.infoline
+												);
+											}
+										},
 										dom.createElement(
 											"pre", {'class':'linetag'},
 											"*** " +

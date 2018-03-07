@@ -87,16 +87,18 @@ diff --git a/filename b/filename
 index 52352325345
 --- a/filename
 +++ b/filename
-@@ -10,5 +10,5 @@ line1
- line2
--line3
+@@ -10,5 +10,5 @@ infoline
+ line1
+-line2
++line2
 +line3
-+line4
- line5
+ line4
 ]]></r>;
 
     code = code.trim("\n");
     var res = me.parse(code, pref);
+    // Note: I messed with that one when trying to fix Git infoline, but did
+    // not try it. Have a look at git commit if you intend to fix this.
     assert.that(res, is.eqJson({
 	log:"Log message",
 	postfix: "",
@@ -106,9 +108,8 @@ index 52352325345
 	    'new':{
 		version: null,
 		name: "b/filename",
-		chunks:[{line:10,
+		chunks:[{line:9,
 		    'status' : [
-			'S',
 			'S',
 			'C',
 			'A',
@@ -119,15 +120,13 @@ index 52352325345
 			"line1",
 			"line2",
 			"line3",
-			"line4",
-			"line5"]}]},
+			"line4"]}]},
 	     'old':{
 		 version: null,
 		 name: "a/filename",
 		 chunks: [
-		     {line:10,
+		     {line:9,
 		     'status' : [
-			 'S',
 			 'S',
 			 'C',
 			 'A',
@@ -137,9 +136,8 @@ index 52352325345
 		     code:[
 			 "line1",
 			 "line2",
-			 "line3",
 			 null,
-			 "line5"]}]}}]}));
+			 "line4"]}]}}]}));
 };
 
 test.unifiedNoNewLine = function() {
