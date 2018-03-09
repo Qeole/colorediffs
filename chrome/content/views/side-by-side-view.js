@@ -91,8 +91,8 @@ colorediffsGlobal.views["side-by-side"] = {
 			var old_version = (file['old'].version) ? "\t" + file['old'].version : "";
 			var new_version = (file['new'].version) ? "\t" + file['new'].version : "";
 
-			var old_title = (file['old'].name + old_version).replace(" ", "&nbsp;", "g");
-			var new_title = (file['new'].name + new_version).replace(" ", "&nbsp;", "g");
+			var old_title = (file['old'].name + old_version).replace(/ /g, "&nbsp;");
+			var new_title = (file['new'].name + new_version).replace(/ /g, "&nbsp;");
 
 			return [
 				dom.createElement(

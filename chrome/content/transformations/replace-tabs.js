@@ -9,11 +9,10 @@ colorediffsGlobal.transformations.composite.members["replace-tabs"] = {
 			if ( line ) {
 				var i = 0;
 				line = line.replace(
-					"\t",
+					/\t/g,
 					function() {
 						return colorediffsGlobal.pad("", tab_sizes[i++]);
-					},
-					"g"
+					}
 				);
 
 			}
