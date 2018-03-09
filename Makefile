@@ -1,7 +1,7 @@
 ADDON=colorediffs
 XPI=$(ADDON)-$(shell date -u "+%Y%m%d").xpi
 SRC=$(shell find chrome defaults ! -path "chrome/content/tests*")
-TOPFILES=install.rdf chrome.manifest LICENSE
+TOPFILES=install.rdf chrome.manifest LICENSE COPYRIGHT
 
 .PHONY: clean test
 
