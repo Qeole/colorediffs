@@ -102,6 +102,9 @@ colorediffsGlobal.stripHtml = function(dom_node) {
 	if (dom_node.nodeName == "#text") {
 		return colorediffsGlobal.escapeHTML(dom_node.textContent);
 	} else if (dom_node.nodeType == 1) {
+		if (dom_node.tagName == "BLOCKQUOTE") {
+			return dom_node.outerHTML;
+		}
 		var klass = dom_node.getAttribute("class");
 		var text = colorediffsGlobal.stripHtmlList(dom_node.childNodes);
 		if (klass != null && (klass.indexOf('moz-txt-link') == 0 || klass.indexOf('moz-smiley') == 0)) {

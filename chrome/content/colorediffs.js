@@ -125,6 +125,11 @@ colorediffsGlobal.onLoadMessage = function() {
 	me.writeDebugFile("text.html", text, pref);
 	//Choose parser
 	var il = colorediffsGlobal.parse(text, pref);
+	if (il == null) {
+		me.setActive(false);
+		me.colorediffsToolbar.initToolbar();
+		return;
+	}
 
 	//Apply filters
 	il = colorediffsGlobal.transform(il, pref);
