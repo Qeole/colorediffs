@@ -3,8 +3,8 @@ colorediffsGlobal.transformations["composite"].methods.initOthers =
 		var callbacks = {};
 		var dependants = {};
 
-		for each (var member in colorediffsGlobal.transformations.composite.members) {
-			member.init({
+		for (var memberName in colorediffsGlobal.transformations.composite.members) {
+			colorediffsGlobal.transformations.composite.members[memberName].init({
 				addListener: function(name, type, callback, depends) {
 					var node = {
 						type:type,

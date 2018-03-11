@@ -33,7 +33,7 @@ colorediffsGlobal.load = function() {
 
 	var unload = function() {
 	var pref = me.getPrefs();
-	pref.QueryInterface(Components.interfaces.nsIPrefBranchInternal);
+	pref.QueryInterface(Components.interfaces.nsIPrefBranch);
 	pref.removeObserver("mail.pane_config.dynamic", me.MailPaneConfigObserver);
 
 	observerService.removeObserver(updateObserver, "colored-diff-update");
@@ -72,7 +72,7 @@ colorediffsGlobal.temp = function() {
 	var me = colorediffsGlobal;
 	var pref = me.getPrefs();
 
-	pref.QueryInterface(Components.interfaces.nsIPrefBranchInternal);
+	pref.QueryInterface(Components.interfaces.nsIPrefBranch);
 	pref.addObserver("mail.pane_config.dynamic", me.MailPaneConfigObserver, false);
 
 	window.addEventListener("load", function() {me.load();}, false);

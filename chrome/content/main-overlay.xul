@@ -3,43 +3,43 @@
 
 <overlay id="main-colorediffs" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-	<script type="application/x-javascript" src="chrome://colorediffs/content/globals.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/prefs.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/overlay.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/globals.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/prefs.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/overlay.js"/>
 
-	<script type="application/x-javascript" src="chrome://colorediffs/content/dom.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/ilUtils.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/callbacks.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/dom.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/ilUtils.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/callbacks.js"/>
 
-	<script type="application/x-javascript" src="chrome://colorediffs/content/parsers/unified-parser.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/parsers/context-parser.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/parsers/main-parser.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/parsers/unified-parser.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/parsers/context-parser.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/parsers/main-parser.js"/>
 
-	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/composite-transformation.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/composite-init.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/composite-run.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/add-title.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/strip-html.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/find-common-name.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/detect-old-new-files.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/select-old-new-files.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/truncate-file-names.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/make-lines-equal-length.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/replace-file-names-transformation.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/replace-tabs.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/show-whitespaces-transformation.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/show-line-numbers.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/collect-tab-sizes.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/calc-chunk-size.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/transformations/main-transformation.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/transformations/composite-transformation.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/transformations/composite-init.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/transformations/composite-run.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/transformations/add-title.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/transformations/strip-html.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/transformations/find-common-name.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/transformations/detect-old-new-files.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/transformations/select-old-new-files.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/transformations/truncate-file-names.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/transformations/make-lines-equal-length.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/transformations/replace-file-names-transformation.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/transformations/replace-tabs.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/transformations/show-whitespaces-transformation.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/transformations/show-line-numbers.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/transformations/collect-tab-sizes.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/transformations/calc-chunk-size.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/transformations/main-transformation.js"/>
 
-	<script type="application/x-javascript" src="chrome://colorediffs/content/views/side-by-side-view.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/views/unified-view.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/views/context-view.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/views/main-view.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/views/side-by-side-view.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/views/unified-view.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/views/context-view.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/views/main-view.js"/>
 
-	<script type="application/x-javascript" src="chrome://colorediffs/content/colorediffs.js"/>
-	<script type="application/x-javascript" src="chrome://colorediffs/content/toolbar.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/colorediffs.js"/>
+	<script type="application/javascript" src="chrome://colorediffs/content/toolbar.js"/>
 
 	<vbox id="messagepanebox">
 		<toolbar id="colorediffs-toolbar" toolbarname="Colorediffs Toolbar"

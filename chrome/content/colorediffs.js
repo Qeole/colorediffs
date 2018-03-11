@@ -24,8 +24,8 @@ colorediffsGlobal.isMessageDiff = function() {
 
 	var text = colorediffsGlobal.htmlToPlainText(body.innerHTML);
 
-	for each (var parser in colorediffsGlobal.parsers) {
-		if (parser.couldParse(text)) {
+	for (var parserName in colorediffsGlobal.parsers) {
+		if (colorediffsGlobal.parsers[parserName].couldParse(text)) {
 			return true;
 		}
 	}

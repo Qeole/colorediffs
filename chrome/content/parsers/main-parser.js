@@ -1,7 +1,7 @@
 colorediffsGlobal.parse = function(code, pref) {
-	for each (var parser in colorediffsGlobal.parsers) {
-		if (parser.couldParse(code)) {
-			return parser.parse(code, pref);
+	for (var parserName in colorediffsGlobal.parsers) {
+		if (colorediffsGlobal.parsers[parserName].couldParse(code)) {
+			return colorediffsGlobal.parsers[parserName].parse(code, pref);
 		}
 	}
 	return null;
