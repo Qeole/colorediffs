@@ -8,7 +8,7 @@ colorediffsGlobal.isMessageDiff = function() {
 		return false;
 	}
 
-	var messagePrefix = /^mailbox-message:|^imap-message:|^news-message:/i;
+	var messagePrefix = /^mailbox-message:|^imap-message:|^news-message:|^exquilla-message:/i;
 	if (! gMessageDisplay.folderDisplay.selectedMessageUris ||
 			! messagePrefix.test(
 				gMessageDisplay.folderDisplay.selectedMessageUris[0]) ) {
