@@ -3,6 +3,7 @@
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
 <?xml-stylesheet href="chrome://colorediffs/content/options/options.css" type="text/css"?>
 <?xml-stylesheet href="chrome://colorediffs/content/bindings/bindings.css" type="text/css"?>
+<?xml-stylesheet href="chrome://messenger/skin/messenger.css" type="text/css"?>
 
 <?xul-overlay href="chrome://colorediffs/content/options/unified-view-options.xul"?>
 <?xul-overlay href="chrome://colorediffs/content/options/context-view-options.xul"?>
@@ -82,10 +83,10 @@
 			<tabpanels>
 				<tabpanel>
 					<groupbox>
-						<caption>
-							<label value="Choose view:"/>
+						<hbox align="center">
+							<label class="header">Choose view:</label>
 							<viewsmenu id="view" command="cmd_change_mode" preference="view-mode-pref"/>
-						</caption>
+						</hbox>
 						<hbox align="center">
 							<spacer flex="1"/>
 							<deck id="view-properties">
