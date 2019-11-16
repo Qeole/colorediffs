@@ -2,7 +2,9 @@
 <?xml-stylesheet href="chrome://colorediffs/content/bindings.css" type="text/css"?>
 <?xul-overlay href="chrome://colorediffs/content/main-overlay.xul"?>
 
-<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<overlay
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	<deck id="view-properties">
 		<preferences>
 			<preference id="sbs_log-fg-pref" name="extensions.diffColorer.sbs_log_fg" type="string"/>
@@ -43,68 +45,68 @@
 				<row class="center"><spacer/></row>
 				<row align="center">
 					<label value="Log:"/>
-					<colorpicker id="sbs_log_fg" preference="sbs_log-fg-pref" command="cmd_change_pref" type="button" flex="1"/>
-					<colorpicker id="sbs_log_bg" preference="sbs_log-bg-pref" command="cmd_change_pref" type="button" flex="1"/>
+					<html:input type="color" id="sbs_log_fg" preference="sbs_log-fg-pref" command="cmd_change_pref" flex="1"/>
+					<html:input type="color" id="sbs_log_bg" preference="sbs_log-bg-pref" command="cmd_change_pref" flex="1"/>
 				</row>
 				<row align="center">
 					<label value="Whole diff:"/>
-					<colorpicker id="sbs_file-diff_fg" preference="sbs_file-diff-fg-pref" command="cmd_change_pref" type="button" flex="1"/>
-					<colorpicker id="sbs_file-diff_bg" preference="sbs_file-diff-bg-pref" command="cmd_change_pref" type="button" flex="1"/>
+					<html:input type="color" id="sbs_file-diff_fg" preference="sbs_file-diff-fg-pref" command="cmd_change_pref" flex="1"/>
+					<html:input type="color" id="sbs_file-diff_bg" preference="sbs_file-diff-bg-pref" command="cmd_change_pref" flex="1"/>
 				</row>
 				<row align="center">
 					<label value="Title:"/>
-					<colorpicker id="sbs_title_fg" preference="sbs_title-fg-pref" command="cmd_change_pref" type="button" flex="1"/>
-					<colorpicker id="sbs_title_bg" preference="sbs_title-bg-pref" command="cmd_change_pref" type="button" flex="1"/>
+					<html:input type="color" id="sbs_title_fg" preference="sbs_title-fg-pref" command="cmd_change_pref" flex="1"/>
+					<html:input type="color" id="sbs_title_bg" preference="sbs_title-bg-pref" command="cmd_change_pref" flex="1"/>
 				</row>
 				<row align="center">
 					<label value="Additional info:"/>
-					<colorpicker id="sbs_precode_fg" preference="sbs_precode-fg-pref" command="cmd_change_pref" type="button" flex="1"/>
-					<colorpicker id="sbs_precode_bg" preference="sbs_precode-bg-pref" command="cmd_change_pref" type="button" flex="1"/>
+					<html:input type="color" id="sbs_precode_fg" preference="sbs_precode-fg-pref" command="cmd_change_pref" flex="1"/>
+					<html:input type="color" id="sbs_precode_bg" preference="sbs_precode-bg-pref" command="cmd_change_pref" flex="1"/>
 				</row>
 				<row align="center">
 					<label value="Left diff header:"/>
-					<colorpicker id="sbs_left-title_fg" preference="sbs_left-title-fg-pref" command="cmd_change_pref" type="button" flex="1"/>
-					<colorpicker id="sbs_left-title_bg" preference="sbs_left-title-bg-pref" command="cmd_change_pref" type="button" flex="1"/>
+					<html:input type="color" id="sbs_left-title_fg" preference="sbs_left-title-fg-pref" command="cmd_change_pref" flex="1"/>
+					<html:input type="color" id="sbs_left-title_bg" preference="sbs_left-title-bg-pref" command="cmd_change_pref" flex="1"/>
 				</row>
 				<row align="center">
 					<label value="Right diff header:"/>
-					<colorpicker id="sbs_right-title_fg" preference="sbs_right-title-fg-pref" command="cmd_change_pref" type="button" flex="1"/>
-					<colorpicker id="sbs_right-title_bg" preference="sbs_right-title-bg-pref" command="cmd_change_pref" type="button" flex="1"/>
+					<html:input type="color" id="sbs_right-title_fg" preference="sbs_right-title-fg-pref" command="cmd_change_pref" flex="1"/>
+					<html:input type="color" id="sbs_right-title_bg" preference="sbs_right-title-bg-pref" command="cmd_change_pref" flex="1"/>
 				</row>
 				<row align="center">
 					<label value="Anchors:"/>
-					<colorpicker id="sbs_anchor_fg" preference="sbs_anchor-fg-pref" command="cmd_change_pref" type="button" flex="1"/>
-					<colorpicker id="sbs_anchor_bg" preference="sbs_anchor-bg-pref" command="cmd_change_pref" type="button" flex="1"/>
+					<html:input type="color" id="sbs_anchor_fg" preference="sbs_anchor-fg-pref" command="cmd_change_pref" flex="1"/>
+					<html:input type="color" id="sbs_anchor_bg" preference="sbs_anchor-bg-pref" command="cmd_change_pref" flex="1"/>
 				</row>
 				<row align="center">
 					<label value="Left diff:"/>
-					<colorpicker id="sbs_left_fg" preference="sbs_left-fg-pref" command="cmd_change_pref" type="button" flex="1"/>
-					<colorpicker id="sbs_left_bg" preference="sbs_left-bg-pref" command="cmd_change_pref" type="button" flex="1"/>
+					<html:input type="color" id="sbs_left_fg" preference="sbs_left-fg-pref" command="cmd_change_pref" flex="1"/>
+					<html:input type="color" id="sbs_left_bg" preference="sbs_left-bg-pref" command="cmd_change_pref" flex="1"/>
 				</row>
 				<row align="center">
 					<label value="Right diff:"/>
-					<colorpicker id="sbs_right_fg" preference="sbs_right-fg-pref" command="cmd_change_pref" type="button" flex="1"/>
-					<colorpicker id="sbs_right_bg" preference="sbs_right-bg-pref" command="cmd_change_pref" type="button" flex="1"/>
+					<html:input type="color" id="sbs_right_fg" preference="sbs_right-fg-pref" command="cmd_change_pref" flex="1"/>
+					<html:input type="color" id="sbs_right_bg" preference="sbs_right-bg-pref" command="cmd_change_pref" flex="1"/>
 				</row>
 				<row align="center">
 					<label value="Deleted Lines:"/>
-					<colorpicker id="sbs_deletedLine_fg" preference="sbs_deletedLine-fg-pref" command="cmd_change_pref" type="button" flex="1"/>
-					<colorpicker id="sbs_deletedLine_bg" preference="sbs_deletedLine-bg-pref" command="cmd_change_pref" type="button" flex="1"/>
+					<html:input type="color" id="sbs_deletedLine_fg" preference="sbs_deletedLine-fg-pref" command="cmd_change_pref" flex="1"/>
+					<html:input type="color" id="sbs_deletedLine_bg" preference="sbs_deletedLine-bg-pref" command="cmd_change_pref" flex="1"/>
 				</row>
 				<row align="center">
 					<label value="Added Lines:"/>
-					<colorpicker id="sbs_addedLine_fg" preference="sbs_addedLine-fg-pref" command="cmd_change_pref" type="button" flex="1"/>
-					<colorpicker id="sbs_addedLine_bg" preference="sbs_addedLine-bg-pref" command="cmd_change_pref" type="button" flex="1"/>
+					<html:input type="color" id="sbs_addedLine_fg" preference="sbs_addedLine-fg-pref" command="cmd_change_pref" flex="1"/>
+					<html:input type="color" id="sbs_addedLine_bg" preference="sbs_addedLine-bg-pref" command="cmd_change_pref" flex="1"/>
 				</row>
 				<row align="center">
 					<label value="Steady Lines:"/>
-					<colorpicker id="sbs_steadyLine_fg" preference="sbs_steadyLine-fg-pref" command="cmd_change_pref" type="button" flex="1"/>
-					<colorpicker id="sbs_steadyLine_bg" preference="sbs_steadyLine-bg-pref" command="cmd_change_pref" type="button" flex="1"/>
+					<html:input type="color" id="sbs_steadyLine_fg" preference="sbs_steadyLine-fg-pref" command="cmd_change_pref" flex="1"/>
+					<html:input type="color" id="sbs_steadyLine_bg" preference="sbs_steadyLine-bg-pref" command="cmd_change_pref" flex="1"/>
 				</row>
 				<row align="center">
 					<label value="Non existing line:"/>
-					<colorpicker id="sbs_emptyLine_fg" preference="sbs_emptyLine-fg-pref" command="cmd_change_pref" type="button" flex="1"/>
-					<colorpicker id="sbs_emptyLine_bg" preference="sbs_emptyLine-bg-pref" command="cmd_change_pref" type="button" flex="1"/>
+					<html:input type="color" id="sbs_emptyLine_fg" preference="sbs_emptyLine-fg-pref" command="cmd_change_pref" flex="1"/>
+					<html:input type="color" id="sbs_emptyLine_bg" preference="sbs_emptyLine-bg-pref" command="cmd_change_pref" flex="1"/>
 				</row>
 			</rows>
 		</grid>
