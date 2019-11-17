@@ -33,7 +33,7 @@ colorediffsGlobal.colorediffsToolbar = new function() {
 	var updatePrefs = function() {
 		pref.showWhiteSpace.set(getShowWhiteSpacesNode().checked);
 		pref.showLineNumbers.set(getShowLineNumbersNode().checked);
-		pref.mode.set(getViewModeNode().selectedItem);
+		pref.mode.set(getViewModeNode().selectedItem.value);
 		pref.diffMode.set(getDiffModeNode().selectedItem.value);
 		pref.tabSize.set(getTabSizeNode().selectedItem.value);
 		pref.showToolbar.set(!getToolbarNode().hidden);
@@ -96,11 +96,10 @@ colorediffsGlobal.colorediffsToolbar = new function() {
 			} else {
 				getToolbarNode().hidden=false;
 				getShowWhiteSpacesNode().checked = pref.showWhiteSpace.get();
-
-				//update combobox
-				getViewModeNode().selectedItem = pref.mode.get();
 				getShowLineNumbersNode().checked = pref.showLineNumbers.get();
 
+				//update combobox
+				selectComboByValue(getViewModeNode(), pref.mode.get());
 				selectComboByValue(getDiffModeNode(), pref.diffMode.get());
 				selectComboByValue(getTabSizeNode(), pref.tabSize.get());
 			}

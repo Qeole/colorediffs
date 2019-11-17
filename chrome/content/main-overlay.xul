@@ -44,7 +44,14 @@
 		<toolbar id="colorediffs-toolbar" toolbarname="Colorediffs Toolbar"
 				 class="chromeclass-toolbar" customizable="true" insertafter="msgHeaderView" hidden="true">
 			<toolbaritem>
-				<viewsmenu id="colorediffs-view-mode" command="cmd_change_mode"/>
+				<menulist tooltiptext="Change mode" id="colorediffs-view-mode" command="cmd_change_mode">
+					<menupopup>
+						<menuitem label="plain" value="none"/>
+						<menuitem label="side-by-side" value="side-by-side"/>
+						<menuitem label="unified" value="unified"/>
+						<menuitem label="context" value="context"/>
+					</menupopup>
+				</menulist>
 			</toolbaritem>
 			<toolbarbutton id="colorediffs-show-line-numbers" tooltiptext="Show/hide line numbers"
 						   command="cmd_change_line_numbers_mode" checked="false"/>
