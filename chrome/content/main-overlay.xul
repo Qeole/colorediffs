@@ -66,8 +66,10 @@
 					</menupopup>
 				</menulist>
 			</toolbaritem>
+			<!-- Option dialog is completely broken at the moment, do not offer to show.
 			<toolbarbutton id="colorediffs-options" tooltiptext="Show options dialog"
 						   command="cmd_show_options"/>
+			-->
 			<toolbaritem>
 				<menulist tooltiptext="Tab size" id="colorediffs-tab-size" command="cmd_change_tab_size">
 					<menupopup>
@@ -77,8 +79,10 @@
 					</menupopup>
 				</menulist>
 			</toolbaritem>
+			<!-- Prevent closing toolbar until we have a proper menu for settings to re-activate it.
 			<toolbarbutton id="colorediffs-close-toolbar" tooltiptext="Hide toolbar"
 						   command="cmd_change_toolbar"/>
+			-->
 		</toolbar>
 	</vbox>
 
