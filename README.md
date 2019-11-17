@@ -85,8 +85,14 @@ Bellingard for GMail. Thanks for understanding.
   again in install.rdf file. So if some tech-savvy SeaMonkey user tests and
   confirms compatibility, I will enable it again.
 
-* Version 0.8+ should work with Thunderbird 60 (although I did not manage to
-  fix preferences settings, so it comes with fixed color choices, unless users
-  resort to the editor config). Later Thunderbird versions are expected to
-  deprecate XUL-based extensions, which means the add-on will not remain
-  compatible unless it undergoes major rework.
+* Versions 0.8 and 0.9 should work with Thunderbird 60 (although I did not
+  manage to fix preferences settings, so it comes with fixed color choices,
+  unless users resort to the config editor). Later Thunderbird versions are
+  expected to deprecate XUL-based extensions, which means the add-on will not
+  remain compatible unless it undergoes major rework.
+
+* Version 1.9 works with Thunderbird 68. Note that the preference menu remains
+  completely broken (I even removed the button to display it), therefore you'll
+  have to work with the default options or to use Thunderbird's config editor.
+  This version has not been tested on older Thunderbird versions. Conversely,
+  version 0.9 and earlier of the add-on cannot be loaded on Thunderbird 68+.
