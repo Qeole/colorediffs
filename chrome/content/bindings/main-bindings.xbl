@@ -14,7 +14,7 @@
 		<implementation>
 			<constructor><![CDATA[
 				var menulist = document.getAnonymousNodes(this)[0];
-				var menupopup = menulist.firstChild;
+				var menupopup = menulist.getElementsByTagName("xul:menupopup")[0];
 
 				for(var view in colorediffsGlobal.views) {
 					var item = document.createElement("menuitem");
@@ -34,7 +34,7 @@
 				]]></getter>
 				<setter><![CDATA[
 					var menulist = document.getAnonymousNodes(this)[0];
-					var items = menulist.firstChild.childNodes;
+					var items = menulist.getElementsByTagName("xul:menupopup")[0].childNodes;
 					for( var i=0; i < items.length; i++ ) {
 						if ( items[i].getAttribute("value") == val ) {
 							menulist.selectedItem = items[i];
@@ -68,10 +68,10 @@
 			]]></constructor>
 			<property name="color">
 				<getter><![CDATA[
-					return document.getAnonymousNodes(this)[0].firstChild.style.backgroundColor;
+					return document.getAnonymousNodes(this)[0].getElementsByTagName("xul:menupopup")[0].style.backgroundColor;
 				]]></getter>
 				<setter><![CDATA[
-					document.getAnonymousNodes(this)[0].firstChild.style.backgroundColor = val;
+					document.getAnonymousNodes(this)[0].getElementsByTagName("xul:menupopup")[0].style.backgroundColor = val;
 				]]></setter>
 			</property>
 			<property name="value">

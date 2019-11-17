@@ -79,7 +79,7 @@ colorediffsGlobal.colorediffsToolbar = new function() {
 	};
 
 	function selectComboByValue(menulist, value) {
-	    var items = menulist.firstChild.childNodes;
+	    var items = menulist.getElementsByTagName("menupopup")[0].childNodes;
 	    for( var i=0; i < items.length; i++ ) {
 		if ( items[i].getAttribute("value") == value ) {
 		    menulist.selectedItem = items[i];
