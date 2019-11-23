@@ -16,10 +16,6 @@
   },
 
   "legacy": {
-    "type": "xul",
-    "options": {
-      "page": "chrome://colorediffs/content/options/options.xul",
-      "open_in_tab": true
-    }
+    "type": "xul"
   }
 }
