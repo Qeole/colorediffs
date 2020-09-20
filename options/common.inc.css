@@ -1,0 +1,491 @@
+/* SPDX-License-Identifier: MPL-2.0 */
+
+/*
+ * Derived from mozilla-central/toolkit/themes/shared/in-content/common.inc.css
+ *
+ * Changes:
+ * - trimmed down (removed XUL and other non-relevant rules)
+ * - :root replaced by body
+ */
+
+@namespace html "http://www.w3.org/1999/xhtml";
+
+body {
+  --in-content-page-color: #0c0c0d;
+  --in-content-page-background: #f9f9fa;
+  --in-content-text-color: var(--grey-90);
+  --in-content-deemphasized-text: var(--grey-60);
+  --in-content-selected-text: #fff;
+  --in-content-box-background: #fff;
+  --in-content-box-background-odd: rgba(12, 12, 13, 0.05); /* grey 90 a05 */
+  --in-content-box-background-hover: #ededf0; /* grey 20 */
+  --in-content-box-background-active: #d7d7db; /* grey 30 */
+  --in-content-box-border-color: var(--grey-90-a30);
+  --in-content-box-info-background: var(--grey-20);
+  --in-content-item-hover: rgba(69, 161, 255, 0.2); /* blue 40 a20 */
+  --in-content-item-selected: #0a84ff;
+  --in-content-border-highlight: #0a84ff;
+  --in-content-border-focus: #0a84ff;
+  --in-content-border-hover: var(--grey-90-a50);
+  --in-content-border-active: var(--blue-50);
+  --in-content-border-active-shadow: var(--blue-50-a30);
+  --in-content-border-invalid: var(--red-50);
+  --in-content-border-invalid-shadow: var(--red-50-a30);
+  --in-content-border-color: #d7d7db;
+  --in-content-category-outline-focus: 1px dotted #0a84ff;
+  --in-content-category-text-selected: #0a84ff;
+  --in-content-category-text-selected-active: #0060df;
+  --in-content-category-background-hover: rgba(12,12,13,0.1);
+  --in-content-category-background-active: rgba(12,12,13,0.15);
+  --in-content-category-background-selected-hover: rgba(12,12,13,0.15);
+  --in-content-category-background-selected-active: rgba(12,12,13,0.2);
+  --in-content-tab-color: #424f5a;
+  --in-content-link-color: var(--blue-60);
+  --in-content-link-color-hover: var(--blue-70);
+  --in-content-link-color-active: var(--blue-80);
+  --in-content-link-color-visited: var(--blue-60);
+  --in-content-button-background: var(--grey-90-a10);
+  --in-content-button-background-hover: var(--grey-90-a20);
+  --in-content-button-background-active: var(--grey-90-a30);
+  --in-content-primary-button-background: var(--blue-60);
+  --in-content-primary-button-background-hover: var(--blue-70);
+  --in-content-primary-button-background-active: var(--blue-80);
+  --in-content-table-background: #ebebeb;
+  --in-content-table-border-dark-color: #d1d1d1;
+  --in-content-table-header-background: #0a84ff;
+  --in-content-dialog-header-background: #f1f1f1;
+  --in-content-sidebar-width: 240px;
+
+  --panel-border-radius: 2px; /* This is overridden on Windows */
+
+  --blue-40: #45a1ff;
+  --blue-40-a10: rgb(69, 161, 255, 0.1);
+  --blue-50: #0a84ff;
+  --blue-50-a30: rgba(10, 132, 255, 0.3);
+  --blue-60: #0060df;
+  --blue-70: #003eaa;
+  --blue-80: #002275;
+  --grey-20: #ededf0;
+  --grey-30: #d7d7db;
+  --grey-40: #b1b1b3;
+  --grey-60: #4a4a4f;
+  --grey-90: #0c0c0d;
+  --grey-90-a10: rgba(12, 12, 13, 0.1);
+  --grey-90-a20: rgba(12, 12, 13, 0.2);
+  --grey-90-a30: rgba(12, 12, 13, 0.3);
+  --grey-90-a50: rgba(12, 12, 13, 0.5);
+  --grey-90-a60: rgba(12, 12, 13, 0.6);
+  --green-50: #30e60b;
+  --green-60: #12bc00;
+  --green-70: #058b00;
+  --green-80: #006504;
+  --green-90: #003706;
+  --orange-50: #ff9400;
+  --red-50: #ff0039;
+  --red-50-a30: rgba(255, 0, 57, 0.3);
+  --red-60: #d70022;
+  --red-70: #a4000f;
+  --red-80: #5a0002;
+  --red-90: #3e0200;
+  --yellow-50: #ffe900;
+  --yellow-60: #d7b600;
+  --yellow-60-a30: rgba(215, 182, 0, 0.3);
+  --yellow-70: #a47f00;
+  --yellow-80: #715100;
+  --yellow-90: #3e2800;
+
+  --shadow-10: 0 1px 4px var(--grey-90-a10);
+  --shadow-30: 0 4px 16px var(--grey-90-a10);
+
+  --card-padding: 16px;
+  --card-shadow: var(--shadow-10);
+  --card-outline-color: var(--grey-30);
+  --card-shadow-hover: var(--card-shadow), 0 0 0 5px var(--card-outline-color);
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    /* Keep this in sync with layout/base/PresShell.cpp! */
+    --in-content-page-background: #2A2A2E;
+    --in-content-page-color: rgb(249, 249, 250);
+    --in-content-text-color: var(--in-content-page-color);
+    --in-content-deemphasized-text: var(--grey-40);
+    --in-content-box-background: #202023;
+    --in-content-box-background-hover: rgba(249,249,250,0.15);
+    --in-content-box-background-active: rgba(249,249,250,0.2);
+    --in-content-box-background-odd: rgba(249,249,250,0.05);
+    --in-content-box-info-background: rgba(249,249,250,0.15);
+
+    --in-content-border-color: rgba(249,249,250,0.2);
+    --in-content-border-hover: rgba(249,249,250,0.3);
+    --in-content-box-border-color: rgba(249,249,250,0.2);
+
+    --in-content-button-background: rgba(249,249,250,0.1);
+    --in-content-button-background-hover: rgba(249,249,250,0.15);
+    --in-content-button-background-active: rgba(249,249,250,0.2);
+
+    --in-content-category-background-hover: rgba(249,249,250,0.1);
+    --in-content-category-background-active: rgba(249,249,250,0.15);
+    --in-content-category-background-selected-hover: rgba(249,249,250,0.15);
+    --in-content-category-background-selected-active: rgba(249,249,250,0.2);
+
+    --in-content-table-background: #202023;
+    --in-content-table-border-dark-color: rgba(249,249,250,0.2);
+    --in-content-table-header-background: #002b57;
+    --in-content-dialog-header-background: rgba(249,249,250,0.05);
+
+    --in-content-category-text-selected: var(--blue-40);
+    --in-content-category-text-selected-active: var(--blue-50);
+    --in-content-link-color: var(--blue-40);
+    --in-content-link-color-hover: var(--blue-50);
+    --in-content-link-color-active: var(--blue-60);
+    --in-content-link-color-visited: var(--blue-40);
+
+    --in-content-tab-color: var(--in-content-page-color);
+
+    --card-outline-color: var(--grey-60);
+
+    scrollbar-color: rgba(249,249,250,.4) rgba(20,20,25,.3);
+  }
+}
+
+body {
+  font: message-box;
+  appearance: none;
+  background-color: var(--in-content-page-background);
+  color: var(--in-content-page-color);
+}
+
+html|body {
+  font-size: 15px;
+  font-weight: normal;
+  margin: 0;
+}
+
+html|h1 {
+  font-size: 2.5em;
+  font-weight: lighter;
+  line-height: 1.2;
+  color: var(--in-content-text-color);
+  margin: 0;
+  margin-bottom: .5em;
+}
+
+html|hr {
+  border-style: solid none none none;
+  border-color: var(--in-content-border-color);
+}
+
+html|h2 {
+  font-weight: 600;
+  line-height: 1.4em;
+}
+
+.main-content {
+  padding: 40px 28px;
+  overflow: auto;
+}
+
+/* html buttons */
+
+html|button {
+  padding: 3px;
+  font: inherit;
+}
+
+/* xul buttons and menulists */
+
+button,
+html|select,
+html|input[type="color"] {
+  appearance: none;
+  min-height: 32px;
+  /* !important overrides button.css for disabled and default XUL buttons: */
+  color: inherit !important;
+  border: 1px solid transparent; /* needed for high-contrast mode, where it'll show up */
+  border-radius: 2px;
+  background-color: var(--in-content-button-background);
+  font-weight: 400;
+  padding: 0 8px;
+  text-decoration: none;
+  margin: 4px 8px;
+  /* Ensure font-size isn't overridden by widget styling (e.g. in forms.css) */
+  font-size: 1em;
+}
+
+html|button {
+  /* Use the same margin of other elements for the alignment */
+  margin-inline: 4px;
+}
+
+html|button::-moz-focus-inner,
+html|select::-moz-focus-inner,
+html|input[type="color"]::-moz-focus-inner {
+  border: none;
+}
+
+button:-moz-focusring,
+html|select:-moz-focusring,
+html|input[type="checkbox"]:-moz-focusring,
+html|input[type="color"]:-moz-focusring {
+  outline: 2px solid var(--in-content-border-active);
+  /* offset outline to align with 1px border-width set for buttons/menulists above. */
+  outline-offset: -1px;
+  /* Make outline-radius slightly bigger than the border-radius set above,
+   * to make the thicker outline corners look smooth */
+  -moz-outline-radius: 3px;
+  box-shadow: 0 0 0 4px var(--in-content-border-active-shadow);
+}
+
+html|select:not([size]):not([multiple]) {
+  background-image: url("chrome://global/skin/icons/arrow-dropdown-12.svg");
+  background-position: right 3px center;
+  background-repeat: no-repeat;
+  background-size: auto 12px;
+  -moz-context-properties: fill;
+  fill: currentColor;
+  font-size: inherit;
+  line-height: 2.1;
+  padding-inline: 5px 24px;
+  text-overflow: ellipsis;
+}
+
+html|select:not([size]):not([multiple]):dir(rtl) {
+  background-position-x: left 3px;
+}
+
+html|select:not([size]):not([multiple]) > html|option {
+  background-color: var(--in-content-box-background);
+  color: var(--in-content-text-color);
+}
+
+html|button:enabled:hover,
+html|select:not([size]):not([multiple]):enabled:hover,
+html|input[type="color"]:hover {
+  background-color: var(--in-content-button-background-hover);
+}
+
+html|button:enabled:hover:active,
+html|select:not([size]):not([multiple]):enabled:hover:active,
+html|input[type="color"]:enabled:hover:active {
+  background-color: var(--in-content-button-background-active);
+}
+
+html|button:disabled,
+html|select:disabled,
+html|input[type="color"]:disabled {
+  opacity: 0.4;
+}
+
+html|button[autofocus],
+html|button[type="submit"],
+button.primary {
+  background-color: var(--in-content-primary-button-background);
+  color: var(--in-content-selected-text) !important;
+}
+
+html|button[autofocus]:enabled:hover,
+html|button[type="submit"]:enabled:hover,
+html|button.primary:enabled:hover {
+  background-color: var(--in-content-primary-button-background-hover);
+}
+
+html|button[autofocus]:enabled:hover:active,
+html|button[type="submit"]:enabled:hover:active,
+html|button.primary:enabled:hover:active {
+  background-color: var(--in-content-primary-button-background-active);
+}
+
+html|button.danger-button {
+  background-color: var(--red-60);
+  color: white !important;
+}
+
+html|button.danger-button:enabled:hover {
+  background-color: var(--red-70);
+}
+
+html|button.danger-button:enabled:hover:active {
+  background-color: var(--red-80);
+}
+
+html|button.ghost-button {
+  background-color: transparent;
+}
+
+html|button.ghost-button:enabled:hover {
+  background-color: var(--in-content-button-background);
+}
+
+html|button.ghost-button:enabled:hover:active {
+  background-color: var(--in-content-button-background-hover);
+}
+
+html|input[type="color"] {
+  padding: 6px;
+  width: 50px;
+}
+
+/* textboxes */
+
+html|input[type="email"],
+html|input[type="tel"],
+html|input[type="text"],
+html|input[type="password"],
+html|input[type="url"],
+html|input[type="number"],
+html|textarea {
+  appearance: none;
+  border: 1px solid var(--in-content-box-border-color);
+  border-radius: 2px;
+  color: inherit;
+  background-color: var(--in-content-box-background);
+}
+
+html|input[type="email"],
+html|input[type="tel"],
+html|input[type="text"],
+html|input[type="password"],
+html|input[type="url"],
+html|input[type="number"],
+html|textarea {
+  font-family: inherit;
+  font-size: inherit;
+  padding: 5px 8px;
+  margin: 2px 4px;
+}
+
+html|input[type="email"]:enabled:not(:focus):hover,
+html|input[type="tel"]:enabled:not(:focus):hover,
+html|input[type="text"]:enabled:not(:focus):hover,
+html|input[type="password"]:enabled:not(:focus):hover,
+html|input[type="url"]:enabled:not(:focus):hover,
+html|input[type="number"]:enabled:not(:focus):hover,
+html|textarea:enabled:not(:focus):hover {
+  border-color: var(--in-content-border-hover);
+}
+
+html|input[type="email"]:focus,
+html|input[type="tel"]:focus,
+html|input[type="text"]:focus,
+html|input[type="password"]:focus,
+html|input[type="url"]:focus,
+html|input[type="number"]:focus,
+html|textarea:focus {
+  border-color: var(--in-content-border-active);
+  box-shadow: 0 0 0 1px var(--in-content-border-active),
+    0 0 0 4px var(--in-content-border-active-shadow);
+}
+
+html|input[type="email"]:-moz-ui-invalid,
+html|input[type="tel"]:-moz-ui-invalid,
+html|input[type="text"]:-moz-ui-invalid,
+html|input[type="password"]:-moz-ui-invalid,
+html|input[type="url"]:-moz-ui-invalid,
+html|input[type="number"]:-moz-ui-invalid,
+html|textarea:-moz-ui-invalid {
+  border-color: var(--in-content-border-invalid);
+}
+
+/* Don't show the field error outlines and focus borders at the same time. */
+html|input[type="email"]:-moz-ui-invalid:focus,
+html|input[type="tel"]:-moz-ui-invalid:focus,
+html|input[type="text"]:-moz-ui-invalid:focus,
+html|input[type="password"]:-moz-ui-invalid:focus,
+html|input[type="url"]:-moz-ui-invalid:focus,
+html|input[type="number"]:-moz-ui-invalid:focus,
+html|textarea:-moz-ui-invalid:focus {
+  box-shadow: 0 0 0 3px var(--in-content-border-invalid-shadow);
+}
+
+html|input[type="email"]:disabled,
+html|input[type="tel"]:disabled,
+html|input[type="text"]:disabled,
+html|input[type="password"]:disabled,
+html|input[type="url"]:disabled,
+html|input[type="number"]:disabled,
+html|textarea:disabled {
+  opacity: 0.4;
+}
+
+/* Links */
+
+html|a,
+.text-link {
+  color: var(--in-content-link-color);
+  text-decoration: none;
+}
+
+html|a:hover,
+.text-link:hover {
+  color: var(--in-content-link-color-hover);
+  text-decoration: underline;
+}
+
+html|a:visited {
+  color: var(--in-content-link-color-visited);
+}
+
+html|a:hover:active,
+.text-link:hover:active {
+  color: var(--in-content-link-color-active);
+  text-decoration: none;
+}
+
+/* Checkboxes and radio buttons */
+
+html|input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  padding: 1px;
+  border: 1px solid var(--in-content-box-border-color);
+  border-radius: 2px;
+  margin: 0;
+  margin-inline-end: 10px;
+  background-color: var(--in-content-box-background);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+html|input[type="checkbox"]:not(:disabled):hover {
+  border-color: var(--in-content-border-focus);
+}
+
+html|input[type="checkbox"]:checked {
+  background-image: url("chrome://global/skin/icons/check.svg");
+  -moz-context-properties: fill;
+  fill: #2292d0;
+}
+
+html|input[type="checkbox"]:disabled {
+  opacity: 0.5;
+}
+
+html|*.toggle-container-with-text {
+  display: flex;
+  align-items: center;
+}
+
+/* List boxes */
+
+html|select[size][multiple] {
+  appearance: none;
+  margin-inline: 0;
+  background-color: var(--in-content-box-background);
+  border: 1px solid var(--in-content-box-border-color);
+  border-radius: 2px;
+  color: var(--in-content-text-color);
+}
+
+html|select[size][multiple] > html|option {
+  padding: 0.3em;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background-image: none;
+}
+
+html|select[size][multiple] > html|option:hover {
+  background-color: var(--in-content-item-hover);
+}

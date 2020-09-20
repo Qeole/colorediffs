@@ -3,19 +3,32 @@
   "applications": {
     "gecko": {
       "id": "{282C3C7A-15A8-4037-A30D-BBEB17FFC76B}",
-      "strict_min_version": "68.0"
+      "strict_min_version": "78.4.0"
     }
   },
   "name": "Colored Diffs",
-  "version": "1.9",
-  "description": "Color diffs sent by Git / SVN / CVS notifications.",
+  "version": "2.0.0",
+  "description": "Color diffs in messages formatted by Git or other version control systems",
   "author": "Vadim Atlygin",
   "homepage_url": "https://github.com/Qeole/colorediffs",
-  "icons": {
-    "64": "chrome/content/icon.png"
+  "developer": {
+    "name": "Qeole"
   },
-
-  "legacy": {
-    "type": "xul"
+  "icons": {
+    "64": "misc/icon.png"
+  },
+  "permissions": [
+    "storage",
+    "messagesModify"
+  ],
+  "background": {
+    "scripts": [
+      "options/defaults.js",
+      "scripts/background.js"
+    ]
+  },
+  "options_ui": {
+    "browser_style": true,
+    "page": "options/ui.html"
   }
 }
