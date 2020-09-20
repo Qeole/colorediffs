@@ -1,98 +1,64 @@
-# ![Add-on icon](chrome/content/icon.png) Colored diffs
+# ![Add-on icon](misc/icon.png) Colorediffs
 
-This is an extension that colors boring diffs sent by notifiers for Git,
-Subversion, CVS, Mercurial, etc.
-
-The project was originally authored by Vadim Atlygin, and for a time it has
-been maintained by Jesse Glick (jglick). Now the torch has passed to Qeole.
-
-## Presentation
-
-A lot of developers use Git or other version control systems. Most of them also
-receive special notifications from the system about changes other people do.
-They might be useful in various ways: someone wants to check if there are bugs
-in the new code, someone just wants to keep knowledge of code base up-to-date.
-But looking over that black-on-white letter is so boring. That's why we decided
-to color it up a bit.
+Color diffs in the emails you receive. This is typically helpful for reviewing
+patches formatted with Git or other version control systems.
 
 ## Installation
 
-### Get it from Mozilla add-ons platform…
+### Get it from Thunderbird's Add-Ons Platform…
 
-[Available here](https://addons.mozilla.org/en-US/thunderbird/addon/colored-diffs/)
+[Available here](https://addons.thunderbird.net/en-US/thunderbird/addon/colored-diffs/)
 
-### … Or install it manually
+### … Or Install it Manually
 
-[Install locally](https://developer.mozilla.org/en-US/Add-ons/Thunderbird/Building_a_Thunderbird_extension_7:_Installation)
-or
-[package it into a .xpi file](https://developer.mozilla.org/en-US/Add-ons/Thunderbird/Building_a_Thunderbird_extension_8:_packaging).
+Pack the add-on as an .xpi file and install it from the “gear” menu in
+Thunderbird's add-on manager.
 
-Under UNIX-like systems you can create the .xpi file by simply running:
+On UNIX-like systems, you can create the .xpi file by simply running:
 
     $ cd /path/to/colorediffs/
     $ make
 
-## What the add-on can do
+Note that this will download (with curl) the latest version of the highlight.js
+library, which is not included in this repository.
 
-![Transformation](misc/transformation.png)
+## Usage
 
-Well, not so much… It can color your diffs, it can show them in side-by-side
-mode if you like. Also it converts all the filenames in message log into links
-so you can quickly jump to the file you want to review. Ah, and it can make
-space and tabs chars visible. You can look through list of SupportedFormats to
-see what are the supported VCSs.
+Once installed, the add-on should automatically detect diffs in your plain-text
+messages and color them with the selected theme. Some options are available in
+the add-on preference page:
 
-## Ideas for future contribution
+- You can select the color scheme amongst all the styles supported by
+  highlight.js.
+- You can have tabs and white space characters replaced by visible characters.
+- You can set the length for tab characters (defaults to 8).
+- You can choose to color all plain-text messages (even with no diffs), which is
+  mostly useful to avoid visual discomfort when using a style with a dark
+  background and browsing a mailing list.
 
-The original author of the project wanted this add-on to include the following
-features:
+## Versions
 
-  1. Highlighting the actual difference between the lines.
-  2. Coloring the syntax of the language used.
-  3. Checking new code against few rules in order to estimate the quality of
-     it.
+**Version 2+ of the add-on is compatible with Thunderbird stable version 78.4
+and onward.** It uses the `messageDisplayScripts` API which was added in
+Thunderbird 82, and backported to 78.4.
 
-But these are pretty big tasks, and development of the add-on is not so active
-by now. If you want to help, though, do not hesitate to contribute by dropping
-an issue or a PR!
+Older versions of the add-on work with Thunderbird
+[up to the version 68](https://github.com/Qeole/colorediffs/tree/e51d1aab6390d11a5ee2ec84e1cf42fd08564a41#version-notes).
 
-## Contribution
+The distinction is due to Thunderbird's move to MailExtensions. As a
+consequence of this change, version 2.0.0 of the add-on is a complete rewrite
+(by Qeole) and works differently from the previous versions. Instead of parsing
+the diffs and rebuilding the messages itself, the add-on embeds and injects the
+[highlight.js library](https://highlightjs.org/) which takes care of the
+colors, without reformatting the content of the message.
 
-If you know how to do something better, whether it's code, icons, default color
-scheme, just contact me. Also please visit the [issues
-list](https://github.com/jglick/colorediffs/issues) and comment on issues you'd
-really like to be done first.
+## Status
 
-## Firefox extension
+The project was originally authored by Vadim Atlygin. For a time it has
+been maintained by Jesse Glick (jglick), and it has now passed to Qeole.
 
-There isn't one and probably never will be, sorry. I could make it work for
-diff in `<pre>` sections (most mail lists archives format them like this) but
-it would never work in GMail and other Web mail systems where it would be
-actually useful. It's just plain hard to find the code between the lines of
-normal text. But you could ease you pain with [Bookmarklet](Bookmarklet.md) I
-wrote when your needs is simple (like mail list archives) and [GreaseMonkey
-script](http://userscripts.org/scripts/show/26684) written by Fabrice
-Bellingard for GMail. Thanks for understanding.
+This add-on is mostly in maintenance mode, do not expect new features. Several
+people are using it to review patches for their daily jobs, so the objective is
+essentially to keep something basic, but that works.
 
-## Version notes
-
-* Version 0.5 is the last one with support for Thunderbird 2. I'm too tired of
-  more than two years old JavaScript engine.
-
-* Version 0.7 does not support SeaMonkey anymore, because the new maintainer
-  does not use it and does not wish to test add-on compatibility. But the code
-  has not changed much, and this is probably just a matter of enabling support
-  again in install.rdf file. So if some tech-savvy SeaMonkey user tests and
-  confirms compatibility, I will enable it again.
-
-* Versions 0.8 and 0.9 should work with Thunderbird 60 (although I did not
-  manage to fix preferences settings, so it comes with fixed color choices,
-  unless users resort to the config editor). Later Thunderbird versions are
-  expected to deprecate XUL-based extensions, which means the add-on will not
-  remain compatible unless it undergoes major rework.
-
-* Version 1.9 works with Thunderbird 68. Note that the preference menu remains
-  completely broken (I even removed the button to display it), therefore you'll
-  have to work with the default options or to use Thunderbird's config editor.
-  This version has not been tested on older Thunderbird versions. Conversely,
-  version 0.9 and earlier of the add-on cannot be loaded on Thunderbird 68+.
+Nonetheless, you are welcome to report issues or to submit pull requests.
