@@ -85,6 +85,8 @@ const styles = [
     { "file": "solarized-dark",            "name" : "Solarized Dark"            },
     { "file": "solarized-light",           "name" : "Solarized Light"           },
     { "file": "srcery",                    "name" : "Srcery"                    },
+    { "file": "stackoverflow-dark",        "name" : "StackOverflow Dark"        },
+    { "file": "stackoverflow-light",       "name" : "StackOverflow Light"       },
     { "file": "sunburst",                  "name" : "Sunburst"                  },
     { "file": "tomorrow",                  "name" : "Tomorrow"                  },
     { "file": "tomorrow-night-blue",       "name" : "Tomorrow Night Blue"       },
