@@ -31,6 +31,9 @@ function replaceSpaces(root, tabsize) {
     };
 
     function doReplace(node) {
+        node.textContent = node.textContent.replace(/&/g,'&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
         node.innerHTML = node.textContent.replace(/( +|\t+)/g, replacer);
     };
 
