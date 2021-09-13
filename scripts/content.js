@@ -79,17 +79,12 @@ function addToolbar() {
 /* Check that this is a plain text email. We don't do HTML. */
 function isPlainText() {
     let bodyNodes = document.body.childNodes;
-    let bodyLength = bodyNodes.length;
-    if (!(bodyLength == 3 ||
-          (bodyLength == 4 && bodyNodes[bodyLength - 1].id == "colorediffsToolbar")))
-        return false;
-    if (bodyNodes[1].tagName != "DIV")
-        return false;
-    let firstChildClass = bodyNodes[1].className;
-    if (firstChildClass != "moz-text-plain" && firstChildClass != "moz-text-flowed")
-        return false;
 
-    return true;
+    for (let node of bodyNodes)
+        if (node.className === "moz-text-plain")
+            return true;
+
+    return false;
 }
 
 /* Check whether this message contains diff snippets */
@@ -101,7 +96,7 @@ function hasDiff() {
     let unifiedBinaryTag = /^---\s(?:new\s)?BINARY FILE:\s.*\s---$/m;
     let textBody = document.body.textContent;
 
-    for (tag of
+    for (let tag of
          [contextLineTag, unifiedLineTag, unifiedNewTag, unifiedBinaryTag]) {
         if (tag.test(textBody))
             return true;
