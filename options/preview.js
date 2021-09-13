@@ -23,7 +23,7 @@ var hasReplacedSpaces = false;
 
 function updateStyle(e) {
     let style = document.getElementById("style").value;
-    document.getElementById("theme").href = "/hljs/styles/" + style + ".css";
+    document.getElementById("theme").href = "/hljs/styles/" + style + ".min.css";
 
     let code = document.getElementById("prevcode");
     let tabsize = document.getElementById("tabsize").value;
