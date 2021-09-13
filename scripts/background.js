@@ -45,7 +45,7 @@ function processCommand(msg) {
 function registerCss() {
     cssPromise = browser.messageDisplayScripts.register({
         css: [{
-            file: "/hljs/styles/" + options.style + ".css",
+            file: "/hljs/styles/" + options.style + ".min.css",
         }],
     });
 }
@@ -61,7 +61,7 @@ function registerScripts() {
     if (wantColors) {
         contentScripts.js.push(
             {
-                file: "/hljs/highlight.pack.js",
+                file: "/hljs/highlight.min.js",
             },
             {
                 file: "/scripts/transformations.js",
