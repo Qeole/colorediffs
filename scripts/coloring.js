@@ -22,11 +22,28 @@ function colorizeDiff() {
         pre.appendChild(code);
     }
 
+    /*
+     * Signature handling:
+     * Search for a div with "moz-txt-sig" class set somewhere inside the plain
+     * text mail. This node holds all signatures. We will remove it from the
+     * DOM to exclude it from the highlighting and add it back afterwards.
+     */
+    let sigParentNode;
+    let signatureNodes = document.querySelectorAll("div.moz-text-plain code > div.moz-txt-sig");
+
+    if (signatureNodes.length) {
+        sigParentNode = signatureNodes[0].parentNode;
+        signatureNodes[0].remove();
+    }
+
     /* Call library function, trigger highlighting */
     hljs.initHighlighting();
 
-    /* Git-send signature is considered as a deletion, patch it */
-    patchGitSendSignature(preNodes[preNodes.length - 1].lastChild.lastChild);
+    if (signatureNodes.length) {
+        signatureNodes[0].className += " hljs-comment";
+        sigParentNode.appendChild(signatureNodes[0]);
+    }
+
     /* Replace spaces and tabs if required */
     if (options.spaces) {
         for (let pre of preNodes)
