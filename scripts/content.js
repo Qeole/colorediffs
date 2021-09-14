@@ -16,9 +16,6 @@ function addToolbar() {
         return;
 
     let toolbarHeight = "5ex";
-    document.body.childNodes[1].style.margin = "8px 8px calc(" + toolbarHeight + " + 8px) 8px";
-    document.body.style.margin = "0";
-    document.body.style.padding = "0";
 
     div = document.createElement("DIV");
     div.id = "colorediffsToolbar";
