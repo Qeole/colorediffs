@@ -37,7 +37,7 @@ function colorizeDiff() {
     }
 
     /* Call library function, trigger highlighting */
-    hljs.initHighlighting();
+    hljs.highlightAll();
 
     if (signatureNodes.length) {
         signatureNodes[0].className += " hljs-comment";
