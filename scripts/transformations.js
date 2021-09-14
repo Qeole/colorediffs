@@ -88,27 +88,6 @@ function toggleSpaces(pre) {
     }
 }
 
-/* Do not consider signature marker as a deleted line */
-function patchGitSendSignature(node) {
-    if (node.className != "moz-txt-sig")
-        return;
-    if (node.childNodes.length != 2)
-        return;
-
-    let marker = node.childNodes[0];
-    let version = node.childNodes[1];
-    let versionPattern = /^\n\d+\.\d+\.\S+\n+$/;
-
-    if (marker.textContent != "-- ")
-        return;
-    if (!versionPattern.test(version.textContent))
-        return;
-
-    marker.className = "hljs-comment";
-    marker.textContent += version.textContent;
-    version.remove();
-}
-
 /* Wait for the hljs object from the highlight.js script to be loaded */
 function waitForHljs() {
     return new Promise((resolve, reject) => {
