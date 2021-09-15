@@ -37,6 +37,7 @@ function colorizeDiff() {
     }
 
     /* Call library function, trigger highlighting */
+    hljs.configure({ ignoreUnescapedHTML: true });
     hljs.highlightAll();
 
     if (signatureNodes.length) {
