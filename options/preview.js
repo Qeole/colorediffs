@@ -48,7 +48,7 @@ function waitAndUpdateStyle() {
 function createPreview() {
     document.getElementById("prevcode").textContent = PreviewContent;
     waitAndUpdateStyle();
-    hljs.highlightBlock(document.getElementById("prevcode"));
+    hljs.highlightElement(document.getElementById("prevcode"));
 }
 
 function changeStyle(offset) {
