@@ -3,7 +3,7 @@
   "applications": {
     "gecko": {
       "id": "{282C3C7A-15A8-4037-A30D-BBEB17FFC76B}",
-      "strict_min_version": "78.4.0"
+      "strict_min_version": "91.0.0"
     }
   },
   "name": "Colored Diffs",
