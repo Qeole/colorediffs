@@ -119,19 +119,19 @@ function hasDiff () {
     }
 
     /* Check whether coloring code was injected by background script */
-    const doColors = typeof (colorizeDiff) !== "undefined";
+    const doColors = typeof (coloring.colorizeDiff) !== "undefined";
 
     /*
      * If options.colorall is enabled, color as fast as we can to avoid white
      * flashes with dark backgrounds
      */
     if (options.colorall && doColors) {
-        colorizeBody();
+        coloring.colorizeBody();
     }
 
     const msgWithDiff = hasDiff();
     if (!options.colorall && msgWithDiff && doColors) {
-        colorizeBody();
+        coloring.colorizeBody();
     }
 
     if (options.colorall || msgWithDiff) {
@@ -139,6 +139,6 @@ function hasDiff () {
     }
 
     if (msgWithDiff && doColors) {
-        colorizeDiff();
+        coloring.colorizeDiff();
     }
 })();
