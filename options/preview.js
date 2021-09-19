@@ -1,5 +1,7 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 
+import { FullStyleList } from "./list-styles.js";
+
 /* eslint-disable no-tabs */
 const PreviewContent =
 `diff --git a/foo b/foo
@@ -55,11 +57,16 @@ function createPreview () {
 
 function changeStyle (offset) {
     const style = document.getElementById("style").value;
-    const idx = styles.findIndex((s) => {
+    const idx = FullStyleList.findIndex((s) => {
         return s.file === style;
     });
-    const newStyle = styles[(idx + offset + styles.length) % styles.length].file;
+    const newStyle = FullStyleList[(idx + offset + FullStyleList.length) % FullStyleList.length].file;
     document.getElementById("style").value = newStyle;
     const change = new Event("change");
     document.getElementById("style").dispatchEvent(change);
 }
+
+export { changeStyle };
+export { createPreview };
+export { updateStyle };
+export { waitAndUpdateStyle };

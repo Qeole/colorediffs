@@ -1,5 +1,7 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 
+import { DefaultOptions, defaultError } from "../options/defaults.js";
+
 const options = {};
 let wantColors = true;
 

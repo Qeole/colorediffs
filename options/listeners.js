@@ -1,5 +1,19 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 
+import { OptionsList } from "./defaults.js";
+import { FullStyleList } from "./list-styles.js";
+import { changeStyle, createPreview, updateStyle, waitAndUpdateStyle } from "./preview.js";
+import { resetAllOptions, restoreAllOptions, saveOptions } from "./save-restore.js";
+
+/* Populate list of styles */
+const list = document.getElementById("style");
+for (const s of FullStyleList) {
+    const item = document.createElement("option");
+    item.value = s.file;
+    item.textContent = s.name;
+    list.appendChild(item);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     restoreAllOptions().then(() => {
         createPreview();

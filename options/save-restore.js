@@ -1,5 +1,7 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 
+import { DefaultOptions, OptionsList, defaultError } from "./defaults.js";
+
 function saveOptions (e) {
     e.preventDefault();
 
@@ -39,3 +41,7 @@ function resetAllOptions () {
         restoreAllOptions();
     });
 }
+
+export { resetAllOptions };
+export { restoreAllOptions };
+export { saveOptions };

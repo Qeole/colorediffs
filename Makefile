@@ -35,7 +35,7 @@ check_css_list: $(HLJS_STYLES)
 	@error=0; for stylepath in $(HLJS_STYLES)*.min.css $(HLJS_STYLES)/base16/*.min.css; do \
 		stylesheet=$$(basename $$stylepath); \
 		stylename=$${stylesheet%.min.css}; \
-		if ! grep -q $$stylename options/fill-css-list.js; then \
+		if ! grep -q $$stylename options/list-styles.js; then \
 			[ $$error = 0 ] && printf '\n'; \
 			printf '\e[1;31m[WARNING] Found missing CSS style: "%s".\e[0m\n' $$stylename; \
 			error=1; \
@@ -44,7 +44,7 @@ check_css_list: $(HLJS_STYLES)
 
 check_css_files: $(HLJS_STYLES)
 	@printf 'Checking that all CSS styles listed in the add-on are present in hljs/...\t'
-	@error=0; for style in $$(sed -n 's/ *{ "file": "\([^"]*\)",.*/\1/p' options/fill-css-list.js); do \
+	@error=0; for style in $$(sed -n 's/ *{ "file": "\([^"]*\)",.*/\1/p' options/list-styles.js); do \
 		if ! [ -f $(HLJS_STYLES)/$${style}.min.css ]; then \
 			[ $$error = 0 ] && printf '\n'; \
 			printf '\e[1;31m[WARNING] Found missing CSS file: "%s".\e[0m\n' $$style; \
