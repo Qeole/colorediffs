@@ -56,6 +56,12 @@ check_css: check_css_list check_css_files
 
 .PHONY: check_css check_css_list check_css_files
 
+# https://eslint.org/
+lint:
+	npx eslint $(FIX) scripts options
+
+.PHONY: lint
+
 clean-hljs:
 	rm -rf -- hljs
 
