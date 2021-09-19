@@ -96,15 +96,3 @@ const transformations = {
         }
     },
 };
-
-/* Wait for the hljs object from the highlight.js script to be loaded */
-function waitForHljs () {
-    return new Promise((resolve, reject) => {
-        (function pollHljs () {
-            if (typeof (hljs) !== "undefined") {
-                return resolve();
-            }
-            setTimeout(pollHljs, 10);
-        })();
-    });
-}
