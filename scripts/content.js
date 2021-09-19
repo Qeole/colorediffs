@@ -1,21 +1,23 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 
-var port;
+let port;
 
-function connectPort() {
-    if (port)
+function connectPort () {
+    if (port) {
         return;
+    }
     port = browser.runtime.connect({
         name: "contentToBackground",
     });
 }
 
-function addToolbar() {
+function addToolbar () {
     let div = document.getElementById("colorediffsToolbar");
-    if (div)
+    if (div) {
         return;
+    }
 
-    let toolbarHeight = "5ex";
+    const toolbarHeight = "5ex";
 
     div = document.createElement("DIV");
     div.id = "colorediffsToolbar";
@@ -31,7 +33,7 @@ function addToolbar() {
     div.appendChild(colorButton);
     div.appendChild(spaceButton);
 
-    let toolbarCss = `
+    const toolbarCss = `
     #colorediffsToolbar {
         position: fixed;
         bottom: 0;
@@ -50,9 +52,9 @@ function addToolbar() {
         font-weight: 800;
         min-width: 3em;
     }`;
-    let style = document.createElement("style");
+    const style = document.createElement("style");
     style.setAttribute("type", "text/css");
-    let styleTextNode = document.createTextNode(toolbarCss);
+    const styleTextNode = document.createTextNode(toolbarCss);
     style.appendChild(styleTextNode);
     document.head.appendChild(style);
 
@@ -74,29 +76,32 @@ function addToolbar() {
 }
 
 /* Check that this is a plain text email. We don't do HTML. */
-function isPlainText() {
-    let bodyNodes = document.body.childNodes;
+function isPlainText () {
+    const bodyNodes = document.body.childNodes;
 
-    for (let node of bodyNodes)
-        if (node.className === "moz-text-plain")
+    for (const node of bodyNodes) {
+        if (node.className === "moz-text-plain") {
             return true;
+        }
+    }
 
     return false;
 }
 
 /* Check whether this message contains diff snippets */
-function hasDiff() {
+function hasDiff () {
     /* These patterns were kept from the old version of the add-on */
-    let contextLineTag = /^(?:\*|\-){3}\s+(\d+)\,\d+\s+(?:\*|\-){4}$/m;
-    let unifiedLineTag = /^@@\s+\-\d+(?:\,\d+)?\s\+\d+(?:\,\d+)?\s+@@/m;
-    let unifiedNewTag = /^--- NEW FILE:\s.* ---$/m;
-    let unifiedBinaryTag = /^---\s(?:new\s)?BINARY FILE:\s.*\s---$/m;
-    let textBody = document.body.textContent;
+    const contextLineTag = /^(?:\*|\-){3}\s+(\d+)\,\d+\s+(?:\*|\-){4}$/m;
+    const unifiedLineTag = /^@@\s+\-\d+(?:\,\d+)?\s\+\d+(?:\,\d+)?\s+@@/m;
+    const unifiedNewTag = /^--- NEW FILE:\s.* ---$/m;
+    const unifiedBinaryTag = /^---\s(?:new\s)?BINARY FILE:\s.*\s---$/m;
+    const textBody = document.body.textContent;
 
-    for (let tag of
-         [contextLineTag, unifiedLineTag, unifiedNewTag, unifiedBinaryTag]) {
-        if (tag.test(textBody))
+    for (const tag of
+        [contextLineTag, unifiedLineTag, unifiedNewTag, unifiedBinaryTag]) {
+        if (tag.test(textBody)) {
             return true;
+        }
     }
 
     return false;
@@ -104,30 +109,36 @@ function hasDiff() {
 
 /* Trigger checks, toolbar, and coloring */
 (function () {
-    if (!isPlainText())
+    if (!isPlainText()) {
         return;
+    }
 
     /* Do not colorize twice, but do update toolbar color */
-    if (document.getElementsByClassName("hljs").length)
+    if (document.getElementsByClassName("hljs").length) {
         return addToolbar();
+    }
 
     /* Check whether coloring code was injected by background script */
-    let doColors = typeof(colorizeDiff) != 'undefined';
+    const doColors = typeof (colorizeDiff) !== "undefined";
 
     /*
      * If options.colorall is enabled, color as fast as we can to avoid white
      * flashes with dark backgrounds
      */
-    if (options.colorall && doColors)
+    if (options.colorall && doColors) {
         colorizeBody();
+    }
 
-    let msgWithDiff = hasDiff();
-    if (!options.colorall && msgWithDiff && doColors)
+    const msgWithDiff = hasDiff();
+    if (!options.colorall && msgWithDiff && doColors) {
         colorizeBody();
+    }
 
-    if (options.colorall || msgWithDiff)
+    if (options.colorall || msgWithDiff) {
         addToolbar();
+    }
 
-    if (msgWithDiff && doColors)
+    if (msgWithDiff && doColors) {
         colorizeDiff();
+    }
 })();
