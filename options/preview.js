@@ -29,12 +29,12 @@ function updateStyle (e) {
 
     const code = document.getElementById("prevcode");
     const tabsize = document.getElementById("tabsize").value;
-    setTabStyle(code, tabsize);
+    transformations.setTabStyle(code, tabsize);
 
     const spaces = document.getElementById("spaces");
     if (spaces.checked) {
         if (!hasReplacedSpaces) {
-            replaceSpaces(code, tabsize);
+            transformations.replaceSpaces(code, tabsize);
             hasReplacedSpaces = true;
         }
     } else if (e && e.target === spaces) {

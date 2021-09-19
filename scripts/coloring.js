@@ -14,7 +14,7 @@ function colorizeDiff () {
         const code = document.createElement("CODE");
 
         code.style.padding = "0";
-        setTabStyle(code, options.tabsize);
+        transformations.setTabStyle(code, options.tabsize);
         code.setAttribute("class", "hljs diff");
 
         while (pre.childNodes.length > 0) {
@@ -50,9 +50,9 @@ function colorizeDiff () {
     /* Replace spaces and tabs if required */
     if (options.spaces) {
         for (const pre of preNodes) {
-            replaceSpaces(pre.firstChild, options.tabsize);
+            transformations.replaceSpaces(pre.firstChild, options.tabsize);
         }
     } else if (document.getElementsByClassName("cd-s").length) {
-        restoreSpaces();
+        transformations.restoreSpaces();
     }
 }
