@@ -22,8 +22,8 @@ function addToolbar () {
     div = document.createElement("DIV");
     div.id = "colorediffsToolbar";
 
-    colorButton = document.createElement("BUTTON");
-    spaceButton = document.createElement("BUTTON");
+    const colorButton = document.createElement("BUTTON");
+    const spaceButton = document.createElement("BUTTON");
     colorButton.id = "toggleColor";
     spaceButton.id = "toggleSpaces";
     colorButton.className = "toolbarButton";

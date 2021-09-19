@@ -24,6 +24,10 @@
         "semi": ["error", "always"]
     },
     "globals": {
-        "browser": "readonly"
+        "browser": "readonly",
+        "coloring": "readonly",
+        "hljs": "readonly",
+        "options": "readonly",
+        "transformations": "readonly"
     }
 }
