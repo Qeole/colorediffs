@@ -56,11 +56,16 @@ check_css: check_css_list check_css_files
 
 .PHONY: check_css check_css_list check_css_files
 
+# https://github.com/mozilla/addons-linter
+ADDONS_LINTER ?= ./node_modules/addons-linter/bin/addons-linter
+addons-linter:
+	$(ADDONS_LINTER) $(ADDON)
+
 # https://eslint.org/
-lint:
+eslint:
 	npx eslint $(FIX) scripts options
 
-.PHONY: lint
+.PHONY: eslint addons-linter
 
 clean-hljs:
 	rm -rf -- hljs
