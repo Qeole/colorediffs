@@ -40,6 +40,7 @@ function colorizeDiff() {
     hljs.configure({ ignoreUnescapedHTML: true });
     hljs.highlightAll();
 
+    /* Re-add signature, highlighted with "comment" color */
     if (signatureNodes.length) {
         signatureNodes[0].className += " hljs-comment";
         sigParentNode.appendChild(signatureNodes[0]);
