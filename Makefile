@@ -8,7 +8,12 @@ HLJS_DL='https://highlightjs.org/download/'
 HLJS_ZIP=/tmp/highlight.zip
 HLJS_SCRIPT=hljs/highlight.min.js
 HLJS_STYLES=hljs/styles/
-xpi: $(ADDON) check_css
+
+addon: checks xpi addons-linter
+
+checks: check_css eslint
+
+xpi: $(ADDON)
 
 %.xpi: \
 	manifest.json \
@@ -73,4 +78,4 @@ clean-hljs:
 clean: clean-hljs
 	rm -f -- $(ADDON)
 
-.PHONY: xpi clean clean-hljs
+.PHONY: addon checks xpi clean clean-hljs

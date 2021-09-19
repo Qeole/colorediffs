@@ -17,7 +17,7 @@ Thunderbird's add-on manager.
 On UNIX-like systems, you can create the .xpi file by simply running:
 
     $ cd /path/to/colorediffs/
-    $ make
+    $ make xpi
 
 Note that this will download (with curl) the latest version of the highlight.js
 library, which is not included in this repository.
@@ -37,6 +37,8 @@ the add-on preference page:
   background and browsing a mailing list.
 
 ## Versions
+
+Thunderbird 91 and higher require version 2.2.0 or newer.
 
 **Version 2+ of the add-on is compatible with Thunderbird stable version 78.4
 and onward.** It uses the `messageDisplayScripts` API which was added in
