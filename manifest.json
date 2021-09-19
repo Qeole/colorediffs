@@ -22,10 +22,7 @@
     "messagesModify"
   ],
   "background": {
-    "scripts": [
-      "options/defaults.js",
-      "scripts/background.js"
-    ]
+    "page": "scripts/background.html"
   },
   "options_ui": {
     "browser_style": true,

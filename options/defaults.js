@@ -12,3 +12,7 @@ const OptionsList = Object.keys(DefaultOptions);
 function defaultError (error) {
     console.error("[colorediffs]: Error:", error);
 }
+
+export { DefaultOptions };
+export { OptionsList };
+export { defaultError };
