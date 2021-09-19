@@ -17,19 +17,19 @@ index 968a86582cb3..c8b42ebfcbb9 100644
 +		}
  
  		do_more(stuff);	/* so much stuff */
- 		return 0;	/* exit at last */`
+ 		return 0;	/* exit at last */`;
 
-var hasReplacedSpaces = false;
+let hasReplacedSpaces = false;
 
-function updateStyle(e) {
-    let style = document.getElementById("style").value;
+function updateStyle (e) {
+    const style = document.getElementById("style").value;
     document.getElementById("theme").href = "/hljs/styles/" + style + ".min.css";
 
-    let code = document.getElementById("prevcode");
-    let tabsize = document.getElementById("tabsize").value;
+    const code = document.getElementById("prevcode");
+    const tabsize = document.getElementById("tabsize").value;
     setTabStyle(code, tabsize);
 
-    let spaces = document.getElementById("spaces");
+    const spaces = document.getElementById("spaces");
     if (spaces.checked) {
         if (!hasReplacedSpaces) {
             replaceSpaces(code, tabsize);
@@ -41,21 +41,23 @@ function updateStyle(e) {
     }
 }
 
-function waitAndUpdateStyle() {
+function waitAndUpdateStyle () {
     window.setTimeout(updateStyle, 200);
 }
 
-function createPreview() {
+function createPreview () {
     document.getElementById("prevcode").textContent = PreviewContent;
     waitAndUpdateStyle();
     hljs.highlightElement(document.getElementById("prevcode"));
 }
 
-function changeStyle(offset) {
-    let style = document.getElementById("style").value;
-    let idx = styles.findIndex((s) => { return s.file == style; });
-    let newStyle = styles[(idx + offset + styles.length) % styles.length].file;
+function changeStyle (offset) {
+    const style = document.getElementById("style").value;
+    const idx = styles.findIndex((s) => {
+        return s.file == style;
+    });
+    const newStyle = styles[(idx + offset + styles.length) % styles.length].file;
     document.getElementById("style").value = newStyle;
-    let change = new Event('change');
+    const change = new Event("change");
     document.getElementById("style").dispatchEvent(change);
 }

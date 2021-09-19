@@ -1,29 +1,30 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 
-var options = {};
-var wantColors = true;
+const options = {};
+let wantColors = true;
 
-var port;
-var scriptsPromise;
-var cssPromise;
+let port;
+let scriptsPromise;
+let cssPromise;
 
-function reloadOption(id) {
+function reloadOption (id) {
     return browser.storage.local.get(id).then((res) => {
-        if (res[id] != undefined)
+        if (res[id] != undefined) {
             options[id] = res[id];
-        else
+        } else {
             options[id] = DefaultOptions[id];
+        }
     }, defaultError);
 }
 
-async function reloadAllOptions() {
+async function reloadAllOptions () {
     await reloadOption("style");
     await reloadOption("tabsize");
     await reloadOption("spaces");
     await reloadOption("colorall");
 }
 
-function processCommand(msg) {
+function processCommand (msg) {
     switch (msg.command) {
     case "toggleSpaces":
         options.spaces = !options.spaces;
@@ -32,17 +33,18 @@ function processCommand(msg) {
     case "toggleColor":
         wantColors = !wantColors;
         unregisterScripts().then(registerScripts);
-        if (wantColors)
+        if (wantColors) {
             registerCss();
-        else
+        } else {
             unregisterCss();
+        }
         break;
     default:
         break;
     }
 }
 
-function registerCss() {
+function registerCss () {
     cssPromise = browser.messageDisplayScripts.register({
         css: [{
             file: "/hljs/styles/" + options.style + ".min.css",
@@ -50,8 +52,8 @@ function registerCss() {
     });
 }
 
-function registerScripts() {
-    let contentScripts = {
+function registerScripts () {
+    const contentScripts = {
         js: [
             {
                 code: "var options = " + JSON.stringify(options) + ";",
@@ -68,32 +70,32 @@ function registerScripts() {
             },
             {
                 file: "/scripts/coloring.js",
-            },
+            }
         );
     }
     contentScripts.js.push(
         {
             file: "/scripts/content.js",
-        },
+        }
     );
     scriptsPromise = browser.messageDisplayScripts.register(contentScripts);
 }
 
-async function unregisterCss() {
+async function unregisterCss () {
     await cssPromise.then(css => css.unregister());
 }
 
-async function unregisterScripts() {
+async function unregisterScripts () {
     await scriptsPromise.then(script => script.unregister());
 }
 
-async function reset() {
+async function reset () {
     await unregisterScripts();
     await unregisterCss();
     await init();
 }
 
-function init() {
+function init () {
     reloadAllOptions().then(registerCss).then(registerScripts);
 }
 

@@ -245,9 +245,9 @@ const styles = [
     { file: "base16/zenburn",                       name: "Zenburn" },
 ];
 
-let list = document.getElementById("style");
-for (let s of styles) {
-    let item = document.createElement("option");
+const list = document.getElementById("style");
+for (const s of styles) {
+    const item = document.createElement("option");
     item.value = s.file;
     item.textContent = s.name;
     list.appendChild(item);
