@@ -1,5 +1,6 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 
+/* eslint-disable no-tabs */
 const PreviewContent =
 `diff --git a/foo b/foo
 index 968a86582cb3..c8b42ebfcbb9 100644
@@ -18,6 +19,7 @@ index 968a86582cb3..c8b42ebfcbb9 100644
  
  		do_more(stuff);	/* so much stuff */
  		return 0;	/* exit at last */`;
+/* eslint-disable no-tabs */
 
 let hasReplacedSpaces = false;
 
@@ -35,7 +37,7 @@ function updateStyle (e) {
             replaceSpaces(code, tabsize);
             hasReplacedSpaces = true;
         }
-    } else if (e && e.target == spaces) {
+    } else if (e && e.target === spaces) {
         createPreview();
         hasReplacedSpaces = false;
     }
@@ -54,7 +56,7 @@ function createPreview () {
 function changeStyle (offset) {
     const style = document.getElementById("style").value;
     const idx = styles.findIndex((s) => {
-        return s.file == style;
+        return s.file === style;
     });
     const newStyle = styles[(idx + offset + styles.length) % styles.length].file;
     document.getElementById("style").value = newStyle;

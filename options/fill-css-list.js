@@ -1,5 +1,6 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 
+/* eslint-disable no-multi-spaces */
 const styles = [
     { file: "base16/3024",                          name: "3024" },
     { file: "a11y-dark",                            name: "A11y Dark" },
@@ -244,6 +245,7 @@ const styles = [
     { file: "xt256",                                name: "xt256" },
     { file: "base16/zenburn",                       name: "Zenburn" },
 ];
+/* eslint-enable no-multi-spaces */
 
 const list = document.getElementById("style");
 for (const s of styles) {
