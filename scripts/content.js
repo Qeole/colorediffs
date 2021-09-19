@@ -61,7 +61,7 @@ function addToolbar () {
     document.body.appendChild(div);
 
     document.getElementById("toggleSpaces").addEventListener("click", () => {
-        toggleSpaces();
+        transformations.toggleSpaces();
         connectPort();
         port.postMessage({
             command: "toggleSpaces",
