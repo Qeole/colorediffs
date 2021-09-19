@@ -9,7 +9,7 @@ let cssPromise;
 
 function reloadOption (id) {
     return browser.storage.local.get(id).then((res) => {
-        if (res[id] != undefined) {
+        if (res[id] !== undefined) {
             options[id] = res[id];
         } else {
             options[id] = DefaultOptions[id];

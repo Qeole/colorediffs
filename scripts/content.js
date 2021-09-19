@@ -91,8 +91,8 @@ function isPlainText () {
 /* Check whether this message contains diff snippets */
 function hasDiff () {
     /* These patterns were kept from the old version of the add-on */
-    const contextLineTag = /^(?:\*|\-){3}\s+(\d+)\,\d+\s+(?:\*|\-){4}$/m;
-    const unifiedLineTag = /^@@\s+\-\d+(?:\,\d+)?\s\+\d+(?:\,\d+)?\s+@@/m;
+    const contextLineTag = /^(?:\*|-){3}\s+(\d+),\d+\s+(?:\*|-){4}$/m;
+    const unifiedLineTag = /^@@\s+-\d+(?:,\d+)?\s\+\d+(?:,\d+)?\s+@@/m;
     const unifiedNewTag = /^--- NEW FILE:\s.* ---$/m;
     const unifiedBinaryTag = /^---\s(?:new\s)?BINARY FILE:\s.*\s---$/m;
     const textBody = document.body.textContent;

@@ -11,22 +11,22 @@ function setTabStyle (node, tabsize) {
 function replaceSpaces (root, tabsize) {
     function replacer (match, spaces, offset, string) {
         /* Space on first column, likely generated for the diff, abort */
-        if (match == " " && (offset == 0 || string[offset - 1] == "\n")) {
+        if (match === " " && (offset === 0 || string[offset - 1] === "\n")) {
             return " ";
         }
 
         let content = "<span class='hljs-comment cd-s'>";
-        if (match[0] == "\t") {
+        if (match[0] === "\t") {
             content += "›";
             const lastNewLine = string.slice(0, offset).lastIndexOf("\n");
             const lastTab = string.slice(0, offset).lastIndexOf("\t");
             const offsetInLine = offset - Math.max(lastNewLine + 1, lastTab + 1);
-            if (offsetInLine % tabsize != tabsize - 1) {
+            if (offsetInLine % tabsize !== tabsize - 1) {
                 content += "\t";
             }
             content += "›\t".repeat(match.length - 1);
         } else {
-            content += (offset == 0 || string[offset - 1] == "\n" ? " " : "·");
+            content += (offset === 0 || string[offset - 1] === "\n" ? " " : "·");
             content += "·".repeat(match.length - 1);
         }
         content += "</span>";
@@ -50,7 +50,7 @@ function replaceSpaces (root, tabsize) {
     };
 
     function processNeighbour (neighbour) {
-        if (neighbour && neighbour.nodeType == Node.TEXT_NODE) {
+        if (neighbour && neighbour.nodeType === Node.TEXT_NODE) {
             doReplace(spanify(neighbour));
         }
     };

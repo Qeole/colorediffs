@@ -19,7 +19,7 @@ function saveOptions (e) {
 function restoreOption (id) {
     return browser.storage.local.get(id).then((res) => {
         const element = document.getElementById(id);
-        if (element.type && element.type == "checkbox") {
+        if (element.type && element.type === "checkbox") {
             element.checked = res[id] || DefaultOptions[id];
         } else {
             element.value = res[id] || DefaultOptions[id];
