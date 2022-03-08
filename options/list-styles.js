@@ -136,6 +136,7 @@ const FullStyleList = [
     { file: "base16/ir-black",                      name: "IR Black (Base16)" },
     { file: "base16/icy-dark",                      name: "Icy Dark" },
     { file: "idea",                                 name: "Idea" },
+    { file: "intellij-light",                       name: "IntelliJ Light" },
     { file: "isbl-editor-dark",                     name: "ISBL Editor Dark" },
     { file: "isbl-editor-light",                    name: "ISBL Editor Light" },
     { file: "base16/isotope",                       name: "Isotope" },
