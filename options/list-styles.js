@@ -244,6 +244,7 @@ const FullStyleList = [
     { file: "base16/xcode-dusk",                    name: "XCode Dusk" },
     { file: "xt256",                                name: "xt256" },
     { file: "base16/zenburn",                       name: "Zenburn" },
+    { file: "intellij-light",                       name: "IntelliJ Light" },
 ];
 /* eslint-enable no-multi-spaces */
 
