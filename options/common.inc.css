@@ -435,7 +435,6 @@ html|a:hover:active,
 /* Checkboxes and radio buttons */
 
 html|input[type="checkbox"] {
-  appearance: none;
   width: 20px;
   height: 20px;
   padding: 1px;
