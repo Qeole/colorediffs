@@ -176,6 +176,8 @@ const FullStyleList = [
     { file: "base16/one-light",                     name: "One Light" },
     { file: "base16/onedark",                       name: "OneDark" },
     { file: "base16/outrun-dark",                   name: "Outrun Dark" },
+    { file: "panda-syntax-dark",                    name: "Panda Syntax Dark" },
+    { file: "panda-syntax-light",                   name: "Panda Syntax Light" },
     { file: "base16/papercolor-dark",               name: "Papercolor Dark" },
     { file: "base16/papercolor-light",              name: "Papercolor Light" },
     { file: "base16/paraiso",                       name: "Paraiso" },
