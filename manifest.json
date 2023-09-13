@@ -7,7 +7,7 @@
     }
   },
   "name": "Colored Diffs",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Color diffs in messages formatted by Git or other version control systems",
   "author": "Vadim Atlygin",
   "homepage_url": "https://github.com/Qeole/colorediffs",
