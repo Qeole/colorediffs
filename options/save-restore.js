@@ -12,7 +12,7 @@ function saveOptions (e) {
 
     return browser.storage.local.set({
         style: document.getElementById("style").value,
-        tabsize: tabsize,
+        tabsize,
         spaces: document.getElementById("spaces").checked,
         colorall: document.getElementById("colorall").checked,
     });
