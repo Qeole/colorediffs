@@ -91,7 +91,7 @@ const transformations = {
             transformations.restoreSpaces();
         } else {
             for (const pre of document.querySelectorAll("body > div > pre")) {
-                transformations.replaceSpaces(pre.firstChild, options.tabsize);
+                transformations.replaceSpaces(pre, options.tabsize);
             }
         }
     },

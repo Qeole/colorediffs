@@ -38,7 +38,7 @@ const coloring = {
         /* Replace spaces and tabs if required */
         if (options.spaces) {
             for (const pre of preNodes) {
-                transformations.replaceSpaces(pre.firstChild, options.tabsize);
+                transformations.replaceSpaces(pre, options.tabsize);
             }
         } else if (document.getElementsByClassName("cd-s").length) {
             transformations.restoreSpaces();
