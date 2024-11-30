@@ -14,7 +14,21 @@ const coloring = {
         const preNodes = document.querySelectorAll("body > div > pre");
 
         for (const pre of preNodes) {
-            for (let i = 0; i < pre.childNodes.length; i++) {
+            let i, j = -1;
+
+            for (i = 0; i < pre.childNodes.length && j < 0; i++) {
+                if (pre.childNodes[i].nodeName === "#text") {
+                    /*
+                     * man git-format-patch: The log message and the patch are
+                     * separated by a line with a three-dash line.
+                     */
+                    j = pre.childNodes[i].textContent.search(/^---$/m);
+                }
+            }
+            if (j >= 0) {
+                pre.childNodes[i - 1].splitText(j + '---'.length);
+            }
+            for (; i < pre.childNodes.length; i++) {
                 if (pre.childNodes[i].nodeName === "#text") {
                     const span = document.createElement("SPAN");
 
