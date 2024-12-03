@@ -14,7 +14,8 @@ const coloring = {
         const preNodes = document.querySelectorAll("body > div > pre");
 
         for (const pre of preNodes) {
-            let i, j = -1;
+            let i;
+            let j = -1;
 
             for (i = 0; i < pre.childNodes.length && j < 0; i++) {
                 if (pre.childNodes[i].nodeName === "#text") {
@@ -26,7 +27,7 @@ const coloring = {
                 }
             }
             if (j >= 0) {
-                pre.childNodes[i - 1].splitText(j + '---'.length);
+                pre.childNodes[i - 1].splitText(j + "---".length);
             }
             for (; i < pre.childNodes.length; i++) {
                 if (pre.childNodes[i].nodeName === "#text") {
